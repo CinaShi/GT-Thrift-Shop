@@ -16,6 +16,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        applyGlobalApperence();
+        
+        let isLoggedIn = true;
+        let rootVC : UIViewController;
+        
+        if isLoggedIn {
+            
+            // go to tab view controller
+            rootVC
+                = MainTabBarViewController()
+            
+        } else {
+            
+            rootVC = UIViewController()
+            // go to login view controller
+        }
+        
+        let frame = UIScreen.mainScreen().bounds;
+        window = UIWindow(frame: frame);
+        
+        if let window = self.window{
+            window.rootViewController = rootVC
+            window.makeKeyAndVisible()
+        }
+        
+        
+        return true
+    }
+    
+    func applyGlobalApperence () {
+        
+        
         UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         
@@ -23,9 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let customFont = UIFont(name: "Avenir-Medium", size: 12)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: customFont!], forState: UIControlState.Normal)
-        
-        
-        return true
     }
 
     func applicationWillResignActive(application: UIApplication) {

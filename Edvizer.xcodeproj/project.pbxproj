@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		084B22971C44AAA5008D3755 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084B22961C44AAA5008D3755 /* MainTabBarViewController.swift */; };
 		BA0C155B1BF405F900712598 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0C155A1BF405F900712598 /* AppDelegate.swift */; };
 		BA0C155D1BF405F900712598 /* LoginRegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0C155C1BF405F900712598 /* LoginRegisterController.swift */; };
 		BA0C15601BF405F900712598 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA0C155E1BF405F900712598 /* Main.storyboard */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		084B22961C44AAA5008D3755 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarViewController.swift; path = Presentation/MainTabBarViewController.swift; sourceTree = "<group>"; };
 		BA0C155A1BF405F900712598 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA0C155C1BF405F900712598 /* LoginRegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterController.swift; sourceTree = "<group>"; };
 		BA0C155F1BF405F900712598 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,6 +125,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		084B22951C44A77C008D3755 /* TabbedBar */ = {
+			isa = PBXGroup;
+			children = (
+				084B22961C44AAA5008D3755 /* MainTabBarViewController.swift */,
+			);
+			name = TabbedBar;
+			sourceTree = "<group>";
+		};
 		BA0C154E1BF405F900712598 = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +142,7 @@
 				BA3952D21BFEEDA500408F3C /* Registration  */,
 				BA3952BF1BFE57F700408F3C /* Icons */,
 				BA3952BE1BFE518800408F3C /* Custom UI */,
+				084B22951C44A77C008D3755 /* TabbedBar */,
 				BA3952D31BFEEE2600408F3C /* Edvizer.app */,
 			);
 			sourceTree = "<group>";
@@ -506,6 +517,7 @@
 				BA2618EC1C0595BB00F9D14C /* PIN_VerifyViewController.swift in Sources */,
 				BAA9D3881C08379F005309C1 /* Detected_SalaryViewController.swift in Sources */,
 				BAA9D3771C07F752005309C1 /* Advanced_TransactionViewController.swift in Sources */,
+				084B22971C44AAA5008D3755 /* MainTabBarViewController.swift in Sources */,
 				BAA9D3A31C0900C7005309C1 /* AllowanceViewController.swift in Sources */,
 				BAA9D3741C07F292005309C1 /* Specific_TransactionViewController.swift in Sources */,
 				BA3952C11BFE5A5000408F3C /* Basic_InfoController.swift in Sources */,
