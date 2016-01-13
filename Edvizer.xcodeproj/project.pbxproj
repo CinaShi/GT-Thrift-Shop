@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		084B22971C44AAA5008D3755 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084B22961C44AAA5008D3755 /* MainTabBarViewController.swift */; };
+		084B22A01C44F0CF008D3755 /* UIColor+Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B229F1C44F0CF008D3755 /* UIColor+Colors.m */; };
+		084B22A41C460AAF008D3755 /* AlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B22A31C460AAF008D3755 /* AlertViewController.m */; };
+		084B22A81C460B00008D3755 /* BannerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B22A61C460B00008D3755 /* BannerTableViewCell.m */; };
+		084B22A91C460B00008D3755 /* BannerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084B22A71C460B00008D3755 /* BannerTableViewCell.xib */; };
+		084B22AD1C461563008D3755 /* AlertChartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B22AB1C461563008D3755 /* AlertChartTableViewCell.m */; };
+		084B22AE1C461563008D3755 /* AlertChartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084B22AC1C461563008D3755 /* AlertChartTableViewCell.xib */; };
+		084B22B11C4625CF008D3755 /* CircleChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B22B01C4625CF008D3755 /* CircleChartView.m */; };
 		BA0C155B1BF405F900712598 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0C155A1BF405F900712598 /* AppDelegate.swift */; };
 		BA0C155D1BF405F900712598 /* LoginRegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0C155C1BF405F900712598 /* LoginRegisterController.swift */; };
 		BA0C15601BF405F900712598 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA0C155E1BF405F900712598 /* Main.storyboard */; };
@@ -61,6 +68,19 @@
 
 /* Begin PBXFileReference section */
 		084B22961C44AAA5008D3755 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarViewController.swift; path = Presentation/MainTabBarViewController.swift; sourceTree = "<group>"; };
+		084B22991C44EDEA008D3755 /* Edvizer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Edvizer-Bridging-Header.h"; sourceTree = "<group>"; };
+		084B229E1C44F0CF008D3755 /* UIColor+Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Colors.h"; path = "../nongge/nongge/nongge/UIColor+Colors.h"; sourceTree = "<group>"; };
+		084B229F1C44F0CF008D3755 /* UIColor+Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Colors.m"; path = "../nongge/nongge/nongge/UIColor+Colors.m"; sourceTree = "<group>"; };
+		084B22A21C460AAF008D3755 /* AlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertViewController.h; sourceTree = "<group>"; };
+		084B22A31C460AAF008D3755 /* AlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertViewController.m; sourceTree = "<group>"; };
+		084B22A51C460B00008D3755 /* BannerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BannerTableViewCell.h; sourceTree = "<group>"; };
+		084B22A61C460B00008D3755 /* BannerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BannerTableViewCell.m; sourceTree = "<group>"; };
+		084B22A71C460B00008D3755 /* BannerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BannerTableViewCell.xib; sourceTree = "<group>"; };
+		084B22AA1C461563008D3755 /* AlertChartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertChartTableViewCell.h; sourceTree = "<group>"; };
+		084B22AB1C461563008D3755 /* AlertChartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertChartTableViewCell.m; sourceTree = "<group>"; };
+		084B22AC1C461563008D3755 /* AlertChartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertChartTableViewCell.xib; sourceTree = "<group>"; };
+		084B22AF1C4625CF008D3755 /* CircleChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleChartView.h; sourceTree = "<group>"; };
+		084B22B01C4625CF008D3755 /* CircleChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleChartView.m; sourceTree = "<group>"; };
 		BA0C155A1BF405F900712598 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA0C155C1BF405F900712598 /* LoginRegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterController.swift; sourceTree = "<group>"; };
 		BA0C155F1BF405F900712598 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -133,15 +153,53 @@
 			name = TabbedBar;
 			sourceTree = "<group>";
 		};
+		084B22981C44ED9F008D3755 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				084B22A11C460AAF008D3755 /* AlertViewController */,
+			);
+			name = Alert;
+			sourceTree = "<group>";
+		};
+		084B229D1C44F08A008D3755 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				084B229E1C44F0CF008D3755 /* UIColor+Colors.h */,
+				084B229F1C44F0CF008D3755 /* UIColor+Colors.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		084B22A11C460AAF008D3755 /* AlertViewController */ = {
+			isa = PBXGroup;
+			children = (
+				084B22A21C460AAF008D3755 /* AlertViewController.h */,
+				084B22A31C460AAF008D3755 /* AlertViewController.m */,
+				084B22A51C460B00008D3755 /* BannerTableViewCell.h */,
+				084B22A61C460B00008D3755 /* BannerTableViewCell.m */,
+				084B22A71C460B00008D3755 /* BannerTableViewCell.xib */,
+				084B22AA1C461563008D3755 /* AlertChartTableViewCell.h */,
+				084B22AB1C461563008D3755 /* AlertChartTableViewCell.m */,
+				084B22AC1C461563008D3755 /* AlertChartTableViewCell.xib */,
+				084B22AF1C4625CF008D3755 /* CircleChartView.h */,
+				084B22B01C4625CF008D3755 /* CircleChartView.m */,
+			);
+			name = AlertViewController;
+			path = Presentation/AlertViewController;
+			sourceTree = "<group>";
+		};
 		BA0C154E1BF405F900712598 = {
 			isa = PBXGroup;
 			children = (
+				084B229D1C44F08A008D3755 /* Util */,
+				084B22991C44EDEA008D3755 /* Edvizer-Bridging-Header.h */,
 				BA0C155E1BF405F900712598 /* Main.storyboard */,
 				BAA9D38A1C0837AC005309C1 /* Budgeting Process */,
 				BA2618EE1C05973200F9D14C /* Account Aggregation */,
 				BA3952D21BFEEDA500408F3C /* Registration  */,
 				BA3952BF1BFE57F700408F3C /* Icons */,
 				BA3952BE1BFE518800408F3C /* Custom UI */,
+				084B22981C44ED9F008D3755 /* Alert */,
 				084B22951C44A77C008D3755 /* TabbedBar */,
 				BA3952D31BFEEE2600408F3C /* Edvizer.app */,
 			);
@@ -436,7 +494,7 @@
 		BA0C154F1BF405F900712598 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Appfish;
 				TargetAttributes = {
@@ -475,7 +533,9 @@
 				BAA9D3861C08124B005309C1 /* money-bag-3.png in Resources */,
 				BAA9D3851C08124B005309C1 /* ico-wallet.png in Resources */,
 				BA24104E1C01319B0016766B /* Well's Fargo Logo.png in Resources */,
+				084B22A91C460B00008D3755 /* BannerTableViewCell.xib in Resources */,
 				BAA9D38E1C08E3CC005309C1 /* Recurring Bills.png in Resources */,
+				084B22AE1C461563008D3755 /* AlertChartTableViewCell.xib in Resources */,
 				BA2410411C0051D80016766B /* 3 + Oval 1.png in Resources */,
 				BA24104C1C01319B0016766B /* American Express.png in Resources */,
 				BAA9D3AB1C0905F0005309C1 /* Weekly Calendar.png in Resources */,
@@ -501,11 +561,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA2618E91C0593DB00F9D14C /* PIN_ViewController.swift in Sources */,
+				084B22B11C4625CF008D3755 /* CircleChartView.m in Sources */,
+				084B22AD1C461563008D3755 /* AlertChartTableViewCell.m in Sources */,
 				BAA9D3A01C08FA19005309C1 /* Recommended_GoalsViewController.swift in Sources */,
 				BA2618F01C05974500F9D14C /* Account_OverviewViewController.swift in Sources */,
 				BAA9D39D1C08F3F3005309C1 /* Saving_IntroViewController.swift in Sources */,
 				BAA9D37D1C080315005309C1 /* Salary_IntroViewController.swift in Sources */,
 				BA2410561C0181100016766B /* Bank_LoginViewController.swift in Sources */,
+				084B22A01C44F0CF008D3755 /* UIColor+Colors.m in Sources */,
+				084B22A41C460AAF008D3755 /* AlertViewController.m in Sources */,
 				BAA9D3931C08EC46005309C1 /* CalendarViewController.swift in Sources */,
 				BA3952BB1BFE50CD00408F3C /* custom_TextField.swift in Sources */,
 				BA0C155D1BF405F900712598 /* LoginRegisterController.swift in Sources */,
@@ -523,6 +587,7 @@
 				BA3952C11BFE5A5000408F3C /* Basic_InfoController.swift in Sources */,
 				BA3952BD1BFE515700408F3C /* custom_Button.swift in Sources */,
 				BAA9D3901C08E783005309C1 /* RecurringBills_IntroViewController.swift in Sources */,
+				084B22A81C460B00008D3755 /* BannerTableViewCell.m in Sources */,
 				BA3952CE1BFEE39800408F3C /* Completion_Button.swift in Sources */,
 				BA3952D51BFEEE7200408F3C /* Introduction_AccountViewController.swift in Sources */,
 				BA2410431C010B670016766B /* Account_AggregationViewController.swift in Sources */,
@@ -641,10 +706,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Edvizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.appfish.Edvizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Edvizer-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -652,10 +720,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Edvizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.appfish.Edvizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Edvizer-Bridging-Header.h";
 			};
 			name = Release;
 		};

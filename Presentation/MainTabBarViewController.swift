@@ -22,19 +22,20 @@ class MainTabBarViewController: UITabBarController {
         accountVC.title = "Account";
         accountVC.tabBarItem.image = UIImage(named: "bank");
         
-        let alertVC = UIViewController();
+        let alertVC = AlertViewController();
         alertVC.title = "Spending Alert";
         alertVC.tabBarItem.image = UIImage(named: "alert");
+        let nav3 = UINavigationController(rootViewController: alertVC)
         
         let analysisVC = UIViewController();
-        analysisVC.title = "Analytics";
+        analysisVC.tabBarItem.title = "Analytics";
         analysisVC.tabBarItem.image = UIImage(named: "analysis");
         
         let settingVC = UIViewController();
         settingVC.title = "Setting";
         settingVC.tabBarItem.image = UIImage(named: "setting");
         
-        self.viewControllers = [planVC, accountVC, alertVC, analysisVC, settingVC];
+        self.viewControllers = [planVC, accountVC, nav3, analysisVC, settingVC];
     }
 
     override func didReceiveMemoryWarning() {

@@ -49,9 +49,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().barTintColor = UIColor(fromHexString: "3192A1");
         
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor(),NSFontAttributeName: UIFont(name: "Avenir-Medium", size: 12)!]
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor(),NSFontAttributeName: UIFont(name: "Avenir-Medium", size: 16)!]
         
         let customFont = UIFont(name: "Avenir-Medium", size: 12)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: customFont!], forState: UIControlState.Normal)
