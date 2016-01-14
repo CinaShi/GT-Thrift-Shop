@@ -18,6 +18,12 @@
 		084B22B41C4675AE008D3755 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 084B22B31C4675AE008D3755 /* Setting.storyboard */; };
 		084B22B71C4677EF008D3755 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B22B61C4677EF008D3755 /* SettingViewController.m */; };
 		084B22BA1C479879008D3755 /* SpentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084B22B91C479878008D3755 /* SpentView.swift */; };
+		084B22BF1C479D88008D3755 /* AnalyticsHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B22BD1C479D88008D3755 /* AnalyticsHistoryViewController.m */; };
+		084B22C21C479DC1008D3755 /* Analytics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 084B22C11C479DC1008D3755 /* Analytics.storyboard */; };
+		08AADB981C484C150065F395 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08AADB971C484C150065F395 /* SearchView.xib */; };
+		08AADB9B1C484DD60065F395 /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AADB9A1C484DD60065F395 /* SearchView.m */; };
+		08AADB9E1C484FA00065F395 /* UIView+Nib.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AADB9D1C484FA00065F395 /* UIView+Nib.m */; };
+		08AADBA11C4852AF0065F395 /* WeeklyAnalyticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AADBA01C4852AF0065F395 /* WeeklyAnalyticsViewController.m */; };
 		AF267591405C1C4DF28A52A6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF9C3848F637FC06EF36D44 /* libPods.a */; };
 		BA0C155B1BF405F900712598 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0C155A1BF405F900712598 /* AppDelegate.swift */; };
 		BA0C155D1BF405F900712598 /* LoginRegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0C155C1BF405F900712598 /* LoginRegisterController.swift */; };
@@ -89,6 +95,16 @@
 		084B22B51C4677EF008D3755 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = Presentation/SettingViewController.h; sourceTree = "<group>"; };
 		084B22B61C4677EF008D3755 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = Presentation/SettingViewController.m; sourceTree = "<group>"; };
 		084B22B91C479878008D3755 /* SpentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpentView.swift; sourceTree = "<group>"; };
+		084B22BC1C479D88008D3755 /* AnalyticsHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalyticsHistoryViewController.h; path = Presentation/AnalyticsHistoryViewController.h; sourceTree = "<group>"; };
+		084B22BD1C479D88008D3755 /* AnalyticsHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnalyticsHistoryViewController.m; path = Presentation/AnalyticsHistoryViewController.m; sourceTree = "<group>"; };
+		084B22C11C479DC1008D3755 /* Analytics.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Analytics.storyboard; path = Presentation/Analytics.storyboard; sourceTree = "<group>"; };
+		08AADB971C484C150065F395 /* SearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchView.xib; path = Presentation/SearchView.xib; sourceTree = "<group>"; };
+		08AADB991C484DD60065F395 /* SearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchView.h; path = Presentation/SearchView.h; sourceTree = "<group>"; };
+		08AADB9A1C484DD60065F395 /* SearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchView.m; path = Presentation/SearchView.m; sourceTree = "<group>"; };
+		08AADB9C1C484FA00065F395 /* UIView+Nib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Nib.h"; sourceTree = "<group>"; };
+		08AADB9D1C484FA00065F395 /* UIView+Nib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Nib.m"; sourceTree = "<group>"; };
+		08AADB9F1C4852AF0065F395 /* WeeklyAnalyticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeeklyAnalyticsViewController.h; path = Presentation/WeeklyAnalyticsViewController.h; sourceTree = "<group>"; };
+		08AADBA01C4852AF0065F395 /* WeeklyAnalyticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeeklyAnalyticsViewController.m; path = Presentation/WeeklyAnalyticsViewController.m; sourceTree = "<group>"; };
 		AEF9C3848F637FC06EF36D44 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0C155A1BF405F900712598 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA0C155C1BF405F900712598 /* LoginRegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterController.swift; sourceTree = "<group>"; };
@@ -186,6 +202,8 @@
 		084B229D1C44F08A008D3755 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				08AADB9C1C484FA00065F395 /* UIView+Nib.h */,
+				08AADB9D1C484FA00065F395 /* UIView+Nib.m */,
 				084B229E1C44F0CF008D3755 /* UIColor+Colors.h */,
 				084B229F1C44F0CF008D3755 /* UIColor+Colors.m */,
 			);
@@ -205,8 +223,9 @@
 		084B22B81C4791AA008D3755 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				BA3952BF1BFE57F700408F3C /* Icons */,
 				084B22951C44A77C008D3755 /* TabbedBar */,
+				084B22BB1C479CDD008D3755 /* Analytics */,
+				BA3952BF1BFE57F700408F3C /* Icons */,
 				084B22B21C467589008D3755 /* Setting */,
 				084B22981C44ED9F008D3755 /* Alert */,
 				BA3952BE1BFE518800408F3C /* Custom UI */,
@@ -215,6 +234,21 @@
 				BAA9D38A1C0837AC005309C1 /* Budgeting Process */,
 			);
 			name = Presentation;
+			sourceTree = "<group>";
+		};
+		084B22BB1C479CDD008D3755 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				084B22BC1C479D88008D3755 /* AnalyticsHistoryViewController.h */,
+				084B22BD1C479D88008D3755 /* AnalyticsHistoryViewController.m */,
+				084B22C11C479DC1008D3755 /* Analytics.storyboard */,
+				08AADB971C484C150065F395 /* SearchView.xib */,
+				08AADB991C484DD60065F395 /* SearchView.h */,
+				08AADB9A1C484DD60065F395 /* SearchView.m */,
+				08AADB9F1C4852AF0065F395 /* WeeklyAnalyticsViewController.h */,
+				08AADBA01C4852AF0065F395 /* WeeklyAnalyticsViewController.m */,
+			);
+			name = Analytics;
 			sourceTree = "<group>";
 		};
 		61B0E9C9C5CDAD48FA9AFF89 /* Frameworks */ = {
@@ -576,6 +610,7 @@
 				BA0C15651BF405F900712598 /* LaunchScreen.storyboard in Resources */,
 				BAA9D3A61C0902C2005309C1 /* Plan.png in Resources */,
 				BAA9D3861C08124B005309C1 /* money-bag-3.png in Resources */,
+				08AADB981C484C150065F395 /* SearchView.xib in Resources */,
 				BAA9D3851C08124B005309C1 /* ico-wallet.png in Resources */,
 				BA24104E1C01319B0016766B /* Well's Fargo Logo.png in Resources */,
 				084B22A91C460B00008D3755 /* BannerTableViewCell.xib in Resources */,
@@ -584,6 +619,7 @@
 				BA2410411C0051D80016766B /* 3 + Oval 1.png in Resources */,
 				BA24104C1C01319B0016766B /* American Express.png in Resources */,
 				084B22B41C4675AE008D3755 /* Setting.storyboard in Resources */,
+				084B22C21C479DC1008D3755 /* Analytics.storyboard in Resources */,
 				BAA9D3AB1C0905F0005309C1 /* Weekly Calendar.png in Resources */,
 				BA0C156F1BF41CFA00712598 /* Edvizer Logo.png in Resources */,
 				BA59F6361C02CAB000386F69 /* BudgetingIcon.png in Resources */,
@@ -671,6 +707,7 @@
 				BAA9D37A1C07F9F5005309C1 /* BudgetingViewController.swift in Sources */,
 				084B22BA1C479879008D3755 /* SpentView.swift in Sources */,
 				BAA9D3961C08EF37005309C1 /* Bill_SearchViewController.swift in Sources */,
+				08AADBA11C4852AF0065F395 /* WeeklyAnalyticsViewController.m in Sources */,
 				BA3952CB1BFEE09800408F3C /* Account_InfoViewController.swift in Sources */,
 				BA0C156D1BF419F600712598 /* CAGradientLayer + Convience.swift in Sources */,
 				BA2618EC1C0595BB00F9D14C /* PIN_VerifyViewController.swift in Sources */,
@@ -680,12 +717,15 @@
 				084B22971C44AAA5008D3755 /* MainTabBarViewController.swift in Sources */,
 				BAA9D3A31C0900C7005309C1 /* AllowanceViewController.swift in Sources */,
 				BAA9D3741C07F292005309C1 /* Specific_TransactionViewController.swift in Sources */,
+				08AADB9E1C484FA00065F395 /* UIView+Nib.m in Sources */,
 				BA3952C11BFE5A5000408F3C /* Basic_InfoController.swift in Sources */,
 				BA3952BD1BFE515700408F3C /* custom_Button.swift in Sources */,
 				BAA9D3901C08E783005309C1 /* RecurringBills_IntroViewController.swift in Sources */,
 				084B22A81C460B00008D3755 /* BannerTableViewCell.m in Sources */,
 				BA3952CE1BFEE39800408F3C /* Completion_Button.swift in Sources */,
 				BA3952D51BFEEE7200408F3C /* Introduction_AccountViewController.swift in Sources */,
+				084B22BF1C479D88008D3755 /* AnalyticsHistoryViewController.m in Sources */,
+				08AADB9B1C484DD60065F395 /* SearchView.m in Sources */,
 				BA2410431C010B670016766B /* Account_AggregationViewController.swift in Sources */,
 				BA3952D01BFEE5F200408F3C /* Verify_EmailViewController.swift in Sources */,
 				BA2410461C0117220016766B /* custom_LabelBig.swift in Sources */,

@@ -34,16 +34,17 @@ class MainTabBarViewController: UITabBarController {
         alertVC.tabBarItem.image = UIImage(named: "alert");
         let nav3 = UINavigationController(rootViewController: alertVC)
         
-        let analysisVC = UIViewController();
+        let analysisVC = UIStoryboard(name: "Analytics", bundle: nil).instantiateViewControllerWithIdentifier("AnalyticsHistoryViewController");
         analysisVC.tabBarItem.title = "Analytics";
         analysisVC.tabBarItem.image = UIImage(named: "analysis");
+        let nav4 = UINavigationController(rootViewController: analysisVC)
         
         let settingVC = UIStoryboard(name: "Setting", bundle: nil).instantiateViewControllerWithIdentifier("SettingViewController");
         settingVC.title = "Setting";
         settingVC.tabBarItem.image = UIImage(named: "setting");
         let nav5 = UINavigationController(rootViewController: settingVC)
         
-        self.viewControllers = [planVC, accountVC, nav3, analysisVC, nav5];
+        self.viewControllers = [planVC, accountVC, nav3, nav4, nav5];
     }
 
     override func didReceiveMemoryWarning() {

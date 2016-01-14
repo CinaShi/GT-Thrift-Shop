@@ -4,5 +4,6 @@
 
 #import "AlertViewController.h"
 #import "SettingViewController.h"
+#import "AnalyticsHistoryViewController.h"
 
 #import "UIColor+Colors.h"
