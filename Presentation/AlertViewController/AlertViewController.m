@@ -9,6 +9,7 @@
 #import "AlertViewController.h"
 #import "BannerTableViewCell.h"
 #import "AlertChartTableViewCell.h"
+#import "UIColor+Colors.h"
 
 typedef NS_ENUM(NSUInteger, AlertViewCellSection) {
     AlertViewCellSection_Banner = 0,
@@ -38,7 +39,8 @@ typedef NS_ENUM(NSUInteger, AlertViewCellSection) {
     [self.tableView registerNib:[UINib nibWithNibName:cellName_BannerTableViewCell bundle:nil] forCellReuseIdentifier:cellName_BannerTableViewCell];
     [self.tableView registerNib:[UINib nibWithNibName:cellName_AlertChartTableViewCell bundle:nil] forCellReuseIdentifier:cellName_AlertChartTableViewCell];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellId"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellSectionHeader"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,7 +55,13 @@ typedef NS_ENUM(NSUInteger, AlertViewCellSection) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    if (section == AlertViewCellSection_Today) {
+        return 4;
+    } else if (section == AlertViewCellSection_Recursive) {
+        return 2;
+    } else {
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -66,11 +74,81 @@ typedef NS_ENUM(NSUInteger, AlertViewCellSection) {
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
+    } else if (indexPath.section == AlertViewCellSection_Today) {
+        if (indexPath.row == 0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellSectionHeader"];
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.textLabel.font = [UIFont systemFontOfSize:15 weight:0.2];
+            cell.textLabel.text = @"Today's Transactions";
+            cell.backgroundColor = [UIColor MainTintColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        } else {
+            UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+            
+            NSArray *titles  = @[@"", @"Coco Garden", @"Chipotle", @"Party"];
+            NSArray *subTitles  = @[@"", @"-$30.00", @"-$12.99", @"-$38.99"];
+            cell.textLabel.text = titles[indexPath.row];
+            cell.detailTextLabel.text = subTitles[indexPath.row];
+            
+            cell.textLabel.font = [UIFont systemFontOfSize:12 weight:0.1];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:13 weight:0.1];
+            cell.textLabel.textColor = [UIColor TextColor];
+            cell.detailTextLabel.textColor = [UIColor TextColor];
+            
+            if (indexPath.row %2 == 1) {
+                cell.backgroundColor = [UIColor whiteColor];
+            } else {
+                cell.backgroundColor = [UIColor colorFromHexString:@"f2fdff"];
+            }
+            
+            return cell;
+        }
+    } else {
+        if (indexPath.row == 0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellSectionHeader"];
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.textLabel.font = [UIFont systemFontOfSize:15 weight:0.2];
+            cell.textLabel.text = @"Recurring Bill Transaction";
+            cell.backgroundColor = [UIColor MainTintColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        } else {
+            UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+            
+            NSArray *titles  = @[@"", @"MeLife Insurance"];
+            NSArray *subTitles  = @[@"", @"-$50.00"];
+            cell.textLabel.text = titles[indexPath.row];
+            cell.detailTextLabel.text = subTitles[indexPath.row];
+            
+            cell.textLabel.font = [UIFont systemFontOfSize:12];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:13 weight:0.1];
+            cell.textLabel.textColor = [UIColor TextColor];
+            cell.detailTextLabel.textColor = [UIColor TextColor];
+            
+            if (indexPath.row %2 == 1) {
+                cell.backgroundColor = [UIColor whiteColor];
+            } else {
+                cell.backgroundColor = [UIColor colorFromHexString:@"f2fdff"];
+            }
+            
+            return cell;
+        }
     }
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = @"cell";
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section >= AlertViewCellSection_Today) {
+        return 20;
+    } else {
+        return CGFLOAT_MIN;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -79,52 +157,37 @@ typedef NS_ENUM(NSUInteger, AlertViewCellSection) {
         return 80;
     } else if (indexPath.section == AlertViewCellSection_Chart) {
         return 340;
+    } else {
+        if (indexPath.row == 0) {
+            return 25;
+        } else {
+            return 40;
+        }
     }
     
     return 80;
 }
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+-(void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

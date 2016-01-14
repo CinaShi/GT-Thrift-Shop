@@ -46,8 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applyGlobalApperence () {
-        
-        
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false);
         UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().barTintColor = UIColor(fromHexString: "3192A1");
         

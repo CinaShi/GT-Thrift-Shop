@@ -3,5 +3,6 @@
 //
 
 #import "AlertViewController.h"
+#import "SettingViewController.h"
 
 #import "UIColor+Colors.h"

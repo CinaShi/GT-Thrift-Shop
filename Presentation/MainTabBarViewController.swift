@@ -13,6 +13,13 @@ class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let view = UIView(frame:
+            CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0)
+        )
+        view.backgroundColor = UIColor.MainTintColor();
+        
+        self.view.addSubview(view)
+        
         // Do any additional setup after loading the view.
         let planVC = UIViewController();
         planVC.title = "Plan";
@@ -31,11 +38,12 @@ class MainTabBarViewController: UITabBarController {
         analysisVC.tabBarItem.title = "Analytics";
         analysisVC.tabBarItem.image = UIImage(named: "analysis");
         
-        let settingVC = UIViewController();
+        let settingVC = UIStoryboard(name: "Setting", bundle: nil).instantiateViewControllerWithIdentifier("SettingViewController");
         settingVC.title = "Setting";
         settingVC.tabBarItem.image = UIImage(named: "setting");
+        let nav5 = UINavigationController(rootViewController: settingVC)
         
-        self.viewControllers = [planVC, accountVC, nav3, analysisVC, settingVC];
+        self.viewControllers = [planVC, accountVC, nav3, analysisVC, nav5];
     }
 
     override func didReceiveMemoryWarning() {

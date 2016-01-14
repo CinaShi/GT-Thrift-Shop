@@ -39,12 +39,32 @@
                             <constraint firstAttribute="height" constant="84" id="yoq-lb-goS"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GH0-r3-eK4" customClass="CircleChartView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GH0-r3-eK4" customClass="SpentView" customModule="Edvizer" customModuleProvider="target">
                         <rect key="frame" x="25" y="119" width="270" height="200"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="200" id="8e2-HS-HKV"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="allowance">
+                                <real key="value" value="100"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spent">
+                                <real key="value" value="110"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="overspentColor">
+                                <color key="value" red="0.83529411764705885" green="0.18431372549019609" blue="0.19215686274509805" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="savingColor">
+                                <color key="value" red="0.23137254901960785" green="0.84705882352941175" blue="0.41568627450980394" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="allowanceColor">
+                                <color key="value" red="0.23137254901960785" green="0.7803921568627451" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="arcWidth">
+                                <real key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <color key="backgroundColor" red="0.95686274509803926" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
