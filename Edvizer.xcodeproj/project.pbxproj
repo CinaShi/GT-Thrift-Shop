@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		084B22971C44AAA5008D3755 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084B22961C44AAA5008D3755 /* MainTabBarViewController.swift */; };
-		084B22A01C44F0CF008D3755 /* UIColor+Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B229F1C44F0CF008D3755 /* UIColor+Colors.m */; };
 		084B22A41C460AAF008D3755 /* AlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B22A31C460AAF008D3755 /* AlertViewController.m */; };
 		084B22A81C460B00008D3755 /* BannerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B22A61C460B00008D3755 /* BannerTableViewCell.m */; };
 		084B22A91C460B00008D3755 /* BannerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084B22A71C460B00008D3755 /* BannerTableViewCell.xib */; };
@@ -20,6 +19,7 @@
 		084B22BA1C479879008D3755 /* SpentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084B22B91C479878008D3755 /* SpentView.swift */; };
 		084B22BF1C479D88008D3755 /* AnalyticsHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 084B22BD1C479D88008D3755 /* AnalyticsHistoryViewController.m */; };
 		084B22C21C479DC1008D3755 /* Analytics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 084B22C11C479DC1008D3755 /* Analytics.storyboard */; };
+		08A8F9471C4F509F0062C038 /* UIColor+Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A8F9461C4F509F0062C038 /* UIColor+Colors.m */; };
 		08AADB981C484C150065F395 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08AADB971C484C150065F395 /* SearchView.xib */; };
 		08AADB9B1C484DD60065F395 /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AADB9A1C484DD60065F395 /* SearchView.m */; };
 		08AADB9E1C484FA00065F395 /* UIView+Nib.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AADB9D1C484FA00065F395 /* UIView+Nib.m */; };
@@ -79,8 +79,6 @@
 /* Begin PBXFileReference section */
 		084B22961C44AAA5008D3755 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarViewController.swift; path = Presentation/MainTabBarViewController.swift; sourceTree = "<group>"; };
 		084B22991C44EDEA008D3755 /* Edvizer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Edvizer-Bridging-Header.h"; sourceTree = "<group>"; };
-		084B229E1C44F0CF008D3755 /* UIColor+Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Colors.h"; path = "../nongge/nongge/nongge/UIColor+Colors.h"; sourceTree = "<group>"; };
-		084B229F1C44F0CF008D3755 /* UIColor+Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Colors.m"; path = "../nongge/nongge/nongge/UIColor+Colors.m"; sourceTree = "<group>"; };
 		084B22A21C460AAF008D3755 /* AlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlertViewController.h; path = Presentation/AlertViewController/AlertViewController.h; sourceTree = "<group>"; };
 		084B22A31C460AAF008D3755 /* AlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlertViewController.m; path = Presentation/AlertViewController/AlertViewController.m; sourceTree = "<group>"; };
 		084B22A51C460B00008D3755 /* BannerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BannerTableViewCell.h; path = Presentation/AlertViewController/BannerTableViewCell.h; sourceTree = "<group>"; };
@@ -98,6 +96,8 @@
 		084B22BC1C479D88008D3755 /* AnalyticsHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalyticsHistoryViewController.h; path = Presentation/AnalyticsHistoryViewController.h; sourceTree = "<group>"; };
 		084B22BD1C479D88008D3755 /* AnalyticsHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnalyticsHistoryViewController.m; path = Presentation/AnalyticsHistoryViewController.m; sourceTree = "<group>"; };
 		084B22C11C479DC1008D3755 /* Analytics.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Analytics.storyboard; path = Presentation/Analytics.storyboard; sourceTree = "<group>"; };
+		08A8F9451C4F509F0062C038 /* UIColor+Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Colors.h"; sourceTree = "<group>"; };
+		08A8F9461C4F509F0062C038 /* UIColor+Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Colors.m"; sourceTree = "<group>"; };
 		08AADB971C484C150065F395 /* SearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchView.xib; path = Presentation/SearchView.xib; sourceTree = "<group>"; };
 		08AADB991C484DD60065F395 /* SearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchView.h; path = Presentation/SearchView.h; sourceTree = "<group>"; };
 		08AADB9A1C484DD60065F395 /* SearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchView.m; path = Presentation/SearchView.m; sourceTree = "<group>"; };
@@ -202,10 +202,10 @@
 		084B229D1C44F08A008D3755 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				08A8F9451C4F509F0062C038 /* UIColor+Colors.h */,
+				08A8F9461C4F509F0062C038 /* UIColor+Colors.m */,
 				08AADB9C1C484FA00065F395 /* UIView+Nib.h */,
 				08AADB9D1C484FA00065F395 /* UIView+Nib.m */,
-				084B229E1C44F0CF008D3755 /* UIColor+Colors.h */,
-				084B229F1C44F0CF008D3755 /* UIColor+Colors.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -698,7 +698,6 @@
 				BAA9D39D1C08F3F3005309C1 /* Saving_IntroViewController.swift in Sources */,
 				BAA9D37D1C080315005309C1 /* Salary_IntroViewController.swift in Sources */,
 				BA2410561C0181100016766B /* Bank_LoginViewController.swift in Sources */,
-				084B22A01C44F0CF008D3755 /* UIColor+Colors.m in Sources */,
 				084B22A41C460AAF008D3755 /* AlertViewController.m in Sources */,
 				BAA9D3931C08EC46005309C1 /* CalendarViewController.swift in Sources */,
 				BA3952BB1BFE50CD00408F3C /* custom_TextField.swift in Sources */,
@@ -719,6 +718,7 @@
 				BAA9D3741C07F292005309C1 /* Specific_TransactionViewController.swift in Sources */,
 				08AADB9E1C484FA00065F395 /* UIView+Nib.m in Sources */,
 				BA3952C11BFE5A5000408F3C /* Basic_InfoController.swift in Sources */,
+				08A8F9471C4F509F0062C038 /* UIColor+Colors.m in Sources */,
 				BA3952BD1BFE515700408F3C /* custom_Button.swift in Sources */,
 				BAA9D3901C08E783005309C1 /* RecurringBills_IntroViewController.swift in Sources */,
 				084B22A81C460B00008D3755 /* BannerTableViewCell.m in Sources */,
