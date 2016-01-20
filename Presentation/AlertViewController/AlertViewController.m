@@ -81,7 +81,7 @@ typedef NS_ENUM(NSUInteger, AlertViewCellSection) {
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.textLabel.font = [UIFont systemFontOfSize:15 weight:0.2];
             cell.textLabel.text = @"Today's Transactions";
-            cell.backgroundColor = [UIColor MainTintColor];
+            cell.backgroundColor = [UIColor mainTintColor];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         } else {
@@ -94,8 +94,8 @@ typedef NS_ENUM(NSUInteger, AlertViewCellSection) {
             
             cell.textLabel.font = [UIFont systemFontOfSize:12 weight:0.1];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:13 weight:0.1];
-            cell.textLabel.textColor = [UIColor TextColor];
-            cell.detailTextLabel.textColor = [UIColor TextColor];
+            cell.textLabel.textColor = [UIColor textColor];
+            cell.detailTextLabel.textColor = [UIColor textColor];
             
             if (indexPath.row %2 == 1) {
                 cell.backgroundColor = [UIColor whiteColor];
@@ -112,7 +112,7 @@ typedef NS_ENUM(NSUInteger, AlertViewCellSection) {
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.textLabel.font = [UIFont systemFontOfSize:15 weight:0.2];
             cell.textLabel.text = @"Recurring Bill Transaction";
-            cell.backgroundColor = [UIColor MainTintColor];
+            cell.backgroundColor = [UIColor mainTintColor];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         } else {
@@ -125,8 +125,8 @@ typedef NS_ENUM(NSUInteger, AlertViewCellSection) {
             
             cell.textLabel.font = [UIFont systemFontOfSize:12];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:13 weight:0.1];
-            cell.textLabel.textColor = [UIColor TextColor];
-            cell.detailTextLabel.textColor = [UIColor TextColor];
+            cell.textLabel.textColor = [UIColor textColor];
+            cell.detailTextLabel.textColor = [UIColor textColor];
             
             if (indexPath.row %2 == 1) {
                 cell.backgroundColor = [UIColor whiteColor];

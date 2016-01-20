@@ -59,7 +59,7 @@ typedef NS_ENUM(NSUInteger, WeeklyAnalyticsViewCellSection) {
         if (indexPath.row == 0) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"sectionHeader"];
             cell.textLabel.text = @"10/22 - 10/28";
-            cell.backgroundColor = [UIColor MainTintColor];
+            cell.backgroundColor = [UIColor mainTintColor];
             cell.textLabel.textColor = [UIColor whiteColor];
         } else {
             cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];

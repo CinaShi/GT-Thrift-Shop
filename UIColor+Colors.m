@@ -61,7 +61,7 @@
 #pragma mark - RGBA from UIColor
 - (NSArray *)rgbaArray
 {
-    // Takes a UIColor and returns R,G,B,A values in NSNumber form
+    // Takes a UIColor and return R,G,B,A values in NSNumber form
     float r=0,g=0,b=0,a=0;
     
     if ([self respondsToSelector:@selector(getRed:green:blue:alpha:)]) {
@@ -752,15 +752,28 @@
 	return [UIColor colorWithRed:236/255.0f green:214/255.0f blue:197/255.0f alpha:1.0];
 }
 
-#pragma mark - Color for Nongge
-+ (UIColor *) NGTintColor
+#pragma mark - Color for Edvizer
++ (UIColor *) headerBackgroundColor {
+    return [UIColor colorFromHexString:@"3DCED4"];
+}
++ (UIColor *) mainTintColor
 {
-    return [UIColor colorFromHexString:@"347417"];
+    return [UIColor colorFromHexString:@"31C9DE"];
 }
 
-+ (UIColor *) NGTableViewBackgroundColor
++ (UIColor *) accentColor {
+    return [UIColor colorFromHexString:@"26DA88"];
+}
++ (UIColor *) textColor {
+    return [UIColor colorFromHexString:@"000000"];
+}
++ (UIColor *) secondaryTextColor {
+    return [UIColor colorFromHexString:@"FFFFFF"];
+}
+
++ (UIColor *) backgroundColor
 {
-    return [UIColor colorFromHexString:@"F2F2F2"];
+    return [UIColor colorFromHexString:@"F5F5F5"];
 }
 
 + (UIColor *) NGSeperatorColor

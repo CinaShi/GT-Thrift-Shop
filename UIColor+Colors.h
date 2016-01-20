@@ -231,9 +231,13 @@ typedef enum
 + (UIColor *)siennaColor;
 + (UIColor *)dustColor;
 
-//Color for Nongge
-+ (UIColor *) NGTintColor;
-+ (UIColor *) NGTableViewBackgroundColor;
+//Color for edvizer
++ (UIColor *) headerBackgroundColor;
++ (UIColor *) mainTintColor;
++ (UIColor *) accentColor;
++ (UIColor *) textColor;
++ (UIColor *) secondaryTextColor;
++ (UIColor *) backgroundColor;
 + (UIColor *) NGSeperatorColor;
 
 + (UIImage *) createImageWithColor: (UIColor *) color;

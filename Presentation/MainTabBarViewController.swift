@@ -16,7 +16,7 @@ class MainTabBarViewController: UITabBarController {
         let view = UIView(frame:
             CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0)
         )
-        view.backgroundColor = UIColor.MainTintColor();
+        view.backgroundColor = UIColor.mainTintColor();
         
         self.view.addSubview(view)
         

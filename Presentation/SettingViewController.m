@@ -28,7 +28,7 @@
     self.tableView.scrollEnabled = NO;
     
     self.tableView.tableFooterView = [[UIView alloc]init];
-    self.tableView.backgroundColor = [UIColor BackgroundColor];
+    self.tableView.backgroundColor = [UIColor backgroundColor];
     
     [self.avatarImageView setImage:[UIImage imageNamed:@"avatar"]];
 }
