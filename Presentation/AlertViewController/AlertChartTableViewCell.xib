@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="411" id="KGk-i7-Jjw" customClass="AlertChartTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="411"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="410"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yxn-mv-LtI">
+                        <rect key="frame" x="25" y="15" width="270" height="84"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allowance Left For Today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vud-c1-eM5">
+                                <rect key="frame" x="40" y="10" width="190" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <color key="textColor" red="0.25490196078431371" green="0.25490196078431371" blue="0.25490196078431371" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$19.68" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etc-pp-QgV">
+                                <rect key="frame" x="80" y="35" width="111" height="43"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="36"/>
+                                <color key="textColor" red="0.25490196079999999" green="0.76470588240000004" blue="0.81568627449999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vud-c1-eM5" firstAttribute="top" secondItem="Yxn-mv-LtI" secondAttribute="top" constant="10" id="Ncl-jI-u5h"/>
+                            <constraint firstItem="Vud-c1-eM5" firstAttribute="centerX" secondItem="Yxn-mv-LtI" secondAttribute="centerX" id="OXJ-iH-Dwd"/>
+                            <constraint firstItem="etc-pp-QgV" firstAttribute="top" secondItem="Vud-c1-eM5" secondAttribute="bottom" constant="4" id="p4G-Os-NKy"/>
+                            <constraint firstItem="etc-pp-QgV" firstAttribute="centerX" secondItem="Vud-c1-eM5" secondAttribute="centerX" id="sg1-o7-2ja"/>
+                            <constraint firstAttribute="height" constant="84" id="yoq-lb-goS"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GH0-r3-eK4" customClass="SpentView" customModule="Edvizer" customModuleProvider="target">
+                        <rect key="frame" x="25" y="119" width="270" height="200"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="200" id="8e2-HS-HKV"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="allowance">
+                                <real key="value" value="100"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spent">
+                                <real key="value" value="110"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="overspentColor">
+                                <color key="value" red="0.83529411764705885" green="0.18431372549019609" blue="0.19215686274509805" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="savingColor">
+                                <color key="value" red="0.23137254901960785" green="0.84705882352941175" blue="0.41568627450980394" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="allowanceColor">
+                                <color key="value" red="0.23137254901960785" green="0.7803921568627451" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="arcWidth">
+                                <real key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.95686274509803926" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="GH0-r3-eK4" firstAttribute="trailing" secondItem="Yxn-mv-LtI" secondAttribute="trailing" id="2MV-tZ-VDP"/>
+                    <constraint firstItem="Yxn-mv-LtI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="442-Hz-NSe"/>
+                    <constraint firstAttribute="trailing" secondItem="Yxn-mv-LtI" secondAttribute="trailing" constant="25" id="7v0-At-96t"/>
+                    <constraint firstItem="Yxn-mv-LtI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="Lgi-X7-j6t"/>
+                    <constraint firstItem="GH0-r3-eK4" firstAttribute="top" secondItem="Yxn-mv-LtI" secondAttribute="bottom" constant="20" id="Ohd-fi-Rn4"/>
+                    <constraint firstItem="GH0-r3-eK4" firstAttribute="leading" secondItem="Yxn-mv-LtI" secondAttribute="trailing" constant="-272" id="pTJ-kp-oHf"/>
+                    <constraint firstItem="GH0-r3-eK4" firstAttribute="leading" secondItem="Yxn-mv-LtI" secondAttribute="leading" id="x8g-oQ-0m4"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="pTJ-kp-oHf"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="chartViewContainer" destination="GH0-r3-eK4" id="ape-4J-omW"/>
+                <outlet property="infoLabel" destination="Vud-c1-eM5" id="rHd-9N-CMp"/>
+                <outlet property="infoViewContainer" destination="Yxn-mv-LtI" id="ERw-UV-xqI"/>
+                <outlet property="numberLabel" destination="etc-pp-QgV" id="sgH-bi-sQz"/>
+            </connections>
+            <point key="canvasLocation" x="379" y="494.5"/>
+        </tableViewCell>
+    </objects>
+</document>

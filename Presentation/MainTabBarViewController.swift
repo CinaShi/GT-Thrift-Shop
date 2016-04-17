@@ -13,6 +13,13 @@ class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let view = UIView(frame:
+            CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0)
+        )
+        view.backgroundColor = UIColor.mainTintColor();
+        
+        self.view.addSubview(view)
+        
         // Do any additional setup after loading the view.
         let planVC = UIViewController();
         planVC.title = "Plan";
@@ -22,19 +29,22 @@ class MainTabBarViewController: UITabBarController {
         accountVC.title = "Account";
         accountVC.tabBarItem.image = UIImage(named: "bank");
         
-        let alertVC = UIViewController();
+        let alertVC = AlertViewController();
         alertVC.title = "Spending Alert";
         alertVC.tabBarItem.image = UIImage(named: "alert");
+        let nav3 = UINavigationController(rootViewController: alertVC)
         
-        let analysisVC = UIViewController();
-        analysisVC.title = "Analytics";
+        let analysisVC = UIStoryboard(name: "Analytics", bundle: nil).instantiateViewControllerWithIdentifier("AnalyticsHistoryViewController");
+        analysisVC.tabBarItem.title = "Analytics";
         analysisVC.tabBarItem.image = UIImage(named: "analysis");
+        let nav4 = UINavigationController(rootViewController: analysisVC)
         
-        let settingVC = UIViewController();
+        let settingVC = UIStoryboard(name: "Setting", bundle: nil).instantiateViewControllerWithIdentifier("SettingViewController");
         settingVC.title = "Setting";
         settingVC.tabBarItem.image = UIImage(named: "setting");
+        let nav5 = UINavigationController(rootViewController: settingVC)
         
-        self.viewControllers = [planVC, accountVC, alertVC, analysisVC, settingVC];
+        self.viewControllers = [planVC, accountVC, nav3, nav4, nav5];
     }
 
     override func didReceiveMemoryWarning() {

@@ -46,15 +46,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applyGlobalApperence () {
-        
-        
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false);
         UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().barTintColor = UIColor.mainTintColor();
+        UINavigationBar.appearance().backIndicatorImage = UIImage(named: "btn_back")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor(),NSFontAttributeName: UIFont(name: "Avenir-Medium", size: 12)!]
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor(),NSFontAttributeName: UIFont(name: "Avenir-Medium", size: 16)!]
         
         let customFont = UIFont(name: "Avenir-Medium", size: 12)
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: customFont!], forState: UIControlState.Normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes( [NSFontAttributeName: customFont!, ], forState: UIControlState.Normal)
+        UIBarButtonItem.appearance().tintColor = UIColor.whiteColor();
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), forBarMetrics: UIBarMetrics.Default) ;
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {
