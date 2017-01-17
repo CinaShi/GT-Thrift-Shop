@@ -1,8 +1,6 @@
-## Welcome to GitHub Pages
+## Welcome to GT Thrift Shop
 
-You can use the [editor on GitHub](https://github.com/WenzhongJin/GT-Thrift-Shop/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+The idea our team has is making a mobile application for GT Thrift Shop. This idea came from our experience using Facebook GT thrift shop group page. We, as a team, believe that a mobile application, with improvement and newly added features such as meet-up navigation/on-campus meeting reservation system and direct photos uploads, will make it more convenient for GT students to sell/buy used goods. 
 
 ### Markdown
 
