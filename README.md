@@ -5,19 +5,14 @@ The idea our team has is making a mobile application for GT Thrift Shop. This id
 ## Team Members
 
 ### Yang Yang
-yyang382@gatech.edu
 
 ### Mengyang Shi
-mshi36@gatech.edu
 
 ### Wenzhong Jin
-daniel-jin@gatech.edu
 
 ### Jihai An
-alexan.0218@gatech.edu
 
 ### Yichen Li
-yichenli@gatech.edu
 
 
 
