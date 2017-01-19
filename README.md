@@ -73,15 +73,19 @@ Returns the url of the image
 | imagedata               |             |
 
 ### Example Requests
-* `自己想`
+
+* 
 
 ### Example Response
+#### Image/File share use static file server at `http://34.196.222.211:8000/`, try this address to see some demo picture 
 ```json
 {
 	"imagename": "111.jpg",	
-  "url":"暂时没想好“
+  "url":"demo/juru.jpg“
 }
 ```
+`the previous url links to 'http://34.196.222.211:8000/demo/juru.jpg`
+
 ## POST user/info
 
 Update user info
