@@ -15,7 +15,7 @@ The idea our team has is making a mobile application for GT Thrift Shop. This id
 ### Yichen Li
 
 
-REST API Specification for the Raw Data Server
+#REST API Specification
 # Version 1
 
 ## POST auth/login
