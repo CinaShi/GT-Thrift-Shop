@@ -1,4 +1,4 @@
- REST API Specification for the Raw Data Server
+ REST API Specification
 # Version 1
 
 ## POST auth/login
