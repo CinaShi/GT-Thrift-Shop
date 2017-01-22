@@ -1,10 +1,14 @@
-from flask import Flask, jsonify
-from flask import request, abort
+from flask import Flask, jsonify, request, abort
 from flask.ext.mysql import MySQL
-import json,codecs
+import json, codecs
+import boto3
+from werkzeug.utils import secure_filename
+
+
 config = json.load(codecs.open('config.json', encoding='utf-8'))
 app = Flask(__name__)
 mysql = MySQL()
+client = boto3.client('s3')
 
 app.config['MYSQL_DATABASE_USER'] = config['db_user']
 app.config['MYSQL_DATABASE_PASSWORD'] = config['db_passwd']
@@ -12,6 +16,8 @@ app.config['MYSQL_DATABASE_DB'] = config['db_db']
 app.config['MYSQL_DATABASE_HOST'] = config['db_host']
 mysql.init_app(app)
 db = mysql.connect()
+
+
 @app.route('/auth/login',methods=['POST'])
 def auth_login():
     if not request.json or not 'gtusername' in request.json:
@@ -32,6 +38,20 @@ def auth_login():
         results = cursor.fetchall()
         userid = results[0][0]
         return  json.dumps({'new':False,'userId':userid}) 
+
+@app.route('/user/image/<username>', methods=['POST'])
+def uploader(username):
+    if 'file' not in request.files:
+        abort(400)
+    f = request.files['file']
+    if f.filename == "":
+        abort(400)
+    filename = secure_filename(f.filename)
+    client.upload_fileobj(f, 'gtthriftshop', username + "/" + filename)
+    return "https://s3-us-west-2.amazonaws.com/gtthriftshop/" + username + "/" + filename + "\n"
+
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port='80')
