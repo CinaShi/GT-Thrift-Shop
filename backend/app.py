@@ -64,11 +64,11 @@ def add_user_info():
     try:
         cursor.execute("insert into UserInfo (userId,nickname,email,avatarURL,description) values (%s,%s,%s,%s,%s)",[userId,nickname,email,avatarURL,description])
         db.commit()
-        return 'success'
+        return 'Insert User Info Success'
         db.close()
     except:
         db.rollback()
-        abort(404, '{"message":"Insert unsuccessful"}')
+        abort(404, '{"message":"insert unsuccessful"}')
 
 
 
