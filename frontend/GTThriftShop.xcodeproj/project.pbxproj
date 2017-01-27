@@ -22,6 +22,8 @@
 		089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */; };
 		089ECA4D1DEE8FAB00D508F6 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */; };
 		089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */; };
+		08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */; };
+		08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellViewController.swift; sourceTree = "<group>"; };
 		089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeViewController.swift; sourceTree = "<group>"; };
+		08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeSuccessViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,10 +117,10 @@
 		088542BD1DE93481004344D4 /* GTThriftShop */ = {
 			isa = PBXGroup;
 			children = (
+				088542C21DE93481004344D4 /* Main.storyboard */,
 				088542BE1DE93481004344D4 /* AppDelegate.swift */,
 				089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */,
-				088542C21DE93481004344D4 /* Main.storyboard */,
-				088542C01DE93481004344D4 /* ViewController.swift */,
+				08CA35551E3ACDA100EFF7D1 /* Login */,
 				089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */,
 				089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */,
 				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
@@ -124,7 +128,6 @@
 				089ECA481DEE8F7700D508F6 /* ChatViewController.swift */,
 				089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */,
 				088542C71DE93481004344D4 /* LaunchScreen.storyboard */,
-				089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */,
 				089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */,
 				088542CA1DE93481004344D4 /* Info.plist */,
 			);
@@ -147,6 +150,17 @@
 				088542E01DE93481004344D4 /* Info.plist */,
 			);
 			path = GTThriftShopUITests;
+			sourceTree = "<group>";
+		};
+		08CA35551E3ACDA100EFF7D1 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				088542C01DE93481004344D4 /* ViewController.swift */,
+				089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */,
+				08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */,
+				08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,11 +297,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */,
 				089ECA451DEE8F4200D508F6 /* ItemDetailViewController.swift in Sources */,
 				089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */,
 				089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */,
 				089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */,
 				089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */,
+				08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */,
 				089ECA4D1DEE8FAB00D508F6 /* FavoriteViewController.swift in Sources */,
 				089ECA491DEE8F7700D508F6 /* ChatViewController.swift in Sources */,
 				088542C11DE93481004344D4 /* ViewController.swift in Sources */,
