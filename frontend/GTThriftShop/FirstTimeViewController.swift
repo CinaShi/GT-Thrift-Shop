@@ -18,7 +18,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     
-    var userId = "2"
+    var userId = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,8 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
         descriptionView.delegate = self
         nickNameField.delegate = self
         emailField.delegate = self
+        
+        print("****** userID ---> \(userId)")
         
         self.navigationController?.navigationBar.isHidden = true
         
@@ -148,10 +150,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
             guard let data = data, let _:URLResponse = response  , error == nil else {
                 print("******* error=\(error)")
                 DispatchQueue.main.async(execute: {
-                    self.sendAlart(info: "There might be some connection issue. Please try again!")
-                    self.uploadPhotoButton.isEnabled = true
-                    self.submitButton.isEnabled = true
-                    self.submitActivityIndicator.stopAnimating()
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
                 });
                 
                 return
@@ -193,10 +192,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
             if error != nil {
                 print("error=\(error!)")
                 DispatchQueue.main.async(execute: {
-                    self.sendAlart(info: "There might be some connection issue. Please try again!")
-                    self.uploadPhotoButton.isEnabled = true
-                    self.submitButton.isEnabled = true
-                    self.submitActivityIndicator.stopAnimating()
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
                 });
                 
                 return
@@ -216,31 +212,32 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
                         self.submitActivityIndicator.stopAnimating()
                         self.proceedToSuccessView()
                     });
-                } else {
+                }else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
-                        self.sendAlart(info: "There might be some connection issue. Please try again!")
-                        self.uploadPhotoButton.isEnabled = true
-                        self.submitButton.isEnabled = true
-                        self.submitActivityIndicator.stopAnimating()
+                        self.notifyFailure(info: "User already exists! Please login again!")
+                    });
+                }
+                else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
                     });
                     
                 }
             } else {
                 DispatchQueue.main.async(execute: {
-                    self.sendAlart(info: "There might be some connection issue. Please try again!")
-                    self.uploadPhotoButton.isEnabled = true
-                    self.submitButton.isEnabled = true
-                    self.submitActivityIndicator.stopAnimating()
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
                 });
             }
-            
-            
-                
-            
-            
         }
         
         task.resume()
+    }
+    
+    func notifyFailure(info: String) {
+        self.sendAlart(info: info)
+        self.uploadPhotoButton.isEnabled = true
+        self.submitButton.isEnabled = true
+        self.submitActivityIndicator.stopAnimating()
     }
     
     func proceedToSuccessView() {

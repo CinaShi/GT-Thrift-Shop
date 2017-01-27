@@ -8,31 +8,48 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     static var authFormPost: String?
     static var authLTPost: String?
     
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        usernameField.delegate = self
+        passwordField.delegate = self
+        self.navigationController?.navigationBar.isHidden = true
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    //below are functions
     
     
     @IBAction func login(_ sender: Any) {
+        if usernameField.text! == "" || passwordField.text! == ""  {
+            sendAlart(info: "Please fill in all blank fields before login!")
+        } else {
+            loginActivityIndicator.startAnimating()
+            self.loginToGT()
+        }
+    }
+    
+//below are helper methods
+    
+    func loginToGT() {
         let client = HttpClient(url: "https://login.gatech.edu/cas/login?service=https%3A%2F%2Ft-square.gatech.edu%2Fsakai-login-tool%2Fcontainer")
         guard let loginScreenText = client.sendGet() else {
+            //notify connection failure
+            DispatchQueue.main.async(execute: {
+                self.notifyFailure(info: "There might be some connection issue. Please try again!")
+            });
             return
         }
+        
+        
         
         let loginScreen = loginScreenText as NSString
         
@@ -52,6 +69,10 @@ class LoginViewController: UIViewController {
             formPost = pageFormAddress
             LoginViewController.authFormPost = formPost
         } else {
+            //notify failure
+            DispatchQueue.main.async(execute: {
+                self.notifyFailure(info: "There might be some connection issue. Please try again!")
+            });
             return
         }
         
@@ -63,6 +84,10 @@ class LoginViewController: UIViewController {
             
             LoginViewController.authLTPost = LT
         } else {
+            //notify failure
+            DispatchQueue.main.async(execute: {
+                self.notifyFailure(info: "There might be some connection issue. Please try again!")
+            });
             return
         }
         
@@ -78,6 +103,10 @@ class LoginViewController: UIViewController {
             //because the app locks up when calling sync{ } for some reason
             //LoginViewController?.syncronizedNetworkErrorRecieved()
             print("Connection error")
+            //notify failure
+            DispatchQueue.main.async(execute: {
+                self.notifyFailure(info: "There might be some connection issue. Please try again!")
+            });
             return
         }
         
@@ -85,16 +114,139 @@ class LoginViewController: UIViewController {
         if response.contains("Incorrect login or disabled account.") || response.contains("Login requested by:") {
             //didCompletion = true
             //sync() { completion(false, nil) }
-            print("Wrong password! Response ---> \(response)")
+            print("Wrong password! Response")
+            //notify wrong password
+            DispatchQueue.main.async(execute: {
+                self.notifyFailure(info: "Your username or password is incorrect!")
+            });
+            
         } else {
             print("Right password! Send request to GT thrift shop to get userid.")
+            //send request to YY and check if its first time user and get userid
+            DispatchQueue.main.async(execute: {
+                self.loginActivityIndicator.stopAnimating()
+                self.uploadUserInfo()
+                //self.proceedToMainTabView()
+            });
+            
         }
     }
     
-    func proceedToSuccessView() {
+    func uploadUserInfo() {
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/auth/login");
+        
+        var request = URLRequest(url:url! as URL);
+        request.httpMethod = "POST";
+        
+        let param = [
+            "gtusername"  : usernameField.text!
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            
+            
+            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                print("****** json = \(responseJSON)")
+                if let newUser = responseJSON["new"]
+                {
+                    if newUser as! Int != 0 {
+                        if let userId = responseJSON["userId"] {
+                            print(userId)
+                            let userIdString = String(userId as! Int)
+                            DispatchQueue.main.async(execute: {
+                                self.proceedToFirstTimeView(userId: String(userIdString))
+                            });
+                        } else {
+                            //notify failure
+                            DispatchQueue.main.async(execute: {
+                                self.notifyFailure(info: "Cannot unwrap userid!")
+                            });
+                        }
+                    } else {
+                        DispatchQueue.main.async(execute: {
+                            self.proceedToMainTabView()
+                        });
+                        
+                    }
+                } else {
+                    //notify failure
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot unwrap new user flag!")
+                    });
+                }
+            }else {
+                //notify failure
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "Cannot unwrap response data!")
+                });
+            }
+            
+        }
+        
+        task.resume()
+    }
+    
+    func sendAlart(info: String) {
+        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            (result : UIAlertAction) -> Void in
+            print("OK")
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func notifyFailure(info: String) {
+        self.sendAlart(info: info)
+        self.loginActivityIndicator.stopAnimating()
+    }
+    
+    func proceedToMainTabView() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "MainTabViewController") as! FirstTimeViewController
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "MainTabViewController") as! UITabBarController
         self.navigationController?.pushViewController(newViewController, animated: true)
+        
+    }
+    
+    func proceedToFirstTimeView(userId: String) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "FirstTimeViewController") as! FirstTimeViewController
+        newViewController.userId = userId
+        self.navigationController?.pushViewController(newViewController, animated: true)
+    }
+    
+//below are delegate functions
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true;
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
         
     }
     
