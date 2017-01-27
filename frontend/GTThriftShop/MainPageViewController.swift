@@ -35,6 +35,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.reloadData()
         
         self.tableView.reloadData()
+
     }
     
     func userAlreadyExist(kUsernameKey: String) -> Bool {
