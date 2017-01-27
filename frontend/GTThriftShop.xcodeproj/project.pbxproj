@@ -24,6 +24,7 @@
 		089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */; };
 		08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */; };
 		08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */; };
+		D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeViewController.swift; sourceTree = "<group>"; };
 		08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeSuccessViewController.swift; sourceTree = "<group>"; };
+		D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */,
 				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
 				089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */,
+				D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */,
 				089ECA481DEE8F7700D508F6 /* ChatViewController.swift */,
 				089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */,
 				088542C71DE93481004344D4 /* LaunchScreen.storyboard */,
@@ -304,6 +307,7 @@
 				089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */,
 				089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */,
 				08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */,
+				D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */,
 				089ECA4D1DEE8FAB00D508F6 /* FavoriteViewController.swift in Sources */,
 				089ECA491DEE8F7700D508F6 /* ChatViewController.swift in Sources */,
 				088542C11DE93481004344D4 /* ViewController.swift in Sources */,
@@ -458,6 +462,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = GTThriftShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Triple6.GTThriftShop;
@@ -470,6 +479,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = GTThriftShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Triple6.GTThriftShop;
