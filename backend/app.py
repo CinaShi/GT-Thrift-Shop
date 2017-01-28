@@ -76,40 +76,6 @@ def add_user_info():
 
 
 
-@app.route('/user/image/<username>', methods=['POST'])
-def uploader(username):
-    if 'file' not in request.files:
-        abort(400)
-    f = request.files['file']
-    if f.filename == "":
-        abort(400)
-    filename = secure_filename(f.filename)
-    client.upload_fileobj(f, 'gtthriftshop', username + "/" + filename)
-    return "https://s3-us-west-2.amazonaws.com/gtthriftshop/" + username + "/" + filename + "\n"
-
-@app.route('/user/info', methods=['POST'])
-def add_user_info():
-    if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'avatarURL' in request.json or not 'description' in request.json:
-        abort(400, '{"message":"Input parameter incorrect or missing"}')
-    userId = request.json['userId']
-    nickname = request.json['nickname']
-    email = request.json['email']
-    avatarURL = request.json['avatarURL']
-    description = request.json['description']
-    
-    cursor = db.cursor()
-    try:
-        cursor.execute("insert into UserInfo (userId,nickname,email,avatarURL,description) values (%s,%s,%s,%s,%s)",[userId,nickname,email,avatarURL,description])
-        db.commit()
-        return 'Insert User Info Success'
-        db.close()
-    except:
-        db.rollback()
-        abort(404, '{"message":"insert unsuccessful"}')
-
-
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port='80')
 #app.run(debug=True)
