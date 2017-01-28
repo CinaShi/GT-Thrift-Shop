@@ -89,7 +89,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
         }
         
         if imageDataKey != nil {
-            let filename = "user-avatar.jpg"
+            let filename = "\(self.userId)-avatar.jpg"
             let mimetype = "image/jpg"
             
             
