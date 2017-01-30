@@ -170,9 +170,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
                 print("****** json = \(responseJSON)")
-                if let newUser = responseJSON["new"]
+                if let newUser = responseJSON["new"] as? Bool
                 {
-                    if newUser as! Int != 0 {
+                    if newUser {
                         if let userId = responseJSON["userId"] {
                             print(userId)
                             let userIdString = String(userId as! Int)
