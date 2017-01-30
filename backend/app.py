@@ -41,6 +41,8 @@ def auth_login():
         userid = results[0][0]
         db.close()
         return  json.dumps({'new':False,'userId':userid}) 
+
+
 @app.route('/user/image/<username>', methods=['POST'])
 def uploader(username):
     if 'file' not in request.files:
@@ -49,8 +51,9 @@ def uploader(username):
     if f.filename == "":
         abort(400)
     filename = secure_filename(f.filename)
-    client.upload_fileobj(f, 'gtthriftshop', username + "/" + filename)
-    return "https://s3-us-west-2.amazonaws.com/gtthriftshop/" + username + "/" + filename
+    client.upload_fileobj(f, 'gtthriftshopusers', username + "/" + filename)
+    return "https://s3-us-west-2.amazonaws.com/gtthriftshopusers/" + username + "/" + filename
+
 
 @app.route('/user/info', methods=['POST'])
 def add_user_info():
