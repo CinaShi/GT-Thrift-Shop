@@ -3,7 +3,7 @@ from flask.ext.mysql import MySQL
 import json, codecs
 import boto3
 from werkzeug.utils import secure_filename
-
+import datetime
 
 config = json.load(codecs.open('config.json', encoding='utf-8'))
 app = Flask(__name__)
@@ -75,10 +75,62 @@ def add_user_info():
     except:
        db.rollback()
        db.close()
-       abort(404, '{"message":"insert unsuccessful"}')
+       abort(400, '{"message":"insert unsuccessful"}')
 
+@app.route('/products',methods=['GET'])
+def get_all_products():
+    
+    productsList = []
 
+    db = mysql.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM Product WHERE isSold = 0 ORDER BY postTime;")
+    if cursor.rowcount > 0:
+        productList = cursor.fetchall()
+        for pRow in productList:
+            userId = pRow[0]
+            pid = pRow[1]
+            pName = pRow[2]
+            pPrice = pRow[3]
+            pInfo = pRow[4]
+            postTime = pRow[5]
+            usedTime = pRow[6]
+            imageCur = db.cursor()
+            imageCur.execute("SELECT imageURL FROM ProductImage WHERE pid = '%d';"%pid)
+            imageList = []
+            if imageCur.rowcount > 0:
+                imageR = imageCur.fetchall()
+                for i in imageR:
+                    imageList.append(i)
+            currentProduct = {}
+            currentProduct['userId'] = userId
+            currentProduct['pid'] = pid
+            currentProduct['pName'] = pName
+            currentProduct['pPrice'] = pPrice
+            currentProduct['pInfo'] = pInfo
+            currentProduct['postTime'] = postTime
+            currentProduct['usedTime'] = usedTime
+            currentProduct['images'] = imageList
+            productsList.append(currentProduct)
+    
+    return jsonify({'products':productsList})
 
+@app.route('/products/<tag>')
+def get_tag_pid(tag):
+    db = mysql.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT tid FROM Tag WHERE tag = '%s';"%tag)
+    pidList = []
+    if cursor.rowcount == 1:
+        tid = cursor.fetchall()[0]
+        pidCur = db.cursor()
+        pidCur.execute("SELECT pid FROM ProductTag WHERE tid = '%d';"%tid)
+        if pidCur.rowcount > 0:
+            pidList = pidCur.fetchall()
+        return jsonify({'pids':pidList})
+    else:
+        abort(400,"Incorrect Tag")
+        
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port='80')
-#app.run(debug=True)
+    #app.run(debug=True)
