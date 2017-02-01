@@ -113,7 +113,7 @@ def get_all_products():
 			currentProduct['usedTime'] = usedTime
 			currentProduct['images'] = imageList
 			productsList.append(currentProduct)
-	
+	db.close()
 	return jsonify({'products':productsList})
 
 
@@ -129,10 +129,43 @@ def get_tag_pid(tag):
 		pidCur.execute("SELECT pid FROM ProductTag WHERE tid = '%d';"%tid)
 		if pidCur.rowcount > 0:
 			pidList = pidCur.fetchall()
+		db.close()
 		return jsonify({'pids':pidList})
 	else:
+		db.close()
 		abort(400,"Incorrect Tag")
 
+
+@app.route('/products/details', methods=['GET'])
+def get_tag_details():
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
+	pid = request.json['pid']	
+	db = mysql.connect()
+	cursor = db.cursor()
+	tidList = []
+	tagContentList = []
+	cursor.execute("SELECT tid FROM ProductTag WHERE pid = '%s';"%pid)
+	if cursor.rowcount > 0:
+		tidList = cursor.fetchall()
+		for tid in tidList:
+			tidCur = cursor.execute("SELECT tag from Tag WHERE tid = '%s';"%tid)
+			if tidCur.rowcount > 0:
+				tagList = tidCur.fetchall()[0]
+				tagContentList.append(tagList)
+
+			else:
+				continue
+	favCur = db.cursor()
+	favCur.execute("SELECT * FROM WHERE userId = %s AND pid = %s", [userId, pid])
+	if cursor.rowcount == 1:
+		isFavorite = True
+	else: 
+		isFavorite = False
+	db.close()
+    return jsonify({'tagContentList':tagContentList, 'isFavorite':isFavorite})
+    
 
 @app.route('/favorites/new', methods=['POST'])
 def add_favorites():
