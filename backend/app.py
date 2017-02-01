@@ -167,6 +167,21 @@ def get_tag_details():
     return jsonify({'tagContentList':tagContentList, 'isFavorite':isFavorite})
     
 
+@app.route('/favorties/all/<userId>', methods=['GET'])
+def get_favorites_pid(userId):
+    db = mysql.connect()
+    cursor = db.cursor()
+    pidList = []
+    cursor.execute("SELECT pid FROM UserLike WHERE userId = '%s";%userId) 
+    if cursor.rowcount == 1:
+        pidList = cursor.fetchall()
+        db.close()
+        return jsonify({'favoritePids':pidList})
+    else :
+        db.close()
+        abort(400,"Incorrect userId")
+
+
 @app.route('/favorites/new', methods=['POST'])
 def add_favorites():
 	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
