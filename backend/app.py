@@ -102,11 +102,7 @@ def get_all_products():
 			if imageCur.rowcount > 0:
 				imageR = imageCur.fetchall()
 				for i in imageR:
-<<<<<<< HEAD
-					imageList.append(i)
-=======
 					imageList.append(i[0])
->>>>>>> febb37e984e257d628f6d7fa69726e33cf67d241
 			currentProduct = {}
 			currentProduct['userId'] = userId
 			currentProduct['pid'] = pid
@@ -144,14 +140,6 @@ def get_tag_pid(tag):
 def get_tag_details():
 	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
-<<<<<<< HEAD
-	userId = request.json['userId']
-	pid = request.json['pid']	
-	db = mysql.connect()
-	cursor = db.cursor()
-	tidList = []
-	tagContentList = []
-=======
 	tidList = []
 	tagContentList = []
 
@@ -161,7 +149,6 @@ def get_tag_details():
 	db = mysql.connect()
 	cursor = db.cursor()
 
->>>>>>> febb37e984e257d628f6d7fa69726e33cf67d241
 	cursor.execute("SELECT tid FROM ProductTag WHERE pid = '%s';"%pid)
 	if cursor.rowcount > 0:
 		tidList = cursor.fetchall()
@@ -180,24 +167,6 @@ def get_tag_details():
 	else: 
 		isFavorite = False
 	db.close()
-<<<<<<< HEAD
-    return jsonify({'tagContentList':tagContentList, 'isFavorite':isFavorite})
-    
-
-@app.route('/favorties/all/<userId>', methods=['GET'])
-def get_favorites_pid(userId):
-    db = mysql.connect()
-    cursor = db.cursor()
-    pidList = []
-    cursor.execute("SELECT pid FROM UserLike WHERE userId = '%s";%userId) 
-    if cursor.rowcount > 0:
-        pidList = cursor.fetchall()
-        db.close()
-        return jsonify({'favoritePids':pidList})
-    else :
-        db.close()
-        abort(400,"Incorrect userId")
-=======
 	return jsonify({'tagContentList':tagContentList, 'isFavorite':isFavorite})
 
 
@@ -216,7 +185,6 @@ def get_favorites_pid(userId):
 	else :
 		db.close()
 		abort(400,"Unknown userId")
->>>>>>> febb37e984e257d628f6d7fa69726e33cf67d241
 
 
 @app.route('/favorites/new', methods=['POST'])
