@@ -117,7 +117,7 @@ def get_all_products():
 	return jsonify({'products':productsList})
 
 
-@app.route('/products/<tag>', methods=['GET'])
+@app.route('/products/tag/<tag>', methods=['GET'])
 def get_tag_pid(tag):
 	db = mysql.connect()
 	cursor = db.cursor()
@@ -138,13 +138,12 @@ def get_tag_pid(tag):
 
 @app.route('/products/details/<pid>', methods=['GET'])
 def get_tag_details(pid):
-	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
+	if not request.json or not 'userId' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	tidList = []
 	tagContentList = []
 
-	userId = request.json['userId']
-	pid = request.json['pid']	
+	userId = request.json['userId']	
 
 	db = mysql.connect()
 	cursor = db.cursor()
