@@ -137,7 +137,7 @@ def get_tag_pid(tag):
 
 
 @app.route('/products/details/<pid>', methods=['GET'])
-def get_tag_details():
+def get_tag_details(pid):
 	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	tidList = []
@@ -229,5 +229,5 @@ def remove_favorites():
 		
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port='80')
-	# app.run()
+	#app.run(host='0.0.0.0',port='80')
+	app.run()
