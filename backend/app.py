@@ -70,7 +70,7 @@ def add_user_info():
 		cursor.execute("insert into UserInfo (userId,nickname,email,avatarURL,description) values (%s,%s,%s,%s,%s)",[userId,nickname,email,avatarURL,description])
 		db.commit()
 		db.close()
-		return 'Insert User Info Success'
+		return 'Insert User Info Successdsdsdds'
 
 	except:
 	   db.rollback()
@@ -102,7 +102,7 @@ def get_all_products():
 			if imageCur.rowcount > 0:
 				imageR = imageCur.fetchall()
 				for i in imageR:
-					imageList.append(i)
+					imageList.append(i[0])
 			currentProduct = {}
 			currentProduct['userId'] = userId
 			currentProduct['pid'] = pid
@@ -136,16 +136,19 @@ def get_tag_pid(tag):
 		abort(400,"Incorrect Tag")
 
 
-@app.route('/products/details', methods=['GET'])
+@app.route('/products/details/<pid>', methods=['GET'])
 def get_tag_details():
 	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
-	pid = request.json['pid']	
-	db = mysql.connect()
-	cursor = db.cursor()
 	tidList = []
 	tagContentList = []
+
+	userId = request.json['userId']
+	pid = request.json['pid']	
+
+	db = mysql.connect()
+	cursor = db.cursor()
+
 	cursor.execute("SELECT tid FROM ProductTag WHERE pid = '%s';"%pid)
 	if cursor.rowcount > 0:
 		tidList = cursor.fetchall()
@@ -158,8 +161,8 @@ def get_tag_details():
 			else:
 				continue
 	favCur = db.cursor()
-	favCur.execute("SELECT * FROM WHERE userId = %s AND pid = %s", [userId, pid])
-	if cursor.rowcount == 1:
+	favCur.execute("SELECT * FROM UserLike WHERE userId = %s AND pid = %s",[userId, pid])
+	if favCur.rowcount == 1:
 		isFavorite = True
 	else: 
 		isFavorite = False
@@ -169,17 +172,20 @@ def get_tag_details():
 
 @app.route('/favorites/all/<userId>', methods=['GET'])
 def get_favorites_pid(userId):
+
+	pidList = []
+	
 	db = mysql.connect()
 	cursor = db.cursor()
-	pidList = []
+
 	cursor.execute("SELECT pid FROM UserLike WHERE userId = '%s';"%userId) 
-	if cursor.rowcount > 0:
+	if cursor.rowcount == 1:
 		pidList = cursor.fetchall()
 		db.close()
-		return jsonify({'favoritePids':pidList})
+		return jsonify('favoritePids':pidList)
 	else :
 		db.close()
-		abort(400,"Incorrect userId")
+		abort(400,"Unknown userId")
 
 
 @app.route('/favorites/new', methods=['POST'])
