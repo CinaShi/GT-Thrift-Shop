@@ -1,0 +1,598 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08757B7B1E56C56600219BCA /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08757B7A1E56C56600219BCA /* Product.swift */; };
+		088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542BE1DE93481004344D4 /* AppDelegate.swift */; };
+		088542C11DE93481004344D4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542C01DE93481004344D4 /* ViewController.swift */; };
+		088542C41DE93481004344D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 088542C21DE93481004344D4 /* Main.storyboard */; };
+		088542C91DE93481004344D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 088542C71DE93481004344D4 /* LaunchScreen.storyboard */; };
+		088542D41DE93481004344D4 /* GTThriftShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542D31DE93481004344D4 /* GTThriftShopTests.swift */; };
+		088542DF1DE93481004344D4 /* GTThriftShopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542DE1DE93481004344D4 /* GTThriftShopUITests.swift */; };
+		089ECA3F1DEE7F6C00D508F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */; };
+		089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */; };
+		089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */; };
+		089ECA451DEE8F4200D508F6 /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */; };
+		089ECA471DEE8F5D00D508F6 /* ContactSellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */; };
+		089ECA491DEE8F7700D508F6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA481DEE8F7700D508F6 /* ChatViewController.swift */; };
+		089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */; };
+		089ECA4D1DEE8FAB00D508F6 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */; };
+		089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */; };
+		08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */; };
+		08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */; };
+		D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		088542D01DE93481004344D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 088542B31DE93481004344D4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 088542BA1DE93481004344D4;
+			remoteInfo = GTThriftShop;
+		};
+		088542DB1DE93481004344D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 088542B31DE93481004344D4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 088542BA1DE93481004344D4;
+			remoteInfo = GTThriftShop;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08757B7A1E56C56600219BCA /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		088542BB1DE93481004344D4 /* GTThriftShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTThriftShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		088542BE1DE93481004344D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		088542C01DE93481004344D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		088542C31DE93481004344D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		088542C81DE93481004344D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		088542CA1DE93481004344D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		088542CF1DE93481004344D4 /* GTThriftShopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GTThriftShopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		088542D31DE93481004344D4 /* GTThriftShopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTThriftShopTests.swift; sourceTree = "<group>"; };
+		088542D51DE93481004344D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		088542DA1DE93481004344D4 /* GTThriftShopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GTThriftShopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		088542DE1DE93481004344D4 /* GTThriftShopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTThriftShopUITests.swift; sourceTree = "<group>"; };
+		088542E01DE93481004344D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
+		089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
+		089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSellerViewController.swift; sourceTree = "<group>"; };
+		089ECA481DEE8F7700D508F6 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellViewController.swift; sourceTree = "<group>"; };
+		089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeViewController.swift; sourceTree = "<group>"; };
+		08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeSuccessViewController.swift; sourceTree = "<group>"; };
+		D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		088542B81DE93481004344D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		088542CC1DE93481004344D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		088542D71DE93481004344D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		088542B21DE93481004344D4 = {
+			isa = PBXGroup;
+			children = (
+				08757B7A1E56C56600219BCA /* Product.swift */,
+				088542BD1DE93481004344D4 /* GTThriftShop */,
+				088542D21DE93481004344D4 /* GTThriftShopTests */,
+				088542DD1DE93481004344D4 /* GTThriftShopUITests */,
+				088542BC1DE93481004344D4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		088542BC1DE93481004344D4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				088542BB1DE93481004344D4 /* GTThriftShop.app */,
+				088542CF1DE93481004344D4 /* GTThriftShopTests.xctest */,
+				088542DA1DE93481004344D4 /* GTThriftShopUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		088542BD1DE93481004344D4 /* GTThriftShop */ = {
+			isa = PBXGroup;
+			children = (
+				088542C21DE93481004344D4 /* Main.storyboard */,
+				088542BE1DE93481004344D4 /* AppDelegate.swift */,
+				089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */,
+				08CA35551E3ACDA100EFF7D1 /* Login */,
+				089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */,
+				089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */,
+				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
+				089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */,
+				D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */,
+				089ECA481DEE8F7700D508F6 /* ChatViewController.swift */,
+				089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */,
+				088542C71DE93481004344D4 /* LaunchScreen.storyboard */,
+				089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */,
+				088542CA1DE93481004344D4 /* Info.plist */,
+			);
+			path = GTThriftShop;
+			sourceTree = "<group>";
+		};
+		088542D21DE93481004344D4 /* GTThriftShopTests */ = {
+			isa = PBXGroup;
+			children = (
+				088542D31DE93481004344D4 /* GTThriftShopTests.swift */,
+				088542D51DE93481004344D4 /* Info.plist */,
+			);
+			path = GTThriftShopTests;
+			sourceTree = "<group>";
+		};
+		088542DD1DE93481004344D4 /* GTThriftShopUITests */ = {
+			isa = PBXGroup;
+			children = (
+				088542DE1DE93481004344D4 /* GTThriftShopUITests.swift */,
+				088542E01DE93481004344D4 /* Info.plist */,
+			);
+			path = GTThriftShopUITests;
+			sourceTree = "<group>";
+		};
+		08CA35551E3ACDA100EFF7D1 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				088542C01DE93481004344D4 /* ViewController.swift */,
+				089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */,
+				08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */,
+				08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		088542BA1DE93481004344D4 /* GTThriftShop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 088542E31DE93481004344D4 /* Build configuration list for PBXNativeTarget "GTThriftShop" */;
+			buildPhases = (
+				088542B71DE93481004344D4 /* Sources */,
+				088542B81DE93481004344D4 /* Frameworks */,
+				088542B91DE93481004344D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GTThriftShop;
+			productName = GTThriftShop;
+			productReference = 088542BB1DE93481004344D4 /* GTThriftShop.app */;
+			productType = "com.apple.product-type.application";
+		};
+		088542CE1DE93481004344D4 /* GTThriftShopTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 088542E61DE93481004344D4 /* Build configuration list for PBXNativeTarget "GTThriftShopTests" */;
+			buildPhases = (
+				088542CB1DE93481004344D4 /* Sources */,
+				088542CC1DE93481004344D4 /* Frameworks */,
+				088542CD1DE93481004344D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				088542D11DE93481004344D4 /* PBXTargetDependency */,
+			);
+			name = GTThriftShopTests;
+			productName = GTThriftShopTests;
+			productReference = 088542CF1DE93481004344D4 /* GTThriftShopTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		088542D91DE93481004344D4 /* GTThriftShopUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 088542E91DE93481004344D4 /* Build configuration list for PBXNativeTarget "GTThriftShopUITests" */;
+			buildPhases = (
+				088542D61DE93481004344D4 /* Sources */,
+				088542D71DE93481004344D4 /* Frameworks */,
+				088542D81DE93481004344D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				088542DC1DE93481004344D4 /* PBXTargetDependency */,
+			);
+			name = GTThriftShopUITests;
+			productName = GTThriftShopUITests;
+			productReference = 088542DA1DE93481004344D4 /* GTThriftShopUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		088542B31DE93481004344D4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Triple6;
+				TargetAttributes = {
+					088542BA1DE93481004344D4 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = K5BR2FF6XK;
+						ProvisioningStyle = Automatic;
+					};
+					088542CE1DE93481004344D4 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 088542BA1DE93481004344D4;
+					};
+					088542D91DE93481004344D4 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 088542BA1DE93481004344D4;
+					};
+				};
+			};
+			buildConfigurationList = 088542B61DE93481004344D4 /* Build configuration list for PBXProject "GTThriftShop" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 088542B21DE93481004344D4;
+			productRefGroup = 088542BC1DE93481004344D4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				088542BA1DE93481004344D4 /* GTThriftShop */,
+				088542CE1DE93481004344D4 /* GTThriftShopTests */,
+				088542D91DE93481004344D4 /* GTThriftShopUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		088542B91DE93481004344D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				088542C91DE93481004344D4 /* LaunchScreen.storyboard in Resources */,
+				089ECA3F1DEE7F6C00D508F6 /* Assets.xcassets in Resources */,
+				088542C41DE93481004344D4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		088542CD1DE93481004344D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		088542D81DE93481004344D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		088542B71DE93481004344D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */,
+				089ECA451DEE8F4200D508F6 /* ItemDetailViewController.swift in Sources */,
+				089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */,
+				089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */,
+				089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */,
+				089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */,
+				08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */,
+				D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */,
+				089ECA4D1DEE8FAB00D508F6 /* FavoriteViewController.swift in Sources */,
+				089ECA491DEE8F7700D508F6 /* ChatViewController.swift in Sources */,
+				088542C11DE93481004344D4 /* ViewController.swift in Sources */,
+				089ECA471DEE8F5D00D508F6 /* ContactSellerViewController.swift in Sources */,
+				088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */,
+				08757B7B1E56C56600219BCA /* Product.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		088542CB1DE93481004344D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				088542D41DE93481004344D4 /* GTThriftShopTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		088542D61DE93481004344D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				088542DF1DE93481004344D4 /* GTThriftShopUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		088542D11DE93481004344D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 088542BA1DE93481004344D4 /* GTThriftShop */;
+			targetProxy = 088542D01DE93481004344D4 /* PBXContainerItemProxy */;
+		};
+		088542DC1DE93481004344D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 088542BA1DE93481004344D4 /* GTThriftShop */;
+			targetProxy = 088542DB1DE93481004344D4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		088542C21DE93481004344D4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				088542C31DE93481004344D4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		088542C71DE93481004344D4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				088542C81DE93481004344D4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		088542E11DE93481004344D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		088542E21DE93481004344D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		088542E41DE93481004344D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = K5BR2FF6XK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = GTThriftShop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Triple6.GTThriftShop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		088542E51DE93481004344D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = K5BR2FF6XK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = GTThriftShop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Triple6.GTThriftShop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		088542E71DE93481004344D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = GTThriftShopTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Triple6.GTThriftShopTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GTThriftShop.app/GTThriftShop";
+			};
+			name = Debug;
+		};
+		088542E81DE93481004344D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = GTThriftShopTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Triple6.GTThriftShopTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GTThriftShop.app/GTThriftShop";
+			};
+			name = Release;
+		};
+		088542EA1DE93481004344D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = GTThriftShopUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Triple6.GTThriftShopUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = GTThriftShop;
+			};
+			name = Debug;
+		};
+		088542EB1DE93481004344D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = GTThriftShopUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Triple6.GTThriftShopUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = GTThriftShop;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		088542B61DE93481004344D4 /* Build configuration list for PBXProject "GTThriftShop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				088542E11DE93481004344D4 /* Debug */,
+				088542E21DE93481004344D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		088542E31DE93481004344D4 /* Build configuration list for PBXNativeTarget "GTThriftShop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				088542E41DE93481004344D4 /* Debug */,
+				088542E51DE93481004344D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		088542E61DE93481004344D4 /* Build configuration list for PBXNativeTarget "GTThriftShopTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				088542E71DE93481004344D4 /* Debug */,
+				088542E81DE93481004344D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		088542E91DE93481004344D4 /* Build configuration list for PBXNativeTarget "GTThriftShopUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				088542EA1DE93481004344D4 /* Debug */,
+				088542EB1DE93481004344D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 088542B31DE93481004344D4 /* Project object */;
+}
