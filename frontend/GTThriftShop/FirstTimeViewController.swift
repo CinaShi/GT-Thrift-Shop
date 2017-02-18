@@ -121,7 +121,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     }
     
     func submitPhotoFirst() {
-        let url:URL = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/image/demo")!
+        let url:URL = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/image/\(userId)")!
         let session = URLSession.shared
         
         let request = NSMutableURLRequest(url:url);

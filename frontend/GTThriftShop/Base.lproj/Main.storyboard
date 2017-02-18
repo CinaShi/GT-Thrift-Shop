@@ -921,9 +921,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="dSn-hY-4Nv" kind="show" identifier="getItemDetails" id="2fi-kf-Fih"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -947,6 +944,7 @@
                     <connections>
                         <outlet property="loadProductsIndicator" destination="zOV-3s-e7B" id="BIB-jF-f27"/>
                         <outlet property="tableView" destination="tKf-JG-pAY" id="Wbz-H3-Zdy"/>
+                        <segue destination="dSn-hY-4Nv" kind="show" identifier="getItemDetails" id="qew-ik-tyZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ykM-Re-bgO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -990,6 +988,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tag:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bqe-ch-JIp">
+                                <rect key="frame" x="16" y="368" width="33" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6r-BF-nms">
                                 <rect key="frame" x="145" y="284" width="213" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1011,20 +1016,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfi-CQ-emF">
-                                <rect key="frame" x="16" y="368" width="93" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lzr-1Z-scY">
+                                <rect key="frame" x="57" y="368" width="301" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="LALALALALAL" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2KV-Ym-q5R">
-                                <rect key="frame" x="16" y="392" width="343" height="117"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.88589589865329954" green="0.6819222189575086" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ok-HJ-YAx">
                                 <rect key="frame" x="109" y="527" width="156" height="83"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1051,6 +1049,25 @@
                                     <action selector="saveFavorite:" destination="dSn-hY-4Nv" eventType="touchUpInside" id="11W-1B-1VW"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9QJ-8Z-JXI">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfi-CQ-emF">
+                                <rect key="frame" x="16" y="397" width="93" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="LALALALALAL" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2KV-Ym-q5R">
+                                <rect key="frame" x="16" y="421" width="343" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.88589589865329954" green="0.6819222189575086" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.69803921568627447" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -1058,14 +1075,16 @@
                         <outlet property="descriptionView" destination="2KV-Ym-q5R" id="jzR-Sb-Bdd"/>
                         <outlet property="favoriteImage" destination="yqQ-cN-1LN" id="17h-zm-rw6"/>
                         <outlet property="itemImageView" destination="one-4n-c7d" id="TLj-SK-p0a"/>
+                        <outlet property="loadDetailsIndicator" destination="9QJ-8Z-JXI" id="Fay-2m-7hr"/>
                         <outlet property="nameLabelView" destination="C6r-BF-nms" id="G4Q-c3-ob7"/>
                         <outlet property="ownerLabelView" destination="RbQ-e1-Uhm" id="fiA-Rh-rCK"/>
                         <outlet property="priceLabelView" destination="X1J-JZ-FDO" id="bOS-hE-tkn"/>
+                        <outlet property="tagView" destination="Lzr-1Z-scY" id="4Ap-2e-Xqy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9qW-eR-3V2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4462" y="-1377"/>
+            <point key="canvasLocation" x="4461.6000000000004" y="-1377.6611694152925"/>
         </scene>
         <!--Contact Seller View Controller-->
         <scene sceneID="tLQ-gr-cfr">
@@ -1248,7 +1267,7 @@
         <image name="userBig" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2fi-kf-Fih"/>
+        <segue reference="qew-ik-tyZ"/>
         <segue reference="hc5-t6-6wo"/>
         <segue reference="ENb-ad-Snx"/>
     </inferredMetricsTieBreakers>

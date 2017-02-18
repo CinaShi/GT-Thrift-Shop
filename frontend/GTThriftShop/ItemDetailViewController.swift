@@ -9,12 +9,9 @@
 import UIKit
 
 class ItemDetailViewController: UIViewController {
-    
-    var itemImage = UIImage(named:"tv")
-    var productName = "Samsung 42 inch 1080P TV"
-    var price = "$199"
-    var owner = "Yichen Li"
-    var itemDescription = "It's a used tv bought at price $300. it's kept in nearly new condition."
+    var product: Product!
+    var isFavorited: Bool?
+    var tags = [String]()
     
     @IBOutlet weak var favoriteImage: UIButton!
     @IBOutlet weak var itemImageView: UIImageView!
@@ -22,29 +19,132 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var priceLabelView: UILabel!
     @IBOutlet weak var ownerLabelView: UILabel!
     @IBOutlet weak var descriptionView: UITextView!
+    @IBOutlet weak var tagView: UILabel!
     
+    @IBOutlet weak var loadDetailsIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        itemImageView.image = itemImage
-        nameLabelView.text = productName
-        priceLabelView.text = price
-        ownerLabelView.text = owner
-        descriptionView.text = itemDescription
+        
+        if let imageData: NSData = NSData(contentsOf: URL(string: product.imageUrls.first!)!) {
+            itemImageView.image = UIImage(data: imageData as Data)
+        } else {
+            itemImageView.image = #imageLiteral(resourceName: "calculator")
+        }
+        nameLabelView.text = product.name
+        priceLabelView.text = "$\(product.price!)"
+        ownerLabelView.text = "\(product.userId!)"
+        descriptionView.text = product!.info
+        
+        loadDetailsIndicator.startAnimating()
+        loadAdditionalDetails()
+    }
+    
+    func loadAdditionalDetails() {
+        loadDetailsIndicator.startAnimating()
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/details/\(product.pid!)")
+        
+        var request = URLRequest(url:url! as URL)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            if let httpResponse = response as? HTTPURLResponse {
+                print("***** statusCode: \(httpResponse.statusCode)")
+                if httpResponse.statusCode == 200 {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
+                        guard let array = json["tags"] as? [String] else {
+                            self.notifyFailure(info: "unableToUnarchiveTags!")
+                            return
+                        }
+                        for tag in array {
+                            self.tags.append(tag)
+                        }
+                        guard let isFavorite = json["isFavorite"] as? Bool else {
+                            self.notifyFailure(info: "unableToUnarchiveFavorite!")
+                            return
+                        }
+                        self.isFavorited = isFavorite
+                        
+                    } catch let error as NSError {
+                        print("Failed to load: \(error.localizedDescription)")
+                    }
+                    
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.loadDetailsIndicator.stopAnimating()
+                        var tagLabel = self.tags.first
+                        for tag in self.tags {
+                            if tag == self.tags.first {continue}
+                            tagLabel = "\(tagLabel), \(tag)"
+                        }
+                        self.tagView.text = tagLabel
+                        if self.isFavorited! {
+                            self.favoriteImage.imageView?.image = #imageLiteral(resourceName: "favorited")
+                        } else {
+                            self.favoriteImage.imageView?.image = #imageLiteral(resourceName: "un-favorite")
+                        }
+                    });
+                }else if httpResponse.statusCode == 404 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot connect to Internet!")
+                    });
+                }
+                else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                    });
+                    
+                }
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func notifyFailure(info: String) {
+        self.sendAlart(info: info)
+        self.loadDetailsIndicator.stopAnimating()
+    }
+    
+    func sendAlart(info: String) {
+        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            (result : UIAlertAction) -> Void in
+            print("OK")
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     
     @IBAction func saveFavorite(_ sender: AnyObject) {
-        let defaults = UserDefaults.standard
-        defaults.set("tv", forKey: "savedImage")
-        defaults.set(productName, forKey: "savedName")
-        defaults.set(price, forKey: "savedPrice")
-        defaults.set(owner, forKey: "savedOwner")
-        defaults.set("2 years", forKey: "savedYear")
-        print("saved")
-        favoriteImage.setImage(UIImage(named: "favorited"), for: UIControlState.normal)
+        
     }
+    
+    
     
     
 }

@@ -10,6 +10,7 @@ import UIKit
 
 class MainPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var products = [Product]()
+    var selected: Product?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadProductsIndicator: UIActivityIndicatorView!
@@ -163,10 +164,28 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         itemNameLabel.text = currentProduct.name
         yearUsedLabel.text = currentProduct.usedTime
         priceLabel.text = currentProduct.price
-        sellerLabel.text = "\(currentProduct.userId!)"
+        sellerLabel.text = "user ID: \(currentProduct.userId!)"
         
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        selected = products[indexPath.row]
+        performSegue(withIdentifier: "getItemDetails", sender: nil)
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "getItemDetails"{
+            let destination = segue.destination as! ItemDetailViewController
+            print(selected!.description)
+            destination.product = selected!
+        }
+        
     }
     
     
