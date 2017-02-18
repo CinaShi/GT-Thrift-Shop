@@ -174,9 +174,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 {
                     if newUser {
                         if let userId = responseJSON["userId"] {
-                            print(userId)
+                            print("user id : \(userId)")
                             let userIdString = String(userId as! Int)
                             DispatchQueue.main.async(execute: {
+                                let ud = UserDefaults.standard
+                                ud.set(userId as! Int, forKey: "userId")
+                                ud.synchronize()
                                 self.proceedToFirstTimeView(userId: String(userIdString))
                             });
                         } else {
@@ -186,9 +189,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             });
                         }
                     } else {
-                        DispatchQueue.main.async(execute: {
-                            self.proceedToMainTabView()
-                        });
+                         if let userId = responseJSON["userId"] {
+                            print("user id : \(userId)")
+                            DispatchQueue.main.async(execute: {
+                                let ud = UserDefaults.standard
+                                ud.set(userId as! Int, forKey: "userId")
+                                ud.synchronize()
+                                self.proceedToMainTabView()
+                            });
+                        }
                         
                     }
                 } else {

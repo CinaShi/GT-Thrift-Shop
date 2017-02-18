@@ -46,7 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		08757B7A1E56C56600219BCA /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		08757B7A1E56C56600219BCA /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Product.swift; path = ../Product.swift; sourceTree = "<group>"; };
 		088542BB1DE93481004344D4 /* GTThriftShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTThriftShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		088542BE1DE93481004344D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		088542C01DE93481004344D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +101,6 @@
 		088542B21DE93481004344D4 = {
 			isa = PBXGroup;
 			children = (
-				08757B7A1E56C56600219BCA /* Product.swift */,
 				088542BD1DE93481004344D4 /* GTThriftShop */,
 				088542D21DE93481004344D4 /* GTThriftShopTests */,
 				088542DD1DE93481004344D4 /* GTThriftShopUITests */,
@@ -127,6 +126,7 @@
 				089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */,
 				08CA35551E3ACDA100EFF7D1 /* Login */,
 				089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */,
+				08757B7A1E56C56600219BCA /* Product.swift */,
 				089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */,
 				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
 				089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */,

@@ -33,7 +33,7 @@ class Product: NSObject, NSCoding {
         self.name = decoder.decodeObject(forKey: "name") as! String
         self.price = decoder.decodeObject(forKey: "price") as! String
         self.info = decoder.decodeObject(forKey: "info") as! String
-        self.pid = decoder.decodeInteger(forKey: "pid") 
+        self.pid = decoder.decodeInteger(forKey: "pid")
         self.postTime = decoder.decodeObject(forKey: "postTime") as! String
         self.usedTime = decoder.decodeObject(forKey: "usedTime") as! String
         self.userId = decoder.decodeInteger(forKey: "userId")
@@ -44,10 +44,14 @@ class Product: NSObject, NSCoding {
         aCoder.encode(name, forKey: "name")
         aCoder.encode(price, forKey: "price")
         aCoder.encode(info, forKey: "info")
-        aCoder.encode(pid, forKey: "pid")
+        if let pid = pid {
+            aCoder.encode(pid, forKey: "pid")
+        }
         aCoder.encode(postTime, forKey: "postTime")
         aCoder.encode(usedTime, forKey: "usedTime")
-        aCoder.encode(userId, forKey: "userId")
+        if let userId = userId {
+            aCoder.encode(userId, forKey: "userId")
+        }
         aCoder.encode(imageUrls, forKey: "imageUrls")
         
     }

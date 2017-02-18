@@ -11,6 +11,7 @@ import UIKit
 class MainPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var products = [Product]()
     var selected: Product?
+    var userDefaults = UserDefaults.standard
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadProductsIndicator: UIActivityIndicatorView!
@@ -37,6 +38,13 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     //Mark: helper methods
+    
+    func storeProductsToLocal() {
+        let productsToSave = products.sorted(by: {$0.pid! < $1.pid!})
+        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: productsToSave)
+        userDefaults.set(encodedData, forKey: "products")
+        userDefaults.synchronize()
+    }
     
     func obtainAllProductsFromServer() {
         loadProductsIndicator.startAnimating()
@@ -77,15 +85,15 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                                 let pid = dict["pid"] as? Int,
                                 let postTime = dict["postTime"] as? String,
                                 let usedTime = dict["usedTime"] as? String,
-                                let userId = dict["userId"] as? Int
-//                                let imageUrls = dict["iamges"] as? [String]
+                                let userId = dict["userId"] as? Int,
+                                let imageUrls = dict["images"] as? [String]
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
-                            print("image list --> \(dict["iamges"])")
-                            var imageUrls = [String]()
-                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
+//                            print("image list --> \(dict["iamges"])")
+//                            var imageUrls = [String]()
+//                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
                             let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls)
                             self.products.append(newProduct)
                         }
@@ -96,6 +104,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     DispatchQueue.main.async(execute: {
                         self.loadProductsIndicator.stopAnimating()
+                        self.storeProductsToLocal()
                         self.tableView.reloadData()
                     });
                 }else if httpResponse.statusCode == 404 {

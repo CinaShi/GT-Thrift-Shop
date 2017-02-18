@@ -81,15 +81,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 let pid = dict["pid"] as? Int,
                                 let postTime = dict["postTime"] as? String,
                                 let usedTime = dict["usedTime"] as? String,
-                                let userId = dict["userId"] as? Int
-                                //                                let imageUrls = dict["iamges"] as? [String]
+                                let userId = dict["userId"] as? Int,
+                                let imageUrls = dict["images"] as? [String]
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
-                            print("image list --> \(dict["iamges"])")
-                            var imageUrls = [String]()
-                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
+//                            print("image list --> \(dict["iamges"])")
+//                            var imageUrls = [String]()
+//                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
                             let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls)
                             self.products.append(newProduct)
                         }
@@ -102,7 +102,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.loadProductsIndicator.stopAnimating()
                         self.tableView.reloadData()
                     });
-                }else if httpResponse.statusCode == 404 {
+                } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
                         self.notifyFailure(info: "Cannot connect to Internet!")
                     });
