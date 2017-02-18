@@ -167,7 +167,7 @@ def get_tag_details():
 	return jsonify({'tagContentList':tagContentList, 'isFavorite':isFavorite})
 
 
-@app.route('/favorties/all/<userId>', methods=['GET'])
+@app.route('/favorites/all/<userId>', methods=['GET'])
 def get_favorites_pid(userId):
 	db = mysql.connect()
 	cursor = db.cursor()
