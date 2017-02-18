@@ -182,7 +182,7 @@ def get_favorites_pid(userId):
 	if cursor.rowcount == 1:
 		pidList = cursor.fetchall()
 		db.close()
-		return jsonify('favoritePids':pidList)
+		return jsonify({'favoritePids':pidList})
 	else :
 		db.close()
 		abort(400,"Unknown userId")
