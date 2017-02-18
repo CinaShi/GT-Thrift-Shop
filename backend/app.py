@@ -70,7 +70,7 @@ def add_user_info():
 		cursor.execute("insert into UserInfo (userId,nickname,email,avatarURL,description) values (%s,%s,%s,%s,%s)",[userId,nickname,email,avatarURL,description])
 		db.commit()
 		db.close()
-		return 'Insert User Info Success'
+		return 'Insert User Info Successdsdsdds'
 
 	except:
 	   db.rollback()
@@ -136,7 +136,7 @@ def get_tag_pid(tag):
 		abort(400,"Incorrect Tag")
 
 
-@app.route('/products/details', methods=['GET'])
+@app.route('/products/details/<pid>', methods=['GET'])
 def get_tag_details():
 	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
@@ -161,8 +161,8 @@ def get_tag_details():
 			else:
 				continue
 	favCur = db.cursor()
-	favCur.execute("SELECT * FROM WHERE userId = %s AND pid = %s", [userId, pid])
-	if cursor.rowcount == 1:
+	favCur.execute("SELECT * FROM UserLike WHERE userId = %s AND pid = %s",[userId, pid])
+	if favCur.rowcount == 1:
 		isFavorite = True
 	else: 
 		isFavorite = False
@@ -177,11 +177,12 @@ def get_favorites_pid(userId):
 	
 	db = mysql.connect()
 	cursor = db.cursor()
+
 	cursor.execute("SELECT pid FROM UserLike WHERE userId = '%s';"%userId) 
 	if cursor.rowcount == 1:
 		pidList = cursor.fetchall()
 		db.close()
-		return jsonify({'favoritesPids':pidList})
+		return jsonify('favoritePids':pidList)
 	else :
 		db.close()
 		abort(400,"Unknown userId")
