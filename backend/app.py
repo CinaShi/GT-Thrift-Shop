@@ -102,7 +102,7 @@ def get_all_products():
 			if imageCur.rowcount > 0:
 				imageR = imageCur.fetchall()
 				for i in imageR:
-					imageList.append(i)
+					imageList.append(i[0])
 			currentProduct = {}
 			currentProduct['userId'] = userId
 			currentProduct['pid'] = pid
