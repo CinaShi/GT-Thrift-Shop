@@ -8,13 +8,19 @@
 
 import UIKit
 
-class MainPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     var products = [Product]()
     var selected: Product?
     var userDefaults = UserDefaults.standard
+    var searchActive: Bool = false
     
+    var filteredProducts = [Product]()
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadProductsIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var timeSorting: UIButton!
+    @IBOutlet weak var priceSorting: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +28,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        searchBar.delegate = self
     }
     
     
@@ -91,11 +98,12 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
-//                            print("image list --> \(dict["iamges"])")
-//                            var imageUrls = [String]()
-//                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
+
                             let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls)
                             self.products.append(newProduct)
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+                            self.products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
                         }
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
@@ -143,6 +151,33 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alertController, animated: true, completion: nil)
     }
     
+    @IBAction func sortByPrice(_ sender: Any) {
+        if priceSorting.imageView?.image == #imageLiteral(resourceName: "ascendingPrice"){
+            products.sort(by: {Double($0.price)! < Double($1.price)!})
+            priceSorting.setImage(#imageLiteral(resourceName: "decendingPrice"), for: UIControlState.normal)
+        } else {
+            products.sort(by: {Double($0.price)! > Double($1.price)!})
+            priceSorting.setImage(#imageLiteral(resourceName: "ascendingPrice"), for: UIControlState.normal)
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    @IBAction func sortByTime(_ sender: Any) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+        if timeSorting.imageView?.image == #imageLiteral(resourceName: "decendingTime"){
+            products.sort(by: {dateFormatter.date(from: $0.postTime)! < dateFormatter.date(from: $1.postTime)!})
+            timeSorting.setImage(#imageLiteral(resourceName: "ascendingTime"), for: UIControlState.normal)
+        } else {
+            products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
+            timeSorting.setImage(#imageLiteral(resourceName: "decendingTime"), for: UIControlState.normal)
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    
     //Mark: Table view delegate
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -150,6 +185,9 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchActive {
+            return filteredProducts.count
+        }
         return products.count
     }
     
@@ -157,7 +195,10 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         // Table view cells are reused and should be dequeued using a cell identifier.
         let cellIdentifier = "mainPageItemCell"
         let cell: UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        let currentProduct = products[indexPath.row]
+        var currentProduct = products[indexPath.row]
+        if searchActive {
+            currentProduct = filteredProducts[indexPath.row]
+        }
         // Fetches the banks for the data source layout.
         let itemImage = cell.contentView.viewWithTag(5) as! UIImageView
         let itemNameLabel = cell.contentView.viewWithTag(1) as! UILabel
@@ -181,8 +222,40 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        selected = products[indexPath.row]
+        if searchActive {
+            selected = filteredProducts[indexPath.row]
+        } else {
+            selected = products[indexPath.row]
+        }
         performSegue(withIdentifier: "getItemDetails", sender: nil)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchActive = true
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchActive = false
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        searchBar.endEditing(true)
+        searchActive = false
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredProducts = products.filter{ item in
+            return item.name.lowercased().range(of: searchText.lowercased()) != nil
+        }
+        if(searchBar.text == nil || searchBar.text == "") {
+            searchActive = false
+        } else {
+            searchActive = true
+        }
+        self.tableView.reloadData()
     }
     
     // MARK: - Navigation
