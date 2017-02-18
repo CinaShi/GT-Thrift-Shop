@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class MainPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     var products = [Product]()
     var selected: Product?
@@ -25,10 +26,11 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        // Do any additional setup after loading the view, typically from a nib.
+        //Do any additional setup after loading the view, typically from a nib.
+        //Do any additional setup after loading the view, typically from a nib.
         self.tableView.dataSource = self
         self.tableView.delegate = self
+
         
         searchBar.delegate = self
     }
@@ -79,27 +81,27 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                         let array = json["products"] as! [Dictionary<String, Any>]
                         // Loop through objects
                         for dict in array {
-                            print(dict["images"] as! [String])
                             guard let name = dict["pName"] as? String,
                                 let price = dict["pPrice"] as? String,
                                 let info = dict["pInfo"] as? String,
                                 let pid = dict["pid"] as? Int,
                                 let postTime = dict["postTime"] as? String,
                                 let usedTime = dict["usedTime"] as? String,
-                                let userId = dict["userId"] as? Int,
-                                let imageUrls = dict["images"] as? [String]
+                                let userId = dict["userId"] as? Int
+//                                let imageUrls = dict["iamges"] as? [String]
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
                             print("image list --> \(dict["images"])")
-                            //var imageUrls = [String]()
-                            //imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
+                            var imageUrls = [String]()
+                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
                             let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls)
                             self.products.append(newProduct)
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
                             self.products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
+
                         }
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
@@ -180,6 +182,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.tableView.reloadData()
     }
+
     //Mark: Table view delegate
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -190,6 +193,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         if searchActive {
             return filteredProducts.count
         }
+
         return products.count
     }
     
@@ -207,7 +211,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         //let currentProduct = products[indexPath.row]
-        
         // Fetches the banks for the data source layout.
         let itemImage = cell.contentView.viewWithTag(5) as! UIImageView
         let itemNameLabel = cell.contentView.viewWithTag(1) as! UILabel
@@ -220,8 +223,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             itemImage.image = #imageLiteral(resourceName: "calculator")
         }
-        
-        
+
         itemNameLabel.text = currentProduct.name
         yearUsedLabel.text = currentProduct.usedTime
         priceLabel.text = currentProduct.price
@@ -233,7 +235,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-    
+        
         performSegue(withIdentifier: "getItemDetails", sender: nil)
     }
     
@@ -265,6 +267,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
     }
     
+
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -279,4 +282,3 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     
 }
-
