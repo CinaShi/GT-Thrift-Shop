@@ -152,10 +152,10 @@ def get_tag_details(pid):
 	if cursor.rowcount > 0:
 		tidList = cursor.fetchall()
 		for tid in tidList:
-			tidCur = cursor.execute("SELECT tag from Tag WHERE tid = '%s';"%tid)
+			tidCur = db.cursor()
+			tidCur.execute("SELECT tag from Tag WHERE tid = '%s';"%tid)
 			if tidCur.rowcount > 0:
 				tagList = tidCur.fetchall()[0]
-				tagContentList.append(tagList)
 
 			else:
 				continue
@@ -166,7 +166,7 @@ def get_tag_details(pid):
 	else: 
 		isFavorite = False
 	db.close()
-	return jsonify({'tagContentList':tagContentList, 'isFavorite':isFavorite})
+	return jsonify({'tagContentList':tagList, 'isFavorite':isFavorite})
 
 
 @app.route('/favorites/all/<userId>', methods=['GET'])
@@ -178,8 +178,8 @@ def get_favorites_pid(userId):
 	cursor = db.cursor()
 
 	cursor.execute("SELECT pid FROM UserLike WHERE userId = '%s';"%userId) 
-	if cursor.rowcount == 1:
-		pidList = cursor.fetchall()
+	if cursor.rowcount > 0:
+		pidList = [item[0] for item in cursor.fetchall()]
 		db.close()
 		return jsonify({'favoritePids':pidList})
 	else :
