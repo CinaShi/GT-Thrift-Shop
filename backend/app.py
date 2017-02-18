@@ -173,7 +173,7 @@ def get_favorites_pid(userId):
     cursor = db.cursor()
     pidList = []
     cursor.execute("SELECT pid FROM UserLike WHERE userId = '%s";%userId) 
-    if cursor.rowcount == 1:
+    if cursor.rowcount > 0:
         pidList = cursor.fetchall()
         db.close()
         return jsonify({'favoritePids':pidList})
