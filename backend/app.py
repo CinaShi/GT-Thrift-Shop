@@ -141,7 +141,7 @@ def get_tag_details(pid):
 	if not request.json or not 'userId' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	tidList = []
-	tagContentList = []
+	tagList = []
 
 	userId = request.json['userId']	
 
@@ -166,7 +166,7 @@ def get_tag_details(pid):
 	else: 
 		isFavorite = False
 	db.close()
-	return jsonify({'tagContentList':tagList, 'isFavorite':isFavorite})
+	return jsonify({'tagList':tagList, 'isFavorite':isFavorite})
 
 
 @app.route('/favorites/all/<userId>', methods=['GET'])
