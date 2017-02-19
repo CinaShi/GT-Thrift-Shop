@@ -41,8 +41,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.menuTableView.delegate = self
         
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        self.menuView.layer.shadowOpacity = 1
-        self.menuView.layer.shadowRadius = 6
+        self.menuView.layer.shadowOpacity = 0.75
+        self.menuView.layer.shadowRadius = 3
         leadingConstraint.constant = -140
         self.view.layoutIfNeeded()
         tags.append("All")
@@ -260,20 +260,22 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func sortByPrice(_ sender: Any) {
         if priceSorting.imageView?.image == #imageLiteral(resourceName: "ascendingPrice"){
-            products.sort(by: {Double($0.price)! < Double($1.price)!})
+            products.sort(by: {Double($0.price)! > Double($1.price)!})
             priceSorting.setImage(#imageLiteral(resourceName: "decendingPrice"), for: UIControlState.normal)
         } else {
-            products.sort(by: {Double($0.price)! > Double($1.price)!})
+            products.sort(by: {Double($0.price)! < Double($1.price)!})
             priceSorting.setImage(#imageLiteral(resourceName: "ascendingPrice"), for: UIControlState.normal)
         }
         
         self.tableView.reloadData()
     }
+
     
     @IBAction func sortByTime(_ sender: Any) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
         if timeSorting.imageView?.image == #imageLiteral(resourceName: "decendingTime"){
+            print("here")
             products.sort(by: {dateFormatter.date(from: $0.postTime)! < dateFormatter.date(from: $1.postTime)!})
             timeSorting.setImage(#imageLiteral(resourceName: "ascendingTime"), for: UIControlState.normal)
         } else {
@@ -283,7 +285,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.tableView.reloadData()
     }
-    
     
     @IBAction func openMenu(_ sender: Any) {
         leadingConstraint.constant = 0

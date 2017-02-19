@@ -33,16 +33,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let height = UIScreen.main.bounds.size.height
         
         blurView.frame.size = CGSize(width: width, height: height)
-        blurView.alpha = 0.75
-        
+        blurView.alpha = 0.9
         background.addSubview(blurView)
         
         loginButton.layer.cornerRadius = 5
-        
-        
-        
-        
-        
+
     }
     
     //below are functions
