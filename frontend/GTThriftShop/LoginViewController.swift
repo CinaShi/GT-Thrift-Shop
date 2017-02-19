@@ -12,6 +12,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     static var authFormPost: String?
     static var authLTPost: String?
+    var userIdString = String()
     
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -190,12 +191,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     if newUser {
                         if let userId = responseJSON["userId"] {
                             print("user id : \(userId)")
-                            let userIdString = String(userId as! Int)
+                            self.userIdString = String(userId as! Int)
                             DispatchQueue.main.async(execute: {
                                 let ud = UserDefaults.standard
                                 ud.set(userId as! Int, forKey: "userId")
                                 ud.synchronize()
-                                self.proceedToFirstTimeView(userId: String(userIdString))
+                                self.proceedToFirstTimeView()
                             });
                         } else {
                             //notify failure
@@ -249,17 +250,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func proceedToMainTabView() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "MainTabViewController") as! UITabBarController
-        self.navigationController?.pushViewController(newViewController, animated: true)
-        
+        self.performSegue(withIdentifier: "login", sender: self)
     }
     
-    func proceedToFirstTimeView(userId: String) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "FirstTimeViewController") as! FirstTimeViewController
-        newViewController.userId = userId
-        self.navigationController?.pushViewController(newViewController, animated: true)
+    func proceedToFirstTimeView() {
+        self.performSegue(withIdentifier: "signup", sender: self)
     }
     
 //below are delegate functions
@@ -271,6 +266,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "signup"{
+            let destination = segue.destination as! FirstTimeViewController
+            destination.userId = userIdString
+        }
         
     }
     
