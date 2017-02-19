@@ -29,8 +29,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let blurEffect = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame.size = CGSize(width: background.frame.width, height: background.frame.height)
-        blurView.alpha = 0.5
+        let width = UIScreen.main.bounds.size.width
+        let height = UIScreen.main.bounds.size.height
+        
+        blurView.frame.size = CGSize(width: width, height: height)
+        blurView.alpha = 0.75
+        
         background.addSubview(blurView)
         
         loginButton.layer.cornerRadius = 5
