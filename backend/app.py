@@ -128,7 +128,7 @@ def get_tag_pid(tag):
 		pidCur = db.cursor()
 		pidCur.execute("SELECT pid FROM ProductTag WHERE tid = '%d';"%tid)
 		if pidCur.rowcount > 0:
-			pidList = pidCur.fetchall()
+			pidList = [item[0] for item in pidCur.fetchall()]
 		db.close()
 		return jsonify({'pids':pidList})
 	else:
