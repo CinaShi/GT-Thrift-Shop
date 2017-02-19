@@ -390,18 +390,22 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true
+        searchBar.showsCancelButton = true
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchActive = false
+        searchBar.showsCancelButton = false
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         searchBar.endEditing(true)
         searchActive = false
+        self.tableView.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false
+        self.searchBar.endEditing(true)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -415,6 +419,10 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         self.tableView.reloadData()
     }
+    
+    
+    //Mark: Other delegates
+    
     
     // MARK: - Navigation
     
