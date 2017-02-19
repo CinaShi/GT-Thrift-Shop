@@ -98,6 +98,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08757B801E59022900219BCA /* Main Page */ = {
+			isa = PBXGroup;
+			children = (
+				089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */,
+				089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */,
+			);
+			name = "Main Page";
+			sourceTree = "<group>";
+		};
+		08757B811E59025200219BCA /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */,
+			);
+			name = Favorite;
+			sourceTree = "<group>";
+		};
 		088542B21DE93481004344D4 = {
 			isa = PBXGroup;
 			children = (
@@ -125,12 +142,10 @@
 				088542BE1DE93481004344D4 /* AppDelegate.swift */,
 				089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */,
 				08CA35551E3ACDA100EFF7D1 /* Login */,
-				089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */,
+				08757B801E59022900219BCA /* Main Page */,
+				08757B811E59025200219BCA /* Favorite */,
 				08757B7A1E56C56600219BCA /* Product.swift */,
-				089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */,
 				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
-				089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */,
-				D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */,
 				089ECA481DEE8F7700D508F6 /* ChatViewController.swift */,
 				089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */,
 				088542C71DE93481004344D4 /* LaunchScreen.storyboard */,
@@ -161,6 +176,7 @@
 		08CA35551E3ACDA100EFF7D1 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */,
 				088542C01DE93481004344D4 /* ViewController.swift */,
 				089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */,
 				08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */,
