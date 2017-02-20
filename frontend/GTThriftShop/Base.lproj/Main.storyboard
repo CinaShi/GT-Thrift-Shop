@@ -1055,6 +1055,11 @@
                                     <constraint firstItem="dfn-hC-VVP" firstAttribute="top" secondItem="Af3-ij-f2n" secondAttribute="bottom" constant="8" id="swL-my-s6f"/>
                                     <constraint firstItem="dfn-hC-VVP" firstAttribute="leading" secondItem="wOO-v9-nyk" secondAttribute="leading" id="vW6-VJ-hy6"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pv-hp-pxY">
                                 <rect key="frame" x="260" y="27" width="30" height="30"/>
