@@ -162,6 +162,10 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     
     //Mark: Table view delegate
     
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "Favorite List"
+//    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

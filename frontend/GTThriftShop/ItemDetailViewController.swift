@@ -237,7 +237,14 @@ class ItemDetailViewController: UIViewController {
         task.resume()
     }
     
+    @IBAction func backToMain(_ sender: Any) {
+        self.performSegue(withIdentifier: "unwindToMainPage", sender: self)
+    }
     
-    
+    @IBAction func unwindFromContactSellerVC(segue: UIStoryboardSegue) {
+        if segue.source is ContactSellerViewController {
+            print("unwind from contact VC")
+        }
+    }
     
 }
