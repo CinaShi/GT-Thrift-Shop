@@ -160,15 +160,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let priceLabel = cell.contentView.viewWithTag(3) as! UILabel
         let sellerLabel = cell.contentView.viewWithTag(4) as! UILabel
         
-        if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-            itemImage.image = UIImage(data: imageData as Data)
-        } else {
-            itemImage.image = #imageLiteral(resourceName: "calculator")
-        }
+        DispatchQueue.main.async(execute: {
+            if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                itemImage.image = UIImage(data: imageData as Data)
+            } else {
+                itemImage.image = #imageLiteral(resourceName: "calculator")
+            }
+        })
+        
         itemNameLabel.text = currentProduct.name
-        yearUsedLabel.text = currentProduct.usedTime
+        yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
         priceLabel.text = currentProduct.price
-        sellerLabel.text = "\(currentProduct.userId!)"
+        sellerLabel.text = "Seller ID: \(currentProduct.userId!)"
         
         
         return cell

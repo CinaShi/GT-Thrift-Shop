@@ -782,6 +782,7 @@
                     <connections>
                         <outlet property="loadFavoriteIndicator" destination="lyi-dL-gH1" id="CjA-YE-0ma"/>
                         <outlet property="tableView" destination="67f-3Q-r2z" id="pBo-Ah-AAn"/>
+                        <segue destination="dSn-hY-4Nv" kind="show" identifier="getItemDetailsFromFavorite" id="IbO-r6-Fxd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vqV-PX-K96" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1299,6 +1300,7 @@
                         <outlet property="priceLabelView" destination="X1J-JZ-FDO" id="bOS-hE-tkn"/>
                         <outlet property="tagView" destination="Lzr-1Z-scY" id="4Ap-2e-Xqy"/>
                         <segue destination="ZOk-hp-Z0r" kind="unwind" identifier="unwindToMainPage" unwindAction="unwindFromDetailVCWithSegue:" id="iiB-lP-Ifn"/>
+                        <segue destination="ZOk-hp-Z0r" kind="unwind" identifier="unwindToFavorite" unwindAction="unwindFromDetailVCtoFavoriteVCWithSegue:" id="dmD-4L-OUO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9qW-eR-3V2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1497,5 +1499,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="yQt-O6-nau"/>
         <segue reference="bs9-cY-yCb"/>
+        <segue reference="IbO-r6-Fxd"/>
     </inferredMetricsTieBreakers>
 </document>

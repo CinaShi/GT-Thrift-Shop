@@ -13,6 +13,7 @@ class ItemDetailViewController: UIViewController {
     var userId: Int!
     var isFavorited: Bool?
     var tags = [String]()
+    var sourceVCName: String!
     
     @IBOutlet weak var favoriteImage: UIButton!
     @IBOutlet weak var itemImageView: UIImageView!
@@ -238,7 +239,15 @@ class ItemDetailViewController: UIViewController {
     }
     
     @IBAction func backToMain(_ sender: Any) {
-        self.performSegue(withIdentifier: "unwindToMainPage", sender: self)
+        if sourceVCName == "mainPageVC" {
+            self.performSegue(withIdentifier: "unwindToMainPage", sender: self)
+        } else if sourceVCName == "favoriteVC" {
+            self.performSegue(withIdentifier: "unwindToFavorite", sender: self)
+        }
+        
+        
+       
+        
     }
     
     @IBAction func unwindFromContactSellerVC(segue: UIStoryboardSegue) {

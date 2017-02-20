@@ -10,6 +10,7 @@ import UIKit
 
 class FavoriteViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var products = [Product]()
+    var selected: Product?
     var userId: Int!
     var favoritedProducts = [Product]()
     var userDefaults = UserDefaults.standard
@@ -160,6 +161,12 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alertController, animated: true, completion: nil)
     }
     
+    @IBAction func unwindFromDetailVCtoFavoriteVC(segue: UIStoryboardSegue) {
+        if segue.source is ItemDetailViewController {
+            print("unwind from detail VC")
+        }
+    }
+    
     //Mark: Table view delegate
     
 //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -186,17 +193,39 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         let priceLabel = cell.contentView.viewWithTag(3) as! UILabel
         let sellerLabel = cell.contentView.viewWithTag(4) as! UILabel
         
-        if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-            itemImage.image = UIImage(data: imageData as Data)
-        } else {
-            itemImage.image = #imageLiteral(resourceName: "calculator")
-        }
+        DispatchQueue.main.async(execute: {
+            if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                itemImage.image = UIImage(data: imageData as Data)
+            } else {
+                itemImage.image = #imageLiteral(resourceName: "calculator")
+            }
+        })
         itemNameLabel.text = currentProduct.name
-        yearUsedLabel.text = currentProduct.usedTime
+        yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
         priceLabel.text = currentProduct.price
-        sellerLabel.text = "user ID: \(currentProduct.userId!)"
+        sellerLabel.text = "Seller ID: \(currentProduct.userId!)"
         
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        selected = products[indexPath.row]
+        performSegue(withIdentifier: "getItemDetailsFromFavorite", sender: nil)
+        
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "getItemDetailsFromFavorite"{
+            let destination = segue.destination as! ItemDetailViewController
+            print(selected!.description)
+            destination.product = selected!
+            destination.sourceVCName = "favoriteVC"
+        }
+        
     }
 }
