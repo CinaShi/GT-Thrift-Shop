@@ -173,5 +173,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return cell
     }
+    
+    @IBAction func unwindFromLoginVC(segue: UIStoryboardSegue) {
+        if segue.source is LoginViewController {
+            print("unwind from login VC")
+        }
+    }
 }
 

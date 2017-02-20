@@ -147,7 +147,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="&lt;BACK"/>
                                 <connections>
-                                    <segue destination="SbF-bm-rzV" kind="show" id="I77-Fd-5VD"/>
+                                    <action selector="unwindToMainPage:" destination="oDb-gJ-0rA" eventType="touchUpInside" id="8au-rO-YKR"/>
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="n0V-T3-zhu">
@@ -218,9 +218,11 @@
                         <outlet property="usernameField" destination="2nw-ws-Faa" id="4SA-F4-wEn"/>
                         <segue destination="7bT-HF-u7Y" kind="show" identifier="login" id="bs9-cY-yCb"/>
                         <segue destination="Cr1-Qb-pj3" kind="show" identifier="signup" id="2e7-XO-WzH"/>
+                        <segue destination="SMk-Ln-fDu" kind="unwind" identifier="unwindToMainVC" unwindAction="unwindFromLoginVCWithSegue:" id="EYj-1p-tZM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jmp-aA-tEl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="SMk-Ln-fDu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1860" y="135.38230884557723"/>
         </scene>
