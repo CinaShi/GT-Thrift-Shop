@@ -21,7 +21,7 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var ownerLabelView: UILabel!
     @IBOutlet weak var descriptionView: UITextView!
     @IBOutlet weak var tagView: UILabel!
-    
+    @IBOutlet weak var contactSellerButton: UIButton!
     @IBOutlet weak var loadDetailsIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -43,6 +43,12 @@ class ItemDetailViewController: UIViewController {
         
         loadDetailsIndicator.startAnimating()
         loadAdditionalDetails()
+        
+        contactSellerButton.layer.borderWidth = 1
+        contactSellerButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
+        contactSellerButton.layer.cornerRadius = 20
+        
+        
     }
     
     func loadAdditionalDetails() {
