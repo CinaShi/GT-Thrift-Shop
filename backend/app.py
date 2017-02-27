@@ -230,52 +230,97 @@ def remove_favorites():
 
 ## Sprint 3
 
-@app.route('products/add/allInfo', methods=['POST'])
+@app.route('/products/add/allInfo', methods=['POST'])
 def add_product():
 	return None
 
 
-@app.route('products/update/isSold', methods=['POST'])
+@app.route('/products/update/isSold', methods=['POST'])
 def update_isSold():
 	return None
 
 
-@app.route('products/add/interest', methods=['POST'])
+@app.route('/products/add/interest', methods=['POST'])
 def add_interest():
 	return None
 
 
-@app.route('transactions/getAll/<uid>', methods=['GET'])
+@app.route('/transactions/getAll/<uid>', methods=['GET'])
 def get_all_transactions(uid):
-	return None
+	transList = []
+	returnList = []
+	
+	db = mysql.connect()
+	cursor = db.cursor()
+
+	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND Product.userId = '%s';"%uid) 
+	if cursor.rowcount > 0:
+		transList = cursor.fetchall()
+		for trans in transList:
+			temp = {}
+			temp["buyerID"] = trans[0]
+			temp["sellerID"] = trans[1]
+			temp["pid"] = trans[2]
+			returnList.append(temp)
+		db.close()
+		return jsonify(returnList)
+	else :
+		db.close()
+		abort(400,"Unknown userId")
 
 
-@app.route('products/getAllPost/<uid>', methods=['GET'])
+@app.route('/products/getAllPost/<uid>', methods=['GET'])
 def get_all_post(uid):
-	return None
+	pidList = []
+	
+	db = mysql.connect()
+	cursor = db.cursor()
+
+	cursor.execute("SELECT pid FROM Product WHERE userId = '%s';"%uid) 
+	if cursor.rowcount > 0:
+		pidList = [item[0] for item in cursor.fetchall()]
+		db.close()
+		return jsonify({'PostPids':pidList})
+	else :
+		db.close()
+		abort(400,"Unknown userId")
 
 
-@app.route('products/interest/<pid>', methods=['GET'])
+@app.route('/products/interest/<pid>', methods=['GET'])
 def get_product_interests(pid):
+	# uidList = []
+	
+	# db = mysql.connect()
+	# cursor = db.cursor()
+
+	# unfinished
+	# cursor.execute("SELECT interestUid FROM UserLike WHERE userId = '%s';"%userId) 
+	# if cursor.rowcount > 0:
+	# 	pidList = [item[0] for item in cursor.fetchall()]
+	# 	db.close()
+	# 	return jsonify({'favoritePids':pidList})
+	# else :
+	# 	db.close()
+	# 	abort(400,"Unknown userId")
 	return None
 
 
-@app.route('user/rate/get/<uid>', methods=['GET'])
+@app.route('/user/rate/get/<uid>', methods=['GET'])
 def get_user_rate(uid):
 	return None
 
 
-@app.route('user/rate/update/<uid>', methods=['POST'])
+@app.route('/user/rate/update/<uid>', methods=['POST'])
 def update_user_rate(uid):
 	return None
 
 
-@app.route('user/comment/get/<uid>', methods=['GET'])
+@app.route('/user/comment/get/<uid>', methods=['GET'])
 def get_user_comment(uid):
 	return None
 
 
-@app.route('user/comment/update/<uid>', methods=['POST'])
+@app.route('/user/comment/update/<uid>', methods=['POST'])
 def update_user_comment(uid):
 	return None
 
@@ -283,4 +328,4 @@ def update_user_comment(uid):
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
-	#app.run()
+	# app.run()
