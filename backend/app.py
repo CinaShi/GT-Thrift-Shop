@@ -16,6 +16,7 @@ app.config['MYSQL_DATABASE_DB'] = config['db_db']
 app.config['MYSQL_DATABASE_HOST'] = config['db_host']
 mysql.init_app(app)
 
+## Sprint 1
 
 @app.route('/auth/login',methods=['POST'])
 def auth_login():
@@ -70,13 +71,14 @@ def add_user_info():
 		cursor.execute("insert into UserInfo (userId,nickname,email,avatarURL,description) values (%s,%s,%s,%s,%s)",[userId,nickname,email,avatarURL,description])
 		db.commit()
 		db.close()
-		return 'Insert User Info Success'
+		return 'Insert User Info Successdsdsdds'
 
 	except:
 	   db.rollback()
 	   db.close()
 	   abort(400, '{"message":"insert unsuccessful"}')
 
+## Sprint 2
 
 @app.route('/products', methods=['GET'])
 def get_all_products():
@@ -102,7 +104,7 @@ def get_all_products():
 			if imageCur.rowcount > 0:
 				imageR = imageCur.fetchall()
 				for i in imageR:
-					imageList.append(i)
+					imageList.append(i[0])
 			currentProduct = {}
 			currentProduct['userId'] = userId
 			currentProduct['pid'] = pid
@@ -113,11 +115,11 @@ def get_all_products():
 			currentProduct['usedTime'] = usedTime
 			currentProduct['images'] = imageList
 			productsList.append(currentProduct)
-	
+	db.close()
 	return jsonify({'products':productsList})
 
 
-@app.route('/products/<tag>', methods=['GET'])
+@app.route('/products/tags/<tag>', methods=['GET'])
 def get_tag_pid(tag):
 	db = mysql.connect()
 	cursor = db.cursor()
@@ -128,10 +130,63 @@ def get_tag_pid(tag):
 		pidCur = db.cursor()
 		pidCur.execute("SELECT pid FROM ProductTag WHERE tid = '%d';"%tid)
 		if pidCur.rowcount > 0:
-			pidList = pidCur.fetchall()
+			pidList = [item[0] for item in pidCur.fetchall()]
+		db.close()
 		return jsonify({'pids':pidList})
 	else:
+		db.close()
 		abort(400,"Incorrect Tag")
+
+
+@app.route('/products/details/<pid>', methods=['POST'])
+def get_tag_details(pid):
+	if not request.json or not 'userId' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	tidList = []
+	tagList = []
+
+	userId = request.json['userId']	
+
+	db = mysql.connect()
+	cursor = db.cursor()
+
+	cursor.execute("SELECT tid FROM ProductTag WHERE pid = '%s';"%pid)
+	if cursor.rowcount > 0:
+		tidList = cursor.fetchall()
+		for tid in tidList:
+			tidCur = db.cursor()
+			tidCur.execute("SELECT tag from Tag WHERE tid = '%s';"%tid)
+			if tidCur.rowcount > 0:
+				tagList = tidCur.fetchall()[0]
+
+			else:
+				continue
+	favCur = db.cursor()
+	favCur.execute("SELECT * FROM UserLike WHERE userId = %s AND pid = %s",[userId, pid])
+	if favCur.rowcount == 1:
+		isFavorite = True
+	else: 
+		isFavorite = False
+	db.close()
+	return jsonify({'tagList':tagList, 'isFavorite':isFavorite})
+
+
+@app.route('/favorites/all/<userId>', methods=['GET'])
+def get_favorites_pid(userId):
+
+	pidList = []
+	
+	db = mysql.connect()
+	cursor = db.cursor()
+
+	cursor.execute("SELECT pid FROM UserLike WHERE userId = '%s';"%userId) 
+	if cursor.rowcount > 0:
+		pidList = [item[0] for item in cursor.fetchall()]
+		db.close()
+		return jsonify({'favoritePids':pidList})
+	else :
+		db.close()
+		abort(400,"Unknown userId")
 
 
 @app.route('/favorites/new', methods=['POST'])
@@ -172,8 +227,60 @@ def remove_favorites():
 	   db.rollback()
 	   db.close()
 	   abort(400, '{"message":"remove unsuccessful"}')
-		
+
+## Sprint 3
+
+@app.route('products/add/allInfo', methods=['POST'])
+def add_product():
+	return None
+
+
+@app.route('products/update/isSold', methods=['POST'])
+def update_isSold():
+	return None
+
+
+@app.route('products/add/interest', methods=['POST'])
+def add_interest():
+	return None
+
+
+@app.route('transactions/getAll/<uid>', methods=['GET'])
+def get_all_transactions(uid):
+	return None
+
+
+@app.route('products/getAllPost/<uid>', methods=['GET'])
+def get_all_post(uid):
+	return None
+
+
+@app.route('products/interest/<pid>', methods=['GET'])
+def get_product_interests(pid):
+	return None
+
+
+@app.route('user/rate/get/<uid>', methods=['GET'])
+def get_user_rate(uid):
+	return None
+
+
+@app.route('user/rate/update/<uid>', methods=['POST'])
+def update_user_rate(uid):
+	return None
+
+
+@app.route('user/comment/get/<uid>', methods=['GET'])
+def get_user_comment(uid):
+	return None
+
+
+@app.route('user/comment/update/<uid>', methods=['POST'])
+def update_user_comment(uid):
+	return None
+
+
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
-	# app.run()
+	#app.run()
