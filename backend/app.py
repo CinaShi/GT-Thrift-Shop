@@ -253,7 +253,7 @@ def get_all_transactions(uid):
 	db = mysql.connect()
 	cursor = db.cursor()
 
-	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND Product.userId = '%s';"%uid) 
+	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND (Product.userId = %s OR Transaction.buyerId = %s);",[uid, uid]) 
 	if cursor.rowcount > 0:
 		transList = cursor.fetchall()
 		for trans in transList:
@@ -263,7 +263,7 @@ def get_all_transactions(uid):
 			temp["pid"] = trans[2]
 			returnList.append(temp)
 		db.close()
-		return jsonify(returnList)
+		return jsonify({'transactions':returnList})
 	else :
 		db.close()
 		abort(400,"Unknown userId")
@@ -288,21 +288,19 @@ def get_all_post(uid):
 
 @app.route('/products/interest/<pid>', methods=['GET'])
 def get_product_interests(pid):
-	# uidList = []
+	uidList = []
 	
-	# db = mysql.connect()
-	# cursor = db.cursor()
+	db = mysql.connect()
+	cursor = db.cursor()
 
-	# unfinished
-	# cursor.execute("SELECT interestUid FROM UserLike WHERE userId = '%s';"%userId) 
-	# if cursor.rowcount > 0:
-	# 	pidList = [item[0] for item in cursor.fetchall()]
-	# 	db.close()
-	# 	return jsonify({'favoritePids':pidList})
-	# else :
-	# 	db.close()
-	# 	abort(400,"Unknown userId")
-	return None
+	cursor.execute("SELECT interestUid FROM InterestList WHERE pid = '%s';"%pid) 
+	if cursor.rowcount > 0:
+		uidList = [item[0] for item in cursor.fetchall()]
+		db.close()
+		return jsonify({'interestUids':uidList})
+	else :
+		db.close()
+		abort(400,"Unknown userId")
 
 
 @app.route('/user/rate/get/<uid>', methods=['GET'])
