@@ -16,6 +16,7 @@ app.config['MYSQL_DATABASE_DB'] = config['db_db']
 app.config['MYSQL_DATABASE_HOST'] = config['db_host']
 mysql.init_app(app)
 
+## Sprint 1
 
 @app.route('/auth/login',methods=['POST'])
 def auth_login():
@@ -77,6 +78,7 @@ def add_user_info():
 	   db.close()
 	   abort(400, '{"message":"insert unsuccessful"}')
 
+## Sprint 2
 
 @app.route('/products', methods=['GET'])
 def get_all_products():
@@ -225,7 +227,59 @@ def remove_favorites():
 	   db.rollback()
 	   db.close()
 	   abort(400, '{"message":"remove unsuccessful"}')
-		
+
+## Sprint 3
+
+@app.route('products/add/allInfo', methods=['POST'])
+def add_product():
+	return None
+
+
+@app.route('products/update/isSold', methods=['POST'])
+def update_isSold():
+	return None
+
+
+@app.route('products/add/interest', methods=['POST'])
+def add_interest():
+	return None
+
+
+@app.route('transactions/getAll/<uid>', methods=['GET'])
+def get_all_transactions(uid):
+	return None
+
+
+@app.route('products/getAllPost/<uid>', methods=['GET'])
+def get_all_post(uid):
+	return None
+
+
+@app.route('products/interest/<pid>', methods=['GET'])
+def get_product_interests(pid):
+	return None
+
+
+@app.route('user/rate/get/<uid>', methods=['GET'])
+def get_user_rate(uid):
+	return None
+
+
+@app.route('user/rate/update/<uid>', methods=['POST'])
+def update_user_rate(uid):
+	return None
+
+
+@app.route('user/comment/get/<uid>', methods=['GET'])
+def get_user_comment(uid):
+	return None
+
+
+@app.route('user/comment/update/<uid>', methods=['POST'])
+def update_user_comment(uid):
+	return None
+
+
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
