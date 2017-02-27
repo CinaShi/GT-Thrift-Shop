@@ -12,10 +12,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     static var authFormPost: String?
     static var authLTPost: String?
+    var userIdString = String()
     
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var loginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +26,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usernameField.delegate = self
         passwordField.delegate = self
         self.navigationController?.navigationBar.isHidden = true
+        
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        let width = UIScreen.main.bounds.size.width
+        let height = UIScreen.main.bounds.size.height
+        
+        blurView.frame.size = CGSize(width: width, height: height)
+        blurView.alpha = 0.9
+        background.addSubview(blurView)
+        
+        loginButton.layer.cornerRadius = 5
+
     }
     
     //below are functions
@@ -174,10 +189,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 {
                     if newUser {
                         if let userId = responseJSON["userId"] {
-                            print(userId)
-                            let userIdString = String(userId as! Int)
+                            print("user id : \(userId)")
+                            self.userIdString = String(userId as! Int)
                             DispatchQueue.main.async(execute: {
-                                self.proceedToFirstTimeView(userId: String(userIdString))
+                                let ud = UserDefaults.standard
+                                ud.set(userId as! Int, forKey: "userId")
+                                ud.synchronize()
+                                self.proceedToFirstTimeView()
                             });
                         } else {
                             //notify failure
@@ -186,9 +204,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             });
                         }
                     } else {
-                        DispatchQueue.main.async(execute: {
-                            self.proceedToMainTabView()
-                        });
+                         if let userId = responseJSON["userId"] {
+                            print("user id : \(userId)")
+                            DispatchQueue.main.async(execute: {
+                                let ud = UserDefaults.standard
+                                ud.set(userId as! Int, forKey: "userId")
+                                ud.synchronize()
+                                self.proceedToMainTabView()
+                            });
+                        }
                         
                     }
                 } else {
@@ -225,19 +249,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func proceedToMainTabView() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "MainTabViewController") as! UITabBarController
-        self.navigationController?.pushViewController(newViewController, animated: true)
-        
+        self.performSegue(withIdentifier: "login", sender: self)
     }
     
-    func proceedToFirstTimeView(userId: String) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "FirstTimeViewController") as! FirstTimeViewController
-        newViewController.userId = userId
-        self.navigationController?.pushViewController(newViewController, animated: true)
+    func proceedToFirstTimeView() {
+        self.performSegue(withIdentifier: "signup", sender: self)
     }
     
+    @IBAction func unwindToMainPage(_ sender: Any) {
+        self.performSegue(withIdentifier: "unwindToMainVC", sender: self)
+    }
 //below are delegate functions
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -247,6 +268,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "signup"{
+            let destination = segue.destination as! FirstTimeViewController
+            destination.userId = userIdString
+        }
         
     }
     

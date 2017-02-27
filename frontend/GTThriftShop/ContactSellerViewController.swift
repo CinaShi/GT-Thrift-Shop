@@ -20,5 +20,8 @@ class ContactSellerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func unwindToDetailVC(_ sender: Any) {
+        self.performSegue(withIdentifier: "unwindToDetailVC", sender: self)
+    }
     
 }
