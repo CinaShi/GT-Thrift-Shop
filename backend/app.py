@@ -264,7 +264,7 @@ def add_product():
 		cursor.execute("INSERT INTO ProductTag(pid,tid) values(%s,%s)",[pid,tid])
 		db.commit()
 		db.close()
-		return "Successful"
+		return "Success"
 	except:
 		db.rollback()
 		db.close()
@@ -291,7 +291,7 @@ def update_isSold():
 			newTranId = cursor.lastrowid
 			db.commit()
 			db.close()
-			return("The product is successfully sold!") 
+			return("Success") 
 		except:
 			db.rollback()
 			db.close()
@@ -461,7 +461,7 @@ def update_user_comment():
 		newId = cursor.lastrowid
 		db.commit()
 		db.close()
-		return("new comment insert success")
+		return("success")
 	except:
 		db.rollback()
 		db.close()
