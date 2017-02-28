@@ -230,10 +230,47 @@ def remove_favorites():
 
 ## Sprint 3
 #author: Yichen
+@app.route('/products/image/<userId>', methods=['POST'])
+def product_uploader(userId):
+	return None
+	# if 'file' not in request.files:
+	# 	abort(400)
+	# f = request.files['file']
+	# if f.filename == "":
+	# 	abort(400)
+	# filename = secure_filename(f.filename)
+	# client.upload_fileobj(f, 'gtthriftshopusers', userId + "/" + filename)
+	# return "https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/" + userId + "/" + filename
+
 @app.route('/products/add/allInfo', methods=['POST'])
 def add_product():
+	if not request.json or not 'userId' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'imageURL' in request.json or not 'tid' in request.json or not 'usedTime' in request.json: 
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
+	pName = request.json['pName']
+	pPrice = request.json['pPrice']
+	pInfo = request.json['pInfo']
+	imageURL = request.json['imageURL']
+	usedTime = request.json['usedTime']
+	tid = request.json['tid']
+	isSold = 0
+	postTime = datetime.datetime.now()
+	db = mysql.connect()
+	cursor = db.cursor()
+	try:
+		cursor.execute("INSERT INTO Product(userId,pName,pPrice,pInfo,postTime,usedTime,isSold) values (%s,%s,%s,%s,%s,%s,%s)",[userId,pName,pPrice,pInfo,postTime,usedTime,isSold])
+		pid = cursor.lastrowid
+		cursor.execute("INSERT INTO ProductImage(pid,imageURL) values(%s,%s)", [pid,imageURL])
+		cursor.execute("INSERT INTO ProductTag(pid,tid) values(%s,%s)",[pid,tid])
+		db.commit()
+		db.close()
+		return "Successful"
+	except:
+		db.rollback()
+		db.close()
+		abort(400, '{"message":"Product info added unsuccessful"}')
 
-	return None
+
 
 #author: Yichen
 @app.route('/products/update/isSold', methods=['POST'])
@@ -261,7 +298,7 @@ def update_isSold():
 			abort(400, '{"message":"product sold is unsuccessful"}')
 	else:
 		db.close()
-		abort(400,"Product not found or item is sold")
+		abort(400,"Product not found or item has been sold already")
 
 
 #author: Yang
@@ -366,7 +403,7 @@ def update_user_rate():
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT userRate,rateCount from UserRate WHERE userId ='%s';"%userId)
-	if cursor.rowcount >0:
+	if cursor.rowcount > 0:
 
 		rateRow = cursor.fetchall()[0]
 		prevRate = float(rateRow[0])
@@ -407,14 +444,31 @@ def get_user_comment(uid):
 	else:
 		db.close()
 		abort(400,"No comment provided for this user")
+		
 
 #author: Yichen
-@app.route('/user/comment/update/<uid>', methods=['POST'])
-def update_user_comment(uid):
-	return None
+@app.route('/user/comment/update', methods=['POST'])
+def update_user_comment():
+	if not request.json or not 'userId' in request.json or not 'ccontent' in request.json or not 'commentatorId' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
+	ccontent = request.json['ccontent']
+	commentatorId = request.json['commentatorId']
+	db = mysql.connect()
+	cursor = db.cursor()
+	try:
+		cursor.execute("INSERT INTO UserComment(userId,ccontent,commentatorId) values (%s,%s,%s)",[userId,ccontent,commentatorId])
+		newId = cursor.lastrowid
+		db.commit()
+		db.close()
+		return("new comment insert success")
+	except:
+		db.rollback()
+		db.close()
+		abort(400, '{"message":"insert new comment unsuccessful"}')
 
 
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0',port='80')
-	#app.run()
+	#app.run(host='0.0.0.0',port='80')
+	app.run()
