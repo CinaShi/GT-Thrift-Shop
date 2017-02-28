@@ -239,12 +239,26 @@ def add_product():
 def update_isSold():
 	return None
 
-
+#author: Yang
 @app.route('/products/add/interest', methods=['POST'])
 def add_interest():
-	return None
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
+	pid = request.json['pid']
+	db = mysql.connect()
+	cursor = db.cursor()
+	try:
+		cursor.execute("INSERT INTO InterestList(pid,interestUId) values (%s,%s)",[pid,userId])
+		db.commit()
+		db.close()
+		return("success")
+	except:
+	    db.rollback()
+	    db.close()
+	    abort(400, '{"message":"add interest user unsuccessful"}')
 
-
+#Wen
 @app.route('/transactions/getAll/<uid>', methods=['GET'])
 def get_all_transactions(uid):
 	transList = []
@@ -268,7 +282,7 @@ def get_all_transactions(uid):
 		db.close()
 		abort(400,"Unknown userId")
 
-
+#Wen
 @app.route('/products/getAllPost/<uid>', methods=['GET'])
 def get_all_post(uid):
 	pidList = []
@@ -285,7 +299,7 @@ def get_all_post(uid):
 		db.close()
 		abort(400,"Unknown userId")
 
-
+#Wen
 @app.route('/products/interest/<pid>', methods=['GET'])
 def get_product_interests(pid):
 	uidList = []
@@ -302,15 +316,58 @@ def get_product_interests(pid):
 		db.close()
 		abort(400,"Unknown userId")
 
-
+#author Yang
 @app.route('/user/rate/get/<uid>', methods=['GET'])
 def get_user_rate(uid):
-	return None
+	db = mysql.connect()
+	cursor = db.cursor()
 
+	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%uid)
+	if cursor.rowcount >0:
+		rateRow = cursor.fetchall()[0]
+		return str(rateRow[0])
+	else:
+		return ("-1")
+	db.close()
 
-@app.route('/user/rate/update/<uid>', methods=['POST'])
-def update_user_rate(uid):
-	return None
+#author Yang
+@app.route('/user/rate/update', methods=['POST'])
+def update_user_rate():
+	if not request.json or not 'userId' in request.json or not 'rate' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
+	rate = int(request.json['rate'])
+
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT userRate,rateCount from UserRate WHERE userId ='%s';"%userId)
+	if cursor.rowcount >0:
+
+		rateRow = cursor.fetchall()[0]
+		prevRate = float(rateRow[0])
+		prevCount = int(rateRow[1])
+		newRate = (float(prevRate*prevCount + rate))/(prevCount+1)
+		newCount = prevCount +1
+		try:
+			cursor.execute("UPDATE UserRate SET userRate = '%s', rateCount = '%s' WHERE userId = '%s';",[newRate,newCount,userId])
+			db.commit()
+			db.close()
+			return ("success")
+		except:
+			db.rollback()
+	    	db.close()
+	    	abort(400, '{"message":"update rate unsuccessful"}')
+	else:
+		try:
+			cursor.execute("INSERT INTO UserRate(userId,userRate,rateCount) values (%s,%s,%s)",[userId,rate,1])
+			db.commit()
+			db.close()
+			return("success")
+		except:
+			db.rollback()
+	    	db.close()
+	     	abort(400, '{"message":"update rate unsuccessful"}')
+
 
 
 @app.route('/user/comment/get/<uid>', methods=['GET'])
@@ -326,4 +383,4 @@ def update_user_comment(uid):
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
-	# app.run()
+	#app.run()
