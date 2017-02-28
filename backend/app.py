@@ -71,7 +71,7 @@ def add_user_info():
 		cursor.execute("insert into UserInfo (userId,nickname,email,avatarURL,description) values (%s,%s,%s,%s,%s)",[userId,nickname,email,avatarURL,description])
 		db.commit()
 		db.close()
-		return 'Insert User Info Successdsdsdds'
+		return 'Insert User Info Success'
 
 	except:
 	   db.rollback()
@@ -229,15 +229,40 @@ def remove_favorites():
 	   abort(400, '{"message":"remove unsuccessful"}')
 
 ## Sprint 3
-
+#author: Yichen
 @app.route('/products/add/allInfo', methods=['POST'])
 def add_product():
+
 	return None
 
-
+#author: Yichen
 @app.route('/products/update/isSold', methods=['POST'])
 def update_isSold():
-	return None
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json or not 'buyerId' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
+	pid = request.json['pid']
+	buyerId = request.json['buyerId']
+	isSold = 1
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT isSold FROM Product WHERE userId = %s AND pid = %s AND isSold = %s",[userId, pid, 0])
+	if cursor.rowcount == 1:
+		try:
+			cursor.execute("UPDATE Product SET isSold = '%s' WHERE userId = %s AND pid = %s", [isSold, userId, pid])
+			cursor.execute("INSERT INTO Transaction(pid,buyerId) values (%s,%s)",[pid, buyerId])
+			newTranId = cursor.lastrowid
+			db.commit()
+			db.close()
+			return("The product is successfully sold!") 
+		except:
+			db.rollback()
+			db.close()
+			abort(400, '{"message":"product sold is unsuccessful"}')
+	else:
+		db.close()
+		abort(400,"Product not found or item is sold")
+
 
 #author: Yang
 @app.route('/products/add/interest', methods=['POST'])
@@ -369,12 +394,12 @@ def update_user_rate():
 	     	abort(400, '{"message":"update rate unsuccessful"}')
 
 
-
+#author: Yichen
 @app.route('/user/comment/get/<uid>', methods=['GET'])
 def get_user_comment(uid):
 	return None
 
-
+#author: Yichen
 @app.route('/user/comment/update/<uid>', methods=['POST'])
 def update_user_comment(uid):
 	return None
