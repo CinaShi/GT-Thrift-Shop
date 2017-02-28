@@ -397,7 +397,16 @@ def update_user_rate():
 #author: Yichen
 @app.route('/user/comment/get/<uid>', methods=['GET'])
 def get_user_comment(uid):
-	return None
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT ccontent FROM UserComment WHERE userId = '%s';"%uid)
+	if cursor.rowcount > 0:
+		rateRow = cursor.fetchall()[0]
+		db.close()
+		return "comment:'" + str(rateRow[0]) + "'"
+	else:
+		db.close()
+		abort(400,"Fail")
 
 #author: Yichen
 @app.route('/user/comment/update/<uid>', methods=['POST'])
