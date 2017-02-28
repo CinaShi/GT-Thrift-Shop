@@ -275,19 +275,18 @@ def add_product():
 #author: Yichen
 @app.route('/products/update/isSold', methods=['POST'])
 def update_isSold():
-	if not request.json or not 'userId' in request.json or not 'pid' in request.json or not 'buyerId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	pid = request.json['pid']
-	buyerId = request.json['buyerId']
 	isSold = 1
 	db = mysql.connect()
 	cursor = db.cursor()
-	cursor.execute("SELECT isSold FROM Product WHERE userId = %s AND pid = %s AND isSold = %s",[userId, pid, 0])
+	cursor.execute("SELECT isSold FROM Product WHERE pid = %s AND isSold = %s",[pid, 0])
 	if cursor.rowcount == 1:
 		try:
-			cursor.execute("UPDATE Product SET isSold = '%s' WHERE userId = %s AND pid = %s", [isSold, userId, pid])
-			cursor.execute("INSERT INTO Transaction(pid,buyerId) values (%s,%s)",[pid, buyerId])
+			cursor.execute("UPDATE Product SET isSold = '%s' WHERE pid = %s", [isSold,pid])
+			cursor.execute("INSERT INTO Transaction(pid,buyerId) values (%s,%s)",[pid, userId])
 			newTranId = cursor.lastrowid
 			db.commit()
 			db.close()
