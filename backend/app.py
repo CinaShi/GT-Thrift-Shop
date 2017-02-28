@@ -406,7 +406,7 @@ def get_user_comment(uid):
 		return "comment:'" + str(rateRow[0]) + "'"
 	else:
 		db.close()
-		abort(400,"Fail")
+		abort(400,"No comment provided for this user")
 
 #author: Yichen
 @app.route('/user/comment/update/<uid>', methods=['POST'])
