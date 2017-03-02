@@ -374,10 +374,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Qdf-GM-NDF">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your information has been saved!" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKJ-qS-7CS">
                                 <rect key="frame" x="57.666666666666657" y="356" width="299" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ev9-Ml-s1Q">
@@ -402,21 +405,26 @@
                         </subviews>
                         <color key="backgroundColor" red="0.49803921569999998" green="0.76078431369999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Qdf-GM-NDF" secondAttribute="trailing" id="9yF-Wb-inT"/>
+                            <constraint firstItem="Qdf-GM-NDF" firstAttribute="leading" secondItem="ofL-N4-gjc" secondAttribute="leading" id="CLA-4q-gB4"/>
                             <constraint firstItem="WKJ-qS-7CS" firstAttribute="centerX" secondItem="ofL-N4-gjc" secondAttribute="centerX" id="LnC-pl-FWN"/>
                             <constraint firstItem="n3O-bz-zaE" firstAttribute="centerX" secondItem="ofL-N4-gjc" secondAttribute="centerX" id="PZt-dM-jof"/>
                             <constraint firstItem="WKJ-qS-7CS" firstAttribute="centerY" secondItem="ofL-N4-gjc" secondAttribute="centerY" id="VLN-un-wea"/>
+                            <constraint firstItem="eIG-IW-h1N" firstAttribute="top" secondItem="Qdf-GM-NDF" secondAttribute="bottom" id="ZQB-hH-4Uc"/>
                             <constraint firstItem="ev9-Ml-s1Q" firstAttribute="centerY" secondItem="ofL-N4-gjc" secondAttribute="centerY" constant="234" id="dmO-MG-6KN"/>
+                            <constraint firstItem="Qdf-GM-NDF" firstAttribute="top" secondItem="ofL-N4-gjc" secondAttribute="top" id="uxA-Aa-cpx"/>
                             <constraint firstItem="n3O-bz-zaE" firstAttribute="centerY" secondItem="ofL-N4-gjc" secondAttribute="centerY" constant="-168.5" id="wOb-Ye-s5w"/>
                             <constraint firstItem="ev9-Ml-s1Q" firstAttribute="centerX" secondItem="ofL-N4-gjc" secondAttribute="centerX" id="xJl-Cp-E2T"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="background" destination="Qdf-GM-NDF" id="cLU-Vc-tgP"/>
                         <outlet property="submitButton" destination="ev9-Ml-s1Q" id="mAz-Di-cGW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IwH-gb-9Qx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1857" y="958"/>
+            <point key="canvasLocation" x="1856.521739130435" y="957.88043478260875"/>
         </scene>
         <!--Chat-->
         <scene sceneID="ZvE-fW-CNR">
@@ -654,7 +662,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.93333333333333335" green="0.69803921568627447" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add" image="Plus 2 Math-100" selectedImage="Plus 2 Math Filled-100" id="coZ-4l-m0B"/>
                     <connections>
@@ -1515,7 +1523,7 @@
         <image name="userBig" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="5XW-Dw-w2H"/>
         <segue reference="qew-ik-tyZ"/>
-        <segue reference="99o-Qk-lN0"/>
     </inferredMetricsTieBreakers>
 </document>
