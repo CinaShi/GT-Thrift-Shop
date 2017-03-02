@@ -99,7 +99,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                     
                     DispatchQueue.main.async(execute: {
-                        self.initialSort()
                         self.loadProductsIndicator.stopAnimating()
                         self.tableView.reloadData()
                     });
@@ -122,12 +121,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         task.resume()
-    }
-    
-    func initialSort() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
-        self.products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
     }
     
     func notifyFailure(info: String) {
@@ -167,18 +160,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let priceLabel = cell.contentView.viewWithTag(3) as! UILabel
         let sellerLabel = cell.contentView.viewWithTag(4) as! UILabel
         
-        if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-            itemImage.image = UIImage(data: imageData as Data)
-        } else {
-            itemImage.image = #imageLiteral(resourceName: "tempLogo")
-        }
+        DispatchQueue.main.async(execute: {
+            if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                itemImage.image = UIImage(data: imageData as Data)
+            } else {
+                itemImage.image = #imageLiteral(resourceName: "calculator")
+            }
+        })
+        
         itemNameLabel.text = currentProduct.name
-        yearUsedLabel.text = currentProduct.usedTime
+        yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
         priceLabel.text = currentProduct.price
-        sellerLabel.text = "\(currentProduct.userId!)"
+        sellerLabel.text = "Seller ID: \(currentProduct.userId!)"
         
         
         return cell
+    }
+    
+    @IBAction func unwindFromLoginVC(segue: UIStoryboardSegue) {
+        if segue.source is LoginViewController {
+            print("unwind from login VC")
+        }
     }
 }
 

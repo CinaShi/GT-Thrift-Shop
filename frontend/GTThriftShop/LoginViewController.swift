@@ -256,6 +256,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.performSegue(withIdentifier: "signup", sender: self)
     }
     
+    @IBAction func unwindToMainPage(_ sender: Any) {
+        self.performSegue(withIdentifier: "unwindToMainVC", sender: self)
+    }
 //below are delegate functions
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

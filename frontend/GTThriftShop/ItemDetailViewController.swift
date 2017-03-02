@@ -13,10 +13,10 @@ class ItemDetailViewController: UIViewController {
     var userId: Int!
     var isFavorited: Bool?
     var tags = [String]()
-    var imageArray = [UIImage]()
+    var sourceVCName: String!
     
     @IBOutlet weak var favoriteImage: UIButton!
-    //@IBOutlet weak var itemImageView: UIImageView!
+    @IBOutlet weak var itemImageView: UIImageView!
     @IBOutlet weak var nameLabelView: UILabel!
     @IBOutlet weak var priceLabelView: UILabel!
     @IBOutlet weak var ownerLabelView: UILabel!
@@ -25,39 +25,15 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var contactSellerButton: UIButton!
     @IBOutlet weak var loadDetailsIndicator: UIActivityIndicatorView!
     
-    @IBOutlet weak var imageScrollView: UIScrollView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        var urlStrings = [String]()
-        for s in product.imageUrls {
-            print(s)
-            urlStrings.append(s)
+        if let imageData: NSData = NSData(contentsOf: URL(string: product.imageUrls.first!)!) {
+            itemImageView.image = UIImage(data: imageData as Data)
+        } else {
+            itemImageView.image = #imageLiteral(resourceName: "calculator")
         }
-        print("URLSTRINGS:  \(urlStrings)")
-        for url in urlStrings{
-            if let imageData : NSData = NSData(contentsOf: URL(string: url)!) {
-                imageArray.append(UIImage(data: imageData as Data)!)
-            //Ti84 picture 3有问题 不能转化为uiimage
-            }
-        }
-        print("imageArray is: \(imageArray)")
-        print("iamgeArray length: \(imageArray.count)")
-        for i in 0..<imageArray.count {
-            let currPic = UIImageView()
-            currPic.image = imageArray[i]
-            currPic.contentMode = .scaleAspectFit
-            let xPos = self.view.frame.width * CGFloat(i)
-            currPic.frame = CGRect(x: xPos, y: 0, width: self.imageScrollView.frame.width, height:self.imageScrollView.frame.height)
-            imageScrollView.contentSize.width = imageScrollView.frame.width * CGFloat(i+1)
-            imageScrollView.addSubview(currPic)
-
-            
-        }
-        
-//////////////
         nameLabelView.text = product.name
         priceLabelView.text = "$\(product.price!)"
         ownerLabelView.text = "\(product.userId!)"
@@ -262,5 +238,22 @@ class ItemDetailViewController: UIViewController {
         task.resume()
     }
     
+    @IBAction func backToMain(_ sender: Any) {
+        if sourceVCName == "mainPageVC" {
+            self.performSegue(withIdentifier: "unwindToMainPage", sender: self)
+        } else if sourceVCName == "favoriteVC" {
+            self.performSegue(withIdentifier: "unwindToFavorite", sender: self)
+        }
+        
+        
+       
+        
+    }
+    
+    @IBAction func unwindFromContactSellerVC(segue: UIStoryboardSegue) {
+        if segue.source is ContactSellerViewController {
+            print("unwind from contact VC")
+        }
+    }
     
 }

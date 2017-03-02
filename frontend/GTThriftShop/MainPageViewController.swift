@@ -52,8 +52,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         products.removeAll()
         
         obtainAllProductsFromServer()
@@ -298,6 +298,12 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         menuShowing = false
     }
     
+    @IBAction func unwindFromDetailVC(segue: UIStoryboardSegue) {
+        if segue.source is ItemDetailViewController {
+            print("unwind from detail VC")
+        }
+    }
+    
     //Mark: Table view delegate
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -341,15 +347,17 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             let priceLabel = cell?.contentView.viewWithTag(3) as! UILabel
             let sellerLabel = cell?.contentView.viewWithTag(4) as! UILabel
             
-            if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-                itemImage.image = UIImage(data: imageData as Data)
-            } else {
-                itemImage.image = #imageLiteral(resourceName: "tempLogo")
-            }
+            DispatchQueue.main.async(execute: {
+                if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                    itemImage.image = UIImage(data: imageData as Data)
+                } else {
+                    itemImage.image = #imageLiteral(resourceName: "calculator")
+                }
+            })
             itemNameLabel.text = currentProduct.name
-            yearUsedLabel.text = currentProduct.usedTime
+            yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
             priceLabel.text = currentProduct.price
-            sellerLabel.text = "user ID: \(currentProduct.userId!)"
+            sellerLabel.text = "Seller ID: \(currentProduct.userId!)"
         }
         
         if tableView == self.menuTableView {
@@ -377,9 +385,11 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             closeMenu(self)
             print("should send url here")
             if tags[indexPath.row] == "All" {
+                self.loadProductsIndicator.startAnimating()
                 refreshProductsFromLocal()
                 initialSort()
                 self.tableView.reloadData()
+                self.loadProductsIndicator.stopAnimating()
             } else {
                 getPidsByTag(tag: tags[indexPath.row])
             }
@@ -432,6 +442,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             let destination = segue.destination as! ItemDetailViewController
             print(selected!.description)
             destination.product = selected!
+            destination.sourceVCName = "mainPageVC"
         }
         
     }
