@@ -351,7 +351,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                 if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
                     itemImage.image = UIImage(data: imageData as Data)
                 } else {
-                    itemImage.image = #imageLiteral(resourceName: "tempLogo")
+                    itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
                 }
             })
             itemNameLabel.text = currentProduct.name

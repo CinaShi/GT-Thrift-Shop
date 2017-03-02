@@ -30,7 +30,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="107"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y7N-tN-6c6" id="Lj9-2H-ZNx">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="106.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="106.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d6a-dc-R12">
@@ -83,7 +83,7 @@
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pmw-1j-Bld">
-                                <rect key="frame" x="0.0" y="680" width="414" height="7"/>
+                                <rect key="frame" x="0.0" y="680" width="414" height="56"/>
                                 <color key="backgroundColor" red="0.49803921569999998" green="0.76078431369999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="19"/>
                                 <state key="normal" title="Login with GT Account!"/>
@@ -418,7 +418,7 @@
             </objects>
             <point key="canvasLocation" x="1857" y="958"/>
         </scene>
-        <!--chat-->
+        <!--Chat-->
         <scene sceneID="ZvE-fW-CNR">
             <objects>
                 <viewController id="nTQ-pd-GWx" customClass="ChatViewController" customModule="GTThriftShop" customModuleProvider="target" sceneMemberID="viewController">
@@ -532,13 +532,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.69803921568627447" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="chat" image="chat" id="OJw-Uf-Zbd"/>
+                    <tabBarItem key="tabBarItem" title="Chat" image="Message Squared-100" selectedImage="Message Squared Filled-100" id="OJw-Uf-Zbd"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AH8-iV-1QA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3607" y="-587"/>
         </scene>
-        <!--add-->
+        <!--Add-->
         <scene sceneID="Arr-cd-djS">
             <objects>
                 <viewController id="dZw-ok-jY7" customClass="SellViewController" customModule="GTThriftShop" customModuleProvider="target" sceneMemberID="viewController">
@@ -551,7 +551,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="itemImage" translatesAutoresizingMaskIntoConstraints="NO" id="6Xl-Jn-xgd">
-                                <rect key="frame" x="67" y="28" width="240" height="240"/>
+                                <rect key="frame" x="92" y="28" width="240" height="240"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5jK-67-Y9R">
@@ -577,21 +577,28 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Set tag" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cul-LN-DJp">
-                                <rect key="frame" x="102" y="410" width="64" height="27"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Have used" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gxu-Np-2it">
+                                <rect key="frame" x="67" y="335" width="100" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="chn-Rf-D8d">
-                                <rect key="frame" x="174" y="410" width="161" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w4z-sA-jTC">
+                                <rect key="frame" x="175" y="334" width="49" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93725490199999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="years" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6G-xy-g7s">
+                                <rect key="frame" x="232" y="335" width="100" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Set price $" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgl-hn-x6L">
                                 <rect key="frame" x="77" y="373" width="107" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -607,22 +614,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Have used" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gxu-Np-2it">
-                                <rect key="frame" x="67" y="335" width="100" height="27"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Set tag" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cul-LN-DJp">
+                                <rect key="frame" x="102" y="410" width="64" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="years" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6G-xy-g7s">
-                                <rect key="frame" x="232" y="335" width="100" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w4z-sA-jTC">
-                                <rect key="frame" x="175" y="334" width="49" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="chn-Rf-D8d">
+                                <rect key="frame" x="174" y="410" width="161" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93725490199999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="textColor"/>
@@ -656,7 +656,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.69803921568627447" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="add" image="add" id="coZ-4l-m0B"/>
+                    <tabBarItem key="tabBarItem" title="Add" image="Plus 2 Math-100" selectedImage="Plus 2 Math Filled-100" id="coZ-4l-m0B"/>
                     <connections>
                         <outlet property="descriptionTextView" destination="Pk7-yE-77H" id="la1-Qa-frg"/>
                         <outlet property="itemImageView" destination="6Xl-Jn-xgd" id="t2g-kJ-uoq"/>
@@ -710,7 +710,7 @@
             </objects>
             <point key="canvasLocation" x="4463.1999999999998" y="136.28185907046478"/>
         </scene>
-        <!--favorite-->
+        <!--Favorite-->
         <scene sceneID="2gL-LZ-Uho">
             <objects>
                 <viewController id="erD-P4-Ruh" customClass="FavoriteViewController" customModule="GTThriftShop" customModuleProvider="target" sceneMemberID="viewController">
@@ -730,7 +730,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="104"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fTW-Jw-dad" id="apL-Vo-LEE">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="103.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="103.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uGC-Bk-KF9">
@@ -792,7 +792,7 @@
                             <constraint firstItem="67f-3Q-r2z" firstAttribute="top" secondItem="xAz-Lv-rkt" secondAttribute="bottom" id="yhm-5U-P77"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="favorite" image="favorite" selectedImage="favorite" id="cRc-oQ-aFM"/>
+                    <tabBarItem key="tabBarItem" title="Favorite" image="Rating-100" selectedImage="Rating Filled-100" id="cRc-oQ-aFM"/>
                     <connections>
                         <outlet property="loadFavoriteIndicator" destination="lyi-dL-gH1" id="CjA-YE-0ma"/>
                         <outlet property="tableView" destination="67f-3Q-r2z" id="pBo-Ah-AAn"/>
@@ -803,7 +803,7 @@
             </objects>
             <point key="canvasLocation" x="3605.7971014492755" y="916.304347826087"/>
         </scene>
-        <!--user-->
+        <!--User-->
         <scene sceneID="9hd-5B-1wI">
             <objects>
                 <viewController id="g76-sG-NjQ" customClass="UserProfileViewController" customModule="GTThriftShop" customModuleProvider="target" sceneMemberID="viewController">
@@ -870,9 +870,6 @@
                                 <rect key="frame" x="310" y="20" width="52" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Log out"/>
-                                <connections>
-                                    <segue destination="SbF-bm-rzV" kind="show" id="yQt-O6-nau"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="@mshi36" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oB5-jm-8mN">
                                 <rect key="frame" x="162" y="74" width="73" height="21"/>
@@ -911,13 +908,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.69803921568627447" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="user" image="user" selectedImage="user" id="hv9-X8-F9F"/>
+                    <tabBarItem key="tabBarItem" title="User" image="User Location-100" selectedImage="User Location Filled-100" id="hv9-X8-F9F"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BdD-Yp-6uK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3606" y="2155"/>
+            <point key="canvasLocation" x="3604" y="2036"/>
         </scene>
-        <!--main-->
+        <!--Home-->
         <scene sceneID="y6u-03-1m0">
             <objects>
                 <viewController id="hfL-N1-XQS" customClass="MainPageViewController" customModule="GTThriftShop" customModuleProvider="target" sceneMemberID="viewController">
@@ -946,7 +943,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="104"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vi5-o1-Wto" id="scw-eU-4Fu">
-                                            <rect key="frame" x="0.0" y="0.0" width="381" height="103.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="381" height="103.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BYA-Em-h6Z">
@@ -1045,7 +1042,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="140" height="46"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KQk-y5-hpI" id="LnO-Mf-NUg">
-                                                    <rect key="frame" x="0.0" y="0.0" width="140" height="45.666666666666664"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="140" height="45.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="tag name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3PX-nj-4rT">
@@ -1110,7 +1107,7 @@
                             <outletCollection property="gestureRecognizers" destination="umu-PU-qmm" appends="YES" id="iA2-Y0-vRb"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="main" image="home" selectedImage="home" id="x0h-rl-Nbz"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="Home-100" selectedImage="Home Filled-100" id="x0h-rl-Nbz"/>
                     <connections>
                         <outlet property="leadingConstraint" destination="keA-CJ-DSz" id="hj4-4e-KnM"/>
                         <outlet property="loadProductsIndicator" destination="zOV-3s-e7B" id="BIB-jF-f27"/>
@@ -1457,7 +1454,6 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="YWj-my-s9X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
                         <segue destination="hfL-N1-XQS" kind="relationship" relationship="viewControllers" id="vRk-gV-eSm"/>
@@ -1493,28 +1489,33 @@
     <resources>
         <image name="Back-50" width="50" height="50"/>
         <image name="GT-icon" width="225" height="225"/>
+        <image name="Home Filled-100" width="30" height="30"/>
+        <image name="Home-100" width="30" height="30"/>
         <image name="Inspection Filled-100" width="100" height="100"/>
-        <image name="add" width="30" height="30"/>
+        <image name="Message Squared Filled-100" width="30" height="30"/>
+        <image name="Message Squared-100" width="30" height="30"/>
+        <image name="Plus 2 Math Filled-100" width="30" height="30"/>
+        <image name="Plus 2 Math-100" width="30" height="30"/>
+        <image name="Rating Filled-100" width="30" height="30"/>
+        <image name="Rating-100" width="30" height="30"/>
+        <image name="User Location Filled-100" width="30" height="30"/>
+        <image name="User Location-100" width="30" height="30"/>
         <image name="ascendingPrice" width="50" height="50"/>
         <image name="background" width="1000" height="1881"/>
-        <image name="chat" width="30" height="30"/>
         <image name="checked" width="512" height="512"/>
         <image name="decendingTime" width="50" height="50"/>
-        <image name="favorite" width="30" height="30"/>
         <image name="full star" width="64" height="64"/>
         <image name="half-star" width="64" height="64"/>
-        <image name="home" width="30" height="30"/>
         <image name="itemImage" width="512" height="512"/>
         <image name="menu" width="50" height="50"/>
         <image name="moon" width="259" height="194"/>
         <image name="printer" width="241" height="209"/>
         <image name="radio" width="259" height="194"/>
         <image name="un-favorite" width="50" height="50"/>
-        <image name="user" width="30" height="30"/>
         <image name="userBig" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5XW-Dw-w2H"/>
         <segue reference="qew-ik-tyZ"/>
+        <segue reference="99o-Qk-lN0"/>
     </inferredMetricsTieBreakers>
 </document>

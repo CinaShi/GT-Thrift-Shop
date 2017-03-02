@@ -31,11 +31,7 @@ class ItemDetailViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-//        if let imageData: NSData = NSData(contentsOf: URL(string: product.imageUrls.first!)!) {
-//            itemImageView.image = UIImage(data: imageData as Data)
-//        } else {
-//            itemImageView.image = #imageLiteral(resourceName: "calculator")
-//        }
+        //Scroll View
         var urlStrings = [String]()
         for s in product.imageUrls{
             urlStrings.append(s)
@@ -55,7 +51,7 @@ class ItemDetailViewController: UIViewController {
             imageScrollView.contentSize.width = imageScrollView.frame.width * CGFloat(i+1)
             imageScrollView.addSubview(currPic)
         }
-        
+        //Load Text
         nameLabelView.text = product.name
         priceLabelView.text = "$\(product.price!)"
         ownerLabelView.text = "\(product.userId!)"
@@ -67,6 +63,7 @@ class ItemDetailViewController: UIViewController {
         loadDetailsIndicator.startAnimating()
         loadAdditionalDetails()
         
+        //Button UI setup
         contactSellerButton.layer.borderWidth = 1
         contactSellerButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
         contactSellerButton.layer.cornerRadius = 20
