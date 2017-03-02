@@ -344,7 +344,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
                 itemImage.image = UIImage(data: imageData as Data)
             } else {
-                itemImage.image = #imageLiteral(resourceName: "calculator")
+                itemImage.image = #imageLiteral(resourceName: "tempLogo")
             }
             itemNameLabel.text = currentProduct.name
             yearUsedLabel.text = currentProduct.usedTime

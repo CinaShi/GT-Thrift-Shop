@@ -17,6 +17,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     @IBOutlet weak var submitActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var background: UIImageView!
     
     var userId = String()
     
@@ -37,9 +38,21 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
         imageView.isUserInteractionEnabled = true
         
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        let width = UIScreen.main.bounds.size.width
+        let height = UIScreen.main.bounds.size.height
+        
+        blurView.frame.size = CGSize(width: width, height: height)
+        blurView.alpha = 0.9
+        background.addSubview(blurView)
+        
+
+
     }
     
     //all button functions start here
+
     
     @IBAction func uploadImage(_ sender: AnyObject) {
         handleSelectProfileImageView()

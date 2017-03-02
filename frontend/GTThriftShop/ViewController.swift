@@ -99,6 +99,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                     
                     DispatchQueue.main.async(execute: {
+                        self.initialSort()
                         self.loadProductsIndicator.stopAnimating()
                         self.tableView.reloadData()
                     });
@@ -121,6 +122,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         task.resume()
+    }
+    
+    func initialSort() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+        self.products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
     }
     
     func notifyFailure(info: String) {
@@ -163,7 +170,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
             itemImage.image = UIImage(data: imageData as Data)
         } else {
-            itemImage.image = #imageLiteral(resourceName: "calculator")
+            itemImage.image = #imageLiteral(resourceName: "tempLogo")
         }
         itemNameLabel.text = currentProduct.name
         yearUsedLabel.text = currentProduct.usedTime
