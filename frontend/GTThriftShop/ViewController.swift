@@ -171,7 +171,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
                 itemImage.image = UIImage(data: imageData as Data)
             } else {
-                itemImage.image = #imageLiteral(resourceName: "calculator")
+                itemImage.image = #imageLiteral(resourceName: "tempLogo")
             }
         })
         
