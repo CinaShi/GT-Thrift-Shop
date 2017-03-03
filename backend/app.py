@@ -257,13 +257,12 @@ def product_uploader(pid):
 
 @app.route('/products/add/allInfo', methods=['POST'])
 def add_product():
-	if not request.json or not 'userId' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'imageURL' in request.json or not 'tid' in request.json or not 'usedTime' in request.json: 
+	if not request.json or not 'userId' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tid' in request.json or not 'usedTime' in request.json: 
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	pName = request.json['pName']
 	pPrice = request.json['pPrice']
 	pInfo = request.json['pInfo']
-	imageURL = request.json['imageURL']
 	usedTime = request.json['usedTime']
 	tid = request.json['tid']
 	isSold = 0
@@ -273,7 +272,6 @@ def add_product():
 	try:
 		cursor.execute("INSERT INTO Product(userId,pName,pPrice,pInfo,postTime,usedTime,isSold) values (%s,%s,%s,%s,%s,%s,%s)",[userId,pName,pPrice,pInfo,postTime,usedTime,isSold])
 		pid = cursor.lastrowid
-		cursor.execute("INSERT INTO ProductImage(pid,imageURL) values(%s,%s)", [pid,imageURL])
 		cursor.execute("INSERT INTO ProductTag(pid,tid) values(%s,%s)",[pid,tid])
 		db.commit()
 		db.close()
