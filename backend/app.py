@@ -228,6 +228,7 @@ def remove_favorites():
 	   db.close()
 	   abort(400, '{"message":"remove unsuccessful"}')
 
+
 ## Sprint 3
 #author: Yichen
 @app.route('/products/add/images/<pid>', methods=['POST'])
@@ -245,11 +246,12 @@ def product_uploader(pid):
 		addressList.append(imageURL)
 		try:
 			cursor.execute("INSERT INTO ProductImage(pid,imageURL) values(%s,%s)", [pid,imageURL])
-			db.commit()
-			db.close()
 		except:
 			db.rollback()
 			db.close()
+			abort(400, '{"message":"upload unsuccessful"}')
+	db.commit()
+	db.close()
 	return jsonify({'photoUrls':addressList})
 
 
@@ -280,7 +282,6 @@ def add_product():
 		db.rollback()
 		db.close()
 		abort(400, '{"message":"Product info added unsuccessful"}')
-
 
 
 #author: Yichen
