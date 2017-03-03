@@ -28,6 +28,7 @@ class SellViewController: UIViewController, UIImagePickerControllerDelegate,  UI
         // Dispose of any resources that can be recreated.
     }
     
+    
     @IBAction func addPhoto(_ sender: AnyObject) {
         let imagePicker:UIImagePickerController = UIImagePickerController()
         imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
