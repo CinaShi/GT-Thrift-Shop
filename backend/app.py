@@ -230,17 +230,28 @@ def remove_favorites():
 
 ## Sprint 3
 #author: Yichen
-@app.route('/products/image/<userId>', methods=['POST'])
-def product_uploader(userId):
-	return None
-	# if 'file' not in request.files:
-	# 	abort(400)
-	# f = request.files['file']
-	# if f.filename == "":
-	# 	abort(400)
-	# filename = secure_filename(f.filename)
-	# client.upload_fileobj(f, 'gtthriftshopusers', userId + "/" + filename)
-	# return "https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/" + userId + "/" + filename
+@app.route('/products/add/images/<pid>', methods=['POST'])
+def product_uploader(pid):
+	fileList = request.files.getlist('files')
+	if len(fileList) == 0:
+		abort(400)
+	db = mysql.connect()
+	cursor = db.cursor()
+	addressList = []
+	for file in fileList:
+		filename = secure_filename(file.filename)
+		client.upload_fileobj(file, 'gtthriftshopproducts', pid + "/" + filename)
+		imageURL = "https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/" + pid + "/" + filename
+		addressList.append(imageURL)
+		try:
+			cursor.execute("INSERT INTO ProductImage(pid,imageURL) values(%s,%s)", [pid,imageURL])
+			db.commit()
+			db.close()
+		except:
+			db.rollback()
+			db.close()
+	return jsonify({'photoUrls':addressList})
+
 
 @app.route('/products/add/allInfo', methods=['POST'])
 def add_product():
@@ -472,4 +483,4 @@ def update_user_comment():
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
-	#app.run()
+	# app.run()
