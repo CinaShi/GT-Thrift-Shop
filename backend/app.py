@@ -230,7 +230,7 @@ def remove_favorites():
 
 
 ## Sprint 3
-#author: Yichen
+#author: Wen
 @app.route('/products/add/images/<pid>', methods=['POST'])
 def product_uploader(pid):
 	fileList = request.files.getlist('files')
@@ -254,7 +254,7 @@ def product_uploader(pid):
 	db.close()
 	return jsonify({'photoUrls':addressList})
 
-
+#author: Yichen
 @app.route('/products/add/allInfo', methods=['POST'])
 def add_product():
 	if not request.json or not 'userId' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tid' in request.json or not 'usedTime' in request.json: 
