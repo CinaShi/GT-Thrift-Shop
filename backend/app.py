@@ -436,13 +436,15 @@ def get_user_comment(uid):
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT ccontent FROM UserComment WHERE userId = '%s';"%uid)
+	commentList = []
 	if cursor.rowcount > 0:
-		rateRow = cursor.fetchall()[0]
+		commentList = [comment[0] for comment in cursor.fetchall()]
 		db.close()
-		return "comment:'" + str(rateRow[0]) + "'"
+		return jsonify({'comments':commentList})
 	else:
 		db.close()
 		abort(400,"No comment provided for this user")
+
 		
 
 #author: Yichen
