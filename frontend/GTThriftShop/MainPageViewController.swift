@@ -347,13 +347,17 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             let priceLabel = cell?.contentView.viewWithTag(3) as! UILabel
             let sellerLabel = cell?.contentView.viewWithTag(4) as! UILabel
             
-            DispatchQueue.main.async(execute: {
-                if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-                    itemImage.image = UIImage(data: imageData as Data)
-                } else {
-                    itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
-                }
-            })
+            if currentProduct.imageUrls.count <= 0 {
+                itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+            } else {
+                DispatchQueue.main.async(execute: {
+                    if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                        itemImage.image = UIImage(data: imageData as Data)
+                    } else {
+                        itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+                    }
+                })
+            }
             itemNameLabel.text = currentProduct.name
             yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
             priceLabel.text = currentProduct.price
