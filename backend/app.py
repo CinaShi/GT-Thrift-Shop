@@ -329,7 +329,7 @@ def add_interest():
 	    db.close()
 	    abort(400, '{"message":"add interest user unsuccessful"}')
 
-#Wen
+#author: Wen
 @app.route('/transactions/getAll/<uid>', methods=['GET'])
 def get_all_transactions(uid):
 	transList = []
@@ -353,7 +353,7 @@ def get_all_transactions(uid):
 		db.close()
 		abort(400,"Unknown userId")
 
-#Wen
+#author: Wen
 @app.route('/products/getAllPost/<uid>', methods=['GET'])
 def get_all_post(uid):
 	pidList = []
@@ -370,7 +370,7 @@ def get_all_post(uid):
 		db.close()
 		abort(400,"Unknown userId")
 
-#Wen
+#author: Wen
 @app.route('/products/interest/<pid>', methods=['GET'])
 def get_product_interests(pid):
 	uidList = []
@@ -455,7 +455,6 @@ def get_user_comment(uid):
 		db.close()
 		abort(400,"No comment provided for this user")
 
-		
 
 #author: Yichen
 @app.route('/user/comment/update', methods=['POST'])
@@ -478,6 +477,21 @@ def update_user_comment():
 		db.close()
 		abort(400, '{"message":"insert new comment unsuccessful"}')
 
+
+#author: Wen
+@app.route('/tags', methods=['GET'])
+def get_tags():
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT tag FROM Tag;")
+	tagList = []
+	if cursor.rowcount > 0:
+		tagList = [tag[0] for tag in cursor.fetchall()]
+		db.close()
+		return jsonify({'tags':tagList})
+	else:
+		db.close()
+		abort(400,"Fetch tag error")
 
 
 if __name__ == '__main__':
