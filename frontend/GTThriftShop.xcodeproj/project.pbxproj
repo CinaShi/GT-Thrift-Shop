@@ -156,13 +156,9 @@
 				08CA35551E3ACDA100EFF7D1 /* Login */,
 				08757B801E59022900219BCA /* Main Page */,
 				08757B811E59025200219BCA /* Favorite */,
-
 				0899EEEA1E713BCE00262267 /* User Profile */,
 				0899EEEB1E713BF600262267 /* Models */,
-
-				
 				D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */,
-				
 				089ECA481DEE8F7700D508F6 /* ChatViewController.swift */,
 				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
 				089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */,
@@ -286,7 +282,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Triple6;
 				TargetAttributes = {
 					088542BA1DE93481004344D4 = {
@@ -373,11 +369,8 @@
 				0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */,
 				0899EEED1E71DD9800262267 /* MyCommentTableViewController.swift in Sources */,
 				089ECA471DEE8F5D00D508F6 /* ContactSellerViewController.swift in Sources */,
-
 				0899EEF11E71DDF700262267 /* CommentDetailTableViewController.swift in Sources */,
-
 				D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */,
-
 				088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */,
 				08757B7B1E56C56600219BCA /* Product.swift in Sources */,
 				0899EEE51E713B9900262267 /* PublishmentTableViewController.swift in Sources */,
@@ -453,6 +446,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -502,6 +496,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
