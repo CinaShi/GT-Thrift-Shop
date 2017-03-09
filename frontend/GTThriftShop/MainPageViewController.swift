@@ -14,6 +14,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     var userDefaults = UserDefaults.standard
     var searchActive: Bool = false
     var menuShowing = false
+    var sortViewExpanded = false
     
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
@@ -264,27 +265,32 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func chooseSortingFunction(_ sender: Any) {
-        if sortViewButton.imageView?.image == #imageLiteral(resourceName: "un-favorite"){
-            print("aoweijfawoiejfoaiwjefowjofwje;iof")
+        if !sortViewExpanded {
             self.view.addSubview(sortView)
             sortView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 NSLayoutConstraint(item: sortView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 64),
                 NSLayoutConstraint(item: sortView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: 0),
                 ])
-            self.sortView.center = self.view.center
-            sortViewButton.setImage(#imageLiteral(resourceName: "favorited"), for: UIControlState.normal)
+            
+            UIView.animate(withDuration: 0.5, animations: {() -> Void in
+                self.sortViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
+            })
+            sortViewExpanded = true
             
         } else {
-            //sortViewButton.imageView?.image == #imageLiteral(resourceName: "favorited") {
             dismissSortView()
         }
     }
     
     func dismissSortView() {
         self.sortView.removeFromSuperview()
-        sortViewButton.setImage(#imageLiteral(resourceName: "un-favorite"), for: UIControlState.normal)
+        UIView.animate(withDuration: 0.5, animations: {() -> Void in
+            self.sortViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(0))
+        })
+        sortViewExpanded = false
     }
+    
     @IBAction func highPriceFirst(_ sender: Any) {
         products.sort(by: {Double($0.price)! > Double($1.price)!})
         self.tableView.reloadData()
@@ -428,21 +434,25 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true
+        dismissSortView()
         searchBar.showsCancelButton = true
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchActive = false
+        dismissSortView()
         searchBar.showsCancelButton = false
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         searchBar.endEditing(true)
+        dismissSortView()
         searchActive = false
         self.tableView.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false
+        dismissSortView()
         self.searchBar.endEditing(true)
     }
     
