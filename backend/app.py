@@ -340,7 +340,7 @@ def get_all_transactions(uid):
 	db = mysql.connect()
 	cursor = db.cursor()
 
-	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND (Product.userId = %s OR Transaction.buyerId = %s);",[uid, uid]) 
+	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid, Transaction.isRated FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND (Product.userId = %s OR Transaction.buyerId = %s);",[uid, uid]) 
 	if cursor.rowcount > 0:
 		transList = cursor.fetchall()
 		for trans in transList:
@@ -348,6 +348,7 @@ def get_all_transactions(uid):
 			temp["buyerID"] = trans[0]
 			temp["sellerID"] = trans[1]
 			temp["pid"] = trans[2]
+			temp["isRated"] = trans[3]
 			returnList.append(temp)
 		db.close()
 		return jsonify({'transactions':returnList})
@@ -496,6 +497,28 @@ def get_tags():
 		abort(400,"Fetch tag error")
 
 
+#author: Wen
+@app.route('/transactions/get/<tranId>', methods=['GET'])
+def get_transactions(tranId):
+	
+	db = mysql.connect()
+	cursor = db.cursor()
+
+	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid, Transaction.time, Transaction.isRated FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND Transaction.tranId = '%s';"%tranId) 
+	if cursor.rowcount == 1:
+		result = cursor.fetchall()[0]
+		temp = {}
+		temp["buyerID"] = result[0]
+		temp["sellerID"] = result[1]
+		temp["pid"] = result[2]
+		temp["postTime"] = result[3]
+		temp["isRated"] = result[4]
+		db.close()
+		return jsonify({'transaction':temp})
+	else :
+		db.close()
+		abort(400,"Unknown tranId")
+
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
-	#app.run()
+	# app.run()
