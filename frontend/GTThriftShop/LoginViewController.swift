@@ -19,6 +19,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var background: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         background.addSubview(blurView)
         
         loginButton.layer.cornerRadius = 5
-
+        backButton.layer.cornerRadius = 5
     }
     
     //below are functions
@@ -256,9 +257,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.performSegue(withIdentifier: "signup", sender: self)
     }
     
+    
     @IBAction func unwindToMainPage(_ sender: Any) {
         self.performSegue(withIdentifier: "unwindToMainVC", sender: self)
     }
+    
 //below are delegate functions
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
