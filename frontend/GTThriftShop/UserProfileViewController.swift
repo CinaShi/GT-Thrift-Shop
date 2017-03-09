@@ -27,7 +27,7 @@ class UserProfileViewController: UIViewController {
         
         //Load Rating Score
         progressview.progress = 0
-        progressview.setProgress(self.userRating, animated: true)git 
+        progressview.setProgress(self.userRating, animated: true)
         
         //Load image and crop
         profileImage.layer.cornerRadius = profileImage.frame.size.width/2
@@ -78,8 +78,7 @@ class UserProfileViewController: UIViewController {
                     do {
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String,Any>
                         self.userRating = (json["rate"] as? Float)!
-                        
-                        
+
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
                     }

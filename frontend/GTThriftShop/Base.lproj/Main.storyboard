@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -995,6 +995,11 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.49939036370000001" green="0.76137989760000002" blue="0.96535676719999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1029,8 +1034,6 @@
                                     <segue destination="xNb-ts-jBu" kind="show" identifier="publishment" id="Bio-BX-dnH"/>
                                 </connections>
                             </button>
-                            
-                            
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5vS-Zc-Idu">
                                 <rect key="frame" x="0.0" y="335" width="375" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2309,7 +2312,6 @@
         <image name="User Location-100" width="30" height="30"/>
         <image name="background" width="1000" height="1881"/>
         <image name="checked" width="512" height="512"/>
-        <image name="empty-star" width="50" height="50"/>
         <image name="full star" width="50" height="50"/>
         <image name="half-star" width="50" height="50"/>
         <image name="menu" width="50" height="50"/>
