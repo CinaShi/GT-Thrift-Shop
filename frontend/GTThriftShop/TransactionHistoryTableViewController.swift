@@ -13,7 +13,7 @@ class TransactionHistoryTableViewController: UITableViewController {
     var products = [Product]()
     var selected: Product?
     var userId: Int!
-    var myTransactions = [(Int, Product, Int)]()
+    var myTransactions = [(Int, Product, Int, Bool)]()
     var userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
@@ -48,7 +48,77 @@ class TransactionHistoryTableViewController: UITableViewController {
     func loadMyTransactions() {
         //implement this part after backend API changed
         
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/transactions/getAll/\(userId!)")
         
+        var request = URLRequest(url:url! as URL)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            if let httpResponse = response as? HTTPURLResponse {
+                print("***** statusCode: \(httpResponse.statusCode)")
+                if httpResponse.statusCode == 200 {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String,Any>
+                        let array = json["transactions"] as! [Dictionary<String, Any>]
+                        // Loop through objects
+                        for dict in array {
+                            guard let buyerID = dict["buyerID"] as? Int,
+                                let sellerID = dict["sellerID"] as? Int,
+                                let pid = dict["pid"] as? Int,
+                                let isRated = dict["isRated"] as? Bool
+                                else{
+                                    self.notifyFailure(info: "cannot unarchive data from server")
+                                    return
+                            }
+                            let product = self.findProductByPid(pid: pid)
+                            self.myTransactions.append((sellerID, product!, buyerID, isRated))
+                        }
+                        
+                    } catch let error as NSError {
+                        print("Failed to load: \(error.localizedDescription)")
+                    }
+                    
+                    
+                    DispatchQueue.main.async(execute: {
+                        //deal with star here
+                        self.tableView.reloadData()
+                    });
+                } else if httpResponse.statusCode == 404 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot connect to Internet!")
+                    });
+                }
+                else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                    });
+                    
+                }
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+            }
+        }
+        
+        task.resume()
         
         
     }
@@ -107,7 +177,7 @@ class TransactionHistoryTableViewController: UITableViewController {
         let currentProduct = currentTransaction.1
         let seller = currentTransaction.0
         let buyer = currentTransaction.2
-        
+        let isRated = currentTransaction.3
         // Fetches the banks for the data source layout.
         let itemImage = cell.contentView.viewWithTag(5) as! UIImageView
         let sellerImage = cell.contentView.viewWithTag(4) as! UIImageView
@@ -142,8 +212,14 @@ class TransactionHistoryTableViewController: UITableViewController {
             sellerLabel.text = "user: \(seller)"
         }
         
-        isRatedLabel.text = "rated"
-        isRatedLabel.textColor = .green
+        if isRated {
+            isRatedLabel.text = "rated"
+            isRatedLabel.textColor = .green
+        } else {
+            isRatedLabel.text = "unrated"
+            isRatedLabel.textColor = .red
+        }
+        
         
         return cell
     }

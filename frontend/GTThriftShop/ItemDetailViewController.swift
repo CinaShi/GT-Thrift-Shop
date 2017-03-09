@@ -26,6 +26,11 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var nextStepButton: UIButton!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

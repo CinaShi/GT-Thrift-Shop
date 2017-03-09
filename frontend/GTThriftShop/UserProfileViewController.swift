@@ -76,8 +76,8 @@ class UserProfileViewController: UIViewController {
                 print("***** statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 200 {
                     do {
-                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Float
-                        self.userRating = json
+                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String,Any>
+                        self.userRating = (json["rate"] as? Float)!
                         
                         
                     } catch let error as NSError {
