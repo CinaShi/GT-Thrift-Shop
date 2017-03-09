@@ -79,7 +79,7 @@ def add_user_info():
 	   abort(400, '{"message":"insert unsuccessful"}')
 
 ## Sprint 2
-
+#author: Yang
 @app.route('/products', methods=['GET'])
 def get_all_products():
 	
@@ -87,7 +87,7 @@ def get_all_products():
 
 	db = mysql.connect()
 	cursor = db.cursor()
-	cursor.execute("SELECT * FROM Product WHERE isSold = 0 ORDER BY postTime;")
+	cursor.execute("SELECT * FROM Product ORDER BY postTime;")
 	if cursor.rowcount > 0:
 		productList = cursor.fetchall()
 		for pRow in productList:
@@ -98,6 +98,7 @@ def get_all_products():
 			pInfo = pRow[4]
 			postTime = pRow[5]
 			usedTime = pRow[6]
+			isSold = pRow[7]
 			imageCur = db.cursor()
 			imageCur.execute("SELECT imageURL FROM ProductImage WHERE pid = '%d';"%pid)
 			imageList = []
@@ -114,6 +115,7 @@ def get_all_products():
 			currentProduct['postTime'] = postTime
 			currentProduct['usedTime'] = usedTime
 			currentProduct['images'] = imageList
+			currentProduct['isSold'] = isSold
 			productsList.append(currentProduct)
 	db.close()
 	return jsonify({'products':productsList})
@@ -329,7 +331,7 @@ def add_interest():
 	    db.close()
 	    abort(400, '{"message":"add interest user unsuccessful"}')
 
-#Wen
+#author: Wen
 @app.route('/transactions/getAll/<uid>', methods=['GET'])
 def get_all_transactions(uid):
 	transList = []
@@ -338,7 +340,7 @@ def get_all_transactions(uid):
 	db = mysql.connect()
 	cursor = db.cursor()
 
-	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND (Product.userId = %s OR Transaction.buyerId = %s);",[uid, uid]) 
+	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid, Transaction.isRated FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND (Product.userId = %s OR Transaction.buyerId = %s);",[uid, uid]) 
 	if cursor.rowcount > 0:
 		transList = cursor.fetchall()
 		for trans in transList:
@@ -346,6 +348,7 @@ def get_all_transactions(uid):
 			temp["buyerID"] = trans[0]
 			temp["sellerID"] = trans[1]
 			temp["pid"] = trans[2]
+			temp["isRated"] = trans[3]
 			returnList.append(temp)
 		db.close()
 		return jsonify({'transactions':returnList})
@@ -353,7 +356,7 @@ def get_all_transactions(uid):
 		db.close()
 		abort(400,"Unknown userId")
 
-#Wen
+#author: Wen
 @app.route('/products/getAllPost/<uid>', methods=['GET'])
 def get_all_post(uid):
 	pidList = []
@@ -370,7 +373,7 @@ def get_all_post(uid):
 		db.close()
 		abort(400,"Unknown userId")
 
-#Wen
+#author: Wen
 @app.route('/products/interest/<pid>', methods=['GET'])
 def get_product_interests(pid):
 	uidList = []
@@ -455,7 +458,6 @@ def get_user_comment(uid):
 		db.close()
 		abort(400,"No comment provided for this user")
 
-		
 
 #author: Yichen
 @app.route('/user/comment/update', methods=['POST'])
@@ -479,6 +481,43 @@ def update_user_comment():
 		abort(400, '{"message":"insert new comment unsuccessful"}')
 
 
+#author: Wen
+@app.route('/tags', methods=['GET'])
+def get_tags():
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT tag FROM Tag;")
+	tagList = []
+	if cursor.rowcount > 0:
+		tagList = [tag[0] for tag in cursor.fetchall()]
+		db.close()
+		return jsonify({'tags':tagList})
+	else:
+		db.close()
+		abort(400,"Fetch tag error")
+
+
+#author: Wen
+@app.route('/transactions/get/<tranId>', methods=['GET'])
+def get_transactions(tranId):
+	
+	db = mysql.connect()
+	cursor = db.cursor()
+
+	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid, Transaction.time, Transaction.isRated FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND Transaction.tranId = '%s';"%tranId) 
+	if cursor.rowcount == 1:
+		result = cursor.fetchall()[0]
+		temp = {}
+		temp["buyerID"] = result[0]
+		temp["sellerID"] = result[1]
+		temp["pid"] = result[2]
+		temp["postTime"] = result[3]
+		temp["isRated"] = result[4]
+		db.close()
+		return jsonify({'transaction':temp})
+	else :
+		db.close()
+		abort(400,"Unknown tranId")
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')

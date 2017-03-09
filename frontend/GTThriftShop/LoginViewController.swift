@@ -13,6 +13,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     static var authFormPost: String?
     static var authLTPost: String?
     var userIdString = String()
+    var effect: UIVisualEffect!
     
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -20,6 +21,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var background: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var loginBlock: UIView!
+    @IBOutlet weak var loginBlockBlur: UIVisualEffectView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,19 +31,42 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordField.delegate = self
         self.navigationController?.navigationBar.isHidden = true
         
-        let blurEffect = UIBlurEffect(style: .light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        let width = UIScreen.main.bounds.size.width
-        let height = UIScreen.main.bounds.size.height
+//        let blurEffect = UIBlurEffect(style: .light)
+//        let blurView = UIVisualEffectView(effect: blurEffect)
+//        let width = UIScreen.main.bounds.size.width
+//        let height = UIScreen.main.bounds.size.height
+//        
+//        blurView.frame.size = CGSize(width: width, height: height)
+//        blurView.alpha = 0.9
+//        background.addSubview(blurView)
         
-        blurView.frame.size = CGSize(width: width, height: height)
-        blurView.alpha = 0.9
-        background.addSubview(blurView)
+        effect = loginBlockBlur.effect
+        loginBlockBlur.effect = nil
+        
+        loginBlock.layer.cornerRadius = 10
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(LoginViewController.animateIn))
+        self.view.addGestureRecognizer(tap)
+        
         
         loginButton.layer.cornerRadius = 5
         backButton.layer.cornerRadius = 5
     }
     
+
+    func animateIn() {
+        self.view.addSubview(loginBlock)
+        loginBlock.center = self.view.center
+        loginBlock.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        loginBlock.alpha = 0
+        
+        UIView.animate(withDuration: 0.5) {
+            self.loginBlockBlur.effect = self.effect
+            self.loginBlock.alpha = 1
+            self.loginBlock.transform = CGAffineTransform.identity
+        }
+
+    }
     //below are functions
     
     

@@ -14,6 +14,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     var userDefaults = UserDefaults.standard
     var searchActive: Bool = false
     var menuShowing = false
+    var sortViewExpanded = false
     
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
@@ -22,16 +23,17 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadProductsIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var timeSorting: UIButton!
-    @IBOutlet weak var priceSorting: UIButton!
     
+    @IBOutlet var sortView: UIView!
+    @IBOutlet weak var sortViewButton: UIButton!
     @IBOutlet weak var menuTableView: UITableView!
+    
     var tags = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        // Do any additional setup after loading the view, typically from a nib.
+        
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
@@ -40,7 +42,11 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.menuTableView.dataSource = self
         self.menuTableView.delegate = self
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
+//        let tapper: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(MainPageViewController.dismissSortView))
+//        self.view.addGestureRecognizer(tapper)
+        
         self.menuView.layer.shadowOpacity = 0.75
         self.menuView.layer.shadowRadius = 3
         leadingConstraint.constant = -140
@@ -48,9 +54,9 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         tags.append("All")
         tags.append("Calculator")
         tags.append("Computer")
+        
+        
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -60,7 +66,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.reloadData()
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     //Mark: helper methods
@@ -258,31 +264,55 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func sortByPrice(_ sender: Any) {
-        if priceSorting.imageView?.image == #imageLiteral(resourceName: "ascendingPrice"){
-            products.sort(by: {Double($0.price)! > Double($1.price)!})
-            priceSorting.setImage(#imageLiteral(resourceName: "decendingPrice"), for: UIControlState.normal)
+    @IBAction func chooseSortingFunction(_ sender: Any) {
+        if !sortViewExpanded {
+            self.view.addSubview(sortView)
+            sortView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: sortView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 64),
+                NSLayoutConstraint(item: sortView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: 0),
+                ])
+            
+            UIView.animate(withDuration: 0.5, animations: {() -> Void in
+                self.sortViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
+            })
+            sortViewExpanded = true
+            
         } else {
-            products.sort(by: {Double($0.price)! < Double($1.price)!})
-            priceSorting.setImage(#imageLiteral(resourceName: "ascendingPrice"), for: UIControlState.normal)
+            dismissSortView()
         }
-        
+    }
+    
+    func dismissSortView() {
+        self.sortView.removeFromSuperview()
+        UIView.animate(withDuration: 0.5, animations: {() -> Void in
+            self.sortViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(0))
+        })
+        sortViewExpanded = false
+    }
+    
+    @IBAction func highPriceFirst(_ sender: Any) {
+        products.sort(by: {Double($0.price)! > Double($1.price)!})
         self.tableView.reloadData()
     }
-
     
-    @IBAction func sortByTime(_ sender: Any) {
+    @IBAction func lowPriceFirst(_ sender: Any) {
+        products.sort(by: {Double($0.price)! < Double($1.price)!})
+        self.tableView.reloadData()
+    }
+    
+    
+    @IBAction func newItemFirst(_ sender: Any) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
-        if timeSorting.imageView?.image == #imageLiteral(resourceName: "decendingTime"){
-            print("here")
-            products.sort(by: {dateFormatter.date(from: $0.postTime)! < dateFormatter.date(from: $1.postTime)!})
-            timeSorting.setImage(#imageLiteral(resourceName: "ascendingTime"), for: UIControlState.normal)
-        } else {
-            products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
-            timeSorting.setImage(#imageLiteral(resourceName: "decendingTime"), for: UIControlState.normal)
-        }
-        
+        products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
+        self.tableView.reloadData()
+    }
+    
+    @IBAction func oldItemFirst(_ sender: Any) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+        products.sort(by: {dateFormatter.date(from: $0.postTime)! < dateFormatter.date(from: $1.postTime)!})
         self.tableView.reloadData()
     }
     
@@ -377,6 +407,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         if tableView == self.tableView {
+            print("Herererererererer")
             if searchActive {
                 selected = filteredProducts[indexPath.row]
             } else {
@@ -387,6 +418,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         if tableView == self.menuTableView {
             closeMenu(self)
+            print("haosdifja;lijdf;aidsofij")
             print("should send url here")
             if tags[indexPath.row] == "All" {
                 self.loadProductsIndicator.startAnimating()
@@ -404,6 +436,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true
+        dismissSortView()
         searchBar.showsCancelButton = true
     }
     
