@@ -17,23 +17,20 @@ class ItemDetailViewController: UIViewController {
     var sourceVCName: String!
     
     @IBOutlet weak var favoriteImage: UIButton!
-    //@IBOutlet weak var itemImageView: UIImageView!
     @IBOutlet weak var nameLabelView: UILabel!
     @IBOutlet weak var priceLabelView: UILabel!
     @IBOutlet weak var ownerLabelView: UILabel!
     @IBOutlet weak var descriptionView: UITextView!
     @IBOutlet weak var tagView: UILabel!
-    @IBOutlet weak var contactSellerButton: UIButton!
     @IBOutlet weak var loadDetailsIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageScrollView: UIScrollView!
-    
     @IBOutlet weak var nextStepButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        //Scroll View
+        // Scroll View
         var urlStrings = [String]()
         for s in product.imageUrls{
             urlStrings.append(s)
@@ -53,6 +50,7 @@ class ItemDetailViewController: UIViewController {
             imageScrollView.contentSize.width = imageScrollView.frame.width * CGFloat(i+1)
             imageScrollView.addSubview(currPic)
         }
+        
         //Load Text
         nameLabelView.text = product.name
         priceLabelView.text = "$\(product.price!)"
@@ -80,9 +78,9 @@ class ItemDetailViewController: UIViewController {
         loadAdditionalDetails()
         
         //Button UI setup
-        contactSellerButton.layer.borderWidth = 1
-        contactSellerButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
-        contactSellerButton.layer.cornerRadius = 20
+        nextStepButton.layer.borderWidth = 1
+        nextStepButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
+        nextStepButton.layer.cornerRadius = 20
         
         
     }

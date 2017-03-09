@@ -29,8 +29,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         usernameField.delegate = self
         passwordField.delegate = self
-        self.navigationController?.navigationBar.isHidden = true
-        
         
         effect = loginBlockBlur.effect
         loginBlockBlur.effect = nil
@@ -39,8 +37,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(LoginViewController.animateIn))
         self.view.addGestureRecognizer(tap)
-        
-        
+
         loginButton.layer.cornerRadius = 5
         backButton.layer.cornerRadius = 5
     }

@@ -21,8 +21,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        self.navigationController?.navigationBar.isHidden = true
-        
         for key in Array(UserDefaults.standard.dictionaryRepresentation().keys) {
             UserDefaults.standard.removeObject(forKey: key)
         }
