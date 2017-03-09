@@ -42,7 +42,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.menuTableView.dataSource = self
         self.menuTableView.delegate = self
         
-        //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
 //        let tapper: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(MainPageViewController.dismissSortView))
 //        self.view.addGestureRecognizer(tapper)
@@ -66,7 +65,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.reloadData()
         
-        //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     //Mark: helper methods

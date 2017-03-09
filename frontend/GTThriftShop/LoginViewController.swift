@@ -31,14 +31,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordField.delegate = self
         self.navigationController?.navigationBar.isHidden = true
         
-//        let blurEffect = UIBlurEffect(style: .light)
-//        let blurView = UIVisualEffectView(effect: blurEffect)
-//        let width = UIScreen.main.bounds.size.width
-//        let height = UIScreen.main.bounds.size.height
-//        
-//        blurView.frame.size = CGSize(width: width, height: height)
-//        blurView.alpha = 0.9
-//        background.addSubview(blurView)
         
         effect = loginBlockBlur.effect
         loginBlockBlur.effect = nil
