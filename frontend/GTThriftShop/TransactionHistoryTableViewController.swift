@@ -22,6 +22,7 @@ class TransactionHistoryTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.navigationController?.navigationBar.isHidden = false
         myTransactions.removeAll()
         
         loadProductsFromLocal()

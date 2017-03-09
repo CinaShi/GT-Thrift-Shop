@@ -30,7 +30,7 @@ class ItemDetailViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        // Scroll View
+
         var urlStrings = [String]()
         for s in product.imageUrls{
             urlStrings.append(s)
@@ -60,15 +60,36 @@ class ItemDetailViewController: UIViewController {
         let ud = UserDefaults.standard
         userId = ud.integer(forKey: "userId")
         
+        initNextStepButtonBasedOnSourceVC()
+        
+        loadDetailsIndicator.startAnimating()
+        loadAdditionalDetails()
+        
+        //Button UI setup
+        nextStepButton.layer.borderWidth = 1
+        nextStepButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
+        nextStepButton.layer.cornerRadius = 20
+        
+        
+    }
+    
+    func initNextStepButtonBasedOnSourceVC() {
         if sourceVCName == "transactionVC" {
             nextStepButton.setTitle("Rate and comment", for: .normal)
             nextStepButton.addTarget(self, action: #selector(goToRateAndCommentVC), for: .touchUpInside)
             if userId == product.userId {
+                nextStepButton.setTitle("Already rated!", for: .normal)
+                nextStepButton.setTitleColor(.cyan, for: .normal)
                 nextStepButton.isEnabled = false
             }
         } else if userId == product.userId {
             nextStepButton.setTitle("Mark as sold", for: .normal)
             nextStepButton.addTarget(self, action: #selector(markAsSold), for: .touchUpInside)
+            if product.isSold! {
+                nextStepButton.setTitle("Already sold!", for: .normal)
+                nextStepButton.setTitleColor(.cyan, for: .normal)
+                nextStepButton.isEnabled = false
+            }
         } else {
             nextStepButton.setTitle("Contact seller", for: .normal)
             nextStepButton.addTarget(self, action: #selector(goToContactSellerVC), for: .touchUpInside)
@@ -82,7 +103,7 @@ class ItemDetailViewController: UIViewController {
         nextStepButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
         nextStepButton.layer.cornerRadius = 20
         
-        
+
     }
     
     func markAsSold() {
