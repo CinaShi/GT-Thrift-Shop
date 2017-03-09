@@ -42,10 +42,10 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.menuTableView.dataSource = self
         self.menuTableView.delegate = self
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(MainPageViewController.dismissSortView))
-        self.view.addGestureRecognizer(tap)
+//        let tapper: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(MainPageViewController.dismissSortView))
+//        self.view.addGestureRecognizer(tapper)
         
         self.menuView.layer.shadowOpacity = 0.75
         self.menuView.layer.shadowRadius = 3
@@ -66,7 +66,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.reloadData()
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     //Mark: helper methods
@@ -407,6 +407,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         if tableView == self.tableView {
+            print("Herererererererer")
             if searchActive {
                 selected = filteredProducts[indexPath.row]
             } else {
@@ -417,6 +418,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         if tableView == self.menuTableView {
             closeMenu(self)
+            print("haosdifja;lijdf;aidsofij")
             print("should send url here")
             if tags[indexPath.row] == "All" {
                 self.loadProductsIndicator.startAnimating()
@@ -440,19 +442,16 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchActive = false
-        dismissSortView()
         searchBar.showsCancelButton = false
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         searchBar.endEditing(true)
-        dismissSortView()
         searchActive = false
         self.tableView.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false
-        dismissSortView()
         self.searchBar.endEditing(true)
     }
     
