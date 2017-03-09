@@ -14,6 +14,11 @@
 		088542C91DE93481004344D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 088542C71DE93481004344D4 /* LaunchScreen.storyboard */; };
 		088542D41DE93481004344D4 /* GTThriftShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542D31DE93481004344D4 /* GTThriftShopTests.swift */; };
 		088542DF1DE93481004344D4 /* GTThriftShopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542DE1DE93481004344D4 /* GTThriftShopUITests.swift */; };
+		0899EEE51E713B9900262267 /* PublishmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE41E713B9900262267 /* PublishmentTableViewController.swift */; };
+		0899EEE71E713BB000262267 /* TransactionHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE61E713BB000262267 /* TransactionHistoryTableViewController.swift */; };
+		0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */; };
+		0899EEED1E71DD9800262267 /* MyCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */; };
+		0899EEF11E71DDF700262267 /* CommentDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */; };
 		089ECA3F1DEE7F6C00D508F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */; };
 		089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */; };
 		089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */; };
@@ -60,6 +65,11 @@
 		088542DA1DE93481004344D4 /* GTThriftShopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GTThriftShopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		088542DE1DE93481004344D4 /* GTThriftShopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTThriftShopUITests.swift; sourceTree = "<group>"; };
 		088542E01DE93481004344D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0899EEE41E713B9900262267 /* PublishmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishmentTableViewController.swift; sourceTree = "<group>"; };
+		0899EEE61E713BB000262267 /* TransactionHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHistoryTableViewController.swift; sourceTree = "<group>"; };
+		0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateAndCommentTableViewController.swift; sourceTree = "<group>"; };
+		0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCommentTableViewController.swift; sourceTree = "<group>"; };
+		0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentDetailTableViewController.swift; path = ../CommentDetailTableViewController.swift; sourceTree = "<group>"; };
 		089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
@@ -146,13 +156,17 @@
 				08CA35551E3ACDA100EFF7D1 /* Login */,
 				08757B801E59022900219BCA /* Main Page */,
 				08757B811E59025200219BCA /* Favorite */,
-				08757B7A1E56C56600219BCA /* Product.swift */,
+
+				0899EEEA1E713BCE00262267 /* User Profile */,
+				0899EEEB1E713BF600262267 /* Models */,
+
+				
 				D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */,
-				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
+				
 				089ECA481DEE8F7700D508F6 /* ChatViewController.swift */,
+				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
 				089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */,
 				088542C71DE93481004344D4 /* LaunchScreen.storyboard */,
-				089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */,
 				088542CA1DE93481004344D4 /* Info.plist */,
 			);
 			path = GTThriftShop;
@@ -174,6 +188,27 @@
 				088542E01DE93481004344D4 /* Info.plist */,
 			);
 			path = GTThriftShopUITests;
+			sourceTree = "<group>";
+		};
+		0899EEEA1E713BCE00262267 /* User Profile */ = {
+			isa = PBXGroup;
+			children = (
+				0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */,
+				0899EEE41E713B9900262267 /* PublishmentTableViewController.swift */,
+				0899EEE61E713BB000262267 /* TransactionHistoryTableViewController.swift */,
+				0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */,
+				089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */,
+				0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */,
+			);
+			name = "User Profile";
+			sourceTree = "<group>";
+		};
+		0899EEEB1E713BF600262267 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				08757B7A1E56C56600219BCA /* Product.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		08CA35551E3ACDA100EFF7D1 /* Login */ = {
@@ -328,16 +363,24 @@
 				089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */,
 				089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */,
 				089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */,
+				0899EEE71E713BB000262267 /* TransactionHistoryTableViewController.swift in Sources */,
 				089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */,
 				08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */,
 				D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */,
 				089ECA4D1DEE8FAB00D508F6 /* FavoriteViewController.swift in Sources */,
 				089ECA491DEE8F7700D508F6 /* ChatViewController.swift in Sources */,
 				088542C11DE93481004344D4 /* ViewController.swift in Sources */,
+				0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */,
+				0899EEED1E71DD9800262267 /* MyCommentTableViewController.swift in Sources */,
 				089ECA471DEE8F5D00D508F6 /* ContactSellerViewController.swift in Sources */,
+
+				0899EEF11E71DDF700262267 /* CommentDetailTableViewController.swift in Sources */,
+
 				D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */,
+
 				088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */,
 				08757B7B1E56C56600219BCA /* Product.swift in Sources */,
+				0899EEE51E713B9900262267 /* PublishmentTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

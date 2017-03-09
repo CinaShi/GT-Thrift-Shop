@@ -27,6 +27,8 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var loadDetailsIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageScrollView: UIScrollView!
     
+    @IBOutlet weak var nextStepButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -60,6 +62,20 @@ class ItemDetailViewController: UIViewController {
         let ud = UserDefaults.standard
         userId = ud.integer(forKey: "userId")
         
+        if sourceVCName == "transactionVC" {
+            nextStepButton.setTitle("Rate and comment", for: .normal)
+            nextStepButton.addTarget(self, action: #selector(goToRateAndCommentVC), for: .touchUpInside)
+            if userId == product.userId {
+                nextStepButton.isEnabled = false
+            }
+        } else if userId == product.userId {
+            nextStepButton.setTitle("Mark as sold", for: .normal)
+            nextStepButton.addTarget(self, action: #selector(markAsSold), for: .touchUpInside)
+        } else {
+            nextStepButton.setTitle("Contact seller", for: .normal)
+            nextStepButton.addTarget(self, action: #selector(goToContactSellerVC), for: .touchUpInside)
+        }
+        
         loadDetailsIndicator.startAnimating()
         loadAdditionalDetails()
         
@@ -69,6 +85,18 @@ class ItemDetailViewController: UIViewController {
         contactSellerButton.layer.cornerRadius = 20
         
         
+    }
+    
+    func markAsSold() {
+        print("code for markAsSold function")
+    }
+    
+    func goToContactSellerVC() {
+        self.performSegue(withIdentifier: "contactSellerVC", sender: self)
+    }
+    
+    func goToRateAndCommentVC() {
+        self.performSegue(withIdentifier: "rateAndCommentVC", sender: self)
     }
     
     func loadAdditionalDetails() {
@@ -262,6 +290,10 @@ class ItemDetailViewController: UIViewController {
             self.performSegue(withIdentifier: "unwindToMainPage", sender: self)
         } else if sourceVCName == "favoriteVC" {
             self.performSegue(withIdentifier: "unwindToFavorite", sender: self)
+        } else if sourceVCName == "publishmentVC" {
+            self.performSegue(withIdentifier: "unwindToPublishment", sender: self)
+        } else if sourceVCName == "transactionVC" {
+            self.performSegue(withIdentifier: "unwindToTransaction", sender: self)
         }
         
         
@@ -269,10 +301,28 @@ class ItemDetailViewController: UIViewController {
         
     }
     
-    @IBAction func unwindFromContactSellerVC(segue: UIStoryboardSegue) {
+    @IBAction func unwindToItemDetailVC(segue: UIStoryboardSegue) {
         if segue.source is ContactSellerViewController {
             print("unwind from contact VC")
+        } else if segue.source is RateAndCommentTableViewController {
+            print("unwind from rateAndComment VC")
         }
     }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "contactSellerVC"{
+            let destination = segue.destination as! ContactSellerViewController
+            destination.userId = userId!
+            destination.pid = product.pid!
+        } else if segue.identifier == "rateAndCommentVC" {
+            let destination = segue.destination as! RateAndCommentTableViewController
+        }
+        
+    }
+    
+    
     
 }

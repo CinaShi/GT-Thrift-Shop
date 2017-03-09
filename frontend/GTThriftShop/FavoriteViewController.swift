@@ -44,7 +44,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         if let decoded = userDefaults.object(forKey: "products") as? Data {
             products = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Product]
         } else {
-            notifyFailure(info: "Please connect to Internet")
+            notifyFailure(info: "Please connect to Internet!")
             //actually might need to manually grab data from server again here. Need opinions
         }
         
