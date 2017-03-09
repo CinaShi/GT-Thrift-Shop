@@ -79,7 +79,7 @@ def add_user_info():
 	   abort(400, '{"message":"insert unsuccessful"}')
 
 ## Sprint 2
-
+#author: Yang
 @app.route('/products', methods=['GET'])
 def get_all_products():
 	
@@ -87,7 +87,7 @@ def get_all_products():
 
 	db = mysql.connect()
 	cursor = db.cursor()
-	cursor.execute("SELECT * FROM Product WHERE isSold = 0 ORDER BY postTime;")
+	cursor.execute("SELECT * FROM Product ORDER BY postTime;")
 	if cursor.rowcount > 0:
 		productList = cursor.fetchall()
 		for pRow in productList:
@@ -98,6 +98,7 @@ def get_all_products():
 			pInfo = pRow[4]
 			postTime = pRow[5]
 			usedTime = pRow[6]
+			isSold = pRow[7]
 			imageCur = db.cursor()
 			imageCur.execute("SELECT imageURL FROM ProductImage WHERE pid = '%d';"%pid)
 			imageList = []
@@ -114,6 +115,7 @@ def get_all_products():
 			currentProduct['postTime'] = postTime
 			currentProduct['usedTime'] = usedTime
 			currentProduct['images'] = imageList
+			currentProduct['isSold'] = isSold
 			productsList.append(currentProduct)
 	db.close()
 	return jsonify({'products':productsList})
@@ -496,4 +498,4 @@ def get_tags():
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
-	# app.run()
+	#app.run()
