@@ -27,7 +27,6 @@ class UserProfileViewController: UIViewController {
         
         //Load Rating Score
         progressview.progress = 0
-        progressview.setProgress(self.userRating, animated: true)
         
         //Load image and crop
         profileImage.layer.cornerRadius = profileImage.frame.size.width/2
@@ -87,6 +86,8 @@ class UserProfileViewController: UIViewController {
                     DispatchQueue.main.async(execute: {
                         //deal with star here
                         self.changeRatingStars()
+                        self.progressview.setProgress(self.userRating, animated: true)
+
                     });
                 } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
