@@ -20,7 +20,7 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         commentTextView.delegate = self
-        
+        self.navigationController?.navigationBar.isHidden = false
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tap(gesture:)))
         self.view.addGestureRecognizer(tapGesture)
     }
