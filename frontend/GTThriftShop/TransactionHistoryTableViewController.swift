@@ -12,6 +12,7 @@ class TransactionHistoryTableViewController: UITableViewController {
 
     var products = [Product]()
     var selected: Product?
+    var selectedIsRated: Bool?
     var userId: Int!
     var myTransactions = [(Int, Product, Int, Bool)]()
     var userDefaults = UserDefaults.standard
@@ -82,12 +83,16 @@ class TransactionHistoryTableViewController: UITableViewController {
                             guard let buyerID = dict["buyerID"] as? Int,
                                 let sellerID = dict["sellerID"] as? Int,
                                 let pid = dict["pid"] as? Int,
-                                let isRated = dict["isRated"] as? Bool
+                                let isRatedString = dict["isRated"] as? String
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
                             let product = self.findProductByPid(pid: pid)
+                            var isRated = false
+                            if isRatedString == "1" {
+                                isRated = true
+                            }
                             self.myTransactions.append((sellerID, product!, buyerID, isRated))
                         }
                         
@@ -227,6 +232,7 @@ class TransactionHistoryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         selected = myTransactions[indexPath.row].1
+        selectedIsRated = myTransactions[indexPath.row].3
         performSegue(withIdentifier: "getItemDetailsFromTransactionHistory", sender: nil)
         
     }
@@ -239,6 +245,7 @@ class TransactionHistoryTableViewController: UITableViewController {
             let destination = segue.destination as! ItemDetailViewController
             print(selected!.description)
             destination.product = selected!
+            destination.isRated = selectedIsRated!
             destination.sourceVCName = "transactionVC"
         }
         
