@@ -15,6 +15,7 @@ class ItemDetailViewController: UIViewController {
     var tags = [String]()
     var imageArray = [UIImage]()
     var sourceVCName: String!
+    var isRated = false
     
     @IBOutlet weak var favoriteImage: UIButton!
     @IBOutlet weak var nameLabelView: UILabel!
@@ -80,12 +81,19 @@ class ItemDetailViewController: UIViewController {
     
     func initNextStepButtonBasedOnSourceVC() {
         if sourceVCName == "transactionVC" {
-            nextStepButton.setTitle("Rate and comment", for: .normal)
-            nextStepButton.addTarget(self, action: #selector(goToRateAndCommentVC), for: .touchUpInside)
             if userId == product.userId {
-                nextStepButton.setTitle("Already rated!", for: .normal)
+                nextStepButton.setTitle("Can't rate yourself :P", for: .normal)
                 nextStepButton.setTitleColor(.cyan, for: .normal)
                 nextStepButton.isEnabled = false
+            } else {
+                if !isRated {
+                    nextStepButton.setTitle("Rate and comment", for: .normal)
+                    nextStepButton.addTarget(self, action: #selector(goToRateAndCommentVC), for: .touchUpInside)
+                } else {
+                    nextStepButton.setTitle("Already rated!", for: .normal)
+                    nextStepButton.setTitleColor(.cyan, for: .normal)
+                    nextStepButton.isEnabled = false
+                }
             }
         } else if userId == product.userId {
             nextStepButton.setTitle("Mark as sold", for: .normal)
