@@ -178,7 +178,7 @@
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="   GT ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2nw-ws-Faa">
-                                <rect key="frame" x="34.5" y="243" width="306" height="35"/>
+                                <rect key="frame" x="35" y="243" width="306" height="35"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93725490199999995" blue="0.95294117649999999" alpha="0.75816031678082196" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Ng1-Wd-1nb"/>
@@ -189,7 +189,7 @@
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="   Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DOB-JF-rmj">
-                                <rect key="frame" x="34.5" y="294" width="306" height="35"/>
+                                <rect key="frame" x="35" y="294" width="306" height="35"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93725490199999995" blue="0.95294117649999999" alpha="0.75816031678082196" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.49803921569999998" green="0.76078431369999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -205,7 +205,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeC-Bw-osx">
-                                <rect key="frame" x="114.5" y="630" width="146" height="29"/>
+                                <rect key="frame" x="115" y="630" width="146" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                 <state key="normal" title="Forget your password?">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2185,7 +2185,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xNb-ts-jBu" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pVQ-oi-gv0">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pVQ-oi-gv0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2203,7 +2203,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JSi-yD-L4H" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="lPd-51-r6E">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lPd-51-r6E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2221,7 +2221,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="U0C-z8-sSW" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="k7b-Tn-Yxx">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="k7b-Tn-Yxx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2239,7 +2239,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="clp-fT-W1p" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="qGk-dI-P8a">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qGk-dI-P8a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
