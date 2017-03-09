@@ -399,9 +399,9 @@ def get_user_rate(uid):
 	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%uid)
 	if cursor.rowcount >0:
 		rateRow = cursor.fetchall()[0]
-		return str(rateRow[0])
+		return jsonify({'rate':rateRow[0]})
 	else:
-		return ("-1")
+		return jsonify({'rate':"-1"})
 	db.close()
 
 #author Yang
