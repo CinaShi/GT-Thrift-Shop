@@ -471,16 +471,16 @@ def update_user_comment():
 	postTime = datetime.datetime.now()
 	db = mysql.connect()
 	cursor = db.cursor()
-	#try:
-	cursor.execute("INSERT INTO UserComment(userId,ccontent,commentatorId,tranId,postTime) values (%s,%s,%s,%s,%s)",[userId,ccontent,commentatorId,tranId,postTime])
-	newId = cursor.lastrowid
-	db.commit()
-	db.close()
-	return("success")
-	#except:
-	#db.rollback()
-	#db.close()
-	#abort(400, '{"message":"insert new comment unsuccessful"}')
+	try:
+		cursor.execute("INSERT INTO UserComment(userId,ccontent,commentatorId,tranId,postTime) values (%s,%s,%s,%s,%s)",[userId,ccontent,commentatorId,tranId,postTime])
+		newId = cursor.lastrowid
+		db.commit()
+		db.close()
+		return("success")
+	except:
+		db.rollback()
+		db.close()
+		abort(400, '{"message":"insert new comment unsuccessful"}')
 
 
 #author: Wen
