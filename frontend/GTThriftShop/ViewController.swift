@@ -13,6 +13,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadProductsIndicator: UIActivityIndicatorView!
     
+    //all products include sold and unsold products, while products include only unsold ones
+    var allProducts = [Product]()
     var products = [Product]()
     
     override func viewDidLoad() {
@@ -30,7 +32,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+        allProducts.removeAll()
         products.removeAll()
         
         obtainAllProductsFromServer()
@@ -82,7 +84,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 let postTime = dict["postTime"] as? String,
                                 let usedTime = dict["usedTime"] as? String,
                                 let userId = dict["userId"] as? Int,
-                                let imageUrls = dict["images"] as? [String]
+                                let imageUrls = dict["images"] as? [String],
+                                let isSold = dict["isSold"] as? Bool
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
@@ -90,8 +93,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //                            print("image list --> \(dict["iamges"])")
 //                            var imageUrls = [String]()
 //                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
-                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls)
-                            self.products.append(newProduct)
+                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls, isSold: isSold)
+                            self.allProducts.append(newProduct)
                         }
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
@@ -99,6 +102,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                     
                     DispatchQueue.main.async(execute: {
+                        self.filterOutSoldProducts()
+                        
                         self.initialSort()
                         self.loadProductsIndicator.stopAnimating()
                         self.tableView.reloadData()
@@ -122,6 +127,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         task.resume()
+    }
+    
+    func filterOutSoldProducts() {
+        for product in allProducts {
+            if !product.isSold {
+                self.products.append(product)
+            }
+        }
     }
     
     func initialSort() {

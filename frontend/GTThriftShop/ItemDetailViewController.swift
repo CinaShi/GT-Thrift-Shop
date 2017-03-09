@@ -33,6 +33,8 @@ class ItemDetailViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        self.navigationController?.navigationBar.isHidden = true
+        
         //Scroll View
         var urlStrings = [String]()
         for s in product.imageUrls{
@@ -62,19 +64,7 @@ class ItemDetailViewController: UIViewController {
         let ud = UserDefaults.standard
         userId = ud.integer(forKey: "userId")
         
-        if sourceVCName == "transactionVC" {
-            nextStepButton.setTitle("Rate and comment", for: .normal)
-            nextStepButton.addTarget(self, action: #selector(goToRateAndCommentVC), for: .touchUpInside)
-            if userId == product.userId {
-                nextStepButton.isEnabled = false
-            }
-        } else if userId == product.userId {
-            nextStepButton.setTitle("Mark as sold", for: .normal)
-            nextStepButton.addTarget(self, action: #selector(markAsSold), for: .touchUpInside)
-        } else {
-            nextStepButton.setTitle("Contact seller", for: .normal)
-            nextStepButton.addTarget(self, action: #selector(goToContactSellerVC), for: .touchUpInside)
-        }
+        initNextStepButtonBasedOnSourceVC()
         
         loadDetailsIndicator.startAnimating()
         loadAdditionalDetails()
@@ -85,6 +75,29 @@ class ItemDetailViewController: UIViewController {
         contactSellerButton.layer.cornerRadius = 20
         
         
+    }
+    
+    func initNextStepButtonBasedOnSourceVC() {
+        if sourceVCName == "transactionVC" {
+            nextStepButton.setTitle("Rate and comment", for: .normal)
+            nextStepButton.addTarget(self, action: #selector(goToRateAndCommentVC), for: .touchUpInside)
+            if userId == product.userId {
+                nextStepButton.setTitle("Already rated!", for: .normal)
+                nextStepButton.setTitleColor(.cyan, for: .normal)
+                nextStepButton.isEnabled = false
+            }
+        } else if userId == product.userId {
+            nextStepButton.setTitle("Mark as sold", for: .normal)
+            nextStepButton.addTarget(self, action: #selector(markAsSold), for: .touchUpInside)
+            if product.isSold! {
+                nextStepButton.setTitle("Already sold!", for: .normal)
+                nextStepButton.setTitleColor(.cyan, for: .normal)
+                nextStepButton.isEnabled = false
+            }
+        } else {
+            nextStepButton.setTitle("Contact seller", for: .normal)
+            nextStepButton.addTarget(self, action: #selector(goToContactSellerVC), for: .touchUpInside)
+        }
     }
     
     func markAsSold() {

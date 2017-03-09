@@ -9,6 +9,8 @@
 import UIKit
 
 class MainPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+    //all products include sold and unsold products, while products include only unsold ones
+    var allProducts = [Product]()
     var products = [Product]()
     var selected: Product?
     var userDefaults = UserDefaults.standard
@@ -59,6 +61,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        allProducts.removeAll()
         products.removeAll()
         
         obtainAllProductsFromServer()
@@ -70,7 +74,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     //Mark: helper methods
     
     func storeProductsToLocal() {
-        let productsToSave = products.sorted(by: {$0.pid! < $1.pid!})
+        let productsToSave = allProducts.sorted(by: {$0.pid! < $1.pid!})
         let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: productsToSave)
         userDefaults.set(encodedData, forKey: "products")
         userDefaults.synchronize()
@@ -125,14 +129,15 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                                 let postTime = dict["postTime"] as? String,
                                 let usedTime = dict["usedTime"] as? String,
                                 let userId = dict["userId"] as? Int,
-                                let imageUrls = dict["images"] as? [String]
+                                let imageUrls = dict["images"] as? [String],
+                                let isSold = dict["isSold"] as? Bool
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
 
-                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls)
-                            self.products.append(newProduct)
+                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls, isSold: isSold)
+                            self.allProducts.append(newProduct)
                             
                         }
                     } catch let error as NSError {
@@ -141,6 +146,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     
                     DispatchQueue.main.async(execute: {
+                        self.filterOutSoldProducts()
+                        
                         self.initialSort()
                         self.loadProductsIndicator.stopAnimating()
                         self.storeProductsToLocal()
@@ -165,6 +172,14 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         task.resume()
+    }
+    
+    func filterOutSoldProducts() {
+        for product in allProducts {
+            if !product.isSold {
+                self.products.append(product)
+            }
+        }
     }
     
     func getPidsByTag(tag: String) {

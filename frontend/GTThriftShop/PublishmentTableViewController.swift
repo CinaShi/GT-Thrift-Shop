@@ -21,6 +21,7 @@ class PublishmentTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.navigationController?.navigationBar.isHidden = false
         myProducts.removeAll()
         
         loadProductsFromLocal()
@@ -125,8 +126,14 @@ class PublishmentTableViewController: UITableViewController {
         yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
         priceLabel.text = currentProduct.price
         sellerLabel.text = "Seller ID: \(currentProduct.userId!)"
-        isSoldLabel.text = "On Sale"
-        isSoldLabel.textColor = UIColor.green
+        if currentProduct.isSold! {
+            isSoldLabel.text = "Sold"
+            isSoldLabel.textColor = .red
+        } else {
+            isSoldLabel.text = "On Sale"
+            isSoldLabel.textColor = .green
+        }
+        
         
         return cell
     }

@@ -17,8 +17,9 @@ class Product: NSObject, NSCoding {
     let postTime: String!
     let usedTime: String!
     let userId: Int!
+    var isSold: Bool!
     
-    init(name: String, price: String, info: String, pid: Int, postTime: String, usedTime: String, userId: Int, imageUrls: [String]) {
+    init(name: String, price: String, info: String, pid: Int, postTime: String, usedTime: String, userId: Int, imageUrls: [String], isSold: Bool) {
         self.name = name
         self.price = price
         self.info = info
@@ -27,6 +28,7 @@ class Product: NSObject, NSCoding {
         self.usedTime = usedTime
         self.userId = userId
         self.imageUrls = imageUrls
+        self.isSold = isSold
     }
     
     required init(coder decoder: NSCoder) {
@@ -38,6 +40,7 @@ class Product: NSObject, NSCoding {
         self.usedTime = decoder.decodeObject(forKey: "usedTime") as! String
         self.userId = decoder.decodeInteger(forKey: "userId")
         self.imageUrls = decoder.decodeObject(forKey: "imageUrls") as! [String]
+        self.isSold = decoder.decodeBool(forKey: "isSold")
     }
     
     func encode(with aCoder: NSCoder) {
@@ -53,6 +56,15 @@ class Product: NSObject, NSCoding {
             aCoder.encode(userId, forKey: "userId")
         }
         aCoder.encode(imageUrls, forKey: "imageUrls")
+        if let isSold = isSold {
+            aCoder.encode(isSold, forKey: "isSold")
+        }
         
+    }
+    
+    func setSold() {
+        if self.isSold == false {
+            self.isSold = true
+        }
     }
 }
