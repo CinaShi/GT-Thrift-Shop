@@ -27,7 +27,7 @@ class UserProfileViewController: UIViewController {
         
         //Load Rating Score
         progressview.progress = 0
-        progressview.setProgress(1, animated: true)
+        progressview.setProgress(self.userRating, animated: true)git 
         
         //Load image and crop
         profileImage.layer.cornerRadius = profileImage.frame.size.width/2
