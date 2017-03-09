@@ -462,15 +462,17 @@ def get_user_comment(uid):
 #author: Yichen
 @app.route('/user/comment/update', methods=['POST'])
 def update_user_comment():
-	if not request.json or not 'userId' in request.json or not 'ccontent' in request.json or not 'commentatorId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'ccontent' in request.json or not 'commentatorId' in request.json or not 'tranId' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	ccontent = request.json['ccontent']
 	commentatorId = request.json['commentatorId']
+	tranId = request.json['tranId']
+	postTime = datetime.datetime.now()
 	db = mysql.connect()
 	cursor = db.cursor()
 	try:
-		cursor.execute("INSERT INTO UserComment(userId,ccontent,commentatorId) values (%s,%s,%s)",[userId,ccontent,commentatorId])
+		cursor.execute("INSERT INTO UserComment(userId,ccontent,commentatorId,tranId,postTime) values (%s,%s,%s,%s,%s)",[userId,ccontent,commentatorId,tranId,postTime])
 		newId = cursor.lastrowid
 		db.commit()
 		db.close()
@@ -521,4 +523,4 @@ def get_transactions(tranId):
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
-	# app.run()
+	#app.run()
