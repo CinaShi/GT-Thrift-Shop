@@ -22,16 +22,17 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadProductsIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var timeSorting: UIButton!
-    @IBOutlet weak var priceSorting: UIButton!
     
+    @IBOutlet var sortView: UIView!
+    @IBOutlet weak var sortViewButton: UIButton!
     @IBOutlet weak var menuTableView: UITableView!
+    
     var tags = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        // Do any additional setup after loading the view, typically from a nib.
+        
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
@@ -41,6 +42,10 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.menuTableView.delegate = self
         
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(MainPageViewController.dismissSortView))
+        self.view.addGestureRecognizer(tap)
+        
         self.menuView.layer.shadowOpacity = 0.75
         self.menuView.layer.shadowRadius = 3
         leadingConstraint.constant = -140
@@ -48,9 +53,9 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         tags.append("All")
         tags.append("Calculator")
         tags.append("Computer")
+        
+        
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -258,31 +263,50 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func sortByPrice(_ sender: Any) {
-        if priceSorting.imageView?.image == #imageLiteral(resourceName: "ascendingPrice"){
-            products.sort(by: {Double($0.price)! > Double($1.price)!})
-            priceSorting.setImage(#imageLiteral(resourceName: "decendingPrice"), for: UIControlState.normal)
+    @IBAction func chooseSortingFunction(_ sender: Any) {
+        if sortViewButton.imageView?.image == #imageLiteral(resourceName: "un-favorite"){
+            print("aoweijfawoiejfoaiwjefowjofwje;iof")
+            self.view.addSubview(sortView)
+            sortView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: sortView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 64),
+                NSLayoutConstraint(item: sortView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: 0),
+                ])
+            self.sortView.center = self.view.center
+            sortViewButton.setImage(#imageLiteral(resourceName: "favorited"), for: UIControlState.normal)
+            
         } else {
-            products.sort(by: {Double($0.price)! < Double($1.price)!})
-            priceSorting.setImage(#imageLiteral(resourceName: "ascendingPrice"), for: UIControlState.normal)
+            //sortViewButton.imageView?.image == #imageLiteral(resourceName: "favorited") {
+            dismissSortView()
         }
-        
+    }
+    
+    func dismissSortView() {
+        self.sortView.removeFromSuperview()
+        sortViewButton.setImage(#imageLiteral(resourceName: "un-favorite"), for: UIControlState.normal)
+    }
+    @IBAction func highPriceFirst(_ sender: Any) {
+        products.sort(by: {Double($0.price)! > Double($1.price)!})
         self.tableView.reloadData()
     }
-
     
-    @IBAction func sortByTime(_ sender: Any) {
+    @IBAction func lowPriceFirst(_ sender: Any) {
+        products.sort(by: {Double($0.price)! < Double($1.price)!})
+        self.tableView.reloadData()
+    }
+    
+    
+    @IBAction func newItemFirst(_ sender: Any) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
-        if timeSorting.imageView?.image == #imageLiteral(resourceName: "decendingTime"){
-            print("here")
-            products.sort(by: {dateFormatter.date(from: $0.postTime)! < dateFormatter.date(from: $1.postTime)!})
-            timeSorting.setImage(#imageLiteral(resourceName: "ascendingTime"), for: UIControlState.normal)
-        } else {
-            products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
-            timeSorting.setImage(#imageLiteral(resourceName: "decendingTime"), for: UIControlState.normal)
-        }
-        
+        products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
+        self.tableView.reloadData()
+    }
+    
+    @IBAction func oldItemFirst(_ sender: Any) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+        products.sort(by: {dateFormatter.date(from: $0.postTime)! < dateFormatter.date(from: $1.postTime)!})
         self.tableView.reloadData()
     }
     
