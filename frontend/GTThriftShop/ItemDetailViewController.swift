@@ -52,7 +52,7 @@ class ItemDetailViewController: UIViewController {
                 imageArray.append(UIImage(data: imageData as Data)!)
             }
         }
-        
+        imageScrollView.frame = CGRect(x: 0, y: 64, width: self.view.frame.width, height: 200)
         for i in 0..<imageArray.count{
             let currPic = UIImageView()
             currPic.image = imageArray[i]
