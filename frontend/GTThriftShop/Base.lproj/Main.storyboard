@@ -1296,8 +1296,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentItemCell" rowHeight="111" id="uUE-zn-2aw">
-                                <rect key="frame" x="0.0" y="28" width="375" height="111"/>
-
+                                <rect key="frame" x="0.0" y="28" width="414" height="111"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uUE-zn-2aw" id="WNg-sE-E4f">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="111"/>
@@ -1835,7 +1834,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fgs-2Y-tMk">
-                                <rect key="frame" x="10" y="28" width="30" height="30"/>
+                                <rect key="frame" x="10" y="72" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="14P-Xr-8oz"/>
                                     <constraint firstAttribute="height" constant="30" id="fnI-4M-sKB"/>
@@ -1846,7 +1845,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqQ-cN-1LN">
-                                <rect key="frame" x="369" y="28" width="30" height="30"/>
+                                <rect key="frame" x="369" y="72" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="Q4A-Ua-DGo"/>
                                     <constraint firstAttribute="height" constant="30" id="mDN-RG-KdI"/>
@@ -2339,6 +2338,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bs9-cY-yCb"/>
-        <segue reference="BFQ-Nz-74P"/>
+        <segue reference="qew-ik-tyZ"/>
     </inferredMetricsTieBreakers>
 </document>
