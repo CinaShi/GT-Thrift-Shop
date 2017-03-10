@@ -16,15 +16,22 @@ class TransactionHistoryTableViewController: UITableViewController {
     var userId: Int!
     var myTransactions = [(Int, Product, Int, Bool)]()
     var userDefaults = UserDefaults.standard
+    var activityIndicatorView: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        tableView.backgroundView = activityIndicatorView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = false
         myTransactions.removeAll()
+        
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        
+        activityIndicatorView.startAnimating()
         
         loadProductsFromLocal()
         loadMyTransactions()
@@ -103,7 +110,9 @@ class TransactionHistoryTableViewController: UITableViewController {
                     
                     DispatchQueue.main.async(execute: {
                         //deal with star here
+                        
                         self.tableView.reloadData()
+                        self.activityIndicatorView.stopAnimating()
                     });
                 } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
@@ -139,6 +148,7 @@ class TransactionHistoryTableViewController: UITableViewController {
     
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
+        self.activityIndicatorView.stopAnimating()
     }
     
     func sendAlart(info: String) {
