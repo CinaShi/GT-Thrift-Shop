@@ -2201,6 +2201,11 @@
                         <constraint firstItem="jZ8-xu-wgB" firstAttribute="leading" secondItem="oID-Mo-5IS" secondAttribute="leading" id="yJM-0P-jcl"/>
                         <constraint firstAttribute="bottom" secondItem="IZb-kd-6pv" secondAttribute="bottom" id="yUL-9w-Fzs"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
                 <exit id="ZOk-hp-Z0r" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
