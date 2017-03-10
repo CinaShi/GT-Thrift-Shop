@@ -371,6 +371,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     
+    
     /*
     // MARK: - Navigation
 
