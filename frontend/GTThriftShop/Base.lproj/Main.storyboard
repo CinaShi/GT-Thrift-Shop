@@ -869,7 +869,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m2c-zP-iVu">
-                                                    <rect key="frame" x="127" y="38.333333333333329" width="160" height="29.999999999999986"/>
+                                                    <rect key="frame" x="127" y="38.666666666666671" width="160" height="30.000000000000014"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="160" id="UY8-xa-aYm"/>
                                                         <constraint firstAttribute="height" constant="30" id="j7o-h3-sqx"/>
@@ -1167,6 +1167,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iOS-9-Wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="PLd-ae-Fav" userLabel="back image">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lon-zC-KA3">
+                                <rect key="frame" x="0.0" y="317" width="414" height="419"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wQD-qx-3nI">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="419"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yZx-EH-jts">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="317"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="OKl-d5-MHQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="317"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="yZx-EH-jts" secondAttribute="height" multiplier="414:317" id="792-de-afC"/>
+                                </constraints>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7r-YX-YSk" userLabel="background">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="317"/>
                                 <subviews>
@@ -1214,7 +1236,6 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.49803921568627452" green="0.76078431372549016" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="ewT-2f-fUg" firstAttribute="top" secondItem="miT-nd-aPf" secondAttribute="bottom" constant="5" id="A0D-Wh-kVo"/>
                                     <constraint firstItem="qJf-D2-LWV" firstAttribute="top" secondItem="oB5-jm-8mN" secondAttribute="bottom" constant="10" id="J4I-N6-pxV"/>
@@ -1232,7 +1253,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7F0-fD-cE6">
-                                <rect key="frame" x="37.666666666666657" y="342" width="340" height="180"/>
+                                <rect key="frame" x="37" y="342" width="340" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="gWX-WN-Hvq"/>
                                     <constraint firstAttribute="width" constant="340" id="qdN-ZS-Yra"/>
@@ -1243,7 +1264,6 @@
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mvR-3C-guB">
                                 <rect key="frame" x="94.666666666666686" y="625" width="225" height="42"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="ObL-Oo-PN6"/>
                                     <constraint firstAttribute="width" constant="225" id="Who-Fn-nLq"/>
@@ -1256,11 +1276,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="yZx-EH-jts" secondAttribute="trailing" id="8rT-Cv-Xk6"/>
+                            <constraint firstItem="PLd-ae-Fav" firstAttribute="leading" secondItem="rd6-Up-wMR" secondAttribute="leading" id="Hcj-cl-Awe"/>
+                            <constraint firstAttribute="bottom" secondItem="PLd-ae-Fav" secondAttribute="bottom" id="HvB-eO-GGu"/>
                             <constraint firstItem="G94-Cv-AQE" firstAttribute="top" secondItem="mvR-3C-guB" secondAttribute="bottom" constant="20" id="IdB-IV-JQg"/>
                             <constraint firstItem="mvR-3C-guB" firstAttribute="centerX" secondItem="rd6-Up-wMR" secondAttribute="centerX" id="UF0-MO-fdx"/>
                             <constraint firstItem="N7r-YX-YSk" firstAttribute="leading" secondItem="rd6-Up-wMR" secondAttribute="leading" id="aX8-1F-Vbj"/>
+                            <constraint firstAttribute="trailing" secondItem="PLd-ae-Fav" secondAttribute="trailing" id="bBg-VH-Jkz"/>
+                            <constraint firstAttribute="trailing" secondItem="Lon-zC-KA3" secondAttribute="trailing" id="e2e-6m-Be6"/>
+                            <constraint firstItem="Lon-zC-KA3" firstAttribute="leading" secondItem="rd6-Up-wMR" secondAttribute="leading" id="euU-wE-WYP"/>
+                            <constraint firstItem="PLd-ae-Fav" firstAttribute="top" secondItem="rd6-Up-wMR" secondAttribute="top" id="fNY-hw-0Dl"/>
                             <constraint firstItem="N7r-YX-YSk" firstAttribute="top" secondItem="rd6-Up-wMR" secondAttribute="top" id="gIt-Y1-nh7"/>
                             <constraint firstItem="7F0-fD-cE6" firstAttribute="top" secondItem="N7r-YX-YSk" secondAttribute="bottom" constant="25" id="oEj-jm-eVq"/>
+                            <constraint firstAttribute="bottom" secondItem="Lon-zC-KA3" secondAttribute="bottom" id="r4P-fs-D5z"/>
+                            <constraint firstItem="yZx-EH-jts" firstAttribute="leading" secondItem="rd6-Up-wMR" secondAttribute="leading" id="s4b-Xs-Z2S"/>
+                            <constraint firstItem="yZx-EH-jts" firstAttribute="top" secondItem="rd6-Up-wMR" secondAttribute="top" id="uVp-Dt-Zui"/>
+                            <constraint firstItem="Lon-zC-KA3" firstAttribute="top" secondItem="yZx-EH-jts" secondAttribute="bottom" id="v7F-md-3rH"/>
                             <constraint firstAttribute="trailing" secondItem="N7r-YX-YSk" secondAttribute="trailing" id="zQv-cn-Cev"/>
                             <constraint firstItem="7F0-fD-cE6" firstAttribute="centerX" secondItem="rd6-Up-wMR" secondAttribute="centerX" id="zXQ-Qv-rxr"/>
                         </constraints>
@@ -1268,6 +1299,7 @@
                     <tabBarItem key="tabBarItem" title="User" image="User Location-100" selectedImage="User Location Filled-100" id="hv9-X8-F9F"/>
                     <connections>
                         <outlet property="background" destination="N7r-YX-YSk" id="NPt-u2-mFq"/>
+                        <outlet property="blurEffectViewTop" destination="N7r-YX-YSk" id="exS-fQ-s1U"/>
                         <outlet property="buttonBlock" destination="7F0-fD-cE6" id="7Zl-MR-npZ"/>
                         <outlet property="logoutButton" destination="mvR-3C-guB" id="g2U-Ac-Skr"/>
                         <outlet property="profileImage" destination="miT-nd-aPf" id="wOB-9N-oAn"/>
@@ -2154,7 +2186,7 @@
                                     <rect key="frame" x="0.0" y="28" width="240" height="30"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vc6-MG-IXG" id="Nat-vP-542">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="29.666666666666668"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buyer ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hN-Nw-vY5">
@@ -2582,6 +2614,7 @@
         <image name="comment" width="100" height="100"/>
         <image name="full star" width="50" height="50"/>
         <image name="half-star" width="50" height="50"/>
+        <image name="iOS-9-Wallpaper" width="503" height="853"/>
         <image name="menu" width="50" height="50"/>
         <image name="publishment" width="100" height="100"/>
         <image name="transaction" width="100" height="100"/>
