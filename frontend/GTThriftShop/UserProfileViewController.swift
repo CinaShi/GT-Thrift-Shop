@@ -60,7 +60,7 @@ class UserProfileViewController: UIViewController {
         let color2 = UIColor(red: 255/255, green: 42/255, blue: 104/255, alpha: 1)
         let color3 = UIColor(red: 255/255, green: 149/255, blue: 0/255, alpha: 1)
         progress.setColors(colors: color1,color2,color3)
-        progress.center = CGPoint(x: profileImage.center.x - 19, y: profileImage.center.y - 15)
+        progress.center = CGPoint(x: profileImage.center.x, y: profileImage.center.y)
         progress.angle = 0
         self.view.addSubview(progress)
         
@@ -130,7 +130,7 @@ class UserProfileViewController: UIViewController {
                         //deal with star here
                         //self.changeRatingStars()
                         //self.progressview.setProgress(self.userRating/5.0, animated: true)
-                        self.progress.animate(toAngle: 240, duration: 5, completion: nil)
+                        self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 5, completion: nil)
 
                     });
                 } else if httpResponse.statusCode == 404 {
