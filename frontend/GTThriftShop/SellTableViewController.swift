@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SellTableViewController: UITableViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate, UIPickerViewDelegate {
+class SellTableViewController: UITableViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate, UIPickerViewDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     //
     var categories = [String]()
@@ -44,6 +44,12 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         for button in addPhotoButtons {
             self.view.bringSubview(toFront: button)
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tap(gesture:)))
+        self.view.addGestureRecognizer(tapGesture)
+        
+        descriptionTextView.text = "Type your description here."
+        descriptionTextView.textColor = UIColor.lightGray
     }
     
     
@@ -99,7 +105,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     func uploadInfoFirst() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/add/allInfo")
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/add/allInfo")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "POST"
@@ -153,7 +159,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
                     });
                 }else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
-                        self.notifyFailure(info: "User already exists! Please login again!")
+                        self.notifyFailure(info: "Cannot find URL!")
                     });
                 }
                 else {
@@ -192,20 +198,27 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         request.httpMethod = "POST"
         
         
+        let boundary: NSString = "----CustomFormBoundarycC4YiaUFwM44F6rT"
+        let body: NSMutableData = NSMutableData()
         
-        let boundary = generateBoundaryString()
-        
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        var imagesData = [Data]()
-        for photo in photosToUpload {
-            imagesData.append(UIImageJPEGRepresentation(photo, 1)!)
+        // you can also send multiple images
+        if photosToUpload.count > 0 {
+            for i in (0..<photosToUpload.count) {
+                body.append(("--\(boundary)\r\n" as String).data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+                body.append("Content-Disposition: form-data; name=\"files\"; filename=\"photo\(i+1).jpeg\"\r\n" .data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+                body.append("Content-Type: image/jpeg\r\n\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+                
+                // change quality of image here
+                body.append(UIImageJPEGRepresentation(photosToUpload[i], 0.5)!)
+                body.append("\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+            }
         }
         
-        if(imagesData.count == 0)  { return }
+        body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
         
-        request.httpBody = createBodyWithParameters(parameters: nil, filePathKey: "file", imagesDataKey: imagesData as [NSData], boundary: boundary) as Data
-        
+        request.httpBody = body as Data
+        request.timeoutInterval = 20
+        request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         let task = session.dataTask(with: request as URLRequest) {
             (
@@ -233,7 +246,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
                     });
                 } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
-                        self.notifyFailure(info: "User already exists! Please login again!")
+                        self.notifyFailure(info: "Cannot find url!")
                     });
                 }
                 else {
@@ -254,43 +267,6 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         task.resume()
     }
     
-    func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imagesDataKey: [NSData]?, boundary: String) -> NSData {
-        let body = NSMutableData();
-        
-        if parameters != nil {
-            for (key, value) in parameters! {
-                body.appendString(string: "--\(boundary)\r\n")
-                body.appendString(string: "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
-                body.appendString(string: "\(value)\r\n")
-            }
-        }
-        
-        if imagesDataKey != nil {
-            var imageCounter = 1
-            for imageDataKey in imagesDataKey! {
-                let filename = "\(imageCounter).jpg"
-                let mimetype = "image/jpg"
-                
-                
-                body.appendString(string: "--\(boundary)\r\n")
-                body.appendString(string: "Content-Disposition: form-data; name=\"\(filePathKey!)\"; filename=\"\(filename)\"\r\n")
-                body.appendString(string: "Content-Type: \(mimetype)\r\n\r\n")
-                body.append(imageDataKey as Data)
-                body.appendString(string: "\r\n")
-                imageCounter += 1
-            }
-            
-        }
-        
-        
-        body.appendString(string: "--\(boundary)--\r\n")
-        
-        return body
-    }
-    
-    func generateBoundaryString() -> String {
-        return "Boundary-\(NSUUID().uuidString)"
-    }
     
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
@@ -361,6 +337,38 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         self.categoryField.text = categories[row]
     }
     
+    // text delegates
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true;
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn shouldChangeTextInRange: NSRange, replacementText: String) -> Bool {
+        if(replacementText.isEqual("\n")) {
+            descriptionTextView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if descriptionTextView.textColor == UIColor.lightGray {
+            descriptionTextView.text = nil
+            descriptionTextView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if descriptionTextView.text.isEmpty {
+            descriptionTextView.text = "Type your description here."
+            descriptionTextView.textColor = UIColor.lightGray
+        }
+    }
+    
+    func tap(gesture: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+        descriptionTextView.resignFirstResponder()
+    }
     
     
     /*

@@ -15,6 +15,7 @@ class MyCommentTableViewController: UITableViewController {
     var selectedTranId: Int?
     var selectedCommentContent: String?
     var selectedPostTime: String?
+    var selectedBuyerId: Int?
     var userId: Int!
     var myComments = [(Int, Product, Int, String, String)]()
     var userDefaults = UserDefaults.standard
@@ -236,6 +237,7 @@ class MyCommentTableViewController: UITableViewController {
         selectedTranId = myComments[indexPath.row].0
         selectedCommentContent = myComments[indexPath.row].3
         selectedPostTime = myComments[indexPath.row].4
+        selectedBuyerId = myComments[indexPath.row].2
         performSegue(withIdentifier: "commentDetailVC", sender: nil)
         
     }
@@ -252,6 +254,7 @@ class MyCommentTableViewController: UITableViewController {
             destination.tranId = selectedTranId!
             destination.commentContent = selectedCommentContent
             destination.postTime = selectedPostTime
+            destination.buyerId = selectedBuyerId!
         }
         
     }

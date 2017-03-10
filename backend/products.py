@@ -138,7 +138,7 @@ def product_uploader(pid):
 	return jsonify({'photoUrls':addressList})
 
 #author: Yichen
-@app.route('/products/add/allInfo', methods=['POST'])
+@products.route('/products/add/allInfo', methods=['POST'])
 def add_product():
 	if not request.json or not 'userId' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tag' in request.json or not 'usedTime' in request.json: 
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
