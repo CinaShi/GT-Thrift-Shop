@@ -12,9 +12,12 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     
     //
     var categories = [String]()
+    var selectedAddPhotoImageView: UIImageView?
     
+    @IBOutlet var photosImageViews: [UIImageView]!
     
-    @IBOutlet weak var itemImageView: UIImageView!
+    @IBOutlet var addPhotoButtons: [UIButton]!
+    
     @IBOutlet weak var itemNameField: UITextField!
     @IBOutlet weak var usedYearField: UITextField!
     @IBOutlet weak var priceField: UITextField!
@@ -32,7 +35,9 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         pickerView.delegate = self
         categoryField.inputView = pickerView
         
-        
+        for button in addPhotoButtons {
+            self.view.bringSubview(toFront: button)
+        }
     }
     
     func loadTagsFromLocal() {
@@ -45,11 +50,20 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     }
 
     @IBAction func addPhoto(_ sender: AnyObject) {
-        let imagePicker:UIImagePickerController = UIImagePickerController()
-        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        imagePicker.delegate = self
+        print("hi!")
+        for (index, button) in addPhotoButtons.enumerated() {
+            if sender as! UIButton == button {
+                selectedAddPhotoImageView = photosImageViews[index]
+                let imagePicker:UIImagePickerController = UIImagePickerController()
+                imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                imagePicker.delegate = self
+                
+                self.present(imagePicker, animated: true, completion: nil)
+                break
+            }
+            
+        }
         
-        self.present(imagePicker, animated: true, completion: nil)
         
     }
     
@@ -62,7 +76,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         
         //scale down image
         let scaledImage = self.scaleImageWith(pickedImage, and: CGSize(width: 240, height: 240))
-        itemImageView.image = scaledImage
+        selectedAddPhotoImageView?.image = scaledImage
         
         picker.dismiss(animated: true, completion: nil)
     }
