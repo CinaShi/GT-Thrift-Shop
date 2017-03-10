@@ -986,7 +986,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Junior CS student. Mostly sell second-hand PC/laptops." translatesAutoresizingMaskIntoConstraints="NO" id="qJf-D2-LWV">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Junior CS student. Mostly sell second-hand PC/laptops." translatesAutoresizingMaskIntoConstraints="NO" id="qJf-D2-LWV">
                                         <rect key="frame" x="20" y="219.5" width="335" height="53.5"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
