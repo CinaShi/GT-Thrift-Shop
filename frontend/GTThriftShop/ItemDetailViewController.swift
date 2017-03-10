@@ -42,7 +42,7 @@ class ItemDetailViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-
+        //set up scrollview
         var urlStrings = [String]()
         for s in product.imageUrls{
             urlStrings.append(s)
