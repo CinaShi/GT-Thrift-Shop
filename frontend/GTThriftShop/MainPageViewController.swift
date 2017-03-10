@@ -355,6 +355,10 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func chooseSortingFunction(_ sender: Any) {
         if !sortViewExpanded {
+            sortView.alpha = 0
+            UIView.animate(withDuration: 0.5){
+                self.sortView.alpha = 1
+            }
             self.view.addSubview(sortView)
             sortView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -366,13 +370,13 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                 self.sortViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
             })
             sortViewExpanded = true
-            
         } else {
             dismissSortView()
         }
     }
     
     func dismissSortView() {
+        
         self.sortView.removeFromSuperview()
         UIView.animate(withDuration: 0.5, animations: {() -> Void in
             self.sortViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(0))
