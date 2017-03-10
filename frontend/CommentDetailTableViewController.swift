@@ -28,11 +28,22 @@ class CommentDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        sellerNameLabel.text = "User: \(product.userId)"
+        sellerNameLabel.text = "User: \(product.userId!)"
         productNameLabel.text = product.name
-        postTimeLabel.text = "At \(postTime)"
+        postTimeLabel.text = "At \(postTime!)"
         commentTextView.text = commentContent
         
+        if product.imageUrls.count <= 0 {
+            productImageView.image = #imageLiteral(resourceName: "No Camera Filled-100")
+        } else {
+            DispatchQueue.main.async(execute: {
+                if let imageData: NSData = NSData(contentsOf: URL(string: self.product.imageUrls.first!)!) {
+                    self.productImageView.image = UIImage(data: imageData as Data)
+                } else {
+                    self.productImageView.image = #imageLiteral(resourceName: "No Camera Filled-100")
+                }
+            })
+        }
     }
 
     

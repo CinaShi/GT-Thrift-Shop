@@ -11,7 +11,7 @@ import UIKit
 class SellTableViewController: UITableViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate, UIPickerViewDelegate {
     
     //
-    let categories = ["羊羊大姐","梦哥","小弈辰","文胸👙","nigga"]
+    var categories = [String]()
     
     
     @IBOutlet weak var itemImageView: UIImageView!
@@ -24,19 +24,24 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        loadTagsFromLocal()
         
         //picker view
         let pickerView = UIPickerView()
         pickerView.delegate = self
         categoryField.inputView = pickerView
-
         
+        
+    }
+    
+    func loadTagsFromLocal() {
+        if let tags = UserDefaults.standard.array(forKey: "tags") {
+            for tag in tags {
+                let category = tag as! String
+                categories.append(category)
+            }
+        }
     }
 
     @IBAction func addPhoto(_ sender: AnyObject) {
