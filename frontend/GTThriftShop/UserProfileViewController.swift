@@ -86,7 +86,7 @@ class UserProfileViewController: UIViewController {
                     DispatchQueue.main.async(execute: {
                         //deal with star here
                         self.changeRatingStars()
-                        self.progressview.setProgress(self.userRating, animated: true)
+                        self.progressview.setProgress(self.userRating/5.0, animated: true)
 
                     });
                 } else if httpResponse.statusCode == 404 {
