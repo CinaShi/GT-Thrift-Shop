@@ -33,7 +33,6 @@
 		08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */; };
 		D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */; };
 		D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDAC31E72630900D94118 /* KDCircularProgress.swift */; };
-		D71CDAC71E72643E00D94118 /* KDCircularProgress.swift in Frameworks */ = {isa = PBXBuildFile; fileRef = D71CDAC61E72643E00D94118 /* KDCircularProgress.swift */; };
 		D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */; };
 /* End PBXBuildFile section */
 
@@ -96,7 +95,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D71CDAC71E72643E00D94118 /* KDCircularProgress.swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

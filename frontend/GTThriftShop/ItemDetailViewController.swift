@@ -16,6 +16,8 @@ class ItemDetailViewController: UIViewController {
     var imageArray = [UIImage]()
     var sourceVCName: String!
     var isRated = false
+    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+    let blurEffectView = UIVisualEffectView(effect: nil)
     
     @IBOutlet weak var favoriteImage: UIButton!
     @IBOutlet weak var nameLabelView: UILabel!
@@ -26,6 +28,10 @@ class ItemDetailViewController: UIViewController {
     @IBOutlet weak var loadDetailsIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var nextStepButton: UIButton!
+    
+    @IBOutlet weak var backFromInterestBlock: UIButton!
+    @IBOutlet var interestBlock: UIView!
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -90,6 +96,9 @@ class ItemDetailViewController: UIViewController {
     }
     
     func initNextStepButtonBasedOnSourceVC() {
+        
+        
+        
         if sourceVCName == "transactionVC" {
             if userId == product.userId {
                 nextStepButton.setTitle("Can't rate yourself :P", for: .normal)
@@ -131,6 +140,46 @@ class ItemDetailViewController: UIViewController {
     
     func markAsSold() {
         print("code for markAsSold function")
+        
+        // Make the block appears
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(blurEffectView)
+        
+        blurEffectView.addSubview(interestBlock)
+        interestBlock.center = blurEffectView.center
+        interestBlock.layer.cornerRadius = 10
+        interestBlock.alpha = 0
+        interestBlock.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        UIView.animate(withDuration: 0.5) {
+            self.blurEffectView.effect = self.blurEffect
+            self.interestBlock.alpha = 1
+            self.interestBlock.transform = CGAffineTransform.identity
+            
+        }
+    
+        
+    }
+    
+    
+    //Make it disappear
+    @IBAction func backFromInterestBlock(_ sender: Any) {
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.interestBlock.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+//            self.interestBlock.alpha = 0
+//        }) { (finished) in
+//            UIView.animate(withDuration: 0.5, animations: {
+//                self.interestBlock.transform = CGAffineTransform.identity
+//            })
+//        
+//        }
+//        UIView.animate(withDuration: 0.5) {
+//            self.blurEffectView.effect = nil
+//        }
+//        
+        self.interestBlock.removeFromSuperview()
+        self.blurEffectView.removeFromSuperview()
+        
     }
     
     func goToContactSellerVC() {
