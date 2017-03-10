@@ -19,6 +19,7 @@
 		0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */; };
 		0899EEED1E71DD9800262267 /* MyCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */; };
 		0899EEF11E71DDF700262267 /* CommentDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */; };
+		0899EEF31E72278300262267 /* SellTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEF21E72278300262267 /* SellTableViewController.swift */; };
 		089ECA3F1DEE7F6C00D508F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */; };
 		089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */; };
 		089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */; };
@@ -70,6 +71,7 @@
 		0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateAndCommentTableViewController.swift; sourceTree = "<group>"; };
 		0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCommentTableViewController.swift; sourceTree = "<group>"; };
 		0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentDetailTableViewController.swift; path = ../CommentDetailTableViewController.swift; sourceTree = "<group>"; };
+		0899EEF21E72278300262267 /* SellTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellTableViewController.swift; sourceTree = "<group>"; };
 		089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 		08757B801E59022900219BCA /* Main Page */ = {
 			isa = PBXGroup;
 			children = (
+				D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */,
 				089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */,
 				089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */,
 			);
@@ -155,10 +158,10 @@
 				089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */,
 				08CA35551E3ACDA100EFF7D1 /* Login */,
 				08757B801E59022900219BCA /* Main Page */,
+				0899EEF41E72279C00262267 /* Sell Product */,
 				08757B811E59025200219BCA /* Favorite */,
 				0899EEEA1E713BCE00262267 /* User Profile */,
 				0899EEEB1E713BF600262267 /* Models */,
-				D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */,
 				089ECA481DEE8F7700D508F6 /* ChatViewController.swift */,
 				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
 				089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */,
@@ -205,6 +208,14 @@
 				08757B7A1E56C56600219BCA /* Product.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		0899EEF41E72279C00262267 /* Sell Product */ = {
+			isa = PBXGroup;
+			children = (
+				0899EEF21E72278300262267 /* SellTableViewController.swift */,
+			);
+			name = "Sell Product";
 			sourceTree = "<group>";
 		};
 		08CA35551E3ACDA100EFF7D1 /* Login */ = {
@@ -357,6 +368,7 @@
 				08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */,
 				089ECA451DEE8F4200D508F6 /* ItemDetailViewController.swift in Sources */,
 				089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */,
+				0899EEF31E72278300262267 /* SellTableViewController.swift in Sources */,
 				089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */,
 				089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */,
 				0899EEE71E713BB000262267 /* TransactionHistoryTableViewController.swift in Sources */,
