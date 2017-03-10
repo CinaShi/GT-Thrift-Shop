@@ -10,14 +10,29 @@ import UIKit
 
 class CommentDetailTableViewController: UITableViewController {
 
+    var product: Product!
+    var tranId: Int!
+    var commentContent: String!
+    var postTime: String!
+    
+    @IBOutlet weak var productImageView: UIImageView!
+    
+    @IBOutlet weak var sellerNameLabel: UILabel!
+    
+    @IBOutlet weak var productNameLabel: UILabel!
+    
+    @IBOutlet weak var postTimeLabel: UILabel!
+    
+    @IBOutlet weak var commentTextView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        sellerNameLabel.text = "User: \(product.userId)"
+        productNameLabel.text = product.name
+        postTimeLabel.text = "At \(postTime)"
+        commentTextView.text = commentContent
+        
     }
 
     

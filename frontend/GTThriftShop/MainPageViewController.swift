@@ -256,7 +256,11 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func getPidsByTag(tag: String) {
         loadProductsIndicator.startAnimating()
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/tags/\(tag)")
+        var newTag = tag
+        if tag.contains(" ") {
+            newTag = tag.replacingOccurrences(of: " ", with: "_")
+        }
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/tags/\(newTag)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"

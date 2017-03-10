@@ -20,7 +20,8 @@ class TransactionHistoryTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activityIndicatorView.color = .blue
         tableView.backgroundView = activityIndicatorView
     }
     
@@ -113,6 +114,11 @@ class TransactionHistoryTableViewController: UITableViewController {
                         
                         self.tableView.reloadData()
                         self.activityIndicatorView.stopAnimating()
+                    });
+                }  else if httpResponse.statusCode == 400 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "You don't have any transaction history!")
+//                        self.backToUserProfileVC(self)
                     });
                 } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {

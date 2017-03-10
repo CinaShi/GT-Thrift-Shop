@@ -10,12 +10,167 @@ import UIKit
 
 class MyCommentTableViewController: UITableViewController {
 
+    var products = [Product]()
+    var selected: Product?
+    var selectedTranId: Int?
+    var selectedCommentContent: String?
+    var selectedPostTime: String?
+    var userId: Int!
+    var myComments = [(Int, Product, Int, String, String)]()
+    var userDefaults = UserDefaults.standard
+    var activityIndicatorView: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activityIndicatorView.color = .blue
+        tableView.backgroundView = activityIndicatorView
         
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBar.isHidden = false
+        myComments.removeAll()
+        
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        
+        activityIndicatorView.startAnimating()
+        
+        loadProductsFromLocal()
+        loadMyComments()
+        
+        tableView.reloadData()
+    }
+
+    //Mark: helper methods
+    
+    func loadProductsFromLocal() {
+        if let decoded = userDefaults.object(forKey: "products") as? Data {
+            products = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Product]
+        } else {
+            notifyFailure(info: "Please connect to Internet!")
+            //actually might need to manually grab data from server again here. Need opinions
+        }
+        
+        userId = userDefaults.integer(forKey: "userId")
+        
+    }
+    
+    func loadMyComments() {
+        //implement this part after backend API changed
+        
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/comment/get/\(userId!)")
+        
+        var request = URLRequest(url:url! as URL)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            if let httpResponse = response as? HTTPURLResponse {
+                print("***** statusCode: \(httpResponse.statusCode)")
+                if httpResponse.statusCode == 200 {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String,Any>
+                        let array = json["comments"] as! [Dictionary<String, Any>]
+                        // Loop through objects
+                        for dict in array {
+                            guard let tranId = dict["tranId"] as? Int,
+                                let buyerId = dict["buyerId"] as? Int,
+                                let pid = dict["pid"] as? Int,
+                                let commentContent = dict["commentContent"] as? String,
+                                let postTime = dict["postTime"] as? String
+                                else{
+                                    self.notifyFailure(info: "cannot unarchive data from server")
+                                    return
+                            }
+                            let product = self.findProductByPid(pid: pid)
+                            
+                            self.myComments.append((tranId, product!, buyerId, commentContent, postTime))
+                        }
+                        
+                    } catch let error as NSError {
+                        print("Failed to load: \(error.localizedDescription)")
+                    }
+                    
+                    
+                    DispatchQueue.main.async(execute: {
+                        //deal with star here
+                        
+                        self.tableView.reloadData()
+                        self.activityIndicatorView.stopAnimating()
+                    });
+                } else if httpResponse.statusCode == 400 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There are currently no comments for you!")
+//                        self.unwindToUserProfile(self)
+                    });
+                } else if httpResponse.statusCode == 404 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot connect to Internet!")
+                    });
+                }
+                else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                    });
+                    
+                }
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+            }
+        }
+        
+        task.resume()
+        
+        
+    }
+    
+    func findProductByPid(pid: Int) -> Product? {
+        for product in products {
+            if product.pid! == pid {
+                return product
+            }
+        }
+        return nil
+    }
+    
+    func notifyFailure(info: String) {
+        self.sendAlart(info: info)
+        self.activityIndicatorView.stopAnimating()
+    }
+    
+    func sendAlart(info: String) {
+        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            (result : UIAlertAction) -> Void in
+            print("OK")
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    
+    
     
     
     @IBAction func unwindToUserProfile(_ sender: Any) {
@@ -32,67 +187,74 @@ class MyCommentTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return myComments.count
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        // Table view cells are reused and should be dequeued using a cell identifier.
+        let cellIdentifier = "CommentItemCell"
+        let cell: UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let currentComment = myComments[indexPath.row]
+        let currentProduct = currentComment.1
+        let buyerId = currentComment.2
+        let commentContent = currentComment.3
+        let postTime = currentComment.4
+        // Fetches the banks for the data source layout.
+        let itemImage = cell.contentView.viewWithTag(4) as! UIImageView
+        let buyerLabel = cell.contentView.viewWithTag(2) as! UILabel
+        let postTimeLabel = cell.contentView.viewWithTag(1) as! UILabel
+        let commentContentTextView = cell.contentView.viewWithTag(3) as! UITextView
+        
+        if currentProduct.imageUrls.count <= 0 {
+            itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+        } else {
+            DispatchQueue.main.async(execute: {
+                if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                    itemImage.image = UIImage(data: imageData as Data)
+                } else {
+                    itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+                }
+            })
+        }
+        
+        buyerLabel.text = "By user: \(buyerId)"
+        postTimeLabel.text = postTime
+        commentContentTextView.text = commentContent
+        
+        
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        selected = myComments[indexPath.row].1
+        selectedTranId = myComments[indexPath.row].0
+        selectedCommentContent = myComments[indexPath.row].3
+        selectedPostTime = myComments[indexPath.row].4
+        performSegue(withIdentifier: "commentDetailVC", sender: nil)
+        
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "commentDetailVC"{
+            let destination = segue.destination as! CommentDetailTableViewController
+            print(selected!.description)
+            destination.product = selected!
+            destination.tranId = selectedTranId!
+            destination.commentContent = selectedCommentContent
+            destination.postTime = selectedPostTime
+        }
+        
     }
-    */
+    
 
 }
