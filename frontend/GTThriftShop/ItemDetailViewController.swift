@@ -47,8 +47,10 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
         interestTableView.delegate = self
         interestTableView.dataSource = self
+
 
         var urlStrings = [String]()
         for s in product.imageUrls{
@@ -59,7 +61,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 imageArray.append(UIImage(data: imageData as Data)!)
             }
         }
-        
+        imageScrollView.frame = CGRect(x: 0, y: 64, width: self.view.frame.width, height: 200)
         for i in 0..<imageArray.count{
             let currPic = UIImageView()
             currPic.image = imageArray[i]

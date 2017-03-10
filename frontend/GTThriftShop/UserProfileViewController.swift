@@ -19,11 +19,12 @@ class UserProfileViewController: UIViewController {
     //@IBOutlet var stars: [UIImageView]!
     
     @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var progressview: UIProgressView!
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var logoutButton: UIButton!
     //starts here
     
+    @IBOutlet weak var blurEffectViewTop: UIView!
+    @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var buttonBlock: UIView!
     
     override func viewDidLoad() {
@@ -32,8 +33,6 @@ class UserProfileViewController: UIViewController {
         //changeRatingStars()
         // Do any additional setup after loading the view, typically from a nib.
         
-        //Load Rating Score
-        progressview.progress = 0
         
         //Load image and crop
         profileImage.layer.cornerRadius = profileImage.frame.size.width/2
@@ -41,10 +40,11 @@ class UserProfileViewController: UIViewController {
         
         //background
         let color4 = UIColor(red: 127/255, green: 194/255, blue: 246/255, alpha: 1)
-        background.layer.shadowColor = color4.cgColor
-        background.layer.shadowRadius = 5
-        background.layer.shadowOffset = CGSize(width: 0, height: 5.0)
-        background.layer.shadowOpacity = 1
+        blurEffectViewTop.layer.shadowColor = UIColor.black.cgColor
+        blurEffectViewTop.layer.shadowRadius = 5
+        blurEffectViewTop.layer.shadowOffset = CGSize(width: 0, height: 5.0)
+        blurEffectViewTop.layer.shadowOpacity = 1
+
         
         //circular progress bar
         progress.startAngle = -90
@@ -61,6 +61,9 @@ class UserProfileViewController: UIViewController {
         progress.center = CGPoint(x: profileImage.center.x, y: profileImage.center.y)
         progress.angle = 0
         self.view.addSubview(progress)
+        print("progressbar frame: \(progress.frame)")
+        print("picture frame: \(profileImage.frame)")
+        print("progress center: \(progress.center)")
         
         //deal with button
         buttonBlock.layer.shadowColor = UIColor.darkGray.cgColor
@@ -72,6 +75,11 @@ class UserProfileViewController: UIViewController {
         logoutButton.layer.cornerRadius = 20
         logoutButton.layer.borderColor = color5.cgColor
         logoutButton.layer.borderWidth = 1
+        
+        //scoreLabel
+        self.scoreLabel.center.x = self.view.frame.width - 60
+        self.scoreLabel.center.y = -30
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,10 +132,19 @@ class UserProfileViewController: UIViewController {
                     
                     
                     DispatchQueue.main.async(execute: {
-                        //deal with star here
-                        //self.changeRatingStars()
-                        //self.progressview.setProgress(self.userRating/5.0, animated: true)
-                        self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 5, completion: nil)
+                        if self.userRating <= 2.5 {
+                            self.scoreLabel.center.x = 60
+                        }
+                        self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
+                        UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
+                            self.scoreLabel.text = "Score: " + String(self.userRating) + "/5.0"
+                            if (self.userRating <= 1.25 || self.userRating >= 3.75) {
+                                self.scoreLabel.center.y = 147
+                            } else {
+                                self.scoreLabel.center.y = 73
+                            }
+
+                        }), completion: nil)
 
                     });
                 } else if httpResponse.statusCode == 404 {
@@ -150,98 +167,6 @@ class UserProfileViewController: UIViewController {
         
         task.resume()
     }
-    
-//    func changeRatingStars() {
-//        if userRating <= 0 {
-//            for star in stars {
-//                star.image = #imageLiteral(resourceName: "empty-star")
-//            }
-//        } else if userRating <= 0.5 {
-//            for (index, star) in stars.enumerated() {
-//                if index == 0 {
-//                    star.image = #imageLiteral(resourceName: "half-star")
-//                } else {
-//                    star.image = #imageLiteral(resourceName: "empty-star")
-//                }
-//            }
-//        } else if userRating <= 1 {
-//            for (index, star) in stars.enumerated() {
-//                if index == 0 {
-//                    star.image = #imageLiteral(resourceName: "full-star")
-//                } else {
-//                    star.image = #imageLiteral(resourceName: "empty-star")
-//                }
-//            }
-//        } else if userRating <= 1.5 {
-//            for (index, star) in stars.enumerated() {
-//                if index == 0 {
-//                    star.image = #imageLiteral(resourceName: "full-star")
-//                } else if index == 1 {
-//                    star.image = #imageLiteral(resourceName: "half-star")
-//                } else {
-//                    star.image = #imageLiteral(resourceName: "empty-star")
-//                }
-//            }
-//        } else if userRating <= 2 {
-//            for (index, star) in stars.enumerated() {
-//                if index == 0 || index == 1 {
-//                    star.image = #imageLiteral(resourceName: "full-star")
-//                } else {
-//                    star.image = #imageLiteral(resourceName: "empty-star")
-//                }
-//            }
-//        } else if userRating <= 2.5 {
-//            for (index, star) in stars.enumerated() {
-//                if index == 0 || index == 1 {
-//                    star.image = #imageLiteral(resourceName: "full-star")
-//                } else if index == 2 {
-//                    star.image = #imageLiteral(resourceName: "half-star")
-//                } else {
-//                    star.image = #imageLiteral(resourceName: "empty-star")
-//                }
-//            }
-//        } else if userRating <= 3 {
-//            for (index, star) in stars.enumerated() {
-//                if index == 0 || index == 1 || index == 2 {
-//                    star.image = #imageLiteral(resourceName: "full-star")
-//                } else {
-//                    star.image = #imageLiteral(resourceName: "empty-star")
-//                }
-//            }
-//        } else if userRating <= 3.5 {
-//            for (index, star) in stars.enumerated() {
-//                if index == 0 || index == 1 || index == 2 {
-//                    star.image = #imageLiteral(resourceName: "full-star")
-//                } else if index == 3 {
-//                    star.image = #imageLiteral(resourceName: "half-star")
-//                } else {
-//                    star.image = #imageLiteral(resourceName: "empty-star")
-//                }
-//            }
-//        } else if userRating <= 4 {
-//            for (index, star) in stars.enumerated() {
-//                if index == 0 || index == 1 || index == 2 || index == 3 {
-//                    star.image = #imageLiteral(resourceName: "full-star")
-//                } else {
-//                    star.image = #imageLiteral(resourceName: "empty-star")
-//                }
-//            }
-//        } else if userRating <= 4.5 {
-//            for (index, star) in stars.enumerated() {
-//                if index == 0 || index == 1 || index == 2 || index == 3 {
-//                    star.image = #imageLiteral(resourceName: "full-star")
-//                } else if index == 4 {
-//                    star.image = #imageLiteral(resourceName: "half-star")
-//                } else {
-//                    star.image = #imageLiteral(resourceName: "empty-star")
-//                }
-//            }
-//        } else {
-//            for star in stars {
-//                star.image = #imageLiteral(resourceName: "full-star")
-//            }
-//        }
-//    }
     
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
