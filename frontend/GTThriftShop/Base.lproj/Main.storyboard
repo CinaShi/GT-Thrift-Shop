@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vMy-cE-XyJ">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -284,7 +284,7 @@
                                 <rect key="frame" x="188.66666666666666" y="349.66666666666669" width="37" height="37"/>
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GT-icon" translatesAutoresizingMaskIntoConstraints="NO" id="kcW-af-Axo">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GT-icon" translatesAutoresizingMaskIntoConstraints="NO" id="kcW-af-Axo">
                                 <rect key="frame" x="132" y="47" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="5qM-bT-GTN"/>
@@ -655,7 +655,7 @@
                                                         <action selector="addPhoto:" destination="vMy-cE-XyJ" eventType="touchUpInside" id="FCH-dr-Qtu"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="Sry-v5-8kD">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="Sry-v5-8kD">
                                                     <rect key="frame" x="14" y="20" width="110" height="110"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -666,7 +666,7 @@
                                                         <action selector="addPhoto:" destination="vMy-cE-XyJ" eventType="touchUpInside" id="U6p-yi-atl"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="aTo-XA-yVe">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="aTo-XA-yVe">
                                                     <rect key="frame" x="132" y="20" width="110" height="110"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -677,7 +677,7 @@
                                                         <action selector="addPhoto:" destination="vMy-cE-XyJ" eventType="touchUpInside" id="krL-1r-dtK"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="ppf-fH-UD5">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="ppf-fH-UD5">
                                                     <rect key="frame" x="250" y="20" width="110" height="110"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -688,7 +688,7 @@
                                                         <action selector="addPhoto:" destination="vMy-cE-XyJ" eventType="touchUpInside" id="D4p-dF-GdT"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="T0h-2w-SRA">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="T0h-2w-SRA">
                                                     <rect key="frame" x="14" y="138" width="110" height="110"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -699,7 +699,7 @@
                                                         <action selector="addPhoto:" destination="vMy-cE-XyJ" eventType="touchUpInside" id="IIz-wf-hI4"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="zZC-o3-BAv">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="zZC-o3-BAv">
                                                     <rect key="frame" x="132" y="138" width="110" height="110"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -710,7 +710,7 @@
                                                         <action selector="addPhoto:" destination="vMy-cE-XyJ" eventType="touchUpInside" id="a8m-ZF-rOD"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="DFr-fY-2Cl">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Photo_addPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="DFr-fY-2Cl">
                                                     <rect key="frame" x="250" y="138" width="110" height="110"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>

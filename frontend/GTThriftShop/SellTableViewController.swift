@@ -75,8 +75,24 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         let pickedImage:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         
         //scale down image
-        let scaledImage = self.scaleImageWith(pickedImage, and: CGSize(width: 240, height: 240))
-        selectedAddPhotoImageView?.image = scaledImage
+        let imageSize = pickedImage.size
+        let imageViewSideLength = Float((selectedAddPhotoImageView?.frame.size.width)!)
+        print(imageViewSideLength)
+        let scaledImage: UIImage!
+        if Float(imageSize.width) >= Float(imageSize.height) {
+            let scaledHeight = imageViewSideLength * Float(imageSize.height) / Float(imageSize.width)
+            print("height -> \(scaledHeight)")
+            scaledImage = self.scaleImageWith(pickedImage, and: CGSize(width: Int(imageViewSideLength), height: Int(scaledHeight)))
+            selectedAddPhotoImageView?.image = scaledImage
+        } else {
+            let scaledWidth = imageViewSideLength * Float(imageSize.width) / Float(imageSize.height)
+            print("width -> \(scaledWidth)")
+            scaledImage = self.scaleImageWith(pickedImage, and: CGSize(width: Int(scaledWidth), height: Int(imageViewSideLength)))
+            selectedAddPhotoImageView?.image = scaledImage
+        }
+        
+        
+        
         
         picker.dismiss(animated: true, completion: nil)
     }
