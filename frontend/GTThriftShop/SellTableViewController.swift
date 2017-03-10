@@ -8,13 +8,17 @@
 
 import UIKit
 
-class SellTableViewController: UITableViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate {
-
+class SellTableViewController: UITableViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate, UIPickerViewDelegate {
+    
+    //
+    let categories = ["羊羊大姐","梦哥","小弈辰","文胸👙","nigga"]
+    
+    
     @IBOutlet weak var itemImageView: UIImageView!
     @IBOutlet weak var itemNameField: UITextField!
     @IBOutlet weak var usedYearField: UITextField!
     @IBOutlet weak var priceField: UITextField!
-    @IBOutlet weak var tagPickerView: UIPickerView!
+    @IBOutlet weak var categoryField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     
     override func viewDidLoad() {
@@ -25,6 +29,14 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        
+        //picker view
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        categoryField.inputView = pickerView
+
+        
     }
 
     @IBAction func addPhoto(_ sender: AnyObject) {
@@ -49,6 +61,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         
         picker.dismiss(animated: true, completion: nil)
     }
+    
     func scaleImageWith(_ image:UIImage, and newSize:CGSize)->UIImage{
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
         image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
@@ -58,7 +71,25 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         return newImage
     }
     
-
+    //delegates
+    func numberOfComponetsInPickerView(_ pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return categories.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return categories[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.categoryField.text = categories[row]
+    }
+    
+    
+    
     /*
     // MARK: - Navigation
 

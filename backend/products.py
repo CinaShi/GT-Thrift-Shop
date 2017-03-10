@@ -64,6 +64,7 @@ def get_all_products():
 def get_tag_pid(tag):
 	db = mysql.connect()
 	cursor = db.cursor()
+	tag = tag.replace('_',' ')
 	cursor.execute("SELECT tid FROM Tag WHERE tag = '%s';"%tag)
 	pidList = []
 	if cursor.rowcount == 1:
