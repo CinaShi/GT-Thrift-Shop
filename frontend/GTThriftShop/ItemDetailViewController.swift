@@ -57,10 +57,20 @@ class ItemDetailViewController: UIViewController {
             imageScrollView.addSubview(currPic)
         }
         
+        if imageArray.count <= 0 {
+            let currPic = UIImageView()
+            currPic.image = #imageLiteral(resourceName: "No Camera Filled-100")
+            currPic.contentMode = .scaleAspectFit
+            let xPos = self.view.frame.width * CGFloat(0)
+            currPic.frame = CGRect(x: xPos, y: 0, width: self.imageScrollView.frame.width, height: self.imageScrollView.frame.height)
+            imageScrollView.contentSize.width = imageScrollView.frame.width * CGFloat(1)
+            imageScrollView.addSubview(currPic)
+        }
+        
         //Load Text
         nameLabelView.text = product.name
         priceLabelView.text = "$\(product.price!)"
-        ownerLabelView.text = "\(product.userId!)"
+        ownerLabelView.text = "User: \(product.userId!)"
         descriptionView.text = product!.info
         
         let ud = UserDefaults.standard
