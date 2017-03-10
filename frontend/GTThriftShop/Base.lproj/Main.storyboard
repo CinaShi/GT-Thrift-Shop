@@ -1009,7 +1009,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.49939036370000001" green="0.76137989760000002" blue="0.96535676719999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.49803921568627452" green="0.76078431372549016" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="ewT-2f-fUg" firstAttribute="top" secondItem="miT-nd-aPf" secondAttribute="bottom" constant="5" id="A0D-Wh-kVo"/>
                                     <constraint firstItem="qJf-D2-LWV" firstAttribute="top" secondItem="oB5-jm-8mN" secondAttribute="bottom" constant="10" id="J4I-N6-pxV"/>
@@ -1026,68 +1026,66 @@
                                     <constraint firstItem="qJf-D2-LWV" firstAttribute="centerX" secondItem="N7r-YX-YSk" secondAttribute="centerX" id="zTM-Tf-eC7"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mvR-3C-guB">
-                                <rect key="frame" x="31" y="580" width="99" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="  Log out"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5vS-Zc-Idu">
-                                <rect key="frame" x="73" y="335" width="229" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="  Transaction history"/>
-                                <connections>
-                                    <segue destination="JSi-yD-L4H" kind="show" id="9IV-QK-w8O"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VB5-S2-BfZ">
-                                <rect key="frame" x="66" y="381" width="235" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="  Comments"/>
-                                <connections>
-                                    <segue destination="clp-fT-W1p" kind="show" id="tiA-ah-6rT"/>
-                                </connections>
-                            </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="HTn-9G-pyc">
                                 <rect key="frame" x="50" y="304" width="314" height="2"/>
                             </progressView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="full star" translatesAutoresizingMaskIntoConstraints="NO" id="T7n-sD-vJn">
-                                <rect key="frame" x="205" y="580" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="full star" translatesAutoresizingMaskIntoConstraints="NO" id="OkM-dK-vyL">
-                                <rect key="frame" x="237" y="580" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="full star" translatesAutoresizingMaskIntoConstraints="NO" id="gaS-xf-Tpw">
-                                <rect key="frame" x="271" y="580" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="full star" translatesAutoresizingMaskIntoConstraints="NO" id="UCO-dy-Kol">
-                                <rect key="frame" x="303" y="580" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="half-star" translatesAutoresizingMaskIntoConstraints="NO" id="JE2-Ig-kTv">
-                                <rect key="frame" x="337" y="580" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TrI-Ar-rhm">
-                                <rect key="frame" x="62" y="427" width="250" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="  Publishment"/>
-                                <connections>
-                                    <segue destination="xNb-ts-jBu" kind="show" identifier="publishment" id="Bio-BX-dnH"/>
-                                </connections>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mvR-3C-guB">
+                                <rect key="frame" x="17" y="635" width="380" height="38"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                <state key="normal" title="  Log out"/>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MqA-6H-ZfM" userLabel="button block">
+                                <rect key="frame" x="17" y="337" width="380" height="240"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5vS-Zc-Idu">
+                                        <rect key="frame" x="98.666666666666686" y="23" width="183" height="38"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                        <state key="normal" title="  Transaction history"/>
+                                        <connections>
+                                            <segue destination="JSi-yD-L4H" kind="show" id="9IV-QK-w8O"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VB5-S2-BfZ">
+                                        <rect key="frame" x="134" y="168" width="112" height="38"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                        <state key="normal" title="  Comments"/>
+                                        <connections>
+                                            <segue destination="clp-fT-W1p" kind="show" id="tiA-ah-6rT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TrI-Ar-rhm">
+                                        <rect key="frame" x="128" y="94" width="124" height="38"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                        <state key="normal" title="  Publishment"/>
+                                        <connections>
+                                            <segue destination="xNb-ts-jBu" kind="show" identifier="publishment" id="Bio-BX-dnH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="VB5-S2-BfZ" firstAttribute="centerX" secondItem="MqA-6H-ZfM" secondAttribute="centerX" id="5yt-FB-aO0"/>
+                                    <constraint firstItem="5vS-Zc-Idu" firstAttribute="centerY" secondItem="MqA-6H-ZfM" secondAttribute="centerY" constant="-78" id="KLk-Ff-Yxi"/>
+                                    <constraint firstItem="TrI-Ar-rhm" firstAttribute="centerY" secondItem="MqA-6H-ZfM" secondAttribute="centerY" constant="-7" id="O3J-BB-MH5"/>
+                                    <constraint firstAttribute="width" secondItem="MqA-6H-ZfM" secondAttribute="height" multiplier="190:120" id="hU0-bX-uwc"/>
+                                    <constraint firstItem="5vS-Zc-Idu" firstAttribute="centerX" secondItem="MqA-6H-ZfM" secondAttribute="centerX" id="pw9-xS-IK5"/>
+                                    <constraint firstItem="TrI-Ar-rhm" firstAttribute="centerX" secondItem="MqA-6H-ZfM" secondAttribute="centerX" id="qks-2n-whb"/>
+                                    <constraint firstItem="VB5-S2-BfZ" firstAttribute="centerY" secondItem="MqA-6H-ZfM" secondAttribute="centerY" constant="67" id="s07-e8-4Ox"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="mvR-3C-guB" firstAttribute="leading" secondItem="MqA-6H-ZfM" secondAttribute="leading" id="637-Eq-byk"/>
                             <constraint firstItem="HTn-9G-pyc" firstAttribute="leading" secondItem="rd6-Up-wMR" secondAttribute="leadingMargin" constant="30" id="6gN-Ka-P2H"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HTn-9G-pyc" secondAttribute="trailing" constant="30" id="83s-Io-JlX"/>
+                            <constraint firstItem="mvR-3C-guB" firstAttribute="centerY" secondItem="rd6-Up-wMR" secondAttribute="centerY" constant="286" id="8zn-Ul-OwZ"/>
+                            <constraint firstAttribute="trailing" secondItem="MqA-6H-ZfM" secondAttribute="trailing" constant="17" id="9j4-ry-3uH"/>
+                            <constraint firstItem="MqA-6H-ZfM" firstAttribute="leading" secondItem="rd6-Up-wMR" secondAttribute="leading" constant="17" id="E3U-GE-muv"/>
                             <constraint firstItem="HTn-9G-pyc" firstAttribute="centerY" secondItem="rd6-Up-wMR" secondAttribute="centerY" constant="-63" id="FWY-rw-aVY"/>
+                            <constraint firstItem="mvR-3C-guB" firstAttribute="centerX" secondItem="rd6-Up-wMR" secondAttribute="centerX" id="UF0-MO-fdx"/>
+                            <constraint firstItem="MqA-6H-ZfM" firstAttribute="top" secondItem="N7r-YX-YSk" secondAttribute="bottom" constant="20" id="Yrs-Ys-X0V"/>
                             <constraint firstItem="N7r-YX-YSk" firstAttribute="leading" secondItem="rd6-Up-wMR" secondAttribute="leading" id="aX8-1F-Vbj"/>
                             <constraint firstItem="N7r-YX-YSk" firstAttribute="top" secondItem="rd6-Up-wMR" secondAttribute="top" id="gIt-Y1-nh7"/>
                             <constraint firstItem="HTn-9G-pyc" firstAttribute="centerX" secondItem="rd6-Up-wMR" secondAttribute="centerX" id="uZd-Fc-rEi"/>
@@ -1096,18 +1094,16 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="User" image="User Location-100" selectedImage="User Location Filled-100" id="hv9-X8-F9F"/>
                     <connections>
+                        <outlet property="background" destination="N7r-YX-YSk" id="NPt-u2-mFq"/>
+                        <outlet property="buttonBlock" destination="MqA-6H-ZfM" id="9jA-Lj-Zqi"/>
+                        <outlet property="logoutButton" destination="mvR-3C-guB" id="g2U-Ac-Skr"/>
                         <outlet property="profileImage" destination="miT-nd-aPf" id="wOB-9N-oAn"/>
                         <outlet property="progressview" destination="HTn-9G-pyc" id="G0O-m5-5NG"/>
-                        <outletCollection property="stars" destination="T7n-sD-vJn" collectionClass="NSMutableArray" id="0cz-Mm-bnf"/>
-                        <outletCollection property="stars" destination="OkM-dK-vyL" collectionClass="NSMutableArray" id="Zi9-s3-ZBf"/>
-                        <outletCollection property="stars" destination="gaS-xf-Tpw" collectionClass="NSMutableArray" id="UhZ-KC-gFF"/>
-                        <outletCollection property="stars" destination="UCO-dy-Kol" collectionClass="NSMutableArray" id="8Ng-Eu-oet"/>
-                        <outletCollection property="stars" destination="JE2-Ig-kTv" collectionClass="NSMutableArray" id="Pzk-dY-u1y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BdD-Yp-6uK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3604" y="1732.9835082458771"/>
+            <point key="canvasLocation" x="3602.898550724638" y="1732.3369565217392"/>
         </scene>
         <!--My publishment-->
         <scene sceneID="GgP-Qv-iey">
@@ -2338,6 +2334,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bs9-cY-yCb"/>
-        <segue reference="qew-ik-tyZ"/>
+        <segue reference="jm5-M4-ALX"/>
     </inferredMetricsTieBreakers>
 </document>
