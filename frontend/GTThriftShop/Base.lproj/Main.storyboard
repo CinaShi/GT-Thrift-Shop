@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vMy-cE-XyJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -820,15 +820,15 @@
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
                                         </accessibility>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="99" id="S5s-Hi-wpQ" userLabel="DescriptionCell">
-                                        <rect key="frame" x="0.0" y="446" width="414" height="99"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="144" id="S5s-Hi-wpQ" userLabel="DescriptionCell">
+                                        <rect key="frame" x="0.0" y="446" width="414" height="144"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S5s-Hi-wpQ" id="edW-Mg-11G">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="98"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="143"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Type the description here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wU8-e5-hAN">
-                                                    <rect key="frame" x="40" y="5" width="366" height="88.666666666666671"/>
+                                                    <rect key="frame" x="40" y="5" width="366" height="133.66666666666666"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -846,15 +846,15 @@
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
                                         </accessibility>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="124" id="jWK-Hu-a4Z" userLabel="SubmitCell">
-                                        <rect key="frame" x="0.0" y="545" width="414" height="124"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="144" id="jWK-Hu-a4Z" userLabel="SubmitCell">
+                                        <rect key="frame" x="0.0" y="590" width="414" height="144"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jWK-Hu-a4Z" id="aBd-dt-7Wf">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="123"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="143"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m2c-zP-iVu">
-                                                    <rect key="frame" x="127" y="28" width="160" height="30"/>
+                                                    <rect key="frame" x="127" y="38.333333333333329" width="160" height="29.999999999999986"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="160" id="UY8-xa-aYm"/>
                                                         <constraint firstAttribute="height" constant="30" id="j7o-h3-sqx"/>
@@ -874,7 +874,6 @@
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="submit:" destination="vMy-cE-XyJ" eventType="touchUpInside" id="35M-5T-Gau"/>
-                                                        <segue destination="LK4-iB-5uv" kind="show" id="bHx-2h-wyg"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -901,6 +900,7 @@
                         <outlet property="descriptionTextView" destination="wU8-e5-hAN" id="Car-Kj-WEt"/>
                         <outlet property="itemNameField" destination="hZ5-fQ-x7N" id="7Bu-IK-0eW"/>
                         <outlet property="priceField" destination="q9F-Oc-TGa" id="fP3-jo-Uip"/>
+                        <outlet property="submitButton" destination="m2c-zP-iVu" id="wrc-fc-jSi"/>
                         <outlet property="usedYearField" destination="TYc-cf-sxQ" id="NQE-Og-VAJ"/>
                         <outletCollection property="photosImageViews" destination="Sry-v5-8kD" collectionClass="NSMutableArray" id="v1Z-HN-Atw"/>
                         <outletCollection property="photosImageViews" destination="aTo-XA-yVe" collectionClass="NSMutableArray" id="Prh-4G-jkY"/>
@@ -914,6 +914,7 @@
                         <outletCollection property="addPhotoButtons" destination="3V6-xM-5KD" collectionClass="NSMutableArray" id="MK7-8p-GgF"/>
                         <outletCollection property="addPhotoButtons" destination="rKu-78-vsr" collectionClass="NSMutableArray" id="jeO-RC-sSd"/>
                         <outletCollection property="addPhotoButtons" destination="ySa-zS-iXQ" collectionClass="NSMutableArray" id="w2j-be-wb5"/>
+                        <segue destination="LK4-iB-5uv" kind="show" identifier="uploadInfoSuccess" id="hka-TD-So8"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PE7-oc-3Ab" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1011,7 +1012,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vqV-PX-K96" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3605.7971014492755" y="916.304347826087"/>
+            <point key="canvasLocation" x="3603" y="958"/>
         </scene>
         <!--User-->
         <scene sceneID="9hd-5B-1wI">
