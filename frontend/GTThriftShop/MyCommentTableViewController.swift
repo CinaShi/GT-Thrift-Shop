@@ -112,7 +112,7 @@ class MyCommentTableViewController: UITableViewController {
                     
                     
                     DispatchQueue.main.async(execute: {
-                        //deal with star here
+                        self.initialSort()
                         
                         self.tableView.reloadData()
                         self.activityIndicatorView.stopAnimating()
@@ -143,6 +143,12 @@ class MyCommentTableViewController: UITableViewController {
         task.resume()
         
         
+    }
+    
+    func initialSort() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+        self.myComments.sort(by: {dateFormatter.date(from: $0.4)! > dateFormatter.date(from: $1.4)!})
     }
     
     func findProductByPid(pid: Int) -> Product? {
