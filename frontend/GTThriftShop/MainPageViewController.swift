@@ -53,15 +53,15 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         leadingConstraint.constant = -140
         self.view.layoutIfNeeded()
         tags.append("All")
-        tags.append("Calculator")
-        tags.append("Computer")
+//        tags.append("Calculator")
+//        tags.append("Computer")
         
-        
+        obtainTagsFromServer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+        print(tags)
         allProducts.removeAll()
         products.removeAll()
         
@@ -73,6 +73,11 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     //Mark: helper methods
     
+    func storeTagsToLocal() {
+        userDefaults.set(tags, forKey: "tags")
+        userDefaults.synchronize()
+    }
+    
     func storeProductsToLocal() {
         let productsToSave = allProducts.sorted(by: {$0.pid! < $1.pid!})
         let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: productsToSave)
@@ -82,11 +87,78 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func refreshProductsFromLocal() {
         if let decoded = userDefaults.object(forKey: "products") as? Data {
-            products = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Product]
+            allProducts = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Product]
+            products.removeAll()
+            filterOutSoldProducts()
         } else {
             notifyFailure(info: "Please connect to Internet")
             //actually might need to manually grab data from server again here. Need opinions
         }
+    }
+    
+    func obtainTagsFromServer() {
+        loadProductsIndicator.startAnimating()
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/tags")
+        
+        var request = URLRequest(url:url! as URL)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            if let httpResponse = response as? HTTPURLResponse {
+                print("***** statusCode: \(httpResponse.statusCode)")
+                if httpResponse.statusCode == 200 {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
+                        let array = json["tags"] as! [String]
+                        for tag in array {
+                            self.tags.append(tag)
+                        }
+                    } catch let error as NSError {
+                        print("Failed to load: \(error.localizedDescription)")
+                    }
+                    
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.loadProductsIndicator.stopAnimating()
+                        self.storeTagsToLocal()
+                        self.menuTableView.reloadData()
+                    });
+                }else if httpResponse.statusCode == 404 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot connect to Internet!")
+                    });
+                }
+                else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                    });
+                    
+                }
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+            }
+        }
+        
+        task.resume()
     }
     
     func obtainAllProductsFromServer() {
@@ -188,7 +260,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
-        
+
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             
@@ -431,8 +503,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         if tableView == self.menuTableView {
             closeMenu(self)
-            print("haosdifja;lijdf;aidsofij")
-            print("should send url here")
             if tags[indexPath.row] == "All" {
                 self.loadProductsIndicator.startAnimating()
                 refreshProductsFromLocal()
