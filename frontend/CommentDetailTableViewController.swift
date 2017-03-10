@@ -10,8 +10,10 @@ import UIKit
 
 class CommentDetailTableViewController: UITableViewController {
 
+    var userId: Int!
     var product: Product!
     var tranId: Int!
+    var buyerId: Int!
     var commentContent: String!
     var postTime: String!
     
@@ -25,10 +27,23 @@ class CommentDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var commentTextView: UITextView!
     
+    @IBOutlet weak var buyerNameLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        sellerNameLabel.text = "User: \(product.userId!)"
+        
+        userId = UserDefaults.standard.integer(forKey: "userId")
+        
+        if userId == product.userId! {
+            sellerNameLabel.text = "You"
+            buyerNameLabel.text = "User: \(buyerId!)"
+        } else if userId == buyerId! {
+            sellerNameLabel.text = "User: \(product.userId!)"
+            buyerNameLabel.text = "you"
+        } else {
+            sellerNameLabel.text = "User: \(product.userId!)"
+            buyerNameLabel.text = "User: \(buyerId!)"
+        }
         productNameLabel.text = product.name
         postTimeLabel.text = "At \(postTime!)"
         commentTextView.text = commentContent
