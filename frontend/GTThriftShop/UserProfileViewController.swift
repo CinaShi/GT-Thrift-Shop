@@ -20,14 +20,12 @@ class UserProfileViewController: UIViewController {
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var progressview: UIProgressView!
-    
     @IBOutlet weak var background: UIView!
-    //@IBOutlet weak var transactionButton: UIButton!
-
-    
     @IBOutlet weak var logoutButton: UIButton!
+    //starts here
     
     @IBOutlet weak var buttonBlock: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUserFromLocal()
@@ -70,11 +68,10 @@ class UserProfileViewController: UIViewController {
         buttonBlock.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
         buttonBlock.layer.shadowOpacity = 0.5
         
-        logoutButton.layer.shadowColor = UIColor.darkGray.cgColor
-        logoutButton.layer.shadowRadius = 5
-        logoutButton.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
-        logoutButton.layer.shadowOpacity = 0.5
-        
+        let color5 = UIColor(red: 255/255, green: 94/255, blue: 58/255, alpha: 1)
+        logoutButton.layer.cornerRadius = 20
+        logoutButton.layer.borderColor = color5.cgColor
+        logoutButton.layer.borderWidth = 1
     }
     
     override func viewWillAppear(_ animated: Bool) {
