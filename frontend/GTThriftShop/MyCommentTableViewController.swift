@@ -241,8 +241,11 @@ class MyCommentTableViewController: UITableViewController {
                     } else {
                         itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
                     }
+                    
                 })
             }
+            itemImage.clipsToBounds = true
+
         }
         
         buyerLabel.text = "By user: \(buyerId)"

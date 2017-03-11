@@ -34,9 +34,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="106"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-
                                                 <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d6a-dc-R12">
-
                                                     <rect key="frame" x="16" y="8" width="87" height="87"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1024,9 +1022,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="381" height="103"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-
                                                 <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uGC-Bk-KF9">
-
                                                     <rect key="frame" x="16" y="8" width="87" height="87"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1393,7 +1389,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="307" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RJ4-KF-syC">
+                                        <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RJ4-KF-syC">
                                             <rect key="frame" x="14" y="7" width="87" height="87"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -1456,7 +1452,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Koj-Dc-VxV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="RaL-Ow-fXI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5677" y="1996"/>
+            <point key="canvasLocation" x="5183" y="1780"/>
         </scene>
         <!--My transaction history-->
         <scene sceneID="nSQ-av-ggL">
@@ -1591,7 +1587,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QUf-Xr-PZm">
+                                        <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QUf-Xr-PZm">
                                             <rect key="frame" x="34" y="36" width="66" height="66"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -1619,7 +1615,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xsv-vb-LKu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Zkh-IN-LJM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5053.6231884057979" y="2830.434782608696"/>
+            <point key="canvasLocation" x="4419" y="2905"/>
         </scene>
         <!--Comment-->
         <scene sceneID="WM1-7s-csg">
@@ -1643,7 +1639,7 @@
                                                     <rect key="frame" x="13" y="8" width="74" height="74"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pcp-vo-Umn">
+                                                <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pcp-vo-Umn">
                                                     <rect key="frame" x="150" y="8" width="74" height="74"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1771,7 +1767,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LmT-NX-Pbe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="wqV-0v-mc5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5774" y="3128"/>
+            <point key="canvasLocation" x="5677" y="2905"/>
         </scene>
         <!--Home-->
         <scene sceneID="y6u-03-1m0">
@@ -1815,9 +1811,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="381" height="103"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-
                                                 <imageView userInteractionEnabled="NO" tag="5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BYA-Em-h6Z">
-
                                                     <rect key="frame" x="16" y="8" width="87" height="87"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -2151,8 +2145,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ok-HJ-YAx">
-
-                                <rect key="frame" x="94.666666666666686" y="623" width="225" height="42"/>
+                                <rect key="frame" x="94.666666666666686" y="672" width="225" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="225" id="c3L-Yh-1vN"/>
                                     <constraint firstAttribute="height" constant="42" id="yok-kW-O3B"/>
@@ -2382,7 +2375,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fgE-EJ-ZCK">
-                                                    <rect key="frame" x="8" y="8" width="324" height="387"/>
+                                                    <rect key="frame" x="8" y="8" width="398" height="387"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
@@ -2610,7 +2603,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XdI-Aa-uZg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4419" y="1996"/>
+            <point key="canvasLocation" x="4406" y="1780"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="J1g-fq-V06">
@@ -2664,7 +2657,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x0s-E9-YCr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4420" y="2540"/>
+            <point key="canvasLocation" x="3603" y="2905"/>
         </scene>
     </scenes>
     <resources>
@@ -2696,7 +2689,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bs9-cY-yCb"/>
-        <segue reference="jm5-M4-ALX"/>
-
+        <segue reference="IbO-r6-Fxd"/>
     </inferredMetricsTieBreakers>
 </document>

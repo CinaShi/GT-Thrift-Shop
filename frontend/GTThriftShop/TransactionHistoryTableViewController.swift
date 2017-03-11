@@ -240,6 +240,7 @@ class TransactionHistoryTableViewController: UITableViewController {
                     }
                 })
             }
+            itemImage.clipsToBounds = true
         }
         
         sellerImage.image = #imageLiteral(resourceName: "User Location Filled-100")

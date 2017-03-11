@@ -202,8 +202,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     } else {
                         itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
                     }
+                    
                 })
             }
+            itemImage.clipsToBounds = true
+
 
         }
         

@@ -146,6 +146,8 @@ class PublishmentTableViewController: UITableViewController {
                 })
             }
         }
+        itemImage.clipsToBounds = true
+
         
         itemNameLabel.text = currentProduct.name
         yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"

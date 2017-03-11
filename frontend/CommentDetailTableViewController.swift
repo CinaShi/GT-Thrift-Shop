@@ -74,6 +74,8 @@ class CommentDetailTableViewController: UITableViewController {
                     }
                 })
             }
+            productImageView.clipsToBounds = true
+
         }
     }
 
