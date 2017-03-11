@@ -479,6 +479,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                     } else {
                         itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
                     }
+                    itemImage.clipsToBounds = true
                 })
             }
             itemNameLabel.text = currentProduct.name
