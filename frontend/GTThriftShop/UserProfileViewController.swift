@@ -40,7 +40,7 @@ class UserProfileViewController: UIViewController {
         
         //background
         let color4 = UIColor(red: 127/255, green: 194/255, blue: 246/255, alpha: 1)
-        blurEffectViewTop.layer.shadowColor = UIColor.black.cgColor
+        blurEffectViewTop.layer.shadowColor = color4.cgColor
         blurEffectViewTop.layer.shadowRadius = 5
         blurEffectViewTop.layer.shadowOffset = CGSize(width: 0, height: 5.0)
         blurEffectViewTop.layer.shadowOpacity = 1

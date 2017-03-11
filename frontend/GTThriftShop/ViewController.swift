@@ -204,6 +204,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     }
                 })
             }
+
         }
         
         itemNameLabel.text = currentProduct.name

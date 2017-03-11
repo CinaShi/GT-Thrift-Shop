@@ -221,6 +221,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                 })
             }
+
         }
         
         

@@ -496,6 +496,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                         }
                     })
                 }
+
             }
             
             itemNameLabel.text = currentProduct.name
