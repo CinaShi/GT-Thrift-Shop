@@ -111,7 +111,7 @@ class TransactionHistoryTableViewController: UITableViewController {
                     
                     DispatchQueue.main.async(execute: {
                         //deal with star here
-                        
+                        self.initialSort()
                         self.tableView.reloadData()
                         self.activityIndicatorView.stopAnimating()
                     });
@@ -140,7 +140,12 @@ class TransactionHistoryTableViewController: UITableViewController {
         
         task.resume()
         
-        
+    }
+    
+    func initialSort() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+        self.myTransactions.sort(by: {dateFormatter.date(from: $0.1.postTime)! > dateFormatter.date(from: $1.1.postTime)!})
     }
     
     func findProductByPid(pid: Int) -> Product? {

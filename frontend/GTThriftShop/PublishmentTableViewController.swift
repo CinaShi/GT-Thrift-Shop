@@ -27,6 +27,8 @@ class PublishmentTableViewController: UITableViewController {
         loadProductsFromLocal()
         loadMyProducts()
         
+        initialSort()
+        
         tableView.reloadData()
     }
 
@@ -50,6 +52,12 @@ class PublishmentTableViewController: UITableViewController {
                 myProducts.append(product)
             }
         }
+    }
+    
+    func initialSort() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+        self.myProducts.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
     }
     
     func findProductByPid(pid: Int) -> Product? {

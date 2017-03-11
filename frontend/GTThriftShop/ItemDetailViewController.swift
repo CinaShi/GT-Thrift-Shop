@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemDetailViewController: UIViewController {
+class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var product: Product!
     var userId: Int!
     var isFavorited: Bool?
@@ -18,6 +18,12 @@ class ItemDetailViewController: UIViewController {
     var isRated = false
     let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
     let blurEffectView = UIVisualEffectView(effect: nil)
+    var activityIndicatorView: UIActivityIndicatorView!
+    let userDefaults = UserDefaults.standard
+    var interestId = [Int]()
+    var selectedId: Int?
+    
+    @IBOutlet weak var interestTableView: UITableView!
     
     @IBOutlet weak var favoriteImage: UIButton!
     @IBOutlet weak var nameLabelView: UILabel!
@@ -41,8 +47,11 @@ class ItemDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        //set up scrollview
+
+        interestTableView.delegate = self
+        interestTableView.dataSource = self
+
+
         var urlStrings = [String]()
         for s in product.imageUrls{
             urlStrings.append(s)
@@ -127,14 +136,6 @@ class ItemDetailViewController: UIViewController {
             nextStepButton.addTarget(self, action: #selector(goToContactSellerVC), for: .touchUpInside)
         }
         
-        loadDetailsIndicator.startAnimating()
-        loadAdditionalDetails()
-        
-        //Button UI setup
-        nextStepButton.layer.borderWidth = 1
-        nextStepButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
-        nextStepButton.layer.cornerRadius = 20
-        
 
     }
     
@@ -157,7 +158,93 @@ class ItemDetailViewController: UIViewController {
             self.interestBlock.transform = CGAffineTransform.identity
             
         }
+        
+        //send request to get all interest Id
+        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activityIndicatorView.color = .blue
+        interestTableView.backgroundView = activityIndicatorView
+        
+        if interestId.count <= 0 {
+            loadInterestIds()
+        }
+        
+    }
     
+    func loadInterestIds() {
+        
+        activityIndicatorView.startAnimating()
+        
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/interest/\(product.pid!)")
+        
+        var request = URLRequest(url:url! as URL)
+        request.httpMethod = "GET"
+        
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            if let httpResponse = response as? HTTPURLResponse {
+                print("***** statusCode: \(httpResponse.statusCode)")
+                if httpResponse.statusCode == 200 {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
+                        guard let array = json["interestUids"] as? [Int] else {
+                            self.notifyFailure(info: "unableToUnarchiveIds!")
+                            return
+                        }
+                        for iId in array {
+                            self.interestId.append(iId)
+                        }
+                        
+                    } catch let error as NSError {
+                        print("Failed to load: \(error.localizedDescription)")
+                    }
+                    
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.activityIndicatorView.stopAnimating()
+                        self.interestTableView.reloadData()
+                    });
+                }else if httpResponse.statusCode == 400 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There has no one interested in this product yet!")
+                    });
+                } else if httpResponse.statusCode == 404 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot connect to Internet!")
+                    });
+                }
+                else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                    });
+                    
+                }
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+            }
+        }
+        
+        task.resume()
         
     }
     
@@ -189,6 +276,101 @@ class ItemDetailViewController: UIViewController {
     func goToRateAndCommentVC() {
         self.performSegue(withIdentifier: "rateAndCommentVC", sender: self)
     }
+    
+    func sendMarkAsSoldRequest() {
+        //send isSold to server && dismiss interest block && make sold button un-enabled && change locally saved data
+        
+        self.backFromInterestBlock(self)
+        self.loadDetailsIndicator.startAnimating()
+        self.nextStepButton.isEnabled = false
+        
+        loadDetailsIndicator.startAnimating()
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/update/isSold")
+        
+        var request = URLRequest(url:url! as URL)
+        request.httpMethod = "POST"
+        
+        let param = [
+            "userId"  : selectedId!,
+            "pid"  : product.pid
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            if let httpResponse = response as? HTTPURLResponse {
+                print("***** statusCode: \(httpResponse.statusCode)")
+                if httpResponse.statusCode == 200 {
+                    
+                    
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.loadDetailsIndicator.stopAnimating()
+                        self.nextStepButton.setTitle("Already sold!", for: .normal)
+                        self.nextStepButton.setTitleColor(.cyan, for: .normal)
+                        self.nextStepButton.isEnabled = false
+                        
+                        self.changeLocalSaveData()
+                        
+                    });
+                }else if httpResponse.statusCode == 404 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot connect to Internet!")
+                    });
+                }
+                else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                    });
+                    
+                }
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func changeLocalSaveData() {
+        if let decoded = userDefaults.object(forKey: "products") as? Data {
+            var products = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Product]
+            for (index, prod) in products.enumerated() {
+                if prod.pid == self.product.pid {
+                    prod.setSold()
+                    products[index] = prod
+                    let productsToSave = products.sorted(by: {$0.pid! < $1.pid!})
+                    let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: productsToSave)
+                    userDefaults.set(encodedData, forKey: "products")
+                    userDefaults.synchronize()
+                    return
+                }
+            }
+        }
+    }
+    
     
     func loadAdditionalDetails() {
         loadDetailsIndicator.startAnimating()
@@ -286,6 +468,8 @@ class ItemDetailViewController: UIViewController {
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
         self.loadDetailsIndicator.stopAnimating()
+        self.activityIndicatorView.stopAnimating()
+        self.nextStepButton.isEnabled = true
     }
     
     func sendAlart(info: String) {
@@ -399,6 +583,41 @@ class ItemDetailViewController: UIViewController {
             print("unwind from rateAndComment VC")
         }
     }
+    
+    //Mark: Table view delegate
+    
+    //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    //        return "Favorite List"
+    //    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return interestId.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Table view cells are reused and should be dequeued using a cell identifier.
+        let cellIdentifier = "interestIdCell"
+        let cell: UITableViewCell = self.interestTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let currentId = interestId[indexPath.row]
+        // Fetches the banks for the data source layout.
+        let idLabel = cell.contentView.viewWithTag(1) as! UILabel
+        idLabel.text = "User: \(currentId)"
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        selectedId = interestId[indexPath.row]
+        sendMarkAsSoldRequest()
+        
+    }
+    
+    
     
     // MARK: - Navigation
     
