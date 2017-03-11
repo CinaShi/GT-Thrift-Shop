@@ -225,6 +225,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 }else if httpResponse.statusCode == 400 {
                     DispatchQueue.main.async(execute: {
                         self.notifyFailure(info: "There has no one interested in this product yet!")
+                        self.backFromInterestBlock(self)
                     });
                 } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
@@ -627,8 +628,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let destination = segue.destination as! ContactSellerViewController
             destination.userId = userId!
             destination.pid = product.pid!
-        } else if segue.identifier == "rateAndCommentVC" {
-            let destination = segue.destination as! RateAndCommentTableViewController
         }
         
     }

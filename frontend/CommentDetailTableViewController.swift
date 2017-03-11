@@ -51,13 +51,29 @@ class CommentDetailTableViewController: UITableViewController {
         if product.imageUrls.count <= 0 {
             productImageView.image = #imageLiteral(resourceName: "No Camera Filled-100")
         } else {
-            DispatchQueue.main.async(execute: {
-                if let imageData: NSData = NSData(contentsOf: URL(string: self.product.imageUrls.first!)!) {
-                    self.productImageView.image = UIImage(data: imageData as Data)
-                } else {
-                    self.productImageView.image = #imageLiteral(resourceName: "No Camera Filled-100")
-                }
-            })
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = documentsURL.appendingPathComponent("\(product.pid!)-photo1.jpeg")
+            let filePath = fileURL.path
+            if FileManager.default.fileExists(atPath: filePath) {
+                productImageView.image = UIImage(contentsOfFile: filePath)
+            } else {
+                DispatchQueue.main.async(execute: {
+                    
+                    if let imageData: NSData = NSData(contentsOf: URL(string: self.product.imageUrls.first!)!) {
+                        do {
+                            let image = UIImage(data: imageData as Data)
+                            self.productImageView.image = image
+                            
+                            try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
+                        } catch let error as NSError {
+                            print("fuk boi--> \(error)")
+                        }
+                        
+                    } else {
+                        self.productImageView.image = #imageLiteral(resourceName: "No Camera Filled-100")
+                    }
+                })
+            }
         }
     }
 

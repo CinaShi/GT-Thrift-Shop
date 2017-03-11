@@ -100,7 +100,9 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
                                 return
                             }
                             let favProduct = self.findProductByPid(pid: pid)
-                            self.favoritedProducts.append(favProduct!)
+                            if !(favProduct?.isSold)! {
+                                self.favoritedProducts.append(favProduct!)
+                            }
                         }
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
@@ -196,14 +198,32 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         if currentProduct.imageUrls.count <= 0 {
             itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
         } else {
-            DispatchQueue.main.async(execute: {
-                if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-                    itemImage.image = UIImage(data: imageData as Data)
-                } else {
-                    itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
-                }
-            })
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = documentsURL.appendingPathComponent("\(currentProduct.pid!)-photo1.jpeg")
+            let filePath = fileURL.path
+            if FileManager.default.fileExists(atPath: filePath) {
+                itemImage.image = UIImage(contentsOfFile: filePath)
+            } else {
+                DispatchQueue.main.async(execute: {
+                    
+                    if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                        do {
+                            let image = UIImage(data: imageData as Data)
+                            itemImage.image = image
+                            
+                            try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
+                        } catch let error as NSError {
+                            print("fuk boi--> \(error)")
+                        }
+                        
+                    } else {
+                        itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+                    }
+                })
+            }
         }
+        
+        
         itemNameLabel.text = currentProduct.name
         yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
         priceLabel.text = currentProduct.price
