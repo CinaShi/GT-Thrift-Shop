@@ -129,10 +129,6 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
 //            }
 //        
 //        }
-        
-        
-        
-        
     }
    
     @IBAction func submit(_ sender: AnyObject) {
