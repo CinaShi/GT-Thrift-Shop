@@ -151,14 +151,14 @@ class PublishmentTableViewController: UITableViewController {
         
         itemNameLabel.text = currentProduct.name
         yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
-        priceLabel.text = currentProduct.price
+        priceLabel.text = "$" + currentProduct.price
         sellerLabel.text = "Seller ID: \(currentProduct.userId!)"
         if currentProduct.isSold! {
             isSoldLabel.text = "Sold"
             isSoldLabel.textColor = .red
         } else {
-            isSoldLabel.text = "On Sale"
-            isSoldLabel.textColor = .green
+            isSoldLabel.text = " "
+            //isSoldLabel.textColor = .green
         }
         
         
