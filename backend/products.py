@@ -175,13 +175,14 @@ def update_isSold():
 	userId = request.json['userId']
 	pid = request.json['pid']
 	isSold = 1
+	postTime = datetime.datetime.now()
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT isSold FROM Product WHERE pid = %s AND isSold = %s",[pid, 0])
 	if cursor.rowcount == 1:
 		try:
 			cursor.execute("UPDATE Product SET isSold = '%s' WHERE pid = %s", [isSold,pid])
-			cursor.execute("INSERT INTO Transaction(pid,buyerId) values (%s,%s)",[pid, userId])
+			cursor.execute("INSERT INTO Transaction(pid,buyerId,time) values (%s,%s,%s)",[pid, userId, postTime])
 			newTranId = cursor.lastrowid
 			db.commit()
 			db.close()
