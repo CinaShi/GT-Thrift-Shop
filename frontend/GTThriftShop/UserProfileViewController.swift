@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class UserProfileViewController: UIViewController {
     
     var userRating:Float = 0
@@ -199,15 +199,19 @@ class UserProfileViewController: UIViewController {
         LoginViewController.authFormPost = nil
         LoginViewController.authLTPost = nil
         
+        let firebaseAuth = FIRAuth.auth()
+        do {
+            try firebaseAuth?.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+        
         self.performSegue(withIdentifier: "logout", sender: nil)
 
 //        UserDefaults.resetStandardUserDefaults()
 //        self.view.layoutIfNeeded()
 //        Class.updateShortcutItems()
-        
-        
     }
-    
     
     @IBAction func unwindToUserProfileVC(segue: UIStoryboardSegue) {
         if segue.source is PublishmentTableViewController {

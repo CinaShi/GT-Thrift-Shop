@@ -31,6 +31,8 @@
 		089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */; };
 		08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */; };
 		08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */; };
+		08E8A84A1E8DFBFA00B338EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08E8A8491E8DFBFA00B338EE /* GoogleService-Info.plist */; };
+		08E8A84D1E8DFDB600B338EE /* Pods_GTThriftShop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E84B06BCEEC3BD2B483DA67 /* Pods_GTThriftShop.framework */; };
 		D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */; };
 		D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDAC31E72630900D94118 /* KDCircularProgress.swift */; };
 		D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */; };
@@ -84,6 +86,13 @@
 		089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeViewController.swift; sourceTree = "<group>"; };
 		08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeSuccessViewController.swift; sourceTree = "<group>"; };
+		08E8A8491E8DFBFA00B338EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		08E8A84B1E8DFDA000B338EE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1485D83152A8028ECFC684D7 /* Pods_GTThriftShopTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTThriftShopTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A49BD5A6938D325BF2E5287 /* Pods-GTThriftShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTThriftShop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GTThriftShop/Pods-GTThriftShop.debug.xcconfig"; sourceTree = "<group>"; };
+		3E84B06BCEEC3BD2B483DA67 /* Pods_GTThriftShop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTThriftShop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C5D345FB1E8E0BB4D4C56E7 /* Pods_GTThriftShopUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTThriftShopUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89C60571F5E8E65FA2903918 /* Pods-GTThriftShop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTThriftShop.release.xcconfig"; path = "Pods/Target Support Files/Pods-GTThriftShop/Pods-GTThriftShop.release.xcconfig"; sourceTree = "<group>"; };
 		D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropMenuButton.swift; sourceTree = "<group>"; };
 		D71CDAC31E72630900D94118 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		D71CDAC61E72643E00D94118 /* KDCircularProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KDCircularProgress.swift; path = "../../../../Downloads/KDCircularProgress-1.5.0/KDCircularProgress/KDCircularProgress.swift"; sourceTree = "<group>"; };
@@ -95,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08E8A84D1E8DFDB600B338EE /* Pods_GTThriftShop.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +151,7 @@
 				088542DD1DE93481004344D4 /* GTThriftShopUITests */,
 				088542BC1DE93481004344D4 /* Products */,
 				D71CDAC51E72643D00D94118 /* Frameworks */,
+				B7A63AC4BEA9386254FE0AD7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -172,6 +183,7 @@
 				089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */,
 				088542C71DE93481004344D4 /* LaunchScreen.storyboard */,
 				088542CA1DE93481004344D4 /* Info.plist */,
+				08E8A8491E8DFBFA00B338EE /* GoogleService-Info.plist */,
 			);
 			path = GTThriftShop;
 			sourceTree = "<group>";
@@ -235,10 +247,23 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		B7A63AC4BEA9386254FE0AD7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3A49BD5A6938D325BF2E5287 /* Pods-GTThriftShop.debug.xcconfig */,
+				89C60571F5E8E65FA2903918 /* Pods-GTThriftShop.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D71CDAC51E72643D00D94118 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08E8A84B1E8DFDA000B338EE /* Foundation.framework */,
 				D71CDAC61E72643E00D94118 /* KDCircularProgress.swift */,
+				3E84B06BCEEC3BD2B483DA67 /* Pods_GTThriftShop.framework */,
+				1485D83152A8028ECFC684D7 /* Pods_GTThriftShopTests.framework */,
+				7C5D345FB1E8E0BB4D4C56E7 /* Pods_GTThriftShopUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -250,9 +275,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 088542E31DE93481004344D4 /* Build configuration list for PBXNativeTarget "GTThriftShop" */;
 			buildPhases = (
+				159DC33FD53B53A17DABEEC0 /* [CP] Check Pods Manifest.lock */,
 				088542B71DE93481004344D4 /* Sources */,
 				088542B81DE93481004344D4 /* Frameworks */,
 				088542B91DE93481004344D4 /* Resources */,
+				FB045EB9FE35AE4D96D82D18 /* [CP] Embed Pods Frameworks */,
+				919E7DE2793118105E658695 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -311,7 +339,7 @@
 				TargetAttributes = {
 					088542BA1DE93481004344D4 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = K5BR2FF6XK;
+						DevelopmentTeam = QA3AX87W5A;
 						ProvisioningStyle = Automatic;
 					};
 					088542CE1DE93481004344D4 = {
@@ -352,6 +380,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				088542C91DE93481004344D4 /* LaunchScreen.storyboard in Resources */,
+				08E8A84A1E8DFBFA00B338EE /* GoogleService-Info.plist in Resources */,
 				089ECA3F1DEE7F6C00D508F6 /* Assets.xcassets in Resources */,
 				088542C41DE93481004344D4 /* Main.storyboard in Resources */,
 			);
@@ -372,6 +401,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		159DC33FD53B53A17DABEEC0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		919E7DE2793118105E658695 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GTThriftShop/Pods-GTThriftShop-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB045EB9FE35AE4D96D82D18 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GTThriftShop/Pods-GTThriftShop-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		088542B71DE93481004344D4 /* Sources */ = {
@@ -549,9 +626,10 @@
 		};
 		088542E41DE93481004344D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A49BD5A6938D325BF2E5287 /* Pods-GTThriftShop.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K5BR2FF6XK;
+				DEVELOPMENT_TEAM = QA3AX87W5A;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -567,9 +645,10 @@
 		};
 		088542E51DE93481004344D4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89C60571F5E8E65FA2903918 /* Pods-GTThriftShop.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K5BR2FF6XK;
+				DEVELOPMENT_TEAM = QA3AX87W5A;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
