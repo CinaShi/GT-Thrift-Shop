@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     static var authFormPost: String?
@@ -226,7 +226,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                 let ud = UserDefaults.standard
                                 ud.set(userId as! Int, forKey: "userId")
                                 ud.synchronize()
-                                self.proceedToMainTabView()
+                                self.proceedToMainTabView(user: userId as! Int)
                             });
                         }
                         
@@ -264,8 +264,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.loginActivityIndicator.stopAnimating()
     }
     
-    func proceedToMainTabView() {
-        self.performSegue(withIdentifier: "login", sender: self)
+    func proceedToMainTabView(user: Int) {
+        FIRAuth.auth()?.signIn(withEmail: "\(usernameField.text!)@gatech.edu", password: "GTThriftShop_\(user)", completion: { (user, error) in
+            if error == nil {
+                print(user!.uid)
+                self.performSegue(withIdentifier: "login", sender: self)
+            } else {
+                print(error!.localizedDescription)
+            }
+        })
+        
     }
     
     func proceedToFirstTimeView() {
@@ -296,6 +304,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "signup"{
             let destination = segue.destination as! FirstTimeViewController
             destination.userId = userIdString
+            destination.gtName = usernameField.text!
         }
         
     }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var nickNameField: UITextField!
@@ -20,6 +20,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     @IBOutlet weak var background: UIImageView!
     
     var userId = String()
+    var gtName = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -257,7 +258,15 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     }
     
     func proceedToSuccessView() {
-        self.performSegue(withIdentifier: "signupSuccess", sender: self)
+        FIRAuth.auth()?.createUser(withEmail: "\(gtName)@gatech.edu", password: "GTThriftShop_\(userId)", completion: { (user, error) in
+            if error == nil {
+                print(user!.uid)
+                self.performSegue(withIdentifier: "signupSuccess", sender: self)
+            } else {
+                print(error!.localizedDescription)
+            }
+        })
+        
     }
     
     //all delegates start here

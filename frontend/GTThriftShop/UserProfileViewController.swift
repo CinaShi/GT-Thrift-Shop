@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class UserProfileViewController: UIViewController {
     
     var userRating:Float = 0
@@ -184,7 +184,12 @@ class UserProfileViewController: UIViewController {
     
     
     @IBAction func logout(_ sender: Any) {
-        
+        let firebaseAuth = FIRAuth.auth()
+        do {
+            try firebaseAuth?.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
     }
     
     
