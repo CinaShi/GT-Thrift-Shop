@@ -183,7 +183,28 @@ class UserProfileViewController: UIViewController {
     }
     
     
-    @IBAction func logout(_ sender: Any) {
+    @IBAction func showLogout(_ sender: Any) {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to log out?", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { _ in self.logout() }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        print("================")
+        
+    }
+    
+    func logout() {
+        
+        HttpClient.clearCookies()
+        
+        LoginViewController.authFormPost = nil
+        LoginViewController.authLTPost = nil
+        
+        self.performSegue(withIdentifier: "logout", sender: nil)
+
+//        UserDefaults.resetStandardUserDefaults()
+//        self.view.layoutIfNeeded()
+//        Class.updateShortcutItems()
+        
         
     }
     

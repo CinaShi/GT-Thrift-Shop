@@ -116,19 +116,6 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
 
         self.present(alert, animated: true, completion: nil)
         
-//        for (index, button) in addPhotoButtons.enumerated() {
-//            if sender as! UIButton == button {
-//                selectedAddPhotoImageView = photosImageViews[index]
-//                selectedIndex = index
-//                let imagePicker:UIImagePickerController = UIImagePickerController()
-//                imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-//                imagePicker.delegate = self
-//                
-//                self.present(imagePicker, animated: true, completion: nil)
-//                break
-//            }
-//        
-//        }
     }
    
     @IBAction func submit(_ sender: AnyObject) {
