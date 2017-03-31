@@ -257,10 +257,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     }
     
     func proceedToSuccessView() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "FirstTimeSuccessViewController") as! FirstTimeSuccessViewController
-        self.navigationController?.pushViewController(newViewController, animated: true)
-        
+        self.performSegue(withIdentifier: "signupSuccess", sender: self)
     }
     
     //all delegates start here

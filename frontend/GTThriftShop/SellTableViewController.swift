@@ -30,9 +30,18 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     
     @IBOutlet weak var submitButton: UIButton!
     
+    @IBOutlet var mainTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = mainTable.bounds
+        //blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
+        backImageView.addSubview(blurEffectView)
+        mainTable.backgroundView = backImageView
         
         loadTagsFromLocal()
         userId = UserDefaults.standard.integer(forKey: "userId")
@@ -66,23 +75,62 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
 
     @IBAction func addPhoto(_ sender: AnyObject) {
         print("hi!")
-        for (index, button) in addPhotoButtons.enumerated() {
-            if sender as! UIButton == button {
-                selectedAddPhotoImageView = photosImageViews[index]
-                selectedIndex = index
-                let imagePicker:UIImagePickerController = UIImagePickerController()
-                imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-                imagePicker.delegate = self
+        let alert = UIAlertController(title: nil, message: "Choose a way", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Take a photo", style: .default) { action in
+            for (index, button) in self.addPhotoButtons.enumerated() {
+                if sender as! UIButton == button {
+                    self.selectedAddPhotoImageView = self.photosImageViews[index]
+                    self.selectedIndex = index
+                    let imagePicker:UIImagePickerController = UIImagePickerController()
+                    imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+                    
+                    imagePicker.delegate = self
+                    
+                    self.present(imagePicker, animated: true, completion: nil)
+                    break
+                }
                 
-                self.present(imagePicker, animated: true, completion: nil)
-                break
+            }
+
+        }
+        let libraryAction = UIAlertAction(title: "Choose from library", style: .default) { action in
+            for (index, button) in self.addPhotoButtons.enumerated() {
+                if sender as! UIButton == button {
+                    self.selectedAddPhotoImageView = self.photosImageViews[index]
+                    self.selectedIndex = index
+                    let imagePicker:UIImagePickerController = UIImagePickerController()
+                    imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                    imagePicker.delegate = self
+                    
+                    self.present(imagePicker, animated: true, completion: nil)
+                    break
+                }
+                
             }
             
         }
+
+        alert.addAction(cameraAction)
+        alert.addAction(libraryAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        self.present(alert, animated: true, completion: nil)
         
-        
+//        for (index, button) in addPhotoButtons.enumerated() {
+//            if sender as! UIButton == button {
+//                selectedAddPhotoImageView = photosImageViews[index]
+//                selectedIndex = index
+//                let imagePicker:UIImagePickerController = UIImagePickerController()
+//                imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+//                imagePicker.delegate = self
+//                
+//                self.present(imagePicker, animated: true, completion: nil)
+//                break
+//            }
+//        
+//        }
     }
-    
+   
     @IBAction func submit(_ sender: AnyObject) {
         if itemNameField.text! == "" || priceField.text! == "" || usedYearField.text! == "" || descriptionTextView.text! == "" || categoryField.text! == "" {
             sendAlart(info: "Please fill in all information before submit!")

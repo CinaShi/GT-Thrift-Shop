@@ -183,6 +183,9 @@ class UserProfileViewController: UIViewController {
     }
     
     
+    @IBAction func logout(_ sender: Any) {
+        
+    }
     
     
     @IBAction func unwindToUserProfileVC(segue: UIStoryboardSegue) {
