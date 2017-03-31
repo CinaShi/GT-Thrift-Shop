@@ -1142,7 +1142,7 @@
                             <constraint firstItem="67f-3Q-r2z" firstAttribute="top" secondItem="xAz-Lv-rkt" secondAttribute="bottom" id="yhm-5U-P77"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Favorite" image="Rating-100" selectedImage="Rating Filled-100" id="cRc-oQ-aFM"/>
+                    <tabBarItem key="tabBarItem" title="Favorite" image="favorite" selectedImage="favorite-filled" id="cRc-oQ-aFM"/>
                     <connections>
                         <outlet property="loadFavoriteIndicator" destination="lyi-dL-gH1" id="CjA-YE-0ma"/>
                         <outlet property="tableView" destination="67f-3Q-r2z" id="pBo-Ah-AAn"/>
@@ -2840,6 +2840,8 @@
         <image name="background" width="1000" height="1881"/>
         <image name="checked" width="512" height="512"/>
         <image name="comment" width="100" height="100"/>
+        <image name="favorite" width="30" height="30"/>
+        <image name="favorite-filled" width="50" height="50"/>
         <image name="full star" width="50" height="50"/>
         <image name="half-star" width="50" height="50"/>
         <image name="iOS-9-Wallpaper" width="503" height="853"/>
@@ -2851,6 +2853,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="99o-Qk-lN0"/>
-        <segue reference="qew-ik-tyZ"/>
+        <segue reference="IbO-r6-Fxd"/>
     </inferredMetricsTieBreakers>
 </document>
