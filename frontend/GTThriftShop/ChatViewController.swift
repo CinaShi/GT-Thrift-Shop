@@ -17,9 +17,7 @@ class ChatViewController: UIViewController {
     }
     
     func loginIntoFireBase() {
-        
-        
-        
+
     }
     
     

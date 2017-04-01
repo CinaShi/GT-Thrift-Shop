@@ -77,21 +77,42 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     //all helper methods start here
     
     func handleSelectProfileImageView() {
-        let picker = UIImagePickerController()
-        
-        picker.delegate = self
-        picker.allowsEditing = true
-        picker.sourceType = .photoLibrary
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            picker.sourceType = UIImagePickerControllerSourceType.camera
-            picker.cameraCaptureMode = .photo
-            picker.modalPresentationStyle = .fullScreen
-            present(picker,animated: true,completion: nil)
-        } else {
-            print("no camera, use library instead")
-            picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
-            present(picker, animated: true, completion: nil)
+//        let picker = UIImagePickerController()
+//        
+//        picker.delegate = self
+//        picker.allowsEditing = true
+//        picker.sourceType = .photoLibrary
+//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//            picker.sourceType = UIImagePickerControllerSourceType.camera
+//            picker.cameraCaptureMode = .photo
+//            picker.modalPresentationStyle = .fullScreen
+//            present(picker,animated: true,completion: nil)
+//        } else {
+//            print("no camera, use library instead")
+//            picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+//            present(picker, animated: true, completion: nil)
+//        }
+    
+        let alert = UIAlertController(title: nil, message: "Choose a way", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Take a photo", style: .default) { action in
+            let imagePicker:UIImagePickerController = UIImagePickerController()
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true, completion: nil)
         }
+        let libraryAction = UIAlertAction(title: "Choose from library", style: .default) { action in
+            let imagePicker:UIImagePickerController = UIImagePickerController()
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        
+        alert.addAction(cameraAction)
+        alert.addAction(libraryAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+
     }
     
     func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData?, boundary: String) -> NSData {
