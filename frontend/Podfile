@@ -7,4 +7,10 @@ target 'GTThriftShop' do
     pod 'Firebase'
   	pod 'Firebase/Core'
     pod 'Firebase/Auth'
+    pod 'Firebase/Messaging'
+    pod 'Alamofire', '~> 4.4'
+    pod 'Firebase/Database'
+    pod 'Firebase/Storage'
+    pod 'JSQMessagesViewController'
+    pod 'SwiftGifOrigin'
 end

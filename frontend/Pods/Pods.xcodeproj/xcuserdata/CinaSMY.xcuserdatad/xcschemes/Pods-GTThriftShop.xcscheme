@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C8045452C9770C6366E30151179B039D"
+               BlueprintIdentifier = "5D964B23F6915C24931853B5F372E757"
                BuildableName = "Pods_GTThriftShop.framework"
                BlueprintName = "Pods-GTThriftShop"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C8045452C9770C6366E30151179B039D"
+            BlueprintIdentifier = "5D964B23F6915C24931853B5F372E757"
             BuildableName = "Pods_GTThriftShop.framework"
             BlueprintName = "Pods-GTThriftShop"
             ReferencedContainer = "container:Pods.xcodeproj">
