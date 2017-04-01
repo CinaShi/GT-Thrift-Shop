@@ -216,7 +216,7 @@ def add_interest():
 	    abort(400, '{"message":"add interest user unsuccessful"}')
 
 #author: Yichen
-@products.route('/products/interest/<userId>', methods=['GET'])
+@products.route('/products/getInterest/<userId>', methods=['GET'])
 def get_interest(userId):
 	pidList1 = []
 	pidList2 = []
