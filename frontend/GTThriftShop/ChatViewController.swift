@@ -17,16 +17,9 @@ class ChatViewController: UIViewController {
     }
     
     func loginIntoFireBase() {
-        FIRAuth.auth()?.signInAnonymously(completion: { (anonymousUser: FIRUser?, error: NSError?) in
-            if error == nil {
-                print("UserId: \(anonymousUser!.uid)")
-            } else {
-                print(error!.localizedDescription)
-                return
-            }
-            
-            
-        } as? FIRAuthResultCallback)
+        
+        
+        
     }
     
     
