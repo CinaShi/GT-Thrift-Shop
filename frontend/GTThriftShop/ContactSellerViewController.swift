@@ -144,7 +144,7 @@ class ContactSellerViewController: JSQMessagesViewController {
 
     private func observeMessages() {
         messageRef = channelRef!.child("messages")
-        let messageQuery = messageRef.queryLimited(toLast:25)
+        let messageQuery = messageRef.queryLimited(toLast:100)
         
         newMessageRefHandle = messageQuery.observe(.childAdded, with: { (snapshot) -> Void in
             
