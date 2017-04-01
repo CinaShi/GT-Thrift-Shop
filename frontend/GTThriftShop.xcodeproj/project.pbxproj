@@ -32,6 +32,7 @@
 		08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */; };
 		08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */; };
 		D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */; };
+		D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDAC31E72630900D94118 /* KDCircularProgress.swift */; };
 		D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,8 @@
 		08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeViewController.swift; sourceTree = "<group>"; };
 		08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeSuccessViewController.swift; sourceTree = "<group>"; };
 		D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropMenuButton.swift; sourceTree = "<group>"; };
+		D71CDAC31E72630900D94118 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
+		D71CDAC61E72643E00D94118 /* KDCircularProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KDCircularProgress.swift; path = "../../../../Downloads/KDCircularProgress-1.5.0/KDCircularProgress/KDCircularProgress.swift"; sourceTree = "<group>"; };
 		D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +140,7 @@
 				088542D21DE93481004344D4 /* GTThriftShopTests */,
 				088542DD1DE93481004344D4 /* GTThriftShopUITests */,
 				088542BC1DE93481004344D4 /* Products */,
+				D71CDAC51E72643D00D94118 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -155,6 +159,7 @@
 			children = (
 				088542C21DE93481004344D4 /* Main.storyboard */,
 				088542BE1DE93481004344D4 /* AppDelegate.swift */,
+				D71CDAC31E72630900D94118 /* KDCircularProgress.swift */,
 				089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */,
 				08CA35551E3ACDA100EFF7D1 /* Login */,
 				08757B801E59022900219BCA /* Main Page */,
@@ -228,6 +233,14 @@
 				08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		D71CDAC51E72643D00D94118 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D71CDAC61E72643E00D94118 /* KDCircularProgress.swift */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +382,7 @@
 				089ECA451DEE8F4200D508F6 /* ItemDetailViewController.swift in Sources */,
 				089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */,
 				0899EEF31E72278300262267 /* SellTableViewController.swift in Sources */,
+				D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */,
 				089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */,
 				089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */,
 				0899EEE71E713BB000262267 /* TransactionHistoryTableViewController.swift in Sources */,

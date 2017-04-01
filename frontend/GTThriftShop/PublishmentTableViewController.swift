@@ -27,6 +27,8 @@ class PublishmentTableViewController: UITableViewController {
         loadProductsFromLocal()
         loadMyProducts()
         
+        initialSort()
+        
         tableView.reloadData()
     }
 
@@ -50,6 +52,12 @@ class PublishmentTableViewController: UITableViewController {
                 myProducts.append(product)
             }
         }
+    }
+    
+    func initialSort() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+        self.myProducts.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
     }
     
     func findProductByPid(pid: Int) -> Product? {
@@ -114,14 +122,33 @@ class PublishmentTableViewController: UITableViewController {
         if currentProduct.imageUrls.count <= 0 {
             itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
         } else {
-            DispatchQueue.main.async(execute: {
-                if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-                    itemImage.image = UIImage(data: imageData as Data)
-                } else {
-                    itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
-                }
-            })
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = documentsURL.appendingPathComponent("\(currentProduct.pid!)-photo1.jpeg")
+            let filePath = fileURL.path
+            if FileManager.default.fileExists(atPath: filePath) {
+                itemImage.image = UIImage(contentsOfFile: filePath)
+            } else {
+                DispatchQueue.main.async(execute: {
+                    
+                    if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                        do {
+                            let image = UIImage(data: imageData as Data)
+                            itemImage.image = image
+                            
+                            try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
+                        } catch let error as NSError {
+                            print("fuk boi--> \(error)")
+                        }
+                        
+                    } else {
+                        itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+                    }
+                })
+            }
         }
+        itemImage.clipsToBounds = true
+
+        
         itemNameLabel.text = currentProduct.name
         yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
         priceLabel.text = currentProduct.price

@@ -256,7 +256,11 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func getPidsByTag(tag: String) {
         loadProductsIndicator.startAnimating()
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/tags/\(tag)")
+        var newTag = tag
+        if tag.contains(" ") {
+            newTag = tag.replacingOccurrences(of: " ", with: "_")
+        }
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/tags/\(newTag)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -351,6 +355,10 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func chooseSortingFunction(_ sender: Any) {
         if !sortViewExpanded {
+            sortView.alpha = 0
+            UIView.animate(withDuration: 0.5){
+                self.sortView.alpha = 1
+            }
             self.view.addSubview(sortView)
             sortView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -362,13 +370,13 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                 self.sortViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
             })
             sortViewExpanded = true
-            
         } else {
             dismissSortView()
         }
     }
     
     func dismissSortView() {
+        
         self.sortView.removeFromSuperview()
         UIView.animate(withDuration: 0.5, animations: {() -> Void in
             self.sortViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(0))
@@ -465,14 +473,35 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             if currentProduct.imageUrls.count <= 0 {
                 itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
             } else {
-                DispatchQueue.main.async(execute: {
-                    if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-                        itemImage.image = UIImage(data: imageData as Data)
-                    } else {
-                        itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
-                    }
-                })
+                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                let fileURL = documentsURL.appendingPathComponent("\(currentProduct.pid!)-photo1.jpeg")
+                let filePath = fileURL.path
+                if FileManager.default.fileExists(atPath: filePath) {
+                    itemImage.image = UIImage(contentsOfFile: filePath)
+                } else {
+                    DispatchQueue.main.async(execute: {
+                        
+                        if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                            do {
+                                let image = UIImage(data: imageData as Data)
+                                itemImage.image = image
+                                
+                                try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
+                            } catch let error as NSError {
+                                print("fuk boi--> \(error)")
+                            }
+                            
+                        } else {
+                            itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+                        }
+
+                    })
+                }
+                itemImage.clipsToBounds = true
+
+
             }
+            
             itemNameLabel.text = currentProduct.name
             yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
             priceLabel.text = currentProduct.price

@@ -20,7 +20,8 @@ class TransactionHistoryTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activityIndicatorView.color = .blue
         tableView.backgroundView = activityIndicatorView
     }
     
@@ -110,9 +111,14 @@ class TransactionHistoryTableViewController: UITableViewController {
                     
                     DispatchQueue.main.async(execute: {
                         //deal with star here
-                        
+                        self.initialSort()
                         self.tableView.reloadData()
                         self.activityIndicatorView.stopAnimating()
+                    });
+                }  else if httpResponse.statusCode == 400 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "You don't have any transaction history!")
+//                        self.backToUserProfileVC(self)
                     });
                 } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
@@ -134,7 +140,12 @@ class TransactionHistoryTableViewController: UITableViewController {
         
         task.resume()
         
-        
+    }
+    
+    func initialSort() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
+        self.myTransactions.sort(by: {dateFormatter.date(from: $0.1.postTime)! > dateFormatter.date(from: $1.1.postTime)!})
     }
     
     func findProductByPid(pid: Int) -> Product? {
@@ -206,13 +217,30 @@ class TransactionHistoryTableViewController: UITableViewController {
         if currentProduct.imageUrls.count <= 0 {
             itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
         } else {
-            DispatchQueue.main.async(execute: {
-                if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-                    itemImage.image = UIImage(data: imageData as Data)
-                } else {
-                    itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
-                }
-            })
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = documentsURL.appendingPathComponent("\(currentProduct.pid!)-photo1.jpeg")
+            let filePath = fileURL.path
+            if FileManager.default.fileExists(atPath: filePath) {
+                itemImage.image = UIImage(contentsOfFile: filePath)
+            } else {
+                DispatchQueue.main.async(execute: {
+                    
+                    if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                        do {
+                            let image = UIImage(data: imageData as Data)
+                            itemImage.image = image
+                            
+                            try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
+                        } catch let error as NSError {
+                            print("fuk boi--> \(error)")
+                        }
+                        
+                    } else {
+                        itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+                    }
+                })
+            }
+            itemImage.clipsToBounds = true
         }
         
         sellerImage.image = #imageLiteral(resourceName: "User Location Filled-100")
