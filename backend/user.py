@@ -68,12 +68,83 @@ def get_user_rate(uid):
 		return jsonify({'rate':-1})
 	db.close()
 
+@user.route('/user/cr/update',methods = ['POST'])
+def update_user_rate_comment():
+	if not request.json or not 'userId' in request.json or not 'rate' in request.json or not 'ccontent' in request.json or not 'commentatorId' in request.json or not 'tranId' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = int(request.json['userId'])
+	rate = int(request.json['rate'])	
+	ccontent = request.json['ccontent']
+	commentatorId = int(request.json['commentatorId'])
+	tranId = request.json['tranId']
+	postTime = datetime.datetime.now()
+	db = mysql.connect()
+	cursor2 = db.cursor()
+	cursor2.execute("SELECT userId FROM UserComment WHERE tranId = %s;"%tranId)
+	if cursor2.rowcount >0:
+		try:
+			cursor2.execute("DELETE FROM UserComment WHERE tranId = %s;"%tranId)
+			db.commit()
+		except:
+			db.rollback()
+			db.close()
+			abort(400, '{"message":"update comment unsuccessful"}')
+	try:
+		cursor2.execute("INSERT INTO UserComment(userId,ccontent,commentatorId,tranId,postTime,rate) values (%s,%s,%s,%s,%s,%s)",[userId,ccontent,commentatorId,tranId,postTime,rate])
+		newId = cursor2.lastrowid
+		db.commit()
+		
+	except:
+		db.rollback()
+		db.close()
+		abort(400, '{"message":"insert new comment unsuccessful"}')
+	cursor2.close()
+
+	tranCur = db.cursor()
+	try:
+   		tranCur.execute("UPDATE Transaction SET isRated = '%s' WHERE tranId = %s;",[1,tranId])
+   		db.commit()
+   	except:
+   		db.rollback()
+   		db.close()
+   		abort(400,'{"message":"update transction fail"}')
+
+	cursor = db.cursor()
+	cursor.execute("SELECT userRate,rateCount from UserRate WHERE userId =%s;"%userId)
+	if cursor.rowcount > 0:
+
+		rateRow = cursor.fetchall()[0]
+		prevRate = float(rateRow[0])
+		prevCount = int(rateRow[1])
+		newRate = (float(prevRate*prevCount + rate))/(prevCount+1)
+		newCount = prevCount +1
+		try:
+			cursor.execute("UPDATE UserRate SET userRate = '%s', rateCount = '%s' WHERE userId = %s;",[newRate,newCount,userId])
+			db.commit()
+			db.close()
+			return ("success")
+		except:
+			db.rollback()
+	    	db.close()
+	    	abort(400, '{"message":"update rate unsuccessful"}')
+	else:
+		try:
+			cursor.execute("INSERT INTO UserRate(userId,userRate,rateCount) values (%s,%s,%s)",[userId,rate,1])
+			db.commit()
+			return("success")
+		except:
+			db.rollback()
+	    	db.close()
+	     	abort(400, '{"message":"insert rate unsuccessful"}')
+	
+	cursor.close()
+	
 #author Yang
 @user.route('/user/rate/update', methods=['POST'])
 def update_user_rate():
 	if not request.json or not 'userId' in request.json or not 'rate' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
+	userId = int(request.json['userId'])
 	rate = int(request.json['rate'])
 
 	db = mysql.connect()
