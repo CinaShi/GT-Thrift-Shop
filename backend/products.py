@@ -215,6 +215,35 @@ def add_interest():
 	    db.close()
 	    abort(400, '{"message":"add interest user unsuccessful"}')
 
+#author: Yichen
+@products.route('/products/interest/<userId>', methods=['GET'])
+def get_interest(userId):
+	pidList1 = []
+	pidList2 = []
+	result = []
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT pid FROM Product WHERE userId = '%s';"%userId)
+	if cursor.rowcount > 0:
+		pidList1 = [item[0] for item in cursor.fetchall()]
+		for pid in pidList1:
+			p1Cur = db.cursor()
+			p1Cur.execute("SELECT interestUId FROM InterestList WHERE pid = '%s';"%pid)
+			result = [item[0] for item in p1Cur.fetchall()]
+	cursor.execute("SELECT pid FROM InterestList WHERE interestUId = '%s';"%userId)
+	if cursor.rowcount > 0:
+		pidList2 = [item[0] for item in cursor.fetchall()]
+		for pid in pidList2:
+			p2Cur = db.cursor()
+			p2Cur.execute("SELECT userId from Product WHERE pid = '%s';"%pid)
+			userRow = p2Cur.fetchall()[0]
+			userList = int(userRow[0])
+	result.append(userList)
+	result = sorted(set(result))
+	db.close()
+	return jsonify({'Interest':result})
+
+
 
 @products.route('/products/getAllPost/<uid>', methods=['GET'])
 def get_all_post(uid):
@@ -249,5 +278,3 @@ def get_product_interests(pid):
 	else :
 		db.close()
 		abort(400,"Unknown userId")
-
-
