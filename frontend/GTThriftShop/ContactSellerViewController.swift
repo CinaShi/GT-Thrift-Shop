@@ -42,7 +42,9 @@ class ContactSellerViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sendInterestInBackground()
+        if pid > -1 {
+            sendInterestInBackground()
+        }
         messageRef = channelRef.child("messages")
         
         self.senderId = "\(userId!)"
