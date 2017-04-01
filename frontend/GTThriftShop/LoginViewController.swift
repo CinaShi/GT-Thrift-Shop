@@ -268,7 +268,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         FIRAuth.auth()?.signIn(withEmail: "\(usernameField.text!)@gatech.edu", password: "GTThriftShop_\(user)", completion: { (user, error) in
             if error == nil {
                 print(user!.uid)
+                
+                
                 self.performSegue(withIdentifier: "login", sender: self)
+                
             } else {
                 print(error!.localizedDescription)
             }

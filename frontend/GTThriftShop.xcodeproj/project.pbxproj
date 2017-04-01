@@ -14,6 +14,7 @@
 		088542C91DE93481004344D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 088542C71DE93481004344D4 /* LaunchScreen.storyboard */; };
 		088542D41DE93481004344D4 /* GTThriftShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542D31DE93481004344D4 /* GTThriftShopTests.swift */; };
 		088542DF1DE93481004344D4 /* GTThriftShopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542DE1DE93481004344D4 /* GTThriftShopUITests.swift */; };
+		089233801E8F58FB00B72BF7 /* ContactSellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0892337F1E8F58FB00B72BF7 /* ContactSellerViewController.swift */; };
 		0899EEE51E713B9900262267 /* PublishmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE41E713B9900262267 /* PublishmentTableViewController.swift */; };
 		0899EEE71E713BB000262267 /* TransactionHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE61E713BB000262267 /* TransactionHistoryTableViewController.swift */; };
 		0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */; };
@@ -24,7 +25,6 @@
 		089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */; };
 		089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */; };
 		089ECA451DEE8F4200D508F6 /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */; };
-		089ECA471DEE8F5D00D508F6 /* ContactSellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */; };
 		089ECA491DEE8F7700D508F6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA481DEE8F7700D508F6 /* ChatViewController.swift */; };
 		089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */; };
 		089ECA4D1DEE8FAB00D508F6 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */; };
@@ -69,6 +69,10 @@
 		088542DA1DE93481004344D4 /* GTThriftShopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GTThriftShopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		088542DE1DE93481004344D4 /* GTThriftShopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTThriftShopUITests.swift; sourceTree = "<group>"; };
 		088542E01DE93481004344D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0892337F1E8F58FB00B72BF7 /* ContactSellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSellerViewController.swift; sourceTree = "<group>"; };
+		089233811E8F5A6400B72BF7 /* JSQMessagesViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQMessagesViewController.framework; path = "Pods/../build/Debug-iphoneos/JSQMessagesViewController/JSQMessagesViewController.framework"; sourceTree = "<group>"; };
+		089233831E8F5A6800B72BF7 /* JSQSystemSoundPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQSystemSoundPlayer.framework; path = "Pods/../build/Debug-iphoneos/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework"; sourceTree = "<group>"; };
+		089233851E8F5C0A00B72BF7 /* GTThriftShop-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTThriftShop-Bridging-Header.h"; sourceTree = "<group>"; };
 		0899EEE41E713B9900262267 /* PublishmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishmentTableViewController.swift; sourceTree = "<group>"; };
 		0899EEE61E713BB000262267 /* TransactionHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHistoryTableViewController.swift; sourceTree = "<group>"; };
 		0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateAndCommentTableViewController.swift; sourceTree = "<group>"; };
@@ -79,7 +83,6 @@
 		089ECA401DEE8EFD00D508F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		089ECA421DEE8F2300D508F6 /* MainPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
 		089ECA441DEE8F4200D508F6 /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
-		089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSellerViewController.swift; sourceTree = "<group>"; };
 		089ECA481DEE8F7700D508F6 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellViewController.swift; sourceTree = "<group>"; };
 		089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				088542C21DE93481004344D4 /* Main.storyboard */,
+				089233851E8F5C0A00B72BF7 /* GTThriftShop-Bridging-Header.h */,
 				088542BE1DE93481004344D4 /* AppDelegate.swift */,
 				D71CDAC31E72630900D94118 /* KDCircularProgress.swift */,
 				089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */,
@@ -180,10 +184,10 @@
 				0899EEEB1E713BF600262267 /* Models */,
 				089ECA481DEE8F7700D508F6 /* ChatViewController.swift */,
 				089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */,
-				089ECA461DEE8F5D00D508F6 /* ContactSellerViewController.swift */,
 				088542C71DE93481004344D4 /* LaunchScreen.storyboard */,
 				088542CA1DE93481004344D4 /* Info.plist */,
 				08E8A8491E8DFBFA00B338EE /* GoogleService-Info.plist */,
+				0892337F1E8F58FB00B72BF7 /* ContactSellerViewController.swift */,
 			);
 			path = GTThriftShop;
 			sourceTree = "<group>";
@@ -259,6 +263,8 @@
 		D71CDAC51E72643D00D94118 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				089233831E8F5A6800B72BF7 /* JSQSystemSoundPlayer.framework */,
+				089233811E8F5A6400B72BF7 /* JSQMessagesViewController.framework */,
 				08E8A84B1E8DFDA000B338EE /* Foundation.framework */,
 				D71CDAC61E72643E00D94118 /* KDCircularProgress.swift */,
 				3E84B06BCEEC3BD2B483DA67 /* Pods_GTThriftShop.framework */,
@@ -339,7 +345,7 @@
 				TargetAttributes = {
 					088542BA1DE93481004344D4 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = QA3AX87W5A;
+						DevelopmentTeam = K5BR2FF6XK;
 						ProvisioningStyle = Automatic;
 					};
 					088542CE1DE93481004344D4 = {
@@ -463,6 +469,7 @@
 				089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */,
 				089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */,
 				0899EEE71E713BB000262267 /* TransactionHistoryTableViewController.swift in Sources */,
+				089233801E8F58FB00B72BF7 /* ContactSellerViewController.swift in Sources */,
 				089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */,
 				08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */,
 				D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */,
@@ -471,7 +478,6 @@
 				088542C11DE93481004344D4 /* ViewController.swift in Sources */,
 				0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */,
 				0899EEED1E71DD9800262267 /* MyCommentTableViewController.swift in Sources */,
-				089ECA471DEE8F5D00D508F6 /* ContactSellerViewController.swift in Sources */,
 				0899EEF11E71DDF700262267 /* CommentDetailTableViewController.swift in Sources */,
 				D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */,
 				088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */,
@@ -629,10 +635,13 @@
 			baseConfigurationReference = 3A49BD5A6938D325BF2E5287 /* Pods-GTThriftShop.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QA3AX87W5A;
+				DEVELOPMENT_TEAM = K5BR2FF6XK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(SRCROOT)/**",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQMessagesViewController",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQSystemSoundPlayer",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = GTThriftShop/Info.plist;
@@ -648,10 +657,13 @@
 			baseConfigurationReference = 89C60571F5E8E65FA2903918 /* Pods-GTThriftShop.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QA3AX87W5A;
+				DEVELOPMENT_TEAM = K5BR2FF6XK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(SRCROOT)/**",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQMessagesViewController",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQSystemSoundPlayer",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = GTThriftShop/Info.plist;

@@ -282,6 +282,9 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
         FIRAuth.auth()?.createUser(withEmail: "\(gtName)@gatech.edu", password: "GTThriftShop_\(userId)", completion: { (user, error) in
             if error == nil {
                 print(user!.uid)
+                
+                
+                
                 self.performSegue(withIdentifier: "signupSuccess", sender: self)
             } else {
                 print(error!.localizedDescription)

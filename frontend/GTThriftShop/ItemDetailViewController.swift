@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var product: Product!
@@ -22,6 +23,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     let userDefaults = UserDefaults.standard
     var interestId = [Int]()
     var selectedId: Int?
+    
+    var channelRef: FIRDatabaseReference!
     
     @IBOutlet weak var interestTableView: UITableView!
     
@@ -101,6 +104,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         nextStepButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
         nextStepButton.layer.cornerRadius = 20
         
+        channelRef = FIRDatabase.database().reference().child("Channels").child(generateChannel())
         
     }
     
@@ -585,6 +589,10 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    func generateChannel() -> String {
+        return userId < product.userId! ? "\(userId!)_\(product.userId!)" : "\(product.userId!)_\(userId!)"
+    }
+    
     //Mark: Table view delegate
     
     //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -625,9 +633,12 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "contactSellerVC"{
-            let destination = segue.destination as! ContactSellerViewController
+            let navVc = segue.destination as! UINavigationController
+            let destination = navVc.viewControllers.first as! ContactSellerViewController
             destination.userId = userId!
+            destination.sellerId = product.userId!
             destination.pid = product.pid!
+            destination.channelRef = channelRef
         }
         
     }
