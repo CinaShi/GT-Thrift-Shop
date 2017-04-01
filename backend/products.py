@@ -223,6 +223,7 @@ def get_interest(userId):
 	result = []
 	db = mysql.connect()
 	cursor = db.cursor()
+	
 	cursor.execute("SELECT pid FROM Product WHERE userId = '%s';"%userId)
 	if cursor.rowcount > 0:
 		pidList1 = [item[0] for item in cursor.fetchall()]
@@ -230,15 +231,16 @@ def get_interest(userId):
 			p1Cur = db.cursor()
 			p1Cur.execute("SELECT interestUId FROM InterestList WHERE pid = '%s';"%pid)
 			result = [item[0] for item in p1Cur.fetchall()]
+	
 	cursor.execute("SELECT pid FROM InterestList WHERE interestUId = '%s';"%userId)
 	if cursor.rowcount > 0:
-		pidList2 = [item[0] for item in cursor.fetchall()]
+		pidList2 = cursor.fetchall()
 		for pid in pidList2:
 			p2Cur = db.cursor()
 			p2Cur.execute("SELECT userId from Product WHERE pid = '%s';"%pid)
 			userRow = p2Cur.fetchall()[0]
 			userList = int(userRow[0])
-	result.append(userList)
+			result.append(userList)
 	result = sorted(set(result))
 	db.close()
 	return jsonify({'Interest':result})
