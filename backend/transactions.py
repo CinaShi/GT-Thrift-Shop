@@ -51,7 +51,7 @@ def get_all_transactions(uid):
 	db = mysql.connect()
 	cursor = db.cursor()
 
-	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid, Transaction.isRated, Transaction.time FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND (Product.userId = %s OR Transaction.buyerId = %s);",[uid, uid]) 
+	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid, Transaction.isRated, Transaction.time, Transaction.tranId FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND (Product.userId = %s OR Transaction.buyerId = %s);",[uid, uid]) 
 	if cursor.rowcount > 0:
 		transList = cursor.fetchall()
 		for trans in transList:
@@ -61,6 +61,7 @@ def get_all_transactions(uid):
 			temp["pid"] = trans[2]
 			temp["isRated"] = trans[3]
 			temp["postTime"] = trans[4]
+			temp["tranId"] = trans[5]
 			returnList.append(temp)
 		db.close()
 		return jsonify({'transactions':returnList})
