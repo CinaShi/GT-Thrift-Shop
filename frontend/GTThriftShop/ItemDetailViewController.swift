@@ -22,6 +22,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     let userDefaults = UserDefaults.standard
     var interestId = [Int]()
     var selectedId: Int?
+    //New
+    var tranId: Int!
     
     @IBOutlet weak var interestTableView: UITableView!
     
@@ -252,19 +254,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     //Make it disappear
     @IBAction func backFromInterestBlock(_ sender: Any) {
-//        UIView.animate(withDuration: 0.5, animations: {
-//            self.interestBlock.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-//            self.interestBlock.alpha = 0
-//        }) { (finished) in
-//            UIView.animate(withDuration: 0.5, animations: {
-//                self.interestBlock.transform = CGAffineTransform.identity
-//            })
-//        
-//        }
-//        UIView.animate(withDuration: 0.5) {
-//            self.blurEffectView.effect = nil
-//        }
-//        
+
         self.interestBlock.removeFromSuperview()
         self.blurEffectView.removeFromSuperview()
         
@@ -628,6 +618,13 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let destination = segue.destination as! ContactSellerViewController
             destination.userId = userId!
             destination.pid = product.pid!
+        } else if segue.identifier == "rateAndCommentVC" {
+            //let destination = segue.destination as! RateAndCommentTableViewController
+            let navBc = segue.destination as! UINavigationController
+            let destination = navBc.viewControllers.first as! RateAndCommentTableViewController
+            destination.userId = userId!
+            destination.targetId = product.userId!
+            destination.tranId = tranId!
         }
         
     }

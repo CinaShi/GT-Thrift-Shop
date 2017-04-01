@@ -11,6 +11,11 @@ import UIKit
 class RateAndCommentTableViewController: UITableViewController, UITextViewDelegate {
     
     var rating = 1
+    var comment: String!
+    var userId: Int!
+    var targetId: Int!
+    var tranId: Int!
+    
     
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet var mainTable: UITableView!
@@ -53,7 +58,95 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
     }
     
     @IBAction func submitRateAndComment(_ sender: Any) {
+        if commentTextView.text! == "" {
+            sendAlert(info: "Please say something QvQ")
+        } else {
+            //ready to submit
+            submitButton.isEnabled = false
+            uploadComment()
+        }
+    }
+    
+    func uploadComment() {
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/cr/update")
         
+        var request = URLRequest(url:url! as URL)
+        request.httpMethod = "POST"
+        
+        
+        let param = [
+            "userId"  : targetId!,
+            "rate"    : rating,
+            "ccontent"    : commentTextView.text!,
+            "commentatorId"    : userId!,
+            "tranId"    : tranId!,
+            ] as [String : Any]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            if let httpResponse = response as? HTTPURLResponse {
+                print("***** statusCode: \(httpResponse.statusCode)")
+                if httpResponse.statusCode == 200 {
+                    
+                    print("comment successfully submitted")
+                    DispatchQueue.main.async(execute: {
+                        //self.performSegue(withIdentifier: "gobacktoProfile", sender: self)
+                    });
+                }else if httpResponse.statusCode == 404 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot find URL!")
+                    });
+                }
+                else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                    });
+                    
+                }
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func notifyFailure(info: String) {
+        self.sendAlert(info: info)
+        submitButton.isEnabled = true
+    }
+    
+    func sendAlert(info: String) {
+        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            (result : UIAlertAction) -> Void in
+            print("OK")
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - rating-related function goes here

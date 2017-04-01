@@ -13,8 +13,12 @@ class TransactionHistoryTableViewController: UITableViewController {
     var products = [Product]()
     var selected: Product?
     var selectedIsRated: Bool?
+    //New
+    var selectedTranId: Int?
+    
     var userId: Int!
-    var myTransactions = [(Int, Product, Int, Bool)]()
+    //var myTransactions = [(Int, Product, Int, Bool)]()
+    var myTransactions = [(Int, Product, Int, Bool, Int)]()
     var userDefaults = UserDefaults.standard
     var activityIndicatorView: UIActivityIndicatorView!
     
@@ -91,17 +95,19 @@ class TransactionHistoryTableViewController: UITableViewController {
                             guard let buyerID = dict["buyerID"] as? Int,
                                 let sellerID = dict["sellerID"] as? Int,
                                 let pid = dict["pid"] as? Int,
-                                let isRatedString = dict["isRated"] as? String
+                                let isRatedString = dict["isRated"] as? Int,
+                                //New
+                                let tranID = dict["tranId"] as? Int
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
                             let product = self.findProductByPid(pid: pid)
                             var isRated = false
-                            if isRatedString == "1" {
+                            if isRatedString == 1 {
                                 isRated = true
                             }
-                            self.myTransactions.append((sellerID, product!, buyerID, isRated))
+                            self.myTransactions.append((sellerID, product!, buyerID, isRated, tranID))
                         }
                         
                     } catch let error as NSError {
@@ -271,6 +277,8 @@ class TransactionHistoryTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: false)
         selected = myTransactions[indexPath.row].1
         selectedIsRated = myTransactions[indexPath.row].3
+        //New
+        selectedTranId = myTransactions[indexPath.row].4
         performSegue(withIdentifier: "getItemDetailsFromTransactionHistory", sender: nil)
         
     }
@@ -285,6 +293,10 @@ class TransactionHistoryTableViewController: UITableViewController {
             destination.product = selected!
             destination.isRated = selectedIsRated!
             destination.sourceVCName = "transactionVC"
+            //New
+            destination.tranId = selectedTranId!
+
+
         }
         
     }
