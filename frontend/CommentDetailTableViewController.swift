@@ -16,6 +16,7 @@ class CommentDetailTableViewController: UITableViewController {
     var buyerId: Int!
     var commentContent: String!
     var postTime: String!
+    var rate: Int!
     
     @IBOutlet weak var productImageView: UIImageView!
     

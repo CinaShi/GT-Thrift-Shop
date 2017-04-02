@@ -273,7 +273,8 @@ class MyCommentTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "commentDetailVC"{
-            let destination = segue.destination as! CommentDetailTableViewController
+            let navVc = segue.destination as! UINavigationController
+            let destination = navVc.viewControllers.first as! CommentDetailTableViewController
             print(selected!.description)
             destination.product = selected!
             destination.tranId = selectedTranId!
