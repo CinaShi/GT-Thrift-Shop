@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RateAndCommentTableViewController: UITableViewController, UITextViewDelegate {
+class RateAndCommentTableViewController: UITableViewController, UITextViewDelegate, UITextFieldDelegate {
     
     var rating = 1
     var comment: String!
@@ -49,6 +49,9 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
         submitButton.layer.cornerRadius = 20
         submitButton.layer.borderColor = color2.cgColor
         submitButton.layer.borderWidth = 1
+        
+        commentTextView.text = "Type your comment here."
+        commentTextView.textColor = UIColor.lightGray
         
     }
 
@@ -111,6 +114,7 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
                     
                     print("comment successfully submitted")
                     DispatchQueue.main.async(execute: {
+                        self.dismiss(animated: true, completion: nil)
                         //self.performSegue(withIdentifier: "gobacktoProfile", sender: self)
                     });
                 }else if httpResponse.statusCode == 404 {
@@ -205,8 +209,24 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
         return true
     }
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if commentTextView.textColor == UIColor.lightGray {
+            commentTextView.text = nil
+            commentTextView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if commentTextView.text.isEmpty {
+            commentTextView.text = "Type your comment here."
+            commentTextView.textColor = UIColor.lightGray
+        }
+    }
+    
     func tap(gesture: UITapGestureRecognizer) {
         commentTextView.resignFirstResponder()
     }
+    
+    
 
 }
