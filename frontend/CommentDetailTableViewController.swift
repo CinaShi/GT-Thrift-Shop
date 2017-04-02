@@ -30,6 +30,9 @@ class CommentDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var buyerNameLabel: UILabel!
     
+    @IBOutlet var stars: [UIImageView]!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,7 +79,25 @@ class CommentDetailTableViewController: UITableViewController {
                 })
             }
             productImageView.clipsToBounds = true
-
+        }
+        displayRateInStars()
+    }
+    
+    func displayRateInStars() {
+        if rate < 1 {
+            for i in 0...4 {
+                stars[i].image = #imageLiteral(resourceName: "Rating-100")
+            }
+            return
+        }
+        for i in 0...rate-1 {
+            stars[i].image = #imageLiteral(resourceName: "Rating Filled-100")
+        }
+        if rate > 4 {
+            return
+        }
+        for i in rate...4 {
+            stars[i].image = #imageLiteral(resourceName: "Rating-100")
         }
     }
 

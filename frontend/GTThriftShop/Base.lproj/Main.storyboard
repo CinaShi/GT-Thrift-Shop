@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1499,7 +1499,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="103"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ryq-Ax-klv" id="UgZ-xA-90M">
-                                    <rect key="frame" x="0.0" y="0.0" width="381" height="103"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="381" height="102.66666666666667"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m1k-NB-dM6">
@@ -1841,6 +1841,11 @@
                         <outlet property="productImageView" destination="Pcp-vo-Umn" id="qRd-Zh-asw"/>
                         <outlet property="productNameLabel" destination="Yeg-MH-Fae" id="HBW-wd-ddv"/>
                         <outlet property="sellerNameLabel" destination="ok1-lb-28D" id="uky-Ec-Nsq"/>
+                        <outletCollection property="stars" destination="KCK-af-LGS" collectionClass="NSMutableArray" id="E14-jV-Es6"/>
+                        <outletCollection property="stars" destination="klt-Se-GCq" collectionClass="NSMutableArray" id="drP-a8-XGi"/>
+                        <outletCollection property="stars" destination="JCZ-fO-g8S" collectionClass="NSMutableArray" id="yAN-br-VW8"/>
+                        <outletCollection property="stars" destination="jtc-FS-aEE" collectionClass="NSMutableArray" id="4bW-Lo-1m7"/>
+                        <outletCollection property="stars" destination="hgD-Xe-UuC" collectionClass="NSMutableArray" id="YV6-cN-c4g"/>
                         <segue destination="wqV-0v-mc5" kind="unwind" identifier="unwindToMyCommentVC" unwindAction="unwindToMyCommentVCWithSegue:" id="hAA-eH-X6a"/>
                     </connections>
                 </tableViewController>

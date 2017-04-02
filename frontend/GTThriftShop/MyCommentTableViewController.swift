@@ -17,7 +17,7 @@ class MyCommentTableViewController: UITableViewController {
     var selectedPostTime: String?
     var selectedBuyerId: Int?
     var userId: Int!
-    var myComments = [(Int, Product, Int, String, String)]()
+    var myComments = [(Int, Product, Int, String, String, Int)]()
     var userDefaults = UserDefaults.standard
     var activityIndicatorView: UIActivityIndicatorView!
     
@@ -96,14 +96,15 @@ class MyCommentTableViewController: UITableViewController {
                                 let buyerId = dict["buyerId"] as? Int,
                                 let pid = dict["pid"] as? Int,
                                 let commentContent = dict["commentContent"] as? String,
-                                let postTime = dict["postTime"] as? String
+                                let postTime = dict["postTime"] as? String,
+                                let rate = dict["rate"] as? Int
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
                             let product = self.findProductByPid(pid: pid)
                             
-                            self.myComments.append((tranId, product!, buyerId, commentContent, postTime))
+                            self.myComments.append((tranId, product!, buyerId, commentContent, postTime, rate))
                         }
                         
                     } catch let error as NSError {
@@ -263,7 +264,7 @@ class MyCommentTableViewController: UITableViewController {
         selectedCommentContent = myComments[indexPath.row].3
         selectedPostTime = myComments[indexPath.row].4
         selectedBuyerId = myComments[indexPath.row].2
-        performSegue(withIdentifier: "commentDetailVC", sender: nil)
+        performSegue(withIdentifier: "commentDetailVC", sender: myComments[indexPath.row].5)
         
     }
 
@@ -281,6 +282,7 @@ class MyCommentTableViewController: UITableViewController {
             destination.commentContent = selectedCommentContent
             destination.postTime = selectedPostTime
             destination.buyerId = selectedBuyerId!
+            destination.rate = sender as! Int
         }
         
     }
