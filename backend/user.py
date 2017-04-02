@@ -183,7 +183,7 @@ def update_user_rate():
 def get_user_comment(uid):
 	db = mysql.connect()
 	cursor = db.cursor()
-	cursor.execute("SELECT UserComment.ccontent, UserComment.tranId, Transaction.pid, Transaction.buyerId, UserComment.postTime FROM UserComment INNER JOIN Transaction WHERE Transaction.tranId = UserComment.tranId AND UserComment.userId = '%s';"%uid)
+	cursor.execute("SELECT UserComment.ccontent, UserComment.tranId, Transaction.pid, Transaction.buyerId, UserComment.postTime,UserComment.rate FROM UserComment INNER JOIN Transaction WHERE Transaction.tranId = UserComment.tranId AND UserComment.userId = '%s';"%uid)
 	commentList = []
 	if cursor.rowcount > 0:
 		for comment in cursor.fetchall():
@@ -193,6 +193,7 @@ def get_user_comment(uid):
 			temp["pid"] = comment[2]
 			temp["buyerId"] = comment[3]
 			temp["postTime"] = comment[4]
+			temp["rate"] = comment[5]
 			commentList.append(temp)
 		db.close()
 		return jsonify({'comments':commentList})
