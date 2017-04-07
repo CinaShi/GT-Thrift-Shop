@@ -45,7 +45,12 @@ def get_all_products():
 				imageR = imageCur.fetchall()
 				for i in imageR:
 					imageList.append(i[0])
+			userCur = db.cursor()
+			userCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%d';"%userId)
+			if userCur.rowcount >0:
+				nickname = userCur.fetchall()[0][0]
 			currentProduct = {}
+			currentProduct['nickname'] = nickname
 			currentProduct['userId'] = userId
 			currentProduct['pid'] = pid
 			currentProduct['pName'] = pName
