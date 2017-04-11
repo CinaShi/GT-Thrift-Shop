@@ -192,6 +192,11 @@ def get_user_comment(uid):
 			temp["tranId"] = comment[1]
 			temp["pid"] = comment[2]
 			temp["buyerId"] = comment[3]
+			buyerCur = db.cursor()
+			buyerCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%comment[3])
+			buyerName = buyerCur.fetchall()[0][0]
+			temp["buyerName"] = buyerName
+			
 			temp["postTime"] = comment[4]
 			temp["rate"] = comment[5]
 			commentList.append(temp)
@@ -224,3 +229,33 @@ def update_user_comment():
 		db.rollback()
 		db.close()
 		abort(400, '{"message":"insert new comment unsuccessful"}')
+
+
+#author: JWZ
+@user.route('/user/info/get/<uid>', methods=['GET'])
+def get_user_info(uid):
+	db = mysql.connect()
+	cursor = db.cursor()
+	info = {}
+	cursor.execute("SELECT nickname, email, avatarURL, description FROM UserInfo WHERE userId = '%s';"%uid)
+	if cursor.rowcount > 0:
+		row = cursor.fetchall()[0]
+		info["nickname"] = row[0]
+		info["email"] = row[1]
+		info["avatarURL"] = row[2]
+		info["description"] = row[3]
+	else:
+		db.close()
+		abort(400,"This user has invalid user info")
+
+	cursor = db.cursor()
+	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%uid)
+	if cursor.rowcount > 0:
+		row = cursor.fetchall()[0]
+		info["rate"] = str(row[0])
+	else:
+		db.close()
+		abort(400,"This user has invalid user rate")
+
+	db.close()
+	return jsonify({'userInfo':info})

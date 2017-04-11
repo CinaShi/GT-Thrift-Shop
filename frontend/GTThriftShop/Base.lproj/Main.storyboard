@@ -2528,7 +2528,6 @@
                                                     <state key="normal" title="Submit"/>
                                                     <connections>
                                                         <action selector="submitRateAndComment:" destination="cBf-19-ly1" eventType="touchUpInside" id="Tk2-ra-T4P"/>
-                                                        <segue destination="g76-sG-NjQ" kind="presentation" identifier="gobacktoProfile" id="6iy-MF-pXB"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -2761,8 +2760,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bs9-cY-yCb"/>
-        <segue reference="6iy-MF-pXB"/>
         <segue reference="BFQ-Nz-74P"/>
         <segue reference="67t-OU-7l1"/>
+        <segue reference="IbO-r6-Fxd"/>
+        <segue reference="hmN-Uy-Okp"/>
     </inferredMetricsTieBreakers>
 </document>
