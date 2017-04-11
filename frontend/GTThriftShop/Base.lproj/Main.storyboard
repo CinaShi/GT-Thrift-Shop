@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1372,9 +1372,12 @@
                         <outlet property="background" destination="N7r-YX-YSk" id="NPt-u2-mFq"/>
                         <outlet property="blurEffectViewTop" destination="N7r-YX-YSk" id="exS-fQ-s1U"/>
                         <outlet property="buttonBlock" destination="7F0-fD-cE6" id="7Zl-MR-npZ"/>
+                        <outlet property="description" destination="qJf-D2-LWV" id="0c3-aQ-KK0"/>
                         <outlet property="logoutButton" destination="mvR-3C-guB" id="g2U-Ac-Skr"/>
+                        <outlet property="nickName" destination="ewT-2f-fUg" id="E96-Pi-JEV"/>
                         <outlet property="profileImage" destination="miT-nd-aPf" id="wOB-9N-oAn"/>
                         <outlet property="scoreLabel" destination="IaR-II-mZg" id="633-ej-gn0"/>
+                        <outlet property="userId" destination="oB5-jm-8mN" id="UcK-kH-xa6"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="logout" modalTransitionStyle="flipHorizontal" id="M2T-0o-rZU"/>
                     </connections>
                 </viewController>
@@ -1499,7 +1502,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="103"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ryq-Ax-klv" id="UgZ-xA-90M">
-                                    <rect key="frame" x="0.0" y="0.0" width="381" height="102.66666666666667"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="381" height="103"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m1k-NB-dM6">
@@ -2335,11 +2338,11 @@
                                     <rect key="frame" x="0.0" y="28" width="240" height="30"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vc6-MG-IXG" id="Nat-vP-542">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="29.666666666666668"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="29.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buyer ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hN-Nw-vY5">
-                                                <rect key="frame" x="15" y="5" width="220" height="19"/>
+                                                <rect key="frame" x="15" y="5" width="220" height="19.666666666666668"/>
                                                 <color key="backgroundColor" white="1" alpha="0.80361729452054798" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -2757,9 +2760,9 @@
         <image name="userBig" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hmN-Uy-Okp"/>
         <segue reference="bs9-cY-yCb"/>
         <segue reference="6iy-MF-pXB"/>
-        <segue reference="IbO-r6-Fxd"/>
+        <segue reference="BFQ-Nz-74P"/>
+        <segue reference="67t-OU-7l1"/>
     </inferredMetricsTieBreakers>
 </document>

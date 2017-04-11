@@ -19,6 +19,9 @@ class UserProfileViewController: UIViewController {
     //@IBOutlet var stars: [UIImageView]!
     
     @IBOutlet weak var profileImage: UIImageView!
+    
+
+    
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var logoutButton: UIButton!
     //starts here
@@ -167,6 +170,7 @@ class UserProfileViewController: UIViewController {
         
         task.resume()
     }
+    
     
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
