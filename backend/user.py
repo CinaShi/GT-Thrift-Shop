@@ -192,6 +192,11 @@ def get_user_comment(uid):
 			temp["tranId"] = comment[1]
 			temp["pid"] = comment[2]
 			temp["buyerId"] = comment[3]
+			buyerCur = db.cursor()
+			buyerCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%comment[3])
+			buyerName = buyerCur.fetchall()[0][0]
+			temp["buyerName"] = buyerName
+			
 			temp["postTime"] = comment[4]
 			temp["rate"] = comment[5]
 			commentList.append(temp)
