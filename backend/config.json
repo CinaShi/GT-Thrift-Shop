@@ -1,7 +1,0 @@
-{
-    "db_host": "jddb.cgr0pyshjriu.us-east-1.rds.amazonaws.com",
-    "db_port": 3306,
-    "db_passwd": "thrift666",
-    "db_user": "jdroot",
-    "db_db": "JDDatabase"
-}
