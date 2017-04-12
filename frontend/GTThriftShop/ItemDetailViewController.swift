@@ -22,7 +22,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     var activityIndicatorView: UIActivityIndicatorView!
     let userDefaults = UserDefaults.standard
     var interestId = [Int]()
-    var interestName = [String]()
+    //var interestName = [String]()
     var selectedId: Int?
     //New
     var tranId: Int!
@@ -203,7 +203,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             
             // You can print out response object
             print("******* response = \(response!)")
-            
             // Print out reponse body
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("****** response data = \(responseString!)")
@@ -221,6 +220,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                                 return
                             }
                             self.interestId.append(interestUid)
+                            //self.interestName.append(interestName)
                         }
 
                         
