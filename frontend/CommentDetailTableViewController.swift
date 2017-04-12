@@ -36,6 +36,16 @@ class CommentDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.tableView.bounds
+        let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
+        backImageView.addSubview(blurEffectView)
+        self.tableView.backgroundView = backImageView
+        
+        productImageView.layer.cornerRadius = productImageView.frame.width/2
+        productImageView.clipsToBounds = true
+        
         userId = UserDefaults.standard.integer(forKey: "userId")
         
         if userId == product.userId! {
@@ -49,8 +59,15 @@ class CommentDetailTableViewController: UITableViewController {
             buyerNameLabel.text = "User: \(buyerId!)"
         }
         productNameLabel.text = product.name
-        postTimeLabel.text = "At \(postTime!)"
-        commentTextView.text = commentContent
+        //time format
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss z"
+        let postDate = dateFormatter.date(from: postTime)
+        dateFormatter.dateFormat = "MMM dd yyyy, HH:mm"
+        let goodDate = dateFormatter.string(from: postDate!)
+        postTimeLabel.text = goodDate
+        
+        commentTextView.text = "   " + commentContent
         
         if product.imageUrls.count <= 0 {
             productImageView.image = #imageLiteral(resourceName: "No Camera Filled-100")
