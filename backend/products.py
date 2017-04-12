@@ -248,6 +248,7 @@ def get_interest(userId):
 			userList = int(userRow[0])
 			result.append(userList)
 	result = sorted(set(result))
+
 	for r in result:
 		rCur = db.cursor()
 		rCur.execute("SELECT nickname, userId, avatarURL FROM UserInfo where userId = '%s';"%r)
