@@ -26,7 +26,13 @@ class MyCommentTableViewController: UITableViewController {
         activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         activityIndicatorView.color = .blue
         tableView.backgroundView = activityIndicatorView
-        
+
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.tableView.bounds
+        let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
+        backImageView.addSubview(blurEffectView)
+        self.tableView.backgroundView = backImageView
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -121,7 +127,6 @@ class MyCommentTableViewController: UITableViewController {
                 } else if httpResponse.statusCode == 400 {
                     DispatchQueue.main.async(execute: {
                         self.notifyFailure(info: "There are currently no comments for you!")
-//                        self.unwindToUserProfile(self)
                     });
                 } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
@@ -177,10 +182,6 @@ class MyCommentTableViewController: UITableViewController {
     }
     
     
-    
-    
-    
-    
     @IBAction func unwindToUserProfile(_ sender: Any) {
         self.performSegue(withIdentifier: "unwindToUserProfileFromComment", sender: self)
     }
@@ -218,6 +219,12 @@ class MyCommentTableViewController: UITableViewController {
         let postTimeLabel = cell.contentView.viewWithTag(1) as! UILabel
         let commentContentTextView = cell.contentView.viewWithTag(3) as! UITextView
         
+        itemImage.layer.cornerRadius = itemImage.frame.width/2
+        itemImage.layer.shadowRadius = 3
+        itemImage.layer.shadowOffset = CGSize(width: 0, height: 5)
+        itemImage.layer.shadowColor = UIColor.black.cgColor
+        itemImage.clipsToBounds = true
+        
         if currentProduct.imageUrls.count <= 0 {
             itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
         } else {
@@ -236,7 +243,7 @@ class MyCommentTableViewController: UITableViewController {
                             
                             try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
                         } catch let error as NSError {
-                            print("fuk boi--> \(error)")
+                            print("Errormessage--> \(error)")
                         }
                         
                     } else {
@@ -245,13 +252,19 @@ class MyCommentTableViewController: UITableViewController {
                     
                 })
             }
-            itemImage.clipsToBounds = true
-
         }
         
         buyerLabel.text = "By user: \(buyerId)"
-        postTimeLabel.text = postTime
-        commentContentTextView.text = commentContent
+        //time convert
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss z"
+        let postDate = dateFormatter.date(from: postTime)
+        
+        dateFormatter.dateFormat = "MMM dd yyyy, HH:mm"
+        let goodDate = dateFormatter.string(from: postDate!)
+        
+        postTimeLabel.text = goodDate
+        commentContentTextView.text = "\"" + commentContent + "\""
         
         
         return cell
