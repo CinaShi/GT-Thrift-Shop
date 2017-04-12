@@ -11,23 +11,26 @@ import FirebaseAuth
 class UserProfileViewController: UIViewController {
     
     var userRating:Float = 0
+    var userNickname:String!
+    var userImageUrl:String!
+    var userDescription:String!
+    var userEmail:String!
+    
     var userId: Int!
     var userDefaults = UserDefaults.standard
     let progress = KDCircularProgress(frame: CGRect(x: 0, y: 0, width: 165, height: 165))
 
-    
-    //@IBOutlet var stars: [UIImageView]!
-    
     @IBOutlet weak var profileImage: UIImageView!
-    
 
-    
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var logoutButton: UIButton!
     //starts here
     
     @IBOutlet weak var blurEffectViewTop: UIView!
+    @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var descriptionField: UITextView!
     @IBOutlet weak var buttonBlock: UIView!
     
     override func viewDidLoad() {
@@ -42,8 +45,8 @@ class UserProfileViewController: UIViewController {
         profileImage.clipsToBounds = true
         
         //background
-        let color4 = UIColor(red: 127/255, green: 194/255, blue: 246/255, alpha: 1)
-        blurEffectViewTop.layer.shadowColor = color4.cgColor
+        //let color4 = UIColor(red: 127/255, green: 194/255, blue: 246/255, alpha: 1)
+        blurEffectViewTop.layer.shadowColor = UIColor.black.cgColor
         blurEffectViewTop.layer.shadowRadius = 5
         blurEffectViewTop.layer.shadowOffset = CGSize(width: 0, height: 5.0)
         blurEffectViewTop.layer.shadowOpacity = 1
@@ -99,7 +102,7 @@ class UserProfileViewController: UIViewController {
     }
     
     func getUserRating() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/rate/get/\(userId!)")
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/info/get/\(userId!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -110,6 +113,7 @@ class UserProfileViewController: UIViewController {
             if error != nil {
                 print("error=\(error!)")
                 DispatchQueue.main.async(execute: {
+                    print("Here1=========")
                     self.notifyFailure(info: "There might be some connection issue. Please try again!")
                 });
                 
@@ -127,7 +131,12 @@ class UserProfileViewController: UIViewController {
                 if httpResponse.statusCode == 200 {
                     do {
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String,Any>
-                        self.userRating = (json["rate"] as? Float)!
+                        let dict = json["userInfo"] as! Dictionary<String, Any>
+                        self.userImageUrl = (dict["avatarURL"] as? String)!
+                        self.userDescription = (dict["description"] as? String)!
+                        self.userEmail = (dict["email"] as? String)!
+                        self.userNickname = (dict["nickname"] as? String)!
+                        self.userRating = (dict["rate"] as? Float)!
 
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
@@ -135,6 +144,11 @@ class UserProfileViewController: UIViewController {
                     
                     
                     DispatchQueue.main.async(execute: {
+                        //basic
+                        self.nicknameLabel.text = self.userNickname
+                        self.emailLabel.text = self.userEmail
+                        self.descriptionField.text = self.userDescription
+                        //rating
                         if self.userRating <= 2.5 {
                             self.scoreLabel.center.x = 60
                         }
@@ -148,14 +162,20 @@ class UserProfileViewController: UIViewController {
                             }
 
                         }), completion: nil)
-
+                        //image
+                        if let imageData: NSData = NSData(contentsOf: URL(string: self.userImageUrl)!) {
+    
+                            let avatar = UIImage(data: imageData as Data)
+                            self.profileImage.image = avatar
+                            
+                        }
+                        
                     });
                 } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
                         self.notifyFailure(info: "Cannot connect to Internet!")
                     });
-                }
-                else {
+                } else {
                     DispatchQueue.main.async(execute: {
                         self.notifyFailure(info: "There might be some connection issue. Please try again!")
                     });
@@ -170,8 +190,7 @@ class UserProfileViewController: UIViewController {
         
         task.resume()
     }
-    
-    
+
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
     }
@@ -192,8 +211,6 @@ class UserProfileViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { _ in self.logout() }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        print("================")
-        
     }
     
     func logout() {
@@ -213,9 +230,6 @@ class UserProfileViewController: UIViewController {
         
         self.performSegue(withIdentifier: "logout", sender: nil)
 
-//        UserDefaults.resetStandardUserDefaults()
-//        self.view.layoutIfNeeded()
-//        Class.updateShortcutItems()
     }
     
     @IBAction func unwindToUserProfileVC(segue: UIStoryboardSegue) {
