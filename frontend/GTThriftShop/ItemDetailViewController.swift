@@ -22,6 +22,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     var activityIndicatorView: UIActivityIndicatorView!
     let userDefaults = UserDefaults.standard
     var interestId = [Int]()
+    var interestName = [String]()
     var selectedId: Int?
     //New
     var tranId: Int!
@@ -211,13 +212,17 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 if httpResponse.statusCode == 200 {
                     do {
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
-                        guard let array = json["interestUids"] as? [Int] else {
-                            self.notifyFailure(info: "unableToUnarchiveIds!")
-                            return
+                        let array = json["interestList"] as! [Dictionary<String, Any>]
+                        for dict in array {
+                            guard let interestUid = dict["userId"] as? Int,
+                            let interestName = dict["nickname"] as? String
+                            else {
+                                self.notifyFailure(info: "unableToUnarchiveIds")
+                                return
+                            }
+                            self.interestId.append(interestUid)
                         }
-                        for iId in array {
-                            self.interestId.append(iId)
-                        }
+
                         
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")

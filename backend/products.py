@@ -45,7 +45,12 @@ def get_all_products():
 				imageR = imageCur.fetchall()
 				for i in imageR:
 					imageList.append(i[0])
+			userCur = db.cursor()
+			userCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%d';"%userId)
+			if userCur.rowcount >0:
+				nickname = userCur.fetchall()[0][0]
 			currentProduct = {}
+			currentProduct['nickname'] = nickname
 			currentProduct['userId'] = userId
 			currentProduct['pid'] = pid
 			currentProduct['pName'] = pName
@@ -222,6 +227,11 @@ def get_interest(userId):
 	pidList2 = []
 	result = []
 	db = mysql.connect()
+	userCur = db.cursor()
+	userCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%userId)
+	if userCur.rowcount >0:
+		nickname = userCur.fetchall()[0][0]
+
 	cursor = db.cursor()
 	
 	cursor.execute("SELECT pid FROM Product WHERE userId = '%s';"%userId)
@@ -243,7 +253,7 @@ def get_interest(userId):
 			result.append(userList)
 	result = sorted(set(result))
 	db.close()
-	return jsonify({'Interest':result})
+	return jsonify({'Interest':result,'nickname':nickname})
 
 
 
@@ -271,12 +281,22 @@ def get_product_interests(pid):
 	
 	db = mysql.connect()
 	cursor = db.cursor()
-
+	returnList = []
 	cursor.execute("SELECT interestUid FROM InterestList WHERE pid = '%s';"%pid) 
 	if cursor.rowcount > 0:
 		uidList = [item[0] for item in cursor.fetchall()]
+		for uid in uidList:
+			temp = {}
+			userCur = db.cursor()
+			userCur.execute("SELECT nickname,avatarURL FROM UserInfo WHERE userId = '%s';"%uid)
+			intereP = userCur.fetchall()[0]
+			nickname = intereP[0]
+			temp['userId'] = uid
+			temp['avatarURL'] = intereP[1]
+			temp['nickname'] = nickname
+			returnList.append(temp)
 		db.close()
-		return jsonify({'interestUids':uidList})
+		return jsonify({'interestList':returnList})
 	else :
 		db.close()
-		abort(400,"Unknown userId")
+		abort(400,"Unknown pid")

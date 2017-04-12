@@ -35,6 +35,17 @@ def get_transactions(tranId):
 		temp["pid"] = result[2]
 		temp["postTime"] = result[3]
 		temp["isRated"] = result[4]
+
+		buyerCur = db.cursor()
+		buyerCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%result[0])
+		buyerName = buyerCur.fetchall()[0][0]
+		temp["buyerName"] = buyerName
+
+		sellerCur = db.cursor()
+		sellerCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%result[1])
+		sellerName = sellerCur.fetchall()[0][0]
+		temp["sellerName"] = sellerName
+
 		db.close()
 		return jsonify({'transaction':temp})
 	else :
@@ -62,6 +73,17 @@ def get_all_transactions(uid):
 			temp["isRated"] = trans[3]
 			temp["postTime"] = trans[4]
 			temp["tranId"] = trans[5]
+
+			buyerCur = db.cursor()
+			buyerCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%trans[0])
+			buyerName = buyerCur.fetchall()[0][0]
+			temp["buyerName"] = buyerName
+
+			sellerCur = db.cursor()
+			sellerCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%trans[1])
+			sellerName = sellerCur.fetchall()[0][0]
+			temp["sellerName"] = sellerName
+
 			returnList.append(temp)
 		db.close()
 		return jsonify({'transactions':returnList})
