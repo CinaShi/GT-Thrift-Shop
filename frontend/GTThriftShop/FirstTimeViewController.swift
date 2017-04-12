@@ -51,7 +51,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
         blurView.frame.size = CGSize(width: width, height: height)
         blurView.alpha = 0.9
         background.addSubview(blurView)
-        
+        imageView.layer.cornerRadius = imageView.frame.width/2
         imageView.clipsToBounds = true
         
     }
