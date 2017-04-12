@@ -214,7 +214,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             
             // You can print out response object
             print("******* response = \(response!)")
-            
             // Print out reponse body
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("****** response data = \(responseString!)")
@@ -231,6 +230,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                                 self.notifyFailure(info: "unableToUnarchiveIds")
                                 return
                             }
+
                             self.interestId.append((interestUid, username))
                         }
 
