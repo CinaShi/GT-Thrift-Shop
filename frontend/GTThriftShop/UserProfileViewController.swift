@@ -146,6 +146,11 @@ class UserProfileViewController: UIViewController {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        // Update your values there
+        initProfileImage()
+    }
+    
     //Mark: helper methods
     
     func loadUserFromLocal() {
@@ -178,12 +183,16 @@ class UserProfileViewController: UIViewController {
         let color2 = UIColor(red: 255/255, green: 42/255, blue: 104/255, alpha: 1)
         let color3 = UIColor(red: 255/255, green: 149/255, blue: 0/255, alpha: 1)
         progress.setColors(colors: color1,color2,color3)
-        progress.center = CGPoint(x: profileImage.center.x, y: profileImage.center.y)
+        
+        progress.center = profileImage.center
+        
         progress.angle = 0
-        self.view.addSubview(progress)
-        print("progressbar frame: \(progress.frame)")
-        print("picture frame: \(profileImage.frame)")
-        print("progress center: \(progress.center)")
+        self.background.addSubview(progress)
+        
+//        print("progressbar frame: \(progress.frame)")
+//        print("picture frame: \(profileImage.frame)")
+//        print("progress center: \(progress.center)")
+//        print("picture center: \(profileImage.center)")
     }
     
     func getUserInfo() {
