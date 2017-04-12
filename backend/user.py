@@ -254,8 +254,9 @@ def get_user_info(uid):
 		row = cursor.fetchall()[0]
 		info["rate"] = float(row[0])
 	else:
-		db.close()
-		abort(400,"This user has invalid user rate")
+		info["rate"] = float("-1")
+		#db.close()
+		#abort(400,"This user has invalid user rate")
 
 	db.close()
 	return jsonify({'userInfo':info})
