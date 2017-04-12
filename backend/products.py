@@ -288,9 +288,11 @@ def get_product_interests(pid):
 		for uid in uidList:
 			temp = {}
 			userCur = db.cursor()
-			userCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%uid)
-			nickname = userCur.fetchall()[0][0]
+			userCur.execute("SELECT nickname,avatarURL FROM UserInfo WHERE userId = '%s';"%uid)
+			intereP = userCur.fetchall()[0]
+			nickname = intereP[0]
 			temp['userId'] = uid
+			temp['avatarURL'] = intereP[1]
 			temp['nickname'] = nickname
 			returnList.append(temp)
 		db.close()
