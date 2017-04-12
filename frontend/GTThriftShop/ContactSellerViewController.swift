@@ -72,6 +72,10 @@ class ContactSellerViewController: JSQMessagesViewController {
         
         if let imageData: NSData = NSData(contentsOf: URL(string: userUrl)!) {
             userAvatarImageView = JSQMessagesAvatarImage.avatar(with: UIImage(data: imageData as Data))
+            
+            
+            
+            
         } else {
             userAvatarImageView = JSQMessagesAvatarImage.avatar(with: #imageLiteral(resourceName: "GT-icon"))
         }
