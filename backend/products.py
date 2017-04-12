@@ -226,12 +226,8 @@ def get_interest(userId):
 	pidList1 = []
 	pidList2 = []
 	result = []
+	finalList = []
 	db = mysql.connect()
-	userCur = db.cursor()
-	userCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%userId)
-	if userCur.rowcount >0:
-		nickname = userCur.fetchall()[0][0]
-
 	cursor = db.cursor()
 	
 	cursor.execute("SELECT pid FROM Product WHERE userId = '%s';"%userId)
@@ -252,8 +248,17 @@ def get_interest(userId):
 			userList = int(userRow[0])
 			result.append(userList)
 	result = sorted(set(result))
+	for r in result:
+		rCur = db.cursor()
+		rCur.execute("SELECT nickname, userId, avatarURL FROM UserInfo where userId = '%s';"%r)
+		rList = rCur.fetchall()[0]
+		resultList = {}
+		resultList['username'] = rList[0]
+		resultList['userId'] = rList[1]
+		resultList['avatarURL'] = rList[2]
+		finalList.append(resultList)
 	db.close()
-	return jsonify({'Interest':result,'nickname':nickname})
+	return jsonify({'Interest':finalList})
 
 
 
