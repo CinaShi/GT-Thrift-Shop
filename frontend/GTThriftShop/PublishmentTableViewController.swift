@@ -120,6 +120,9 @@ class PublishmentTableViewController: UITableViewController {
         let currentProduct = myProducts[indexPath.row]
         // Fetches the banks for the data source layout.
         let itemImage = cell.contentView.viewWithTag(5) as! UIImageView
+        itemImage.layer.cornerRadius = itemImage.frame.width/2
+        itemImage.clipsToBounds = true
+        
         let itemNameLabel = cell.contentView.viewWithTag(1) as! UILabel
         let yearUsedLabel = cell.contentView.viewWithTag(2) as! UILabel
         let priceLabel = cell.contentView.viewWithTag(3) as! UILabel
