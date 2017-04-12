@@ -530,17 +530,18 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="6hw-Bc-s6J">
-                                <rect key="frame" x="189" y="350" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="6hw-Bc-s6J">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="DfB-X4-ggg" secondAttribute="trailing" id="AEC-qx-VIc"/>
                             <constraint firstItem="DfB-X4-ggg" firstAttribute="leading" secondItem="SNq-7j-knf" secondAttribute="leading" id="BKb-P6-Kyt"/>
+                            <constraint firstItem="6hw-Bc-s6J" firstAttribute="centerY" secondItem="SNq-7j-knf" secondAttribute="centerY" id="BVW-3H-Reu"/>
                             <constraint firstItem="DfB-X4-ggg" firstAttribute="top" secondItem="JYK-gu-4O1" secondAttribute="bottom" constant="8" id="Gab-Ai-Wjx"/>
                             <constraint firstItem="DGH-pT-cFC" firstAttribute="top" secondItem="DfB-X4-ggg" secondAttribute="bottom" id="IRm-mL-Dos"/>
+                            <constraint firstItem="6hw-Bc-s6J" firstAttribute="centerX" secondItem="SNq-7j-knf" secondAttribute="centerX" id="n44-6q-L0V"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Chat" image="Message Squared-100" selectedImage="Message Squared Filled-100" id="OJw-Uf-Zbd"/>
@@ -1105,7 +1106,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" id="vVr-f6-nXK">
                         <rect key="frame" x="0.0" y="0.0" width="340" height="180"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <sections>
                             <tableViewSection id="R2b-eZ-GiR">
@@ -1118,7 +1119,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publishment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="feM-Nf-Ghp">
-                                                    <rect key="frame" x="88" y="13" width="239" height="34"/>
+                                                    <rect key="frame" x="88" y="13" width="239" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -1130,6 +1131,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="bgN-3Y-Bau" firstAttribute="top" secondItem="2xH-ug-JJZ" secondAttribute="top" constant="5" id="04D-jU-ftx"/>
                                                 <constraint firstItem="feM-Nf-Ghp" firstAttribute="top" secondItem="2xH-ug-JJZ" secondAttribute="topMargin" constant="5" id="BHH-CG-74w"/>
@@ -1140,6 +1142,7 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="feM-Nf-Ghp" secondAttribute="bottom" constant="5" id="tYo-Jc-hFe"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="xNb-ts-jBu" kind="presentation" modalTransitionStyle="crossDissolve" id="okq-gf-Mfb"/>
                                         </connections>
@@ -1152,9 +1155,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KH5-pP-fwI">
-                                                    <rect key="frame" x="88" y="13" width="239" height="34"/>
+                                                    <rect key="frame" x="88" y="13" width="239" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transaction" translatesAutoresizingMaskIntoConstraints="NO" id="wtt-4e-IIo">
@@ -1164,6 +1167,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="KH5-pP-fwI" secondAttribute="trailing" constant="5" id="1x3-wM-ajG"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="KH5-pP-fwI" secondAttribute="bottom" constant="5" id="KWM-o0-FUl"/>
@@ -1174,6 +1178,7 @@
                                                 <constraint firstItem="wtt-4e-IIo" firstAttribute="top" secondItem="ssS-78-1tE" secondAttribute="top" constant="5" id="syi-5n-Why"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="JSi-yD-L4H" kind="presentation" modalTransitionStyle="crossDissolve" id="lrb-35-RXj"/>
                                         </connections>
@@ -1186,7 +1191,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Nv-5F-wOZ">
-                                                    <rect key="frame" x="88" y="5" width="247" height="42"/>
+                                                    <rect key="frame" x="88" y="5" width="247" height="41"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -1198,6 +1203,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="9Nv-5F-wOZ" secondAttribute="trailing" constant="5" id="4u2-vP-otC"/>
                                                 <constraint firstAttribute="bottom" secondItem="6QL-kb-4Mo" secondAttribute="bottom" constant="5" id="90g-xG-f5D"/>
@@ -1208,6 +1214,7 @@
                                                 <constraint firstItem="9Nv-5F-wOZ" firstAttribute="top" secondItem="UVk-CP-MeI" secondAttribute="topMargin" constant="-3" id="okL-gn-mva"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="clp-fT-W1p" kind="presentation" identifier="embedToComment" modalTransitionStyle="crossDissolve" id="9RT-PR-1Uw"/>
                                         </connections>
@@ -1401,7 +1408,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BdD-Yp-6uK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2518.840579710145" y="2246.739130434783"/>
+            <point key="canvasLocation" x="2517.5999999999999" y="2246.6266866566721"/>
         </scene>
         <!--My publishment-->
         <scene sceneID="GgP-Qv-iey">
@@ -2862,20 +2869,20 @@
         <image name="User Location-100" width="30" height="30"/>
         <image name="background" width="1000" height="1881"/>
         <image name="checked" width="512" height="512"/>
-        <image name="comment" width="100" height="100"/>
+        <image name="comment" width="50" height="50"/>
         <image name="favorite" width="30" height="30"/>
         <image name="favorite-filled" width="30" height="30"/>
         <image name="iOS-9-Wallpaper" width="503" height="853"/>
         <image name="menu" width="50" height="50"/>
-        <image name="publishment" width="100" height="100"/>
-        <image name="transaction" width="100" height="100"/>
+        <image name="publishment" width="50" height="50"/>
+        <image name="transaction" width="50" height="50"/>
         <image name="un-favorite" width="50" height="50"/>
         <image name="userBig" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="SX5-iM-ft7"/>
-        <segue reference="bs9-cY-yCb"/>
+        <segue reference="99o-Qk-lN0"/>
+        <segue reference="hmN-Uy-Okp"/>
         <segue reference="jm5-M4-ALX"/>
-        <segue reference="67t-OU-7l1"/>
     </inferredMetricsTieBreakers>
 </document>
