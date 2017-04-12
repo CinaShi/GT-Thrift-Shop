@@ -213,8 +213,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
                         let array = json["interestList"] as! [Dictionary<String, Any>]
                         for dict in array {
-                            guard let interestUid = dict["userId"] as? Int,
-                            let interestName = dict["nickname"] as? String
+                            guard let interestUid = dict["userId"] as? Int
+                            //let interestName = dict["nickname"] as? String
                             else {
                                 self.notifyFailure(info: "unableToUnarchiveIds")
                                 return
