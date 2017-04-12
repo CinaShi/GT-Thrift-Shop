@@ -12,6 +12,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     //all products include sold and unsold products, while products include only unsold ones
     var allProducts = [Product]()
     var products = [Product]()
+    var user: User!
     var selected: Product?
     var userDefaults = UserDefaults.standard
     var searchActive: Bool = false
@@ -56,7 +57,19 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
 //        tags.append("Calculator")
 //        tags.append("Computer")
         
-        obtainTagsFromServer()
+        
+        DispatchQueue.background(background: {
+            // do something in background
+            if let decoded = self.userDefaults.object(forKey: "userInfo") as? Data {
+                self.user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+            } else {
+                self.getUserInfo()
+            }
+        }, completion:{
+            // when background job finished, do something in main thread
+            print("User info loaded")
+            self.obtainTagsFromServer()
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +82,75 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.reloadData()
         
+    }
+    
+    func getUserInfo() {
+        let userId = userDefaults.integer(forKey: "userId")
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/info/get/\(userId)")
+        
+        var request = URLRequest(url:url! as URL)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    print("Here1=========")
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            if let httpResponse = response as? HTTPURLResponse {
+                print("***** statusCode: \(httpResponse.statusCode)")
+                if httpResponse.statusCode == 200 {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String,Any>
+                        let dict = json["userInfo"] as! Dictionary<String, Any>
+                        let userImageUrl = dict["avatarURL"] as! String
+                        let userDescription = dict["description"] as! String
+                        let userEmail = dict["email"] as! String
+                        let userNickname = dict["nickname"] as! String
+                        let userRating = dict["rate"] as! Float
+                        
+                        self.user = User(uid: userId, nickname: userNickname, email: userEmail, info: userDescription, rate: userRating, avatarURL: userImageUrl)
+                        
+                        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: self.user)
+                        self.userDefaults.set(encodedData, forKey: "userInfo")
+                        self.userDefaults.synchronize()
+                    } catch let error as NSError {
+                        print("Failed to load: \(error.localizedDescription)")
+                    }
+                    
+                    
+                    
+                } else if httpResponse.statusCode == 404 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot connect to Internet!")
+                    });
+                } else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                    });
+                    
+                }
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+            }
+        }
+        
+        task.resume()
     }
     
     //Mark: helper methods
@@ -201,6 +283,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                                 let postTime = dict["postTime"] as? String,
                                 let usedTime = dict["usedTime"] as? String,
                                 let userId = dict["userId"] as? Int,
+                                let userName = dict["nickname"] as? String,
                                 let imageUrls = dict["images"] as? [String],
                                 let isSold = dict["isSold"] as? Bool
                                 else{
@@ -208,7 +291,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                                     return
                             }
 
-                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls, isSold: isSold)
+                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, userName: userName, imageUrls: imageUrls, isSold: isSold)
                             self.allProducts.append(newProduct)
                             
                         }
@@ -505,7 +588,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             itemNameLabel.text = currentProduct.name
             yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
             priceLabel.text = currentProduct.price
-            sellerLabel.text = "Seller ID: \(currentProduct.userId!)"
+            sellerLabel.text = "Seller: \(currentProduct.userName!)"
         }
         
         if tableView == self.menuTableView {
@@ -597,3 +680,19 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
 }
+
+extension DispatchQueue {
+    
+    static func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
+        DispatchQueue.global(qos: .background).async {
+            background?()
+            if let completion = completion {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+                    completion()
+                })
+            }
+        }
+    }
+    
+}
+

@@ -152,7 +152,7 @@ class PublishmentTableViewController: UITableViewController {
         itemNameLabel.text = currentProduct.name
         yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
         priceLabel.text = "$" + currentProduct.price
-        sellerLabel.text = "Seller ID: \(currentProduct.userId!)"
+        sellerLabel.text = "Seller: \(currentProduct.userName!)"
         if currentProduct.isSold! {
             isSoldLabel.text = "Sold"
             isSoldLabel.textColor = .red

@@ -13,11 +13,17 @@ import FirebaseDatabase
 import FirebaseStorage
 import JSQMessagesViewController
 import SwiftGifOrigin
+import Alamofire
+
 class ContactSellerViewController: JSQMessagesViewController {
     
     var channelRef: FIRDatabaseReference!
     var userId: Int!
+    var userName: String!
+    var userUrl: String!
     var sellerId: Int!
+    var sellerName: String!
+    var sellerUrl: String!
     var pid: Int!
     var messageRef: FIRDatabaseReference!
     lazy var storageRef: FIRStorageReference = FIRStorage.storage().reference(forURL: "gs://gtthriftshop-394d2.appspot.com/")
@@ -29,6 +35,9 @@ class ContactSellerViewController: JSQMessagesViewController {
     
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
+    
+    var userAvatarImageView: JSQMessagesAvatarImage!
+    var sellerAvatarImageView: JSQMessagesAvatarImage!
     
     private lazy var userIsTypingRef: FIRDatabaseReference =
         self.channelRef!.child("typingIndicator").child(self.senderId) // 1
@@ -55,11 +64,37 @@ class ContactSellerViewController: JSQMessagesViewController {
         messageRef = channelRef.child("messages")
         
         self.senderId = "\(userId!)"
-        self.senderDisplayName = "User: \(userId!)"
-        self.title = "User: \(sellerId!)"
+        self.senderDisplayName = self.userName!
+        self.title = sellerName!
         // No avatars
-        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
-        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
+//        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
+//        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
+        
+        if let imageData: NSData = NSData(contentsOf: URL(string: userUrl)!) {
+            userAvatarImageView = JSQMessagesAvatarImage.avatar(with: UIImage(data: imageData as Data))
+        } else {
+            userAvatarImageView = JSQMessagesAvatarImage.avatar(with: #imageLiteral(resourceName: "GT-icon"))
+        }
+        
+        if sellerUrl == nil {
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = documentsURL.appendingPathComponent("\(sellerId!)-avatar.jpeg")
+            let filePath = fileURL.path
+            if FileManager.default.fileExists(atPath: filePath) {
+                sellerAvatarImageView = JSQMessagesAvatarImage.avatar(with: UIImage(contentsOfFile: filePath))
+            } else {
+                print("need to grab image from web")
+                getSellerAvatar()
+            }
+        } else {
+            if let imageData: NSData = NSData(contentsOf: URL(string: sellerUrl)!) {
+                sellerAvatarImageView = JSQMessagesAvatarImage.avatar(with: UIImage(data: imageData as Data))
+            } else {
+                sellerAvatarImageView = JSQMessagesAvatarImage.avatar(with: #imageLiteral(resourceName: "GT-icon"))
+            }
+        }
+        
+        
         
         observeMessages()
     }
@@ -76,6 +111,35 @@ class ContactSellerViewController: JSQMessagesViewController {
         
         if let refHandle = updatedMessageRefHandle {
             messageRef.removeObserver(withHandle: refHandle)
+        }
+    }
+    
+    func getSellerAvatar() {
+        Alamofire.request("http://ec2-34-196-222-211.compute-1.amazonaws.com/user/getAvatarURL/\(sellerId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success:
+                print("Validation Successful")
+                if let json = response.result.value {
+                    print("JSON: \(json)")
+                    let result = json as! NSDictionary
+                    guard let sellerAvatarURL = result["avatarURL"] as? String else {
+                        print("error: cannot unarchive returned data")
+                        return
+                    }
+                    self.sellerUrl = sellerAvatarURL
+                    if let imageData: NSData = NSData(contentsOf: URL(string: self.sellerUrl)!) {
+                        self.sellerAvatarImageView = JSQMessagesAvatarImage.avatar(with: UIImage(data: imageData as Data))
+                    } else {
+                        self.sellerAvatarImageView = JSQMessagesAvatarImage.avatar(with: #imageLiteral(resourceName: "GT-icon"))
+                    }
+                   
+                } else {
+                    self.sellerAvatarImageView = JSQMessagesAvatarImage.avatar(with: #imageLiteral(resourceName: "GT-icon"))
+                }
+            case .failure(let error):
+                print(error)
+                self.sellerAvatarImageView = JSQMessagesAvatarImage.avatar(with: #imageLiteral(resourceName: "GT-icon"))
+            }
         }
     }
     
@@ -335,7 +399,12 @@ class ContactSellerViewController: JSQMessagesViewController {
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return nil
+        let message = messages[indexPath.item]
+        if message.senderId == senderId {
+            return userAvatarImageView
+        } else {
+            return sellerAvatarImageView
+        }
     }
     
     //deal with date display later

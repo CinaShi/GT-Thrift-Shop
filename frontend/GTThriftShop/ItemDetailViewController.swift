@@ -12,6 +12,9 @@ import FirebaseDatabase
 class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var product: Product!
     var userId: Int!
+    var user: User!
+    var currentUserName: String!
+    var userAvatarUrl: String!
     var isFavorited: Bool?
     var tags = [String]()
     var imageArray = [UIImage]()
@@ -21,8 +24,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     let blurEffectView = UIVisualEffectView(effect: nil)
     var activityIndicatorView: UIActivityIndicatorView!
     let userDefaults = UserDefaults.standard
-    var interestId = [Int]()
-    //var interestName = [String]()
+    var interestId = [(Int,String)]()
+    var interestName = [String]()
     var selectedId: Int?
     //New
     var tranId: Int!
@@ -57,6 +60,14 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         interestTableView.delegate = self
         interestTableView.dataSource = self
 
+        if let decoded = self.userDefaults.object(forKey: "userInfo") as? Data {
+            user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+        } else {
+            print("error: didn't get user info from local storage")
+        }
+        
+        currentUserName = user.nickname!
+        userAvatarUrl = user.avatarURL!
 
         var urlStrings = [String]()
         for s in product.imageUrls{
@@ -91,7 +102,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         //Load Text
         nameLabelView.text = product.name
         priceLabelView.text = "$\(product.price!)"
-        ownerLabelView.text = "User: \(product.userId!)"
+        ownerLabelView.text = product.userName!
         descriptionView.text = product!.info
         
         let ud = UserDefaults.standard
@@ -213,14 +224,14 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
                         let array = json["interestList"] as! [Dictionary<String, Any>]
                         for dict in array {
-                            guard let interestUid = dict["userId"] as? Int
-                            //let interestName = dict["nickname"] as? String
+                            guard let interestUid = dict["userId"] as? Int,
+                            let username = dict["nickname"] as? String
                             else {
                                 self.notifyFailure(info: "unableToUnarchiveIds")
                                 return
                             }
-                            self.interestId.append(interestUid)
-                            //self.interestName.append(interestName)
+
+                            self.interestId.append((interestUid, username))
                         }
 
                         
@@ -609,14 +620,14 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         let currentId = interestId[indexPath.row]
         // Fetches the banks for the data source layout.
         let idLabel = cell.contentView.viewWithTag(1) as! UILabel
-        idLabel.text = "User: \(currentId)"
+        idLabel.text = currentId.1
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        selectedId = interestId[indexPath.row]
+        selectedId = interestId[indexPath.row].0
         sendMarkAsSoldRequest()
         
     }
@@ -631,7 +642,10 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let navVc = segue.destination as! UINavigationController
             let destination = navVc.viewControllers.first as! ContactSellerViewController
             destination.userId = userId!
+            destination.userName = currentUserName
+            destination.userUrl = userAvatarUrl
             destination.sellerId = product.userId!
+            destination.sellerName = product.userName!
             destination.pid = product.pid!
             destination.channelRef = channelRef
         } else if segue.identifier == "rateAndCommentVC" {

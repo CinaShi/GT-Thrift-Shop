@@ -259,3 +259,18 @@ def get_user_info(uid):
 
 	db.close()
 	return jsonify({'userInfo':info})
+
+#author: Yichen
+@user.route('/user/getAvatarURL/<userId>', methods=['GET'])
+def get_user_avatarURL(userId):
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT avatarURL FROM UserInfo WHERE userId = '%s';"%userId)
+	if cursor.rowcount == 1:
+		result = [item[0] for item in cursor.fetchall()]
+		strResult = ''.join(map(str, result))
+		db.close()
+		return jsonify({'avatarURL':strResult})
+	else:
+		db.close()
+		abort(400,"no user exists")

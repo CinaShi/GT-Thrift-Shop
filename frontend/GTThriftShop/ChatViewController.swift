@@ -16,7 +16,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
-    var users = [String]()
+    var currentUser: User!
+    var users = [(Int, String, String)]()
     var userId: Int!
     
     @IBOutlet weak var loadUsersIndicator: UIActivityIndicatorView!
@@ -40,6 +41,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let ud = UserDefaults.standard
         userId = ud.integer(forKey: "userId")
+        
+        if let decoded = ud.object(forKey: "userInfo") as? Data {
+            currentUser = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+        } else {
+            print("error: didn't get user info from local storage")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,9 +68,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.users.removeAll()
                     print("JSON: \(json)")
                     let result = json as! NSDictionary
-                    let array = result["Interest"] as! [Int]
-                    for uid in array {
-                        self.users.append("\(uid)")
+                    let array = result["Interest"] as! [Dictionary<String, Any>]
+                    for dict in array {
+                        guard let userAvatarURL = dict["avatarURL"] as? String,
+                            let contactUserId = dict["userId"] as? Int,
+                            let username = dict["username"] as? String
+                            else {
+                                print("error: cannot unarchive returned data")
+                                return
+                        }
+                        
+                        self.users.append((contactUserId, username, userAvatarURL))
                     }
                     DispatchQueue.main.async(execute: {
                         self.loadUsersIndicator.stopAnimating()
@@ -118,9 +133,35 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let userAvatar = cell.contentView.viewWithTag(2) as! UIImageView
         let userNameLabel = cell.contentView.viewWithTag(1) as! UILabel
         
-        userNameLabel.text = "User: \(currentUser)"
-        userAvatar.image = #imageLiteral(resourceName: "userBig")
-            
+        userNameLabel.text = currentUser.1
+        
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsURL.appendingPathComponent("\(currentUser.0)-avatar.jpeg")
+        let filePath = fileURL.path
+        if FileManager.default.fileExists(atPath: filePath) {
+            userAvatar.image = UIImage(contentsOfFile: filePath)
+        } else {
+            DispatchQueue.main.async(execute: {
+                
+                if let imageData: NSData = NSData(contentsOf: URL(string: currentUser.2)!) {
+                    do {
+                        let image = UIImage(data: imageData as Data)
+                        userAvatar.image = image
+                        
+                        try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
+                    } catch let error as NSError {
+                        print("fuk boi--> \(error)")
+                    }
+                    
+                } else {
+                    userAvatar.image = #imageLiteral(resourceName: "GT-icon")
+                }
+                
+            })
+        }
+        userAvatar.clipsToBounds = true
+        
+        
         return cell
     }
     
@@ -140,9 +181,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             let navVc = segue.destination as! UINavigationController
             let destination = navVc.viewControllers.first as! ContactSellerViewController
             destination.userId = userId!
-            destination.sellerId = Int(sender as! String)
+            destination.userName = currentUser.nickname
+            destination.userUrl = currentUser.avatarURL
+            destination.sellerName = (sender as! (Int, String, String)).1
+            destination.sellerId = (sender as! (Int, String, String)).0
+            destination.sellerUrl = (sender as! (Int, String, String)).2
             destination.pid = -1
-            destination.channelRef = FIRDatabase.database().reference().child("Channels").child(generateChannel(anotherId: Int(sender as! String)!))
+            destination.channelRef = FIRDatabase.database().reference().child("Channels").child(generateChannel(anotherId: (sender as! (Int, String, String)).0))
         }
         
     }

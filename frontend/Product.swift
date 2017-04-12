@@ -17,9 +17,10 @@ class Product: NSObject, NSCoding {
     let postTime: String!
     let usedTime: String!
     let userId: Int!
+    let userName: String!
     var isSold: Bool!
     
-    init(name: String, price: String, info: String, pid: Int, postTime: String, usedTime: String, userId: Int, imageUrls: [String], isSold: Bool) {
+    init(name: String, price: String, info: String, pid: Int, postTime: String, usedTime: String, userId: Int, userName: String, imageUrls: [String], isSold: Bool) {
         self.name = name
         self.price = price
         self.info = info
@@ -27,6 +28,7 @@ class Product: NSObject, NSCoding {
         self.postTime = postTime
         self.usedTime = usedTime
         self.userId = userId
+        self.userName = userName
         self.imageUrls = imageUrls
         self.isSold = isSold
     }
@@ -39,6 +41,7 @@ class Product: NSObject, NSCoding {
         self.postTime = decoder.decodeObject(forKey: "postTime") as! String
         self.usedTime = decoder.decodeObject(forKey: "usedTime") as! String
         self.userId = decoder.decodeInteger(forKey: "userId")
+        self.userName = decoder.decodeObject(forKey: "userName") as! String
         self.imageUrls = decoder.decodeObject(forKey: "imageUrls") as! [String]
         self.isSold = decoder.decodeBool(forKey: "isSold")
     }
@@ -55,6 +58,7 @@ class Product: NSObject, NSCoding {
         if let userId = userId {
             aCoder.encode(userId, forKey: "userId")
         }
+        aCoder.encode(userName, forKey: "userName")
         aCoder.encode(imageUrls, forKey: "imageUrls")
         if let isSold = isSold {
             aCoder.encode(isSold, forKey: "isSold")
