@@ -252,7 +252,7 @@ def get_user_info(uid):
 	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%uid)
 	if cursor.rowcount > 0:
 		row = cursor.fetchall()[0]
-		info["rate"] = str(row[0])
+		info["rate"] = float(row[0])
 	else:
 		db.close()
 		abort(400,"This user has invalid user rate")

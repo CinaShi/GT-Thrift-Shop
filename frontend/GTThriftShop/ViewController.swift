@@ -89,9 +89,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
-//                            print("image list --> \(dict["iamges"])")
-//                            var imageUrls = [String]()
-//                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
+
                             let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls, isSold: isSold)
                             self.allProducts.append(newProduct)
                         }
