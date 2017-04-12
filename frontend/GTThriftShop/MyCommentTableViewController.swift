@@ -10,6 +10,9 @@ import UIKit
 
 class MyCommentTableViewController: UITableViewController {
 
+    var isFromAnotherUser = false
+    var otherUserId:Int!
+    
     var products = [Product]()
     var selected: Product?
     var selectedTranId: Int?
@@ -38,6 +41,12 @@ class MyCommentTableViewController: UITableViewController {
         
         activityIndicatorView.startAnimating()
         
+        if isFromAnotherUser {
+            userId = otherUserId
+        } else {
+            userId = userDefaults.integer(forKey: "userId")
+        }
+        
         loadProductsFromLocal()
         loadMyComments()
         
@@ -53,8 +62,6 @@ class MyCommentTableViewController: UITableViewController {
             notifyFailure(info: "Please connect to Internet!")
             //actually might need to manually grab data from server again here. Need opinions
         }
-        
-        userId = userDefaults.integer(forKey: "userId")
         
     }
     
@@ -120,7 +127,11 @@ class MyCommentTableViewController: UITableViewController {
                     });
                 } else if httpResponse.statusCode == 400 {
                     DispatchQueue.main.async(execute: {
-                        self.notifyFailure(info: "There are currently no comments for you!")
+                        if self.isFromAnotherUser {
+                            self.notifyFailure(info: "There are currently no comments for this user!")
+                        } else {
+                            self.notifyFailure(info: "There are currently no comments for you!")
+                        }
 //                        self.unwindToUserProfile(self)
                     });
                 } else if httpResponse.statusCode == 404 {

@@ -20,6 +20,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var users = [(Int, String, String)]()
     var userId: Int!
     
+    var selectedUserId: Int!
+    
     @IBOutlet weak var loadUsersIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -95,6 +97,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    func goToUserProfile(sender: UITapGestureRecognizer) {
+        print("going to User profile")
+        let touch = sender.location(in: self.tableView)
+        if let indexPath = tableView.indexPathForRow(at: touch) {
+            selectedUserId = users[indexPath.row].0
+            self.performSegue(withIdentifier: "chatToUserProfile", sender: self)
+        }
+        
+    }
+    
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
         self.loadUsersIndicator.stopAnimating()
@@ -161,6 +173,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         userAvatar.clipsToBounds = true
         
+        userAvatar.isUserInteractionEnabled = true
+        let tapToUserProfile = UITapGestureRecognizer(target: self, action: #selector(goToUserProfile))
+        userAvatar.addGestureRecognizer(tapToUserProfile)
+        
         
         return cell
     }
@@ -188,6 +204,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             destination.sellerUrl = (sender as! (Int, String, String)).2
             destination.pid = -1
             destination.channelRef = FIRDatabase.database().reference().child("Channels").child(generateChannel(anotherId: (sender as! (Int, String, String)).0))
+        } else if segue.identifier == "chatToUserProfile" {
+            let destination = segue.destination as! UserProfileViewController
+            destination.isFromOtherUser = true
+            destination.otherUserId = selectedUserId
         }
         
     }
