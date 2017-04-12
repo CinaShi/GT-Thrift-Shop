@@ -16,6 +16,9 @@ class UserProfileViewController: UIViewController {
     var userDescription:String!
     var userEmail:String!
     
+    var isFromOtherUser = false
+    var otherUserId = -1
+    
     var userId: Int!
     var userDefaults = UserDefaults.standard
     let progress = KDCircularProgress(frame: CGRect(x: 0, y: 0, width: 165, height: 165))
@@ -33,6 +36,9 @@ class UserProfileViewController: UIViewController {
     @IBOutlet weak var descriptionField: UITextView!
     @IBOutlet weak var buttonBlock: UIView!
     
+    
+    @IBOutlet weak var backButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUserFromLocal()
@@ -40,6 +46,114 @@ class UserProfileViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         
+        self.initProfileImage()
+        
+        //deal with button
+        buttonBlock.layer.shadowColor = UIColor.darkGray.cgColor
+        buttonBlock.layer.shadowRadius = 5
+        buttonBlock.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
+        buttonBlock.layer.shadowOpacity = 0.5
+        
+        let color5 = UIColor(red: 255/255, green: 94/255, blue: 58/255, alpha: 1)
+        logoutButton.layer.cornerRadius = 20
+        logoutButton.layer.borderColor = color5.cgColor
+        logoutButton.layer.borderWidth = 1
+        
+        //scoreLabel
+        self.scoreLabel.center.x = self.view.frame.width - 60
+        self.scoreLabel.center.y = -30
+        
+        
+        backButton.isHidden = true
+        logoutButton.isHidden = false
+        
+        
+        if (isFromOtherUser && otherUserId > -1) {
+            self.userId = otherUserId
+            
+            backButton.isHidden = false
+            logoutButton.isHidden = true
+            
+            buttonBlock.heightAnchor.constraint(equalToConstant: 60).isActive = true
+            
+            self.getUserInfo()
+        }
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if (!isFromOtherUser) {
+            if let decoded = self.userDefaults.object(forKey: "userInfo") as? Data {
+                let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+                
+                self.userImageUrl = user.avatarURL
+                self.userDescription = user.info
+                self.userEmail = user.email
+                self.userNickname = user.nickname
+                self.userRating = user.rate
+                if user.rate < 0 || user.rate > 5 {
+                    self.userRating = 0
+                }
+                //basic
+                self.nicknameLabel.text = self.userNickname
+                self.emailLabel.text = self.userEmail
+                self.descriptionField.text = self.userDescription
+                //rating
+                if self.userRating <= 2.5 {
+                    self.scoreLabel.center.x = 60
+                }
+                self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
+                UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
+                    self.scoreLabel.text = "Score: " + String(self.userRating) + "/5.0"
+                    if user.rate < 0 || user.rate > 5 {
+                        self.scoreLabel.text = "No rating"
+                    }
+                    if (self.userRating <= 1.25 || self.userRating >= 3.75) {
+                        self.scoreLabel.center.y = 147
+                    } else {
+                        self.scoreLabel.center.y = 73
+                    }
+                    
+                }), completion: nil)
+                //image
+                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                let fileURL = documentsURL.appendingPathComponent("\(self.userId!)-avatar.jpeg")
+                let filePath = fileURL.path
+                if FileManager.default.fileExists(atPath: filePath) {
+                    self.profileImage.image = UIImage(contentsOfFile: filePath)
+                } else {
+                    if let imageData: NSData = NSData(contentsOf: URL(string: self.userImageUrl)!) {
+                        do {
+                            let avatar = UIImage(data: imageData as Data)
+                            self.profileImage.image = avatar
+                            
+                            try UIImageJPEGRepresentation(avatar!, 1)?.write(to: fileURL)
+                        } catch let error as NSError {
+                            print("error--> \(error)")
+                        }
+                        
+                    } else {
+                        self.profileImage.image = #imageLiteral(resourceName: "GT-icon")
+                    }
+                }
+                self.profileImage.clipsToBounds = true
+            } else {
+                self.getUserInfo()
+            }
+        }
+        
+    }
+    
+    //Mark: helper methods
+    
+    func loadUserFromLocal() {
+        userId = userDefaults.integer(forKey: "userId")
+        
+    }
+    
+    func initProfileImage() {
         //Load image and crop
         profileImage.layer.cornerRadius = profileImage.frame.size.width/2
         profileImage.clipsToBounds = true
@@ -50,7 +164,7 @@ class UserProfileViewController: UIViewController {
         blurEffectViewTop.layer.shadowRadius = 5
         blurEffectViewTop.layer.shadowOffset = CGSize(width: 0, height: 5.0)
         blurEffectViewTop.layer.shadowOpacity = 1
-
+        
         
         //circular progress bar
         progress.startAngle = -90
@@ -70,85 +184,6 @@ class UserProfileViewController: UIViewController {
         print("progressbar frame: \(progress.frame)")
         print("picture frame: \(profileImage.frame)")
         print("progress center: \(progress.center)")
-        
-        //deal with button
-        buttonBlock.layer.shadowColor = UIColor.darkGray.cgColor
-        buttonBlock.layer.shadowRadius = 5
-        buttonBlock.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
-        buttonBlock.layer.shadowOpacity = 0.5
-        
-        let color5 = UIColor(red: 255/255, green: 94/255, blue: 58/255, alpha: 1)
-        logoutButton.layer.cornerRadius = 20
-        logoutButton.layer.borderColor = color5.cgColor
-        logoutButton.layer.borderWidth = 1
-        
-        //scoreLabel
-        self.scoreLabel.center.x = self.view.frame.width - 60
-        self.scoreLabel.center.y = -30
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if let decoded = self.userDefaults.object(forKey: "userInfo") as? Data {
-            let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
-            
-            self.userImageUrl = user.avatarURL
-            self.userDescription = user.info
-            self.userEmail = user.email
-            self.userNickname = user.nickname
-            self.userRating = user.rate
-            //basic
-            self.nicknameLabel.text = self.userNickname
-            self.emailLabel.text = self.userEmail
-            self.descriptionField.text = self.userDescription
-            //rating
-            if self.userRating <= 2.5 {
-                self.scoreLabel.center.x = 60
-            }
-            self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
-            UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
-                self.scoreLabel.text = "Score: " + String(self.userRating) + "/5.0"
-                if (self.userRating <= 1.25 || self.userRating >= 3.75) {
-                    self.scoreLabel.center.y = 147
-                } else {
-                    self.scoreLabel.center.y = 73
-                }
-                
-            }), completion: nil)
-            //image
-            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let fileURL = documentsURL.appendingPathComponent("\(self.userId!)-avatar.jpeg")
-            let filePath = fileURL.path
-            if FileManager.default.fileExists(atPath: filePath) {
-                self.profileImage.image = UIImage(contentsOfFile: filePath)
-            } else {
-                if let imageData: NSData = NSData(contentsOf: URL(string: self.userImageUrl)!) {
-                    do {
-                        let avatar = UIImage(data: imageData as Data)
-                        self.profileImage.image = avatar
-                        
-                        try UIImageJPEGRepresentation(avatar!, 1)?.write(to: fileURL)
-                    } catch let error as NSError {
-                        print("fuk boi--> \(error)")
-                    }
-                    
-                } else {
-                    self.profileImage.image = #imageLiteral(resourceName: "GT-icon")
-                }
-            }
-            self.profileImage.clipsToBounds = true
-        } else {
-            self.getUserInfo()
-        }
-    }
-    
-    //Mark: helper methods
-    
-    func loadUserFromLocal() {
-        userId = userDefaults.integer(forKey: "userId")
-        
     }
     
     func getUserInfo() {
@@ -194,12 +229,19 @@ class UserProfileViewController: UIViewController {
                             self.emailLabel.text = self.userEmail
                             self.descriptionField.text = self.userDescription
                             //rating
+                            
+                            if self.userRating < 0 || self.userRating > 5 {
+                                self.userRating = 0
+                            }
                             if self.userRating <= 2.5 {
                                 self.scoreLabel.center.x = 60
                             }
                             self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
                             UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
                                 self.scoreLabel.text = "Score: " + String(self.userRating) + "/5.0"
+                                if self.userRating < 0 || self.userRating > 5 {
+                                    self.scoreLabel.text = "No rating"
+                                }
                                 if (self.userRating <= 1.25 || self.userRating >= 3.75) {
                                     self.scoreLabel.center.y = 147
                                 } else {
@@ -221,7 +263,7 @@ class UserProfileViewController: UIViewController {
                                         
                                         try UIImageJPEGRepresentation(avatar!, 1)?.write(to: fileURL)
                                     } catch let error as NSError {
-                                        print("fuk boi--> \(error)")
+                                        print("error--> \(error)")
                                     }
                                     
                                 } else {
@@ -299,6 +341,11 @@ class UserProfileViewController: UIViewController {
 
     }
     
+    @IBAction func back(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     @IBAction func unwindToUserProfileVC(segue: UIStoryboardSegue) {
         if segue.source is PublishmentTableViewController {
             print("unwind from publishment VC")
@@ -307,6 +354,18 @@ class UserProfileViewController: UIViewController {
         } else if segue.source is MyCommentTableViewController {
             print("unwind from comment VC")
         }
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toEmbedView"{
+            let destination = segue.destination as! EmbedTableViewController
+            destination.isFromAnotherUser = self.isFromOtherUser
+            destination.otherUserId = self.otherUserId
+        }
+        
     }
     
 }

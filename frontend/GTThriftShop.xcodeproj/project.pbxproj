@@ -34,6 +34,7 @@
 		08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */; };
 		08E8A84A1E8DFBFA00B338EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08E8A8491E8DFBFA00B338EE /* GoogleService-Info.plist */; };
 		08E8A84D1E8DFDB600B338EE /* Pods_GTThriftShop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E84B06BCEEC3BD2B483DA67 /* Pods_GTThriftShop.framework */; };
+		08F5A3531E9E052800EAADCC /* EmbedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F5A3521E9E052800EAADCC /* EmbedTableViewController.swift */; };
 		D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */; };
 		D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDAC31E72630900D94118 /* KDCircularProgress.swift */; };
 		D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */; };
@@ -93,6 +94,7 @@
 		08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeSuccessViewController.swift; sourceTree = "<group>"; };
 		08E8A8491E8DFBFA00B338EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08E8A84B1E8DFDA000B338EE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		08F5A3521E9E052800EAADCC /* EmbedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmbedTableViewController.swift; sourceTree = "<group>"; };
 		1485D83152A8028ECFC684D7 /* Pods_GTThriftShopTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTThriftShopTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A49BD5A6938D325BF2E5287 /* Pods-GTThriftShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTThriftShop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GTThriftShop/Pods-GTThriftShop.debug.xcconfig"; sourceTree = "<group>"; };
 		3E84B06BCEEC3BD2B483DA67 /* Pods_GTThriftShop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTThriftShop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,6 +231,7 @@
 				0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */,
 				089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */,
 				0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */,
+				08F5A3521E9E052800EAADCC /* EmbedTableViewController.swift */,
 			);
 			name = "User Profile";
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */,
 				088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */,
 				08757B7B1E56C56600219BCA /* Product.swift in Sources */,
+				08F5A3531E9E052800EAADCC /* EmbedTableViewController.swift in Sources */,
 				0899EEE51E713B9900262267 /* PublishmentTableViewController.swift in Sources */,
 				0868862A1E9DD09A009DFF61 /* User.swift in Sources */,
 			);

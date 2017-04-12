@@ -120,11 +120,15 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         channelRef = FIRDatabase.database().reference().child("Channels").child(generateChannel())
         
+        if (product.userId != userId) {
+            ownerLabelView.isUserInteractionEnabled = true
+            let tapToUserProfile = UITapGestureRecognizer(target: self, action: #selector(goToUserProfile))
+            ownerLabelView.addGestureRecognizer(tapToUserProfile)
+            
+        }
     }
     
     func initNextStepButtonBasedOnSourceVC() {
-        
-        
         
         if sourceVCName == "transactionVC" {
             if userId == product.userId {
@@ -269,6 +273,11 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         task.resume()
         
+    }
+    
+    func goToUserProfile() {
+        print("going to User profile")
+        self.performSegue(withIdentifier: "goToUserProfile", sender: self)
     }
     
     
@@ -656,6 +665,10 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             destination.targetId = product.userId!
             destination.tranId = tranId!
 
+        } else if segue.identifier == "goToUserProfile" {
+            let destination = segue.destination as! UserProfileViewController
+            destination.isFromOtherUser = true
+            destination.otherUserId = product.userId!
         }
         
     }
