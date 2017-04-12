@@ -83,6 +83,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 let postTime = dict["postTime"] as? String,
                                 let usedTime = dict["usedTime"] as? String,
                                 let userId = dict["userId"] as? Int,
+                                let userName = dict["nickname"] as? String,
                                 let imageUrls = dict["images"] as? [String],
                                 let isSold = dict["isSold"] as? Bool
                                 else{
@@ -92,7 +93,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //                            print("image list --> \(dict["iamges"])")
 //                            var imageUrls = [String]()
 //                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
-                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, imageUrls: imageUrls, isSold: isSold)
+                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, userName: userName, imageUrls: imageUrls, isSold: isSold)
                             self.allProducts.append(newProduct)
                         }
                     } catch let error as NSError {
@@ -196,7 +197,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         
                             try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
                         } catch let error as NSError {
-                            print("fuk boi--> \(error)")
+                            print("error--> \(error)")
                         }
                         
                     } else {
@@ -213,7 +214,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         itemNameLabel.text = currentProduct.name
         yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
         priceLabel.text = currentProduct.price
-        sellerLabel.text = "Seller ID: \(currentProduct.userId!)"
+        sellerLabel.text = "Seller: \(currentProduct.userName!)"
         
         
         return cell
