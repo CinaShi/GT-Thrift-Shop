@@ -13,3 +13,7 @@ The idea our team has is making a mobile application for GT Thrift Shop. This id
 ### Jihai An
 
 ### Yichen Li
+
+## Detailed Design & Instruction
+
+### https://docs.google.com/document/d/12jZxifblpwG3lAC5Kqw02ObpOMUnJd0dU-_GKG7gAdg/edit?usp=sharing
