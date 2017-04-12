@@ -131,6 +131,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let currentUser = users[indexPath.row]
         // Fetches the banks for the data source layout.
         let userAvatar = cell.contentView.viewWithTag(2) as! UIImageView
+        userAvatar.layer.cornerRadius = userAvatar.frame.width/2
+        userAvatar.contentMode = .scaleAspectFill
+        
         let userNameLabel = cell.contentView.viewWithTag(1) as! UILabel
         
         userNameLabel.text = currentUser.1

@@ -17,6 +17,13 @@ class PublishmentTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.tableView.bounds
+        let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
+        backImageView.addSubview(blurEffectView)
+        self.tableView.backgroundView = backImageView
     }
     
     override func viewWillAppear(_ animated: Bool) {

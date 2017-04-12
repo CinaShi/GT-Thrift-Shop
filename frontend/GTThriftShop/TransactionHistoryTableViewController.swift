@@ -27,6 +27,14 @@ class TransactionHistoryTableViewController: UITableViewController {
         activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         activityIndicatorView.color = .blue
         tableView.backgroundView = activityIndicatorView
+
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.tableView.bounds
+        let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
+        backImageView.addSubview(blurEffectView)
+        self.tableView.backgroundView = backImageView
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -212,8 +220,8 @@ class TransactionHistoryTableViewController: UITableViewController {
         let isRated = currentTransaction.3
         // Fetches the banks for the data source layout.
         let itemImage = cell.contentView.viewWithTag(5) as! UIImageView
-        let sellerImage = cell.contentView.viewWithTag(4) as! UIImageView
-        let buyerImage = cell.contentView.viewWithTag(6) as! UIImageView
+        itemImage.layer.cornerRadius = itemImage.frame.width/2
+
         let productLabel = cell.contentView.viewWithTag(2) as! UILabel
         let sellerLabel = cell.contentView.viewWithTag(1) as! UILabel
         let buyerLabel = cell.contentView.viewWithTag(3) as! UILabel
@@ -238,7 +246,7 @@ class TransactionHistoryTableViewController: UITableViewController {
                             
                             try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
                         } catch let error as NSError {
-                            print("fuk boi--> \(error)")
+                            print("error--> \(error)")
                         }
                         
                     } else {
@@ -249,8 +257,6 @@ class TransactionHistoryTableViewController: UITableViewController {
             itemImage.clipsToBounds = true
         }
         
-        sellerImage.image = #imageLiteral(resourceName: "User Location Filled-100")
-        buyerImage.image = #imageLiteral(resourceName: "User Location-100")
         
         productLabel.text = currentProduct.name
         if userId == seller {
