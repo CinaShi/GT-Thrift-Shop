@@ -42,7 +42,7 @@ class TransactionHistoryTableViewController: UITableViewController {
         self.navigationController?.navigationBar.isHidden = false
         myTransactions.removeAll()
         
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
         
         activityIndicatorView.startAnimating()
         

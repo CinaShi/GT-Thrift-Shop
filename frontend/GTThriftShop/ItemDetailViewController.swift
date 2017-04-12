@@ -133,7 +133,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         if sourceVCName == "transactionVC" {
             if userId == product.userId {
                 nextStepButton.setTitle("Can't rate yourself :P", for: .normal)
-                nextStepButton.setTitleColor(.cyan, for: .normal)
+                nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
                 nextStepButton.isEnabled = false
             } else {
                 if !isRated {
@@ -141,7 +141,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     nextStepButton.addTarget(self, action: #selector(goToRateAndCommentVC), for: .touchUpInside)
                 } else {
                     nextStepButton.setTitle("Already rated!", for: .normal)
-                    nextStepButton.setTitleColor(.cyan, for: .normal)
+                    nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
                     nextStepButton.isEnabled = false
                 }
             }
@@ -150,7 +150,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             nextStepButton.addTarget(self, action: #selector(markAsSold), for: .touchUpInside)
             if product.isSold! {
                 nextStepButton.setTitle("Already sold!", for: .normal)
-                nextStepButton.setTitleColor(.cyan, for: .normal)
+                nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
                 nextStepButton.isEnabled = false
             }
         } else {
