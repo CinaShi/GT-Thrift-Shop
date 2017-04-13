@@ -15,6 +15,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     var userIdString = String()
     var effect: UIVisualEffect!
     
+    @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
@@ -40,10 +41,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
         loginButton.layer.cornerRadius = 5
         backButton.layer.cornerRadius = 5
+        
     }
     
 
     func animateIn() {
+        
         self.view.addSubview(loginBlock)
         loginBlock.center = self.view.center
         loginBlock.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)

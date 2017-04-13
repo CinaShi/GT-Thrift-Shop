@@ -71,4 +71,5 @@ class Product: NSObject, NSCoding {
             self.isSold = true
         }
     }
+
 }

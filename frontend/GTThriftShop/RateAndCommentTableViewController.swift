@@ -62,7 +62,7 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
     
     @IBAction func submitRateAndComment(_ sender: Any) {
         if commentTextView.text! == "" {
-            sendAlert(info: "Please say something QvQ")
+            sendAlert(info: "Please write down your comments before submission!")
         } else {
             //ready to submit
             submitButton.isEnabled = false
@@ -115,7 +115,7 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
                     print("comment successfully submitted")
                     DispatchQueue.main.async(execute: {
                         self.dismiss(animated: true, completion: nil)
-                        //self.performSegue(withIdentifier: "gobacktoProfile", sender: self)
+                        self.performSegue(withIdentifier: "unwindFromRateAndCommentVC", sender: self)
                     });
                 }else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
@@ -225,6 +225,17 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
     
     func tap(gesture: UITapGestureRecognizer) {
         commentTextView.resignFirstResponder()
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "unwindFromRateAndCommentVC" {
+            let destination = segue.destination as! ItemDetailViewController
+            destination.isRated = true
+        }
+        
     }
     
     

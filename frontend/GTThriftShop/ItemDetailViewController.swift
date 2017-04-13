@@ -347,7 +347,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     DispatchQueue.main.async(execute: {
                         self.loadDetailsIndicator.stopAnimating()
                         self.nextStepButton.setTitle("Already sold!", for: .normal)
-                        self.nextStepButton.setTitleColor(.cyan, for: .normal)
+                        self.nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
                         self.nextStepButton.isEnabled = false
                         
                         self.changeLocalSaveData()
@@ -601,6 +601,9 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             print("unwind from contact VC")
         } else if segue.source is RateAndCommentTableViewController {
             print("unwind from rateAndComment VC")
+            nextStepButton.setTitle("Already rated!", for: .normal)
+            nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
+            nextStepButton.isEnabled = false
         }
     }
     

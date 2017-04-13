@@ -20,12 +20,14 @@ class MyCommentTableViewController: UITableViewController {
     var selectedPostTime: String?
     var selectedBuyerId: Int?
     var userId: Int!
-    var myComments = [(Int, Product, Int, String, String, Int)]()
+    var myComments = [(Int, Product, Int, String, String, Int, String)]()
     var userDefaults = UserDefaults.standard
     var activityIndicatorView: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         activityIndicatorView.color = .blue
         tableView.backgroundView = activityIndicatorView
@@ -41,7 +43,7 @@ class MyCommentTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = false
-        myComments.removeAll()
+        
         
         tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine 
         
@@ -56,7 +58,6 @@ class MyCommentTableViewController: UITableViewController {
         loadProductsFromLocal()
         loadMyComments()
         
-        tableView.reloadData()
     }
 
     //Mark: helper methods
@@ -101,6 +102,7 @@ class MyCommentTableViewController: UITableViewController {
                 print("***** statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 200 {
                     do {
+                        self.myComments.removeAll()
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String,Any>
                         let array = json["comments"] as! [Dictionary<String, Any>]
                         // Loop through objects
@@ -110,14 +112,15 @@ class MyCommentTableViewController: UITableViewController {
                                 let pid = dict["pid"] as? Int,
                                 let commentContent = dict["commentContent"] as? String,
                                 let postTime = dict["postTime"] as? String,
-                                let rate = dict["rate"] as? Int
+                                let rate = dict["rate"] as? Int,
+                                let buyerName = dict["buyerName"] as? String
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
                             let product = self.findProductByPid(pid: pid)
                             
-                            self.myComments.append((tranId, product!, buyerId, commentContent, postTime, rate))
+                            self.myComments.append((tranId, product!, buyerId, commentContent, postTime, rate, buyerName))
                         }
                         
                     } catch let error as NSError {
@@ -227,6 +230,7 @@ class MyCommentTableViewController: UITableViewController {
         let buyerId = currentComment.2
         let commentContent = currentComment.3
         let postTime = currentComment.4
+        let buyerName = currentComment.6
         // Fetches the banks for the data source layout.
         let itemImage = cell.contentView.viewWithTag(4) as! UIImageView
         let buyerLabel = cell.contentView.viewWithTag(2) as! UILabel
@@ -268,7 +272,7 @@ class MyCommentTableViewController: UITableViewController {
             }
         }
         
-        buyerLabel.text = "By user: \(buyerId)"
+        buyerLabel.text = "From \(buyerName)"
         //time convert
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss z"
@@ -291,7 +295,7 @@ class MyCommentTableViewController: UITableViewController {
         selectedCommentContent = myComments[indexPath.row].3
         selectedPostTime = myComments[indexPath.row].4
         selectedBuyerId = myComments[indexPath.row].2
-        performSegue(withIdentifier: "commentDetailVC", sender: myComments[indexPath.row].5)
+        performSegue(withIdentifier: "commentDetailVC", sender: myComments[indexPath.row])
         
     }
 
@@ -309,7 +313,8 @@ class MyCommentTableViewController: UITableViewController {
             destination.commentContent = selectedCommentContent
             destination.postTime = selectedPostTime
             destination.buyerId = selectedBuyerId!
-            destination.rate = sender as! Int
+            destination.rate = (sender as! (Int, Product, Int, String, String, Int, String)).5
+            destination.buyerName = (sender as! (Int, Product, Int, String, String, Int, String)).6
         }
         
     }

@@ -18,7 +18,7 @@ class TransactionHistoryTableViewController: UITableViewController {
     
     var userId: Int!
     //var myTransactions = [(Int, Product, Int, Bool)]()
-    var myTransactions = [(Int, Product, Int, Bool, Int)]()
+    var myTransactions = [(Int, Product, Int, Bool, Int, String, String)]()
     var userDefaults = UserDefaults.standard
     var activityIndicatorView: UIActivityIndicatorView!
     
@@ -40,7 +40,7 @@ class TransactionHistoryTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = false
-        myTransactions.removeAll()
+        
         
         tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
         
@@ -49,7 +49,6 @@ class TransactionHistoryTableViewController: UITableViewController {
         loadProductsFromLocal()
         loadMyTransactions()
         
-        tableView.reloadData()
     }
     
     //Mark: helper methods
@@ -96,6 +95,7 @@ class TransactionHistoryTableViewController: UITableViewController {
                 print("***** statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 200 {
                     do {
+                        self.myTransactions.removeAll()
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String,Any>
                         let array = json["transactions"] as! [Dictionary<String, Any>]
                         // Loop through objects
@@ -105,7 +105,9 @@ class TransactionHistoryTableViewController: UITableViewController {
                                 let pid = dict["pid"] as? Int,
                                 let isRatedString = dict["isRated"] as? Int,
                                 //New
-                                let tranID = dict["tranId"] as? Int
+                                let tranID = dict["tranId"] as? Int,
+                                let buyerName = dict["buyerName"] as? String,
+                                let sellerName = dict["sellerName"] as? String
                                 else{
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
@@ -115,7 +117,7 @@ class TransactionHistoryTableViewController: UITableViewController {
                             if isRatedString == 1 {
                                 isRated = true
                             }
-                            self.myTransactions.append((sellerID, product!, buyerID, isRated, tranID))
+                            self.myTransactions.append((sellerID, product!, buyerID, isRated, tranID, buyerName, sellerName))
                         }
                         
                     } catch let error as NSError {
@@ -218,6 +220,8 @@ class TransactionHistoryTableViewController: UITableViewController {
         let seller = currentTransaction.0
         let buyer = currentTransaction.2
         let isRated = currentTransaction.3
+        let buyerName = currentTransaction.5
+        let sellerName = currentTransaction.6
         // Fetches the banks for the data source layout.
         let itemImage = cell.contentView.viewWithTag(5) as! UIImageView
         itemImage.layer.cornerRadius = itemImage.frame.width/2
@@ -261,15 +265,18 @@ class TransactionHistoryTableViewController: UITableViewController {
         productLabel.text = currentProduct.name
         if userId == seller {
             sellerLabel.text = "You"
-            buyerLabel.text = "user: \(buyer)"
+            buyerLabel.text = "to " + buyerName
         } else if userId == buyer {
-            buyerLabel.text = "You"
-            sellerLabel.text = "user: \(seller)"
+            sellerLabel.text = sellerName
+            buyerLabel.text = "to you"
+        } else {
+            sellerLabel.text = sellerName
+            buyerLabel.text = "to " + buyerName
         }
         
         if isRated {
             isRatedLabel.text = "rated"
-            isRatedLabel.textColor = .green
+            isRatedLabel.textColor = .blue
         } else {
             isRatedLabel.text = "unrated"
             isRatedLabel.textColor = .red

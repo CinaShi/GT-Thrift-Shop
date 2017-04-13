@@ -14,6 +14,7 @@ class CommentDetailTableViewController: UITableViewController {
     var product: Product!
     var tranId: Int!
     var buyerId: Int!
+    var buyerName: String!
     var commentContent: String!
     var postTime: String!
     var rate: Int!
@@ -50,13 +51,13 @@ class CommentDetailTableViewController: UITableViewController {
         
         if userId == product.userId! {
             sellerNameLabel.text = "You"
-            buyerNameLabel.text = "User: \(buyerId!)"
+            buyerNameLabel.text = "to " + buyerName
         } else if userId == buyerId! {
-            sellerNameLabel.text = "User: \(product.userId!)"
+            sellerNameLabel.text = product.userName
             buyerNameLabel.text = "you"
         } else {
-            sellerNameLabel.text = "User: \(product.userId!)"
-            buyerNameLabel.text = "User: \(buyerId!)"
+            sellerNameLabel.text = product.userName
+            buyerNameLabel.text = "to " + buyerName
         }
         productNameLabel.text = product.name
         //time format
