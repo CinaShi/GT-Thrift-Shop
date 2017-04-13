@@ -43,7 +43,7 @@ class MyCommentTableViewController: UITableViewController {
         self.navigationController?.navigationBar.isHidden = false
         myComments.removeAll()
         
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine 
         
         activityIndicatorView.startAnimating()
         
