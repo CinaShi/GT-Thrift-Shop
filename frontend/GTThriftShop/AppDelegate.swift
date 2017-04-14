@@ -23,6 +23,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        // Assuming your storyboard is named "Main"
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // Add code here (e.g. if/else) to determine which view controller class (chooseViewControllerA or chooseViewControllerB) and storyboard ID (chooseStoryboardA or chooseStoryboardB) to send the user to
+        
+        
+        
+        if UserDefaults.standard.object(forKey: "userId") != nil {
+            let initialViewController: UITabBarController = mainStoryboard.instantiateViewController(withIdentifier: "MainTabViewController") as! UITabBarController
+            self.window?.rootViewController = initialViewController
+        }else{
+            let initialViewController: ViewController = mainStoryboard.instantiateViewController(withIdentifier: "preLoginInitial") as! ViewController
+            self.window?.rootViewController = initialViewController
+        }
+            
+        self.window?.makeKeyAndVisible()
+        
         // Register for remote notifications. This shows a permission dialog on first run, to
         // show the dialog at a more appropriate time move this registration accordingly.
         // [START register_for_notifications]
