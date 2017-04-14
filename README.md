@@ -1,6 +1,6 @@
 # GT Thrift Shop
 
-The idea our team has is making a mobile application for GT Thrift Shop. This idea came from our experience using Facebook GT thrift shop group page. We, as a team, believe that a mobile application, with improvement and newly added features such as meet-up navigation/on-campus meeting reservation system and direct photos uploads, will make it more convenient for GT students to sell/buy used goods. 
+The idea of our team is to make a mobile application for GT Thrift Shop. This idea came from our experience using Facebook GT thrift shop group page. We believe that a mobile application, with improvement and newly added features such as rating and comments system, instant message and direct photos uploads, will make it more convenient for GT students and faculties to sell or buy used goods. Additionally, integrating GT authentication into the app will make our app a much safer choice for GT students.
 
 ## Team Members
 
