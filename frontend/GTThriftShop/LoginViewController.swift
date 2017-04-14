@@ -272,7 +272,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             if error == nil {
                 print(user!.uid)
                 
-                
                 self.performSegue(withIdentifier: "login", sender: self)
                 
             } else {

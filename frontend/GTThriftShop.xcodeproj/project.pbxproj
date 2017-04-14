@@ -683,7 +683,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQMessagesViewController",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQSystemSoundPlayer",
 				);
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = 1;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = GTThriftShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

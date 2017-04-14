@@ -302,6 +302,20 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         task.resume()
     }
     
+    @IBAction func resetAll(_ sender: Any) {
+        itemNameField.text = ""
+        usedYearField.text = ""
+        priceField.text = ""
+        categoryField.text = ""
+        descriptionTextView.text = ""
+        
+        for imageView in photosImageViews {
+            imageView.image = #imageLiteral(resourceName: "Unchecked Checkbox-100")
+        }
+        photos = [UIImage?](repeating: nil, count:6)
+    }
+    
+    
     
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
