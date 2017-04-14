@@ -104,7 +104,7 @@ class UserProfileViewController: UIViewController {
                 }
                 self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
                 UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
-                    self.scoreLabel.text = "Score: " + String(self.userRating) + "/5.0"
+                    self.scoreLabel.text = String(self.userRating) + "/5.0"
                     if user.rate < 0 || user.rate > 5 {
                         self.scoreLabel.text = "No rating"
                     }
@@ -169,7 +169,7 @@ class UserProfileViewController: UIViewController {
                 }
                 self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
                 UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
-                    self.scoreLabel.text = "Score: " + String(self.userRating) + "/5.0"
+                    self.scoreLabel.text = String(self.userRating) + "/5.0"
                     if user.rate < 0 || user.rate > 5 {
                         self.scoreLabel.text = "No rating"
                     }
@@ -306,7 +306,7 @@ class UserProfileViewController: UIViewController {
                             }
                             self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
                             UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
-                                self.scoreLabel.text = "Score: " + String(self.userRating) + "/5.0"
+                                self.scoreLabel.text = String(self.userRating) + "/5.0"
                                 if self.userRating < 0 || self.userRating > 5 {
                                     self.scoreLabel.text = "No rating"
                                 }
