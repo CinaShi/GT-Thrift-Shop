@@ -54,8 +54,8 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         let color1 = UIColor(colorLiteralRed: 0, green: 128/255, blue:1, alpha: 1)
         self.submitButton.layer.borderWidth = 1
         self.resetButton.layer.borderWidth = 1
-        self.submitButton.layer.cornerRadius = 20
-        self.resetButton.layer.cornerRadius = 20
+        self.submitButton.layer.cornerRadius = 15
+        self.resetButton.layer.cornerRadius = 15
         self.submitButton.layer.borderColor = color1.cgColor
         self.resetButton.layer.borderColor = color1.cgColor
         

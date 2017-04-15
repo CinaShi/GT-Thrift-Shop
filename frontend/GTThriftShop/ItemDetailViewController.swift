@@ -48,7 +48,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var backFromInterestBlock: UIButton!
     @IBOutlet var interestBlock: UIView!
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
@@ -166,16 +165,15 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func markAsSold() {
-        print("code for markAsSold function")
-        
         // Make the block appears
         blurEffectView.frame = self.view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(blurEffectView)
         
-        blurEffectView.addSubview(interestBlock)
+        
         interestBlock.center = blurEffectView.center
         interestBlock.layer.cornerRadius = 10
+        blurEffectView.addSubview(interestBlock)
         interestBlock.alpha = 0
         interestBlock.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         UIView.animate(withDuration: 0.5) {
@@ -287,7 +285,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     //Make it disappear
     @IBAction func backFromInterestBlock(_ sender: Any) {
-
+        
         self.interestBlock.removeFromSuperview()
         self.blurEffectView.removeFromSuperview()
         
@@ -643,10 +641,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     //Scrollview Delegate
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
         let pageNumber = round(imageScrollView.contentOffset.x / imageScrollView.frame.size.width)
         pageIndicator.currentPage = Int(pageNumber)
-        print("page number: \(pageNumber)")
     }
     
     // MARK: - Navigation

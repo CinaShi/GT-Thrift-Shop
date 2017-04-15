@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,39 +17,34 @@
                         <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogoTransparent.png" translatesAutoresizingMaskIntoConstraints="NO" id="h1s-hU-gza">
-                                <rect key="frame" x="118" y="264" width="138" height="138"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="X0i-Wa-tYr">
+                                <rect key="frame" x="137" y="243.5" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="138" id="0VD-8R-U8r"/>
-                                    <constraint firstAttribute="height" constant="138" id="yDY-aH-qS5"/>
+                                    <constraint firstAttribute="height" constant="100" id="5qa-xk-c8l"/>
+                                    <constraint firstAttribute="width" constant="100" id="cEr-Rk-8IJ"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OnB-Df-8Pl">
-                                <rect key="frame" x="63" y="508.5" width="248" height="37"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="31"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GT Thrift Shop" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="634-KR-A6d">
-                                <rect key="frame" x="111.5" y="410" width="151.5" height="30"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GT Thrift Shop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Llq-RH-0sv">
+                                <rect key="frame" x="94" y="333.5" width="187" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="187" id="7En-1R-8ZL"/>
+                                    <constraint firstAttribute="height" constant="50" id="WQQ-Gt-M60"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="30"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="h1s-hU-gza" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="7SI-Bx-yzF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="OnB-Df-8Pl" secondAttribute="trailing" constant="48" id="AIt-Pb-WfU"/>
-                            <constraint firstItem="634-KR-A6d" firstAttribute="centerX" secondItem="h1s-hU-gza" secondAttribute="centerX" id="KiU-tp-qDE"/>
-                            <constraint firstItem="OnB-Df-8Pl" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="47" id="KpW-aW-OiN"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="OnB-Df-8Pl" secondAttribute="bottom" constant="122" id="LUk-e5-b3N"/>
-                            <constraint firstItem="h1s-hU-gza" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="d3C-9Z-VGg"/>
-                            <constraint firstItem="634-KR-A6d" firstAttribute="top" secondItem="h1s-hU-gza" secondAttribute="bottom" constant="8" id="fT4-jJ-KY7"/>
+                            <constraint firstItem="Llq-RH-0sv" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="25" id="0Ns-5b-SSg"/>
+                            <constraint firstItem="X0i-Wa-tYr" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="PoT-Ze-jWR"/>
+                            <constraint firstItem="X0i-Wa-tYr" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-40" id="WA2-rM-gSf"/>
+                            <constraint firstItem="Llq-RH-0sv" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ZPu-Im-K5e"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -60,6 +54,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppLogoTransparent.png" width="167" height="167"/>
+        <image name="logo_transparent" width="400" height="400"/>
     </resources>
 </document>
