@@ -2221,9 +2221,6 @@
                             <constraint firstAttribute="bottom" secondItem="tKf-JG-pAY" secondAttribute="bottom" constant="48" id="y46-A4-2m5"/>
                             <constraint firstAttribute="trailing" secondItem="tKf-JG-pAY" secondAttribute="trailing" id="yKk-Fo-W62"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="umu-PU-qmm" appends="YES" id="iA2-Y0-vRb"/>
-                        </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="Home-100" selectedImage="Home Filled-100" id="x0h-rl-Nbz"/>
                     <connections>
@@ -2298,11 +2295,16 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="umu-PU-qmm">
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="bF9-BR-hn5">
                     <connections>
-                        <action selector="edgePanGestureWithSender:" destination="hfL-N1-XQS" id="TwX-pk-l0f"/>
+                        <action selector="rightSwipe:" destination="hfL-N1-XQS" id="50Z-sQ-WG5"/>
                     </connections>
-                </screenEdgePanGestureRecognizer>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="7qe-dm-uwp">
+                    <connections>
+                        <action selector="leftSwipe:" destination="hfL-N1-XQS" id="2BG-us-Wvo"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3602.4000000000001" y="-1351.5742128935533"/>
         </scene>
@@ -2977,5 +2979,8 @@
         <segue reference="SX5-iM-ft7"/>
         <segue reference="BFQ-Nz-74P"/>
         <segue reference="hmN-Uy-Okp"/>
+        <segue reference="btL-pi-SGU"/>
+        <segue reference="qew-ik-tyZ"/>
+        <segue reference="67t-OU-7l1"/>
     </inferredMetricsTieBreakers>
 </document>

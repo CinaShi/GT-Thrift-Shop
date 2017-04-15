@@ -132,6 +132,9 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     @IBAction func submit(_ sender: AnyObject) {
         if itemNameField.text! == "" || priceField.text! == "" || usedYearField.text! == "" || descriptionTextView.text! == "" || categoryField.text! == "" {
             sendAlart(info: "Please fill in all information before submit!")
+        
+        } else if (itemNameField.text?.length)! > 29 {
+            sendAlart(info: "Item's name should be less than 30 characters")
         } else {
             var photosToUpload = [UIImage]()
             for photo in photos {
