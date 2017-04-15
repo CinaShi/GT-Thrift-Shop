@@ -24,6 +24,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     let blurEffectView = UIVisualEffectView(effect: nil)
     var activityIndicatorView: UIActivityIndicatorView!
     
+    private let refreshControl = UIRefreshControl()
+    
     let userDefaults = UserDefaults.standard
     var interestId = [(Int,String)]()
     var interestName = [String]()
@@ -129,6 +131,10 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             ownerLabelView.addGestureRecognizer(tapToUserProfile)
             
         }
+        
+        self.interestTableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(loadInterestIds), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
     }
     
     func initNextStepButtonBasedOnSourceVC() {
@@ -227,6 +233,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 print("***** statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 200 {
                     do {
+                        self.interestId.removeAll()
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
                         let array = json["interestList"] as! [Dictionary<String, Any>]
                         for dict in array {
@@ -249,6 +256,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     DispatchQueue.main.async(execute: {
                         self.activityIndicatorView.stopAnimating()
                         self.interestTableView.reloadData()
+                        self.refreshControl.endRefreshing()
                     });
                 }else if httpResponse.statusCode == 400 {
                     DispatchQueue.main.async(execute: {
@@ -343,7 +351,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             if let httpResponse = response as? HTTPURLResponse {
                 print("***** statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 200 {
-                    
                     
                     
                     DispatchQueue.main.async(execute: {
@@ -492,6 +499,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         self.loadDetailsIndicator.stopAnimating()
         self.activityIndicatorView.stopAnimating()
         self.nextStepButton.isEnabled = true
+        self.refreshControl.endRefreshing()
     }
     
     func sendAlart(info: String) {

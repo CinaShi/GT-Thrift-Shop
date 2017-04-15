@@ -22,6 +22,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var selectedUserId: Int!
     
+    private let refreshControl = UIRefreshControl()
+    
     @IBOutlet weak var loadUsersIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -29,6 +31,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
+        self.tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(getUsers), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
         
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -58,7 +63,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func getUsers() {
-        loadUsersIndicator.startAnimating()
+        if !refreshControl.isRefreshing {
+            loadUsersIndicator.startAnimating()
+        }
+        
         
         
         
@@ -85,6 +93,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     DispatchQueue.main.async(execute: {
                         self.loadUsersIndicator.stopAnimating()
                         self.tableView.reloadData()
+                        self.refreshControl.endRefreshing()
                     });
                 } else {
                     self.notifyFailure(info: "Failed to decode json!")
@@ -110,6 +119,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
         self.loadUsersIndicator.stopAnimating()
+        self.refreshControl.endRefreshing()
     }
     
     func sendAlart(info: String) {

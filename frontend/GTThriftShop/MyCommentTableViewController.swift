@@ -30,7 +30,6 @@ class MyCommentTableViewController: UITableViewController {
         
         activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         activityIndicatorView.color = .blue
-        tableView.backgroundView = activityIndicatorView
 
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -38,6 +37,10 @@ class MyCommentTableViewController: UITableViewController {
         let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
         backImageView.addSubview(blurEffectView)
         self.tableView.backgroundView = backImageView
+        self.tableView.backgroundView?.addSubview(activityIndicatorView)
+        
+        self.tableView.refreshControl?.addTarget(self, action: #selector(loadMyComments), for: .valueChanged)
+        self.tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing🤣")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -133,6 +136,7 @@ class MyCommentTableViewController: UITableViewController {
                         
                         self.tableView.reloadData()
                         self.activityIndicatorView.stopAnimating()
+                        self.tableView.refreshControl?.endRefreshing()
                     });
                 } else if httpResponse.statusCode == 400 {
                     DispatchQueue.main.async(execute: {
@@ -186,6 +190,7 @@ class MyCommentTableViewController: UITableViewController {
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
         self.activityIndicatorView.stopAnimating()
+        self.tableView.refreshControl?.endRefreshing()
     }
     
     func sendAlart(info: String) {

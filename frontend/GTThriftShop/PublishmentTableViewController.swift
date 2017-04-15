@@ -14,9 +14,14 @@ class PublishmentTableViewController: UITableViewController {
     var userId: Int!
     var myProducts = [Product]()
     var userDefaults = UserDefaults.standard
+    var activityIndicatorView: UIActivityIndicatorView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activityIndicatorView.color = .blue
+//        tableView.backgroundView = activityIndicatorView
         
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -24,22 +29,119 @@ class PublishmentTableViewController: UITableViewController {
         let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
         backImageView.addSubview(blurEffectView)
         self.tableView.backgroundView = backImageView
+        self.tableView.backgroundView?.addSubview(activityIndicatorView)
+        
+        self.tableView.refreshControl?.addTarget(self, action: #selector(obtainAllProductsFromServer), for: .valueChanged)
+        self.tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing🤣")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = false
         myProducts.removeAll()
-        
+        activityIndicatorView.startAnimating()
         loadProductsFromLocal()
         loadMyProducts()
         
         initialSort()
-        
+        self.activityIndicatorView.stopAnimating()
         tableView.reloadData()
     }
 
     //Mark: helper methods
+    
+    func obtainAllProductsFromServer() {
+        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products")
+        
+        var request = URLRequest(url:url! as URL)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+                
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response!)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            if let httpResponse = response as? HTTPURLResponse {
+                print("***** statusCode: \(httpResponse.statusCode)")
+                if httpResponse.statusCode == 200 {
+                    do {
+                        self.products.removeAll()
+                        
+                        
+                        let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
+                        let array = json["products"] as! [Dictionary<String, Any>]
+                        // Loop through objects
+                        for dict in array {
+                            guard let name = dict["pName"] as? String,
+                                let price = dict["pPrice"] as? String,
+                                let info = dict["pInfo"] as? String,
+                                let pid = dict["pid"] as? Int,
+                                let postTime = dict["postTime"] as? String,
+                                let usedTime = dict["usedTime"] as? String,
+                                let userId = dict["userId"] as? Int,
+                                let userName = dict["nickname"] as? String,
+                                let imageUrls = dict["images"] as? [String],
+                                let isSold = dict["isSold"] as? Bool
+                                else{
+                                    self.notifyFailure(info: "cannot unarchive data from server")
+                                    return
+                            }
+                            //                            print("image list --> \(dict["iamges"])")
+                            //                            var imageUrls = [String]()
+                            //                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
+                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, userName: userName, imageUrls: imageUrls, isSold: isSold)
+                            self.products.append(newProduct)
+                        }
+                    } catch let error as NSError {
+                        print("Failed to load: \(error.localizedDescription)")
+                    }
+                    
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.myProducts.removeAll()
+                        
+                        self.loadProductsFromLocal()
+                        self.loadMyProducts()
+                        
+                        self.initialSort()
+                        
+                        self.tableView.reloadData()
+                        
+                        self.tableView.refreshControl?.endRefreshing()
+                    });
+                } else if httpResponse.statusCode == 404 {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "Cannot connect to Internet!")
+                    });
+                }
+                else {
+                    DispatchQueue.main.async(execute: {
+                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                    });
+                    
+                }
+            } else {
+                DispatchQueue.main.async(execute: {
+                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+                });
+            }
+        }
+        
+        task.resume()
+    }
     
     func loadProductsFromLocal() {
         if let decoded = userDefaults.object(forKey: "products") as? Data {
@@ -78,6 +180,8 @@ class PublishmentTableViewController: UITableViewController {
     
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
+        self.activityIndicatorView.stopAnimating()
+        self.tableView.refreshControl?.endRefreshing()
     }
     
     func sendAlart(info: String) {
