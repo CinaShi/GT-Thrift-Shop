@@ -318,7 +318,8 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         usedYearField.text = ""
         priceField.text = ""
         categoryField.text = ""
-        descriptionTextView.text = ""
+        descriptionTextView.text = "Type your description here."
+        descriptionTextView.textColor = UIColor.lightGray
         
         for imageView in photosImageViews {
             imageView.image = #imageLiteral(resourceName: "Unchecked Checkbox-100")
