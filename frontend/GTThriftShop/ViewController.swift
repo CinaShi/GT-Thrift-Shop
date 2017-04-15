@@ -157,6 +157,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.present(alertController, animated: true, completion: nil)
     }
     
+    
+    
     //Mark: Table view delegate
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -207,11 +209,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     } else {
                         itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
                     }
-                    
                 })
             }
             itemImage.clipsToBounds = true
-
 
         }
         

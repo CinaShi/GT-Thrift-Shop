@@ -283,8 +283,6 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
             if error == nil {
                 print(user!.uid)
                 
-                
-                
                 self.performSegue(withIdentifier: "signupSuccess", sender: self)
             } else {
                 print(error!.localizedDescription)

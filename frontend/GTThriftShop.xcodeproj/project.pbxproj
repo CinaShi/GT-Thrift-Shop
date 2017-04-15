@@ -30,9 +30,6 @@
 		089ECA4B1DEE8F8E00D508F6 /* SellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */; };
 		089ECA4D1DEE8FAB00D508F6 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */; };
 		089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */; };
-		08AF3D141E9F5C620078A906 /* AppLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AF3D131E9F5C620078A906 /* AppLogo.png */; };
-		08AF3D161E9F5D4A0078A906 /* AppLogoTransparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AF3D151E9F5D4A0078A906 /* AppLogoTransparent.png */; };
-		08AF3D181E9F5E720078A906 /* AppLogoLessTransparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AF3D171E9F5E720078A906 /* AppLogoLessTransparent.png */; };
 		08AF3D1A1E9F63AD0078A906 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AF3D191E9F63AD0078A906 /* ForgotPasswordViewController.swift */; };
 		08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */; };
 		08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */; };
@@ -94,9 +91,6 @@
 		089ECA4A1DEE8F8E00D508F6 /* SellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellViewController.swift; sourceTree = "<group>"; };
 		089ECA4C1DEE8FAB00D508F6 /* FavoriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
-		08AF3D131E9F5C620078A906 /* AppLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AppLogo.png; path = Assets.xcassets/AppLogo.imageset/AppLogo.png; sourceTree = "<group>"; };
-		08AF3D151E9F5D4A0078A906 /* AppLogoTransparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppLogoTransparent.png; sourceTree = "<group>"; };
-		08AF3D171E9F5E720078A906 /* AppLogoLessTransparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppLogoLessTransparent.png; sourceTree = "<group>"; };
 		08AF3D191E9F63AD0078A906 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		08CA35511E3ACD0800EFF7D1 /* FirstTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeViewController.swift; sourceTree = "<group>"; };
 		08CA35531E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTimeSuccessViewController.swift; sourceTree = "<group>"; };
@@ -192,7 +186,6 @@
 		088542BD1DE93481004344D4 /* GTThriftShop */ = {
 			isa = PBXGroup;
 			children = (
-				08AF3D1B1E9F63B60078A906 /* additional assets */,
 				088542C21DE93481004344D4 /* Main.storyboard */,
 				089233851E8F5C0A00B72BF7 /* GTThriftShop-Bridging-Header.h */,
 				088542BE1DE93481004344D4 /* AppDelegate.swift */,
@@ -260,16 +253,6 @@
 				0899EEF21E72278300262267 /* SellTableViewController.swift */,
 			);
 			name = "Sell Product";
-			sourceTree = "<group>";
-		};
-		08AF3D1B1E9F63B60078A906 /* additional assets */ = {
-			isa = PBXGroup;
-			children = (
-				08AF3D131E9F5C620078A906 /* AppLogo.png */,
-				08AF3D151E9F5D4A0078A906 /* AppLogoTransparent.png */,
-				08AF3D171E9F5E720078A906 /* AppLogoLessTransparent.png */,
-			);
-			name = "additional assets";
 			sourceTree = "<group>";
 		};
 		08CA35551E3ACDA100EFF7D1 /* Login */ = {
@@ -421,11 +404,8 @@
 			files = (
 				088542C91DE93481004344D4 /* LaunchScreen.storyboard in Resources */,
 				08E8A84A1E8DFBFA00B338EE /* GoogleService-Info.plist in Resources */,
-				08AF3D181E9F5E720078A906 /* AppLogoLessTransparent.png in Resources */,
 				089ECA3F1DEE7F6C00D508F6 /* Assets.xcassets in Resources */,
-				08AF3D161E9F5D4A0078A906 /* AppLogoTransparent.png in Resources */,
 				088542C41DE93481004344D4 /* Main.storyboard in Resources */,
-				08AF3D141E9F5C620078A906 /* AppLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,7 +663,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQMessagesViewController",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQSystemSoundPlayer",
 				);
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = 1;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = GTThriftShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

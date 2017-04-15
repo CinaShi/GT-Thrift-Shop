@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseDatabase
 
-class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     var product: Product!
     var userId: Int!
     var user: User!
@@ -23,6 +23,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
     let blurEffectView = UIVisualEffectView(effect: nil)
     var activityIndicatorView: UIActivityIndicatorView!
+    
     let userDefaults = UserDefaults.standard
     var interestId = [(Int,String)]()
     var interestName = [String]()
@@ -43,7 +44,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var loadDetailsIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var nextStepButton: UIButton!
-    
+    @IBOutlet weak var pageIndicator: UIPageControl!
     @IBOutlet weak var backFromInterestBlock: UIButton!
     @IBOutlet var interestBlock: UIView!
     
@@ -59,6 +60,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
 
         interestTableView.delegate = self
         interestTableView.dataSource = self
+        imageScrollView.delegate = self
 
         if let decoded = self.userDefaults.object(forKey: "userInfo") as? Data {
             user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
@@ -78,6 +80,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 imageArray.append(UIImage(data: imageData as Data)!)
             }
         }
+        self.pageIndicator.numberOfPages = imageArray.count
+        
         imageScrollView.frame = CGRect(x: 0, y: 64, width: self.view.frame.width, height: 200)
         for i in 0..<imageArray.count{
             let currPic = UIImageView()
@@ -591,9 +595,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             self.performSegue(withIdentifier: "unwindToTransaction", sender: self)
         }
         
-        
-       
-        
     }
     
     @IBAction func unwindToItemDetailVC(segue: UIStoryboardSegue) {
@@ -612,10 +613,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     //Mark: Table view delegate
-    
-    //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //        return "Favorite List"
-    //    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -644,7 +641,13 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
-    
+    //Scrollview Delegate
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        let pageNumber = round(imageScrollView.contentOffset.x / imageScrollView.frame.size.width)
+        pageIndicator.currentPage = Int(pageNumber)
+        print("page number: \(pageNumber)")
+    }
     
     // MARK: - Navigation
     

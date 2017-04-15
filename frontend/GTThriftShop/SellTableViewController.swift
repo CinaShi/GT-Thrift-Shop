@@ -29,6 +29,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     @IBOutlet weak var descriptionTextView: UITextView!
     
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
     
     @IBOutlet var mainTable: UITableView!
     override func viewDidLoad() {
@@ -49,6 +50,16 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         let pickerView = UIPickerView()
         pickerView.delegate = self
         categoryField.inputView = pickerView
+        //buttons
+        let color1 = UIColor(colorLiteralRed: 0, green: 128/255, blue:1, alpha: 1)
+        self.submitButton.layer.borderWidth = 1
+        self.resetButton.layer.borderWidth = 1
+        self.submitButton.layer.cornerRadius = 20
+        self.resetButton.layer.cornerRadius = 20
+        self.submitButton.layer.borderColor = color1.cgColor
+        self.resetButton.layer.borderColor = color1.cgColor
+        
+
         
         for button in addPhotoButtons {
             self.view.bringSubview(toFront: button)
@@ -301,6 +312,20 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         
         task.resume()
     }
+    
+    @IBAction func resetAll(_ sender: Any) {
+        itemNameField.text = ""
+        usedYearField.text = ""
+        priceField.text = ""
+        categoryField.text = ""
+        descriptionTextView.text = ""
+        
+        for imageView in photosImageViews {
+            imageView.image = #imageLiteral(resourceName: "Unchecked Checkbox-100")
+        }
+        photos = [UIImage?](repeating: nil, count:6)
+    }
+    
     
     
     func notifyFailure(info: String) {

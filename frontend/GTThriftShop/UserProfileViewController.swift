@@ -405,6 +405,8 @@ class UserProfileViewController: UIViewController {
             print ("Error signing out: %@", signOutError)
         }
         
+        UserDefaults.standard.removeObject(forKey: "userId")
+        
         self.performSegue(withIdentifier: "logout", sender: nil)
 
     }
