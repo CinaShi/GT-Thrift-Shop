@@ -82,132 +82,134 @@ class UserProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (!isFromOtherUser) {
-            if let decoded = self.userDefaults.object(forKey: "userInfo") as? Data {
-                let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
-                
-                self.userImageUrl = user.avatarURL
-                self.userDescription = user.info
-                self.userEmail = user.email
-                self.userNickname = user.nickname
-                self.userRating = user.rate
-                if user.rate < 0 || user.rate > 5 {
-                    self.userRating = 0
-                }
-                //basic
-                self.nicknameLabel.text = self.userNickname
-                self.emailLabel.text = self.userEmail
-                self.descriptionField.text = self.userDescription
-                //rating
-                if self.userRating <= 2.5 {
-                    self.scoreLabel.center.x = 60
-                }
-                self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
-                UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
-                    self.scoreLabel.text = String(self.userRating) + "/5.0"
-                    if user.rate < 0 || user.rate > 5 {
-                        self.scoreLabel.text = "No rating"
-                    }
-                    if (self.userRating <= 1.25 || self.userRating >= 3.75) {
-                        self.scoreLabel.center.y = 147
-                    } else {
-                        self.scoreLabel.center.y = 73
-                    }
-                    
-                }), completion: nil)
-                //image
-                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                let fileURL = documentsURL.appendingPathComponent("\(self.userId!)-avatar.jpeg")
-                let filePath = fileURL.path
-                if FileManager.default.fileExists(atPath: filePath) {
-                    self.profileImage.image = UIImage(contentsOfFile: filePath)
-                } else {
-                    if let imageData: NSData = NSData(contentsOf: URL(string: self.userImageUrl)!) {
-                        do {
-                            let avatar = UIImage(data: imageData as Data)
-                            self.profileImage.image = avatar
-                            
-                            try UIImageJPEGRepresentation(avatar!, 1)?.write(to: fileURL)
-                        } catch let error as NSError {
-                            print("error--> \(error)")
-                        }
-                        
-                    } else {
-                        self.profileImage.image = #imageLiteral(resourceName: "GT-icon")
-                    }
-                }
-                self.profileImage.clipsToBounds = true
-            } else {
-                self.getUserInfo()
-            }
-        }
+        self.getUserInfo()
+        
+//        if (!isFromOtherUser) {
+//            if let decoded = self.userDefaults.object(forKey: "userInfo") as? Data {
+//                let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+//                
+//                self.userImageUrl = user.avatarURL
+//                self.userDescription = user.info
+//                self.userEmail = user.email
+//                self.userNickname = user.nickname
+//                self.userRating = user.rate
+//                if user.rate < 0 || user.rate > 5 {
+//                    self.userRating = 0
+//                }
+//                //basic
+//                self.nicknameLabel.text = self.userNickname
+//                self.emailLabel.text = self.userEmail
+//                self.descriptionField.text = self.userDescription
+//                //rating
+//                if self.userRating <= 2.5 {
+//                    self.scoreLabel.center.x = 60
+//                }
+//                self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
+//                UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
+//                    self.scoreLabel.text = String(self.userRating) + "/5.0"
+//                    if user.rate < 0 || user.rate > 5 {
+//                        self.scoreLabel.text = "No rating"
+//                    }
+//                    if (self.userRating <= 1.25 || self.userRating >= 3.75) {
+//                        self.scoreLabel.center.y = 147
+//                    } else {
+//                        self.scoreLabel.center.y = 73
+//                    }
+//                    
+//                }), completion: nil)
+//                //image
+//                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//                let fileURL = documentsURL.appendingPathComponent("\(self.userId!)-avatar.jpeg")
+//                let filePath = fileURL.path
+//                if FileManager.default.fileExists(atPath: filePath) {
+//                    self.profileImage.image = UIImage(contentsOfFile: filePath)
+//                } else {
+//                    if let imageData: NSData = NSData(contentsOf: URL(string: self.userImageUrl)!) {
+//                        do {
+//                            let avatar = UIImage(data: imageData as Data)
+//                            self.profileImage.image = avatar
+//                            
+//                            try UIImageJPEGRepresentation(avatar!, 1)?.write(to: fileURL)
+//                        } catch let error as NSError {
+//                            print("error--> \(error)")
+//                        }
+//                        
+//                    } else {
+//                        self.profileImage.image = #imageLiteral(resourceName: "GT-icon")
+//                    }
+//                }
+//                self.profileImage.clipsToBounds = true
+//            } else {
+//                self.getUserInfo()
+//            }
+//        }
     }
     
     override func viewDidLayoutSubviews() {
         // Update your values there
         initProfileImage()
         
-        if (!isFromOtherUser) {
-            if let decoded = self.userDefaults.object(forKey: "userInfo") as? Data {
-                let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
-                
-                self.userImageUrl = user.avatarURL
-                self.userDescription = user.info
-                self.userEmail = user.email
-                self.userNickname = user.nickname
-                self.userRating = user.rate
-                if user.rate < 0 || user.rate > 5 {
-                    self.userRating = 0
-                }
-                //basic
-                self.nicknameLabel.text = self.userNickname
-                self.emailLabel.text = self.userEmail
-                self.descriptionField.text = self.userDescription
-                //rating
-                if self.userRating <= 2.5 {
-                    self.scoreLabel.center.x = 60
-                }
-                self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
-                UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
-                    self.scoreLabel.text = String(self.userRating) + "/5.0"
-                    if user.rate < 0 || user.rate > 5 {
-                        self.scoreLabel.text = "No rating"
-                    }
-                    if (self.userRating <= 1.25 || self.userRating >= 3.75) {
-                        self.scoreLabel.center.y = 147
-                    } else {
-                        self.scoreLabel.center.y = 73
-                    }
-                    
-                }), completion: nil)
-                //image
-                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                let fileURL = documentsURL.appendingPathComponent("\(self.userId!)-avatar.jpeg")
-                let filePath = fileURL.path
-                if FileManager.default.fileExists(atPath: filePath) {
-                    self.profileImage.image = UIImage(contentsOfFile: filePath)
-                } else {
-                    if let imageData: NSData = NSData(contentsOf: URL(string: self.userImageUrl)!) {
-                        do {
-                            let avatar = UIImage(data: imageData as Data)
-                            self.profileImage.image = avatar
-                            
-                            try UIImageJPEGRepresentation(avatar!, 1)?.write(to: fileURL)
-                        } catch let error as NSError {
-                            print("error--> \(error)")
-                        }
-                        
-                    } else {
-                        self.profileImage.image = #imageLiteral(resourceName: "GT-icon")
-                    }
-                }
-                self.profileImage.clipsToBounds = true
-            } else {
-                self.getUserInfo()
-            }
-        } else {
-            self.getUserInfo()
-        }
+//        if (!isFromOtherUser) {
+//            if let decoded = self.userDefaults.object(forKey: "userInfo") as? Data {
+//                let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+//                
+//                self.userImageUrl = user.avatarURL
+//                self.userDescription = user.info
+//                self.userEmail = user.email
+//                self.userNickname = user.nickname
+//                self.userRating = user.rate
+//                if user.rate < 0 || user.rate > 5 {
+//                    self.userRating = 0
+//                }
+//                //basic
+//                self.nicknameLabel.text = self.userNickname
+//                self.emailLabel.text = self.userEmail
+//                self.descriptionField.text = self.userDescription
+//                //rating
+//                if self.userRating <= 2.5 {
+//                    self.scoreLabel.center.x = 60
+//                }
+//                self.progress.animate(toAngle: Double(self.userRating / 5) * 360, duration: 2, completion: nil)
+//                UIView.animate(withDuration: 2, delay: 1, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseOut], animations: ({
+//                    self.scoreLabel.text = String(self.userRating) + "/5.0"
+//                    if user.rate < 0 || user.rate > 5 {
+//                        self.scoreLabel.text = "No rating"
+//                    }
+//                    if (self.userRating <= 1.25 || self.userRating >= 3.75) {
+//                        self.scoreLabel.center.y = 147
+//                    } else {
+//                        self.scoreLabel.center.y = 73
+//                    }
+//                    
+//                }), completion: nil)
+//                //image
+//                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//                let fileURL = documentsURL.appendingPathComponent("\(self.userId!)-avatar.jpeg")
+//                let filePath = fileURL.path
+//                if FileManager.default.fileExists(atPath: filePath) {
+//                    self.profileImage.image = UIImage(contentsOfFile: filePath)
+//                } else {
+//                    if let imageData: NSData = NSData(contentsOf: URL(string: self.userImageUrl)!) {
+//                        do {
+//                            let avatar = UIImage(data: imageData as Data)
+//                            self.profileImage.image = avatar
+//                            
+//                            try UIImageJPEGRepresentation(avatar!, 1)?.write(to: fileURL)
+//                        } catch let error as NSError {
+//                            print("error--> \(error)")
+//                        }
+//                        
+//                    } else {
+//                        self.profileImage.image = #imageLiteral(resourceName: "GT-icon")
+//                    }
+//                }
+//                self.profileImage.clipsToBounds = true
+//            } else {
+//                self.getUserInfo()
+//            }
+//        } else {
+//            self.getUserInfo()
+//        }
     }
     
     //Mark: helper methods
