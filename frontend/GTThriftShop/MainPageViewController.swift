@@ -43,20 +43,14 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         searchBar.delegate = self
         
         self.menuTableView.dataSource = self
-        self.menuTableView.delegate = self
-        
-        
-//        let tapper: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(MainPageViewController.dismissSortView))
-//        self.view.addGestureRecognizer(tapper)
+        self.menuTableView.delegate = self 
         
         self.menuView.layer.shadowOpacity = 0.75
         self.menuView.layer.shadowRadius = 3
         leadingConstraint.constant = -140
         self.view.layoutIfNeeded()
         tags.append("All")
-//        tags.append("Calculator")
-//        tags.append("Computer")
-        
+
         
         DispatchQueue.background(background: {
             // do something in background
@@ -502,6 +496,23 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         leadingConstraint.constant = -140
         UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
         menuShowing = false
+    }
+    
+    @IBAction func leftSwipe(_ sender: UISwipeGestureRecognizer) {
+        if menuShowing == false {
+            leadingConstraint.constant = 0
+            UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
+            menuShowing = true
+        }
+        
+    }
+
+    @IBAction func rightSwipe(_ sender: UISwipeGestureRecognizer) {
+        if menuShowing == true {
+            leadingConstraint.constant = -140
+            UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
+            menuShowing = false
+        }
     }
     
     @IBAction func unwindFromDetailVC(segue: UIStoryboardSegue) {

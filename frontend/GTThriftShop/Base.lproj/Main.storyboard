@@ -1364,7 +1364,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="..." translatesAutoresizingMaskIntoConstraints="NO" id="qJf-D2-LWV">
-                                        <rect key="frame" x="20" y="221" width="335" height="53"/>
+                                        <rect key="frame" x="20" y="221" width="335" height="53.5"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="qJf-D2-LWV" secondAttribute="height" multiplier="113:18" id="hTC-je-1VP"/>
@@ -2212,9 +2212,6 @@
                             <constraint firstAttribute="bottom" secondItem="tKf-JG-pAY" secondAttribute="bottom" constant="48" id="y46-A4-2m5"/>
                             <constraint firstAttribute="trailing" secondItem="tKf-JG-pAY" secondAttribute="trailing" id="yKk-Fo-W62"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="umu-PU-qmm" appends="YES" id="iA2-Y0-vRb"/>
-                        </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="Home-100" selectedImage="Home Filled-100" id="x0h-rl-Nbz"/>
                     <connections>
@@ -2289,11 +2286,16 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="umu-PU-qmm">
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="bF9-BR-hn5">
                     <connections>
-                        <action selector="edgePanGestureWithSender:" destination="hfL-N1-XQS" id="TwX-pk-l0f"/>
+                        <action selector="rightSwipe:" destination="hfL-N1-XQS" id="50Z-sQ-WG5"/>
                     </connections>
-                </screenEdgePanGestureRecognizer>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="7qe-dm-uwp">
+                    <connections>
+                        <action selector="leftSwipe:" destination="hfL-N1-XQS" id="2BG-us-Wvo"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3602.4000000000001" y="-1351.5742128935533"/>
         </scene>
@@ -2964,9 +2966,9 @@
         <image name="userBig" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="67t-OU-7l1"/>
-        <segue reference="IbO-r6-Fxd"/>
-        <segue reference="bs9-cY-yCb"/>
         <segue reference="btL-pi-SGU"/>
+        <segue reference="qew-ik-tyZ"/>
+        <segue reference="bs9-cY-yCb"/>
+        <segue reference="67t-OU-7l1"/>
     </inferredMetricsTieBreakers>
 </document>
