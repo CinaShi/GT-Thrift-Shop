@@ -56,6 +56,13 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.view.layoutIfNeeded()
         tags.append("All")
 
+        let swipeFromLeft = UISwipeGestureRecognizer(target: self, action: #selector(left(sender:)))
+        swipeFromLeft.direction = .right
+        let swipeFromRight = UISwipeGestureRecognizer(target: self, action: #selector(right(sender:)))
+        swipeFromRight.direction = .left
+        
+        self.tableView.addGestureRecognizer(swipeFromLeft)
+        self.tableView.addGestureRecognizer(swipeFromRight)
         
         DispatchQueue.background(background: {
             // do something in background
@@ -73,7 +80,10 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print(tags)
+//        print(tags)
+        
+        searchBar.text = nil
+        searchBar.endEditing(true)
         
         obtainAllProductsFromServer()
         
@@ -507,22 +517,22 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         menuShowing = false
     }
     
-    @IBAction func leftSwipe(_ sender: UISwipeGestureRecognizer) {
+    func left(sender:UISwipeGestureRecognizer) {
         if menuShowing == false {
             leadingConstraint.constant = 0
             UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
             menuShowing = true
         }
-        
     }
-
-    @IBAction func rightSwipe(_ sender: UISwipeGestureRecognizer) {
+    
+    func right(sender: UISwipeGestureRecognizer) {
         if menuShowing == true {
             leadingConstraint.constant = -140
             UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
             menuShowing = false
         }
     }
+    
     
     @IBAction func unwindFromDetailVC(segue: UIStoryboardSegue) {
         if segue.source is ItemDetailViewController {
@@ -669,6 +679,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        searchBar.endEditing(true)
         searchActive = false
         self.searchBar.endEditing(true)
     }
