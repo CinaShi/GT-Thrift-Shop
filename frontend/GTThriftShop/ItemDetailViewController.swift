@@ -148,6 +148,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     func initNextStepButtonBasedOnSourceVC() {
         
         if sourceVCName == "transactionVC" {
+            favoriteImage.isHidden = true
             if userId == product.userId {
                 nextStepButton.setTitle("Can't rate yourself :P", for: .normal)
                 nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
@@ -163,6 +164,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
         } else if userId == product.userId {
+            favoriteImage.isHidden = true
             nextStepButton.setTitle("Mark as sold", for: .normal)
             nextStepButton.addTarget(self, action: #selector(markAsSold), for: .touchUpInside)
             if product.isSold! {
