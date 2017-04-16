@@ -250,10 +250,7 @@ class UserProfileViewController: UIViewController {
         progress.angle = 0
         self.background.addSubview(progress)
         
-//        print("progressbar frame: \(progress.frame)")
-//        print("picture frame: \(profileImage.frame)")
-//        print("progress center: \(progress.center)")
-//        print("picture center: \(profileImage.center)")
+
     }
     
     func getUserInfo() {
