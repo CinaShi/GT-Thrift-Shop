@@ -59,8 +59,6 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         self.submitButton.layer.borderColor = color1.cgColor
         self.resetButton.layer.borderColor = color1.cgColor
         
-
-        
         for button in addPhotoButtons {
             self.view.bringSubview(toFront: button)
         }
