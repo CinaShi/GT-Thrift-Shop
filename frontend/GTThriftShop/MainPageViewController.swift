@@ -19,6 +19,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     var menuShowing = false
     var sortViewExpanded = false
     
+    private let refreshControl = UIRefreshControl()
+    
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
     var filteredProducts = [Product]()
@@ -39,6 +41,9 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(obtainAllProductsFromServer), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
         
         searchBar.delegate = self
         
@@ -69,8 +74,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         print(tags)
-        allProducts.removeAll()
-        products.removeAll()
         
         obtainAllProductsFromServer()
         
@@ -238,7 +241,9 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func obtainAllProductsFromServer() {
-        loadProductsIndicator.startAnimating()
+        if !refreshControl.isRefreshing {
+            loadProductsIndicator.startAnimating()
+        }
         let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products")
         
         var request = URLRequest(url:url! as URL)
@@ -266,6 +271,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                 print("***** statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 200 {
                     do {
+                        self.allProducts.removeAll()
+                        self.products.removeAll()
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
                         let array = json["products"] as! [Dictionary<String, Any>]
                         // Loop through objects
@@ -301,6 +308,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                         self.loadProductsIndicator.stopAnimating()
                         self.storeProductsToLocal()
                         self.tableView.reloadData()
+                        self.refreshControl.endRefreshing()
                     });
                 }else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
@@ -418,6 +426,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
         self.loadProductsIndicator.stopAnimating()
+        self.refreshControl.endRefreshing()
     }
     
     func sendAlart(info: String) {

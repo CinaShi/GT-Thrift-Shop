@@ -1581,6 +1581,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="b3R-B6-nuL">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <segue destination="dSn-hY-4Nv" kind="presentation" identifier="getItemDetailsFromPublishment" modalTransitionStyle="crossDissolve" id="jm5-M4-ALX"/>
                         <segue destination="RaL-Ow-fXI" kind="unwind" identifier="unwindToUserProfileFromPublishment" unwindAction="unwindToUserProfileVCWithSegue:" id="Cha-IN-BlI"/>
@@ -1690,6 +1693,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="QH0-F3-Pjn">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <segue destination="dSn-hY-4Nv" kind="presentation" identifier="getItemDetailsFromTransactionHistory" modalTransitionStyle="crossDissolve" id="BFQ-Nz-74P"/>
                         <segue destination="lV7-nU-XM8" kind="unwind" identifier="unwindToUserProfileFromTransaction" unwindAction="unwindToUserProfileVCWithSegue:" id="wFZ-Fb-7Oe"/>
@@ -1788,12 +1794,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Comments" id="jMQ-lp-W2v">
-                        <barButtonItem key="leftBarButtonItem" title="&lt; back" id="mQ5-aw-myU">
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Back" id="mQ5-aw-myU">
                             <connections>
                                 <action selector="unwindToUserProfile:" destination="3bQ-DD-hbh" id="FeB-2t-TN7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="jZZ-4E-e0d">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <segue destination="06O-LM-a7g" kind="presentation" identifier="commentDetailVC" modalTransitionStyle="crossDissolve" id="bvW-Xn-byl"/>
                         <segue destination="Zkh-IN-LJM" kind="unwind" identifier="unwindToUserProfileFromComment" unwindAction="unwindToUserProfileVCWithSegue:" id="2cQ-Fr-6fk"/>
@@ -1901,7 +1910,8 @@
                                         <rect key="frame" x="0.0" y="137" width="375" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oH3-J3-58u" id="HdG-ju-mlC">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="75.5"/>
+
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="76"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rating-100" translatesAutoresizingMaskIntoConstraints="NO" id="JCZ-fO-g8S">
@@ -1952,7 +1962,8 @@
                                         <rect key="frame" x="0.0" y="213" width="375" height="455"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="orb-fb-7ly" id="8dg-AG-dp9">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="454.5"/>
+
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="455"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="la2-YI-Oee">
@@ -2966,8 +2977,12 @@
         <image name="userBig" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SX5-iM-ft7"/>
+
         <segue reference="bs9-cY-yCb"/>
+        <segue reference="SX5-iM-ft7"/>
+        <segue reference="BFQ-Nz-74P"/>
+        <segue reference="hmN-Uy-Okp"/>
+        <segue reference="btL-pi-SGU"/>
         <segue reference="qew-ik-tyZ"/>
         <segue reference="67t-OU-7l1"/>
     </inferredMetricsTieBreakers>
