@@ -24,6 +24,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     let blurEffectView = UIVisualEffectView(effect: nil)
     var activityIndicatorView: UIActivityIndicatorView!
     
+    var tappedImage: UIImage!
+    
     private let refreshControl = UIRefreshControl()
     
     let userDefaults = UserDefaults.standard
@@ -92,6 +94,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             currPic.frame = CGRect(x: xPos, y: 0, width: self.imageScrollView.frame.width, height: self.imageScrollView.frame.height)
             imageScrollView.contentSize.width = imageScrollView.frame.width * CGFloat(i+1)
             imageScrollView.addSubview(currPic)
+            
         }
         
         if imageArray.count <= 0 {
@@ -102,6 +105,11 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             currPic.frame = CGRect(x: xPos, y: 0, width: self.imageScrollView.frame.width, height: self.imageScrollView.frame.height)
             imageScrollView.contentSize.width = imageScrollView.frame.width * CGFloat(1)
             imageScrollView.addSubview(currPic)
+        } else {
+            tappedImage = imageArray[0]
+            let imageTapped = UITapGestureRecognizer(target: self, action: #selector(enlargeImage))
+            imageScrollView.addGestureRecognizer(imageTapped)
+            
         }
         
         //Load Text
@@ -168,6 +176,59 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
 
+    }
+    
+    func enlargeImage() {
+        var imageToDisplay = tappedImage
+        let imageWidth = (imageToDisplay?.size.width)!
+        let imageHeight = (imageToDisplay?.size.height)!
+        if imageWidth > self.view.frame.size.width || imageHeight > self.view.frame.size.height {
+            if imageHeight > imageWidth {
+                imageToDisplay = self.resizeImage(image: imageToDisplay!, targetSize: CGSize.init(width: imageWidth * (self.view.frame.height / imageHeight), height: self.view.frame.height))
+            } else {
+                imageToDisplay = self.resizeImage(image: imageToDisplay!, targetSize: CGSize.init(width: self.view.frame.width, height: imageHeight * (self.view.frame.width / imageWidth)))
+            }
+        }
+        let newImageView = UIImageView(image: imageToDisplay)
+        newImageView.frame = self.view.frame
+        newImageView.backgroundColor = .black
+        newImageView.contentMode = .center
+        newImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        newImageView.addGestureRecognizer(tap)
+        self.view.addSubview(newImageView)
+        self.view.bringSubview(toFront: newImageView)
+    }
+    
+    func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.navigationBar.isHidden = false
+        sender.view?.removeFromSuperview()
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / image.size.width
+        let heightRatio = targetSize.height / image.size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
     
     func markAsSold() {
@@ -651,6 +712,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageNumber = round(imageScrollView.contentOffset.x / imageScrollView.frame.size.width)
         pageIndicator.currentPage = Int(pageNumber)
+        tappedImage = imageArray[Int(pageNumber)]
     }
     
     // MARK: - Navigation
