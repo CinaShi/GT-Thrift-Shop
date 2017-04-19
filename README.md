@@ -5,10 +5,10 @@ The idea of our team is to make a mobile application for GT Thrift Shop. This id
 ## Team Members
  
  * Jihai An (@alexan0218)
- * Mengyang Shi (@cinashi)
- * Wenzhong Jin 
+ * Mengyang Shi (@CinaShi)
+ * Wenzhong Jin (@WenzhongJin)
  * Yang Yang (@yysama233)
- * Yichen Li
+ * Yichen Li (@yli923)
  
 ## Detailed Design
 
@@ -30,3 +30,5 @@ The idea of our team is to make a mobile application for GT Thrift Shop. This id
 3. Existing problems & future functionalities.
  * This app can only run on iOS devices whose system language is English(U.S.).
  * User will be able to update their profile and products in the future.
+ * User will be able to use swipe gesture to browse images in full-screen mode.
+ * User will be able to use third party payment methods(Venmo, Paypal, etc) to complete their transaction.
