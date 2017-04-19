@@ -16,18 +16,20 @@ The idea of our team is to make a mobile application for GT Thrift Shop. This id
 
 ## Release Notes
  
-**1. New Features**
+__1. New Features__
  * Users now can search the product they want by keywords and categories.
  * Chat function available.
  * Buyers now can rate and comment the seller after purchasing.
  * Users now can view a product's pictures in full-screen size.
  * The side bar on product page can now be expanded by swiping.
-**2. Bugs fixed**
+ 
+__2. Bugs fixed__
  * Fixed a bug that makes the app crush after users cancel searching.
  * Fixed a bug that makes the swipe gesture fails.
  * User's rating is updated properly now.
  * Fixed minor UI bugs. The app now looks good on different screen sizes.
-**3. Existing problems & future functionalities.**
+ 
+__3. Existing problems & future functionalities.__
  * This app can only run on iOS devices whose system language is English(U.S.).
  * User will be able to update their profile and products in the future.
  * User will be able to use swipe gesture to browse images in full-screen mode.
