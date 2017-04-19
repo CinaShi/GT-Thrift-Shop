@@ -4,11 +4,11 @@ The idea of project is to make a mobile application for pre-owned goods trading 
 
 ## Team Members
 
-  * Jihai An (@alexan0218)
-  * Mengyang Shi (@CinaShi)
-  * Wenzhong Jin (@WenzhongJin)
-  * Yang Yang (@yysama233)
-  * Yichen Li (@yli923)
+  * Jihai An [@alexan0218]
+  * Mengyang Shi [@CinaShi]
+  * Wenzhong Jin [@WenzhongJin]
+  * Yang Yang [@yysama233]
+  * Yichen Li [@yli923]
 
 ## Detailed Design
 
@@ -58,4 +58,8 @@ $ pod install
 
 > To run this project in Xcode, you can either use Xcode's built-in iPhone simulator or, if you have an Apple developer account already, connect your device to your Mac and test running the app on your device. If you are unfamiliar with how to use Xcode, here's [an awesome user guide from codewithchris.com](http://codewithchris.com/xcode-tutorial/).
 
+
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen.)
+
+[@CinaShi]: <https://github.com/CinaShi>
 
