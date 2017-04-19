@@ -17,23 +17,24 @@ The idea of project is to make a mobile application for pre-owned goods trading 
  ## Release Notes
   
  __1. New Features__
-  * Users now can search the product they want by keywords and categories.
-  * Chat function available.
-  * Buyers now can rate and comment the seller after purchasing.
-  * Users now can view a product's pictures in full-screen size.
+  * Users can now search the product they want by keywords and categories.
+  * Users can now use in-app messages to chat with other users.
+  * Buyers can now rate and comment on the seller after purchasing products from the seller.
+  * Users can now view a product's pictures in full-screen size.
   * The side bar on product page can now be expanded by swiping.
   
  __2. Bugs fixed__
   * Fixed a bug that makes the app crush after users cancel searching.
   * Fixed a bug that makes the swipe gesture fails.
-  * User's rating is updated properly now.
-  * Fixed minor UI bugs. The app now looks good on different screen sizes.
+  * User's rating is functioning properly now.
+  * Fixed minor UI bugs. The app now looks awesome on different screen sizes.
   
  __3. Existing problems & future functionalities.__
-  * This app can only run on iOS devices whose system language is English(U.S.).
+  * This app can only run properly on iOS devices of which system language is English(U.S.).
   * User will be able to update their profile and products in the future.
   * User will be able to use swipe gesture to browse images in full-screen mode.
   * User will be able to use third party payment methods(Venmo, Paypal, etc) to complete their transaction.
+  * User will be able to receive notifications when they receive in-app messages.
 
 ## Install Guide
 
