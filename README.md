@@ -56,6 +56,6 @@ $ pod install
 ```
 ### Run Instruction(for developers):
 
-> To run this project in Xcode, you can either use Xcode's built-in iPhone simulator or, if you have an Apple developer account already, connect your device to your Mac and test running the app on your device. If you have unfamiliar with how to use Xcode, here's [an awesome user guide from codewithchris.com](http://codewithchris.com/xcode-tutorial/).
+> To run this project in Xcode, you can either use Xcode's built-in iPhone simulator or, if you have an Apple developer account already, connect your device to your Mac and test running the app on your device. If you are unfamiliar with how to use Xcode, here's [an awesome user guide from codewithchris.com](http://codewithchris.com/xcode-tutorial/).
 
 
