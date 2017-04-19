@@ -4,12 +4,8 @@ The idea of our team is to make a mobile application for GT Thrift Shop. This id
 
 ## Team Members
 
- Yang Yang
- Mengyang Shi
- Wenzhong Jin
- Jihai An
- Yichen Li
+ Yang Yang, Mengyang Shi, Wenzhong Jin, Jihai An, Yichen Li
 
 ## Detailed Design & Instruction
 
-### https://docs.google.com/document/d/12jZxifblpwG3lAC5Kqw02ObpOMUnJd0dU-_GKG7gAdg/edit?usp=sharing
+ https://docs.google.com/document/d/12jZxifblpwG3lAC5Kqw02ObpOMUnJd0dU-_GKG7gAdg/edit?usp=sharing
