@@ -56,7 +56,7 @@ The idea of project is to make a mobile application for pre-owned goods trading 
 $ pod install
 ```
 ### Backend Server
-> Pre-requisites include an installation of python-2.7.13 and a list of pip packages below. Once pre-requisites are met, backend is able to run with a line of code 'python app.py' on local host.
+> Pre-requisites include an installation of python-2.7.13 and a list of pip packages below. Once pre-requisites are met, backend is able to run with a line of code `python app.py` on local host.
 - Flask
 ```sh
 $ pip install flask
