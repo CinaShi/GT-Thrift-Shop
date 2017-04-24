@@ -58,10 +58,14 @@ $ pod install
 ### Backend Server
 > Pre-requisites include an installation of python-2.7.13 and a list of pip packages below.
 - Flask
->```sh
-$ pip instal flask
+```sh
+$ pip install flask
 ```
 ### Run Instruction(for developers):
+- boto3
+```sh
+$ pip install boto3
+```
 
 > To run this project in Xcode, you can either use Xcode's built-in iPhone simulator or, if you have an Apple developer account already, connect your device to your Mac and test running the app on your device. If you are unfamiliar with how to use Xcode, here's [an awesome user guide from codewithchris.com](http://codewithchris.com/xcode-tutorial/).
 
