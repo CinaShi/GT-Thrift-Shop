@@ -18,12 +18,14 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     var searchActive: Bool = false
     var menuShowing = false
     var sortViewExpanded = false
+    var filteredProducts = [Product]()
+    var tags = [String]()
     
     private let refreshControl = UIRefreshControl()
     
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
-    var filteredProducts = [Product]()
+    
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -33,7 +35,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var sortViewButton: UIButton!
     @IBOutlet weak var menuTableView: UITableView!
     
-    var tags = [String]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,16 +48,17 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
         
         searchBar.delegate = self
-        
+                
         self.menuTableView.dataSource = self
         self.menuTableView.delegate = self 
         
         self.menuView.layer.shadowOpacity = 0.75
         self.menuView.layer.shadowRadius = 3
-        leadingConstraint.constant = -140
+        leadingConstraint.constant = -300
         self.view.layoutIfNeeded()
         tags.append("All")
-
+        let color1 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
+        self.sortView.layer.borderColor = color1.cgColor
         let swipeFromLeft = UISwipeGestureRecognizer(target: self, action: #selector(left(sender:)))
         swipeFromLeft.direction = .right
         let swipeFromRight = UISwipeGestureRecognizer(target: self, action: #selector(right(sender:)))
@@ -80,8 +83,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-//        print(tags)
-        
+
         searchBar.text = nil
         searchBar.endEditing(true)
         
@@ -458,8 +460,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             self.view.addSubview(sortView)
             sortView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                NSLayoutConstraint(item: sortView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 64),
-                NSLayoutConstraint(item: sortView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: 0),
+                NSLayoutConstraint(item: sortView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 74),
+                NSLayoutConstraint(item: sortView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: -10),
                 ])
             
             UIView.animate(withDuration: 0.5, animations: {() -> Void in
@@ -506,29 +508,31 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func openMenu(_ sender: Any) {
-        leadingConstraint.constant = 0
-        UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
+        leadingConstraint.constant = -10
+
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 3.0, options: [], animations: {self.view.layoutIfNeeded()}, completion: nil)
+        
         menuShowing = true
     }
     
     @IBAction func closeMenu(_ sender: Any) {
-        leadingConstraint.constant = -140
-        UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
+        leadingConstraint.constant = -270
+        UIView.animate(withDuration: 0.2, animations: {self.view.layoutIfNeeded()})
+        
         menuShowing = false
     }
     
     func left(sender:UISwipeGestureRecognizer) {
-        if menuShowing == false {
-            leadingConstraint.constant = 0
-            UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
-            menuShowing = true
-        }
+        leadingConstraint.constant = -10
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 3.0, options: [], animations: {self.view.layoutIfNeeded()}, completion: nil)
+        
+        menuShowing = true
     }
     
     func right(sender: UISwipeGestureRecognizer) {
         if menuShowing == true {
-            leadingConstraint.constant = -140
-            UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
+            leadingConstraint.constant = -270
+            UIView.animate(withDuration: 0.2, animations: {self.view.layoutIfNeeded()})
             menuShowing = false
         }
     }
