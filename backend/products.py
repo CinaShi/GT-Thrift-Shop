@@ -19,7 +19,7 @@ mysql.init_app(app)
 products = Blueprint('products', __name__)
 
 #author: Yang
-@products.route('/products', methods=['GET'])
+@products.route('/products', methods=['POST'])
 def get_all_products():
 	
 	productsList = []
@@ -65,8 +65,11 @@ def get_all_products():
 	return jsonify({'products':productsList})
 
 
-@products.route('/products/tags/<tag>', methods=['GET'])
-def get_tag_pid(tag):
+@products.route('/products/tags', methods=['POST'])
+def get_tag_pid():
+	if not request.json or not 'tag' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	tag = request.json['tag']
 	db = mysql.connect()
 	cursor = db.cursor()
 	tag = tag.replace('_',' ')
@@ -85,14 +88,15 @@ def get_tag_pid(tag):
 		abort(400,"Incorrect Tag")
 
 
-@products.route('/products/details/<pid>', methods=['POST'])
-def get_tag_details(pid):
-	if not request.json or not 'userId' in request.json:
+@products.route('/products/details', methods=['POST'])
+def get_tag_details():
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	tidList = []
 	tagList = []
 
 	userId = request.json['userId']	
+	pid = request.json['pid']
 
 	db = mysql.connect()
 	cursor = db.cursor()
@@ -172,10 +176,11 @@ def add_product():
 		abort(400, '{"message":"Product info added unsuccessful"}')
 
 #author: Yichen
-@products.route('/products/info/update/<pid>', methods=['POST'])
-def update_product_info(pid):
-	if not request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tag' in request.json or not 'usedTime' in request.json: 
+@products.route('/products/info/update', methods=['POST'])
+def update_product_info():
+	if not request.json or not 'pid' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tag' in request.json or not 'usedTime' in request.json: 
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	pid = request.json['pid']
 	pName = request.json['pName']
 	pPrice = float(request.json['pPrice'])
 	pInfo = request.json['pInfo']
@@ -246,12 +251,16 @@ def add_interest():
 	    abort(400, '{"message":"add interest user unsuccessful"}')
 
 #author: Yichen
-@products.route('/products/getInterest/<userId>', methods=['GET'])
-def get_interest(userId):
+@products.route('/products/getInterest', methods=['POST'])
+def get_interest():
 	pidList1 = []
 	pidList2 = []
 	result = []
 	finalList = []
+
+	if not request.json or not 'userId' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
 	db = mysql.connect()
 	cursor = db.cursor()
 	
@@ -288,14 +297,16 @@ def get_interest(userId):
 
 
 
-@products.route('/products/getAllPost/<uid>', methods=['GET'])
-def get_all_post(uid):
+@products.route('/products/getAllPost', methods=['POST'])
+def get_all_post():
 	pidList = []
-	
+	if not request.json or not 'userId' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
 	db = mysql.connect()
 	cursor = db.cursor()
 
-	cursor.execute("SELECT pid FROM Product WHERE userId = '%s';"%uid) 
+	cursor.execute("SELECT pid FROM Product WHERE userId = '%s';"%userId) 
 	if cursor.rowcount > 0:
 		pidList = [item[0] for item in cursor.fetchall()]
 		db.close()
@@ -306,10 +317,12 @@ def get_all_post(uid):
 
 
 #author: Wen
-@products.route('/products/interest/<pid>', methods=['GET'])
-def get_product_interests(pid):
+@products.route('/products/interest', methods=['POST'])
+def get_product_interests():
 	uidList = []
-	
+	if not request.json or not 'pid' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	pid = request.json['pid']
 	db = mysql.connect()
 	cursor = db.cursor()
 	returnList = []
