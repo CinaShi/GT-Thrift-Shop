@@ -24,7 +24,7 @@ class UserProfileViewController: UIViewController {
     let progress = KDCircularProgress(frame: CGRect(x: 0, y: 0, width: 165, height: 165))
 
     @IBOutlet weak var profileImage: UIImageView!
-
+    @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var logoutButton: UIButton!
     //starts here
@@ -47,7 +47,8 @@ class UserProfileViewController: UIViewController {
         
         
         //deal with button
-        buttonBlock.layer.shadowColor = UIColor.darkGray.cgColor
+        let color6 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+        buttonBlock.layer.shadowColor = color6.cgColor
         buttonBlock.layer.shadowRadius = 5
         buttonBlock.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
         buttonBlock.layer.shadowOpacity = 0.5
@@ -61,6 +62,7 @@ class UserProfileViewController: UIViewController {
         self.scoreLabel.center.x = self.view.frame.width - 60
         self.scoreLabel.center.y = -30
         
+        self.backImage.clipsToBounds = true
         
         backButton.isHidden = true
         logoutButton.isHidden = false
@@ -74,7 +76,6 @@ class UserProfileViewController: UIViewController {
             
             buttonBlock.heightAnchor.constraint(equalToConstant: 60).isActive = true
             
-//            self.getUserInfo()
         }
     }
     
@@ -104,8 +105,8 @@ class UserProfileViewController: UIViewController {
         profileImage.clipsToBounds = true
         
         //background
-        //let color4 = UIColor(red: 127/255, green: 194/255, blue: 246/255, alpha: 1)
-        blurEffectViewTop.layer.shadowColor = UIColor.black.cgColor
+        let color4 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+        blurEffectViewTop.layer.shadowColor = color4.cgColor
         blurEffectViewTop.layer.shadowRadius = 5
         blurEffectViewTop.layer.shadowOffset = CGSize(width: 0, height: 5.0)
         blurEffectViewTop.layer.shadowOpacity = 1
@@ -201,12 +202,13 @@ class UserProfileViewController: UIViewController {
                             let filePath = fileURL.path
                             if FileManager.default.fileExists(atPath: filePath) {
                                 self.profileImage.image = UIImage(contentsOfFile: filePath)
+                                self.backImage.image = UIImage(contentsOfFile: filePath)
                             } else {
                                 if let imageData: NSData = NSData(contentsOf: URL(string: self.userImageUrl)!) {
                                     do {
                                         let avatar = UIImage(data: imageData as Data)
                                         self.profileImage.image = avatar
-                                        
+                                        self.backImage.image = avatar
                                         try UIImageJPEGRepresentation(avatar!, 1)?.write(to: fileURL)
                                     } catch let error as NSError {
                                         print("error--> \(error)")
@@ -214,6 +216,7 @@ class UserProfileViewController: UIViewController {
                                     
                                 } else {
                                     self.profileImage.image = #imageLiteral(resourceName: "GT-icon")
+                                    self.backImage.image = #imageLiteral(resourceName: "GT-icon")
                                 }
                             }
                             self.profileImage.clipsToBounds = true

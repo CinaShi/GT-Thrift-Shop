@@ -52,6 +52,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var backFromInterestBlock: UIButton!
     @IBOutlet var interestBlock: UIView!
     
+    @IBOutlet weak var topView: UIView!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
@@ -85,11 +87,11 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         self.pageIndicator.numberOfPages = imageArray.count
         
-        imageScrollView.frame = CGRect(x: 0, y: 64, width: self.view.frame.width, height: 200)
+        imageScrollView.frame = CGRect(x: 0, y: 20, width: self.view.frame.width, height: 300)
         for i in 0..<imageArray.count{
             let currPic = UIImageView()
             currPic.image = imageArray[i]
-            currPic.contentMode = .scaleAspectFit
+            currPic.contentMode = .scaleAspectFill
             let xPos = self.view.frame.width * CGFloat(i)
             currPic.frame = CGRect(x: xPos, y: 0, width: self.imageScrollView.frame.width, height: self.imageScrollView.frame.height)
             imageScrollView.contentSize.width = imageScrollView.frame.width * CGFloat(i+1)
@@ -100,7 +102,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         if imageArray.count <= 0 {
             let currPic = UIImageView()
             currPic.image = #imageLiteral(resourceName: "No Camera Filled-100")
-            currPic.contentMode = .scaleAspectFit
+            currPic.contentMode = .scaleAspectFill
             let xPos = self.view.frame.width * CGFloat(0)
             currPic.frame = CGRect(x: xPos, y: 0, width: self.imageScrollView.frame.width, height: self.imageScrollView.frame.height)
             imageScrollView.contentSize.width = imageScrollView.frame.width * CGFloat(1)
@@ -113,8 +115,16 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         //Load Text
+        let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+        topView.layer.shadowRadius = 100
+        topView.layer.masksToBounds = false
+        topView.layer.shadowColor = UIColor.black.cgColor
+        topView.layer.shadowOffset = CGSize(width: 0,height: 500)
+        
+        
+        
         nameLabelView.text = product.name
-        priceLabelView.text = "$\(product.price!)"
+        priceLabelView.text = product.price!
         ownerLabelView.text = product.userName!
         descriptionView.text = product!.info
         
@@ -127,9 +137,9 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         loadAdditionalDetails()
         
         //Button UI setup
-        nextStepButton.layer.borderWidth = 1
-        nextStepButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
-        nextStepButton.layer.cornerRadius = 20
+//        nextStepButton.layer.borderWidth = 1
+//        nextStepButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
+//        nextStepButton.layer.cornerRadius = 20
         
         channelRef = FIRDatabase.database().reference().child("Channels").child(generateChannel())
         

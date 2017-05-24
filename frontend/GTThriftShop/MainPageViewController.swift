@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class MainPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource{
     //all products include sold and unsold products, while products include only unsold ones
     var allProducts = [Product]()
     var products = [Product]()
@@ -18,12 +18,14 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     var searchActive: Bool = false
     var menuShowing = false
     var sortViewExpanded = false
+    var filteredProducts = [Product]()
+    var tags = [String]()
     
     private let refreshControl = UIRefreshControl()
     
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
-    var filteredProducts = [Product]()
+    
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -33,7 +35,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var sortViewButton: UIButton!
     @IBOutlet weak var menuTableView: UITableView!
     
-    var tags = [String]()
+    @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,20 +44,42 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.refreshControl = refreshControl
+        
+        //Starts here, collectionview
+        
+        let flowLayout = UICollectionViewFlowLayout.init()
+        
+        //设置行间距
+        flowLayout.minimumLineSpacing = 20
+        //设置列间距
+        flowLayout.minimumInteritemSpacing = 10
+        //设置边界的填充距离
+        flowLayout.itemSize = CGSize(width: self.view.frame.width/2 - 20, height: self.view.frame.height/3)
+        flowLayout.sectionInset = UIEdgeInsets.init(top: 15, left: 15, bottom: 15, right: 15)
+        //给collectionView设置布局属性, 也可以通过init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout)方法来创建一个UICollectionView对象
+        self.collectionView.collectionViewLayout = flowLayout
+        
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+
+
+        //ends here
+        
         refreshControl.addTarget(self, action: #selector(obtainAllProductsFromServer), for: .valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
         
         searchBar.delegate = self
-        
+                
         self.menuTableView.dataSource = self
         self.menuTableView.delegate = self 
         
         self.menuView.layer.shadowOpacity = 0.75
         self.menuView.layer.shadowRadius = 3
-        leadingConstraint.constant = -140
+        leadingConstraint.constant = -300
         self.view.layoutIfNeeded()
         tags.append("All")
-
+        let color1 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
+        self.sortView.layer.borderColor = color1.cgColor
         let swipeFromLeft = UISwipeGestureRecognizer(target: self, action: #selector(left(sender:)))
         swipeFromLeft.direction = .right
         let swipeFromRight = UISwipeGestureRecognizer(target: self, action: #selector(right(sender:)))
@@ -80,13 +104,12 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-//        print(tags)
-        
+
         searchBar.text = nil
         searchBar.endEditing(true)
         
         obtainAllProductsFromServer()
-        
+        collectionView.reloadData()
         tableView.reloadData()
         
     }
@@ -318,6 +341,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                         self.loadProductsIndicator.stopAnimating()
                         self.storeProductsToLocal()
                         self.tableView.reloadData()
+                        self.collectionView.reloadData()
                         self.refreshControl.endRefreshing()
                     });
                 }else if httpResponse.statusCode == 404 {
@@ -425,6 +449,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         initialSort()
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     
     func initialSort() {
@@ -458,8 +483,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             self.view.addSubview(sortView)
             sortView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                NSLayoutConstraint(item: sortView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 64),
-                NSLayoutConstraint(item: sortView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: 0),
+                NSLayoutConstraint(item: sortView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 74),
+                NSLayoutConstraint(item: sortView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: -10),
                 ])
             
             UIView.animate(withDuration: 0.5, animations: {() -> Void in
@@ -483,11 +508,13 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func highPriceFirst(_ sender: Any) {
         products.sort(by: {Double($0.price)! > Double($1.price)!})
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     
     @IBAction func lowPriceFirst(_ sender: Any) {
         products.sort(by: {Double($0.price)! < Double($1.price)!})
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     
     
@@ -496,6 +523,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
         products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     
     @IBAction func oldItemFirst(_ sender: Any) {
@@ -503,32 +531,35 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
         products.sort(by: {dateFormatter.date(from: $0.postTime)! < dateFormatter.date(from: $1.postTime)!})
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     
     @IBAction func openMenu(_ sender: Any) {
-        leadingConstraint.constant = 0
-        UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
+        leadingConstraint.constant = -10
+
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 3.0, options: [], animations: {self.view.layoutIfNeeded()}, completion: nil)
+        
         menuShowing = true
     }
     
     @IBAction func closeMenu(_ sender: Any) {
-        leadingConstraint.constant = -140
-        UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
+        leadingConstraint.constant = -270
+        UIView.animate(withDuration: 0.2, animations: {self.view.layoutIfNeeded()})
+        
         menuShowing = false
     }
     
     func left(sender:UISwipeGestureRecognizer) {
-        if menuShowing == false {
-            leadingConstraint.constant = 0
-            UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
-            menuShowing = true
-        }
+        leadingConstraint.constant = -10
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 3.0, options: [], animations: {self.view.layoutIfNeeded()}, completion: nil)
+        
+        menuShowing = true
     }
     
     func right(sender: UISwipeGestureRecognizer) {
         if menuShowing == true {
-            leadingConstraint.constant = -140
-            UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
+            leadingConstraint.constant = -270
+            UIView.animate(withDuration: 0.2, animations: {self.view.layoutIfNeeded()})
             menuShowing = false
         }
     }
@@ -559,7 +590,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         if tableView == self.menuTableView {
             count = tags.count
         }
-        
+        print("asdfasdfsf：\(count)")
         return count!
     }
     
@@ -653,13 +684,77 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                 refreshProductsFromLocal()
                 initialSort()
                 self.tableView.reloadData()
+                
                 self.loadProductsIndicator.stopAnimating()
             } else {
                 getPidsByTag(tag: tags[indexPath.row])
             }
         }
     }
+    // MARK: UICollectionviewDataSource  代理方法
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        var count:Int?
+        
+        if searchActive {
+            count = filteredProducts.count
+        } else {
+            count = products.count
+        }
+        print("im herer:\(count)")
+        return count!
+    }
     
+    /**
+     - returns: 绘制collectionView的cell
+     */
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell:UICollectionViewCell?
+        cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainCollectionCell", for: indexPath)
+        let itemNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
+        let itemPriceLabel = cell?.contentView.viewWithTag(2) as! UILabel
+        let itemImage = cell?.contentView.viewWithTag(3) as! UIImageView
+        
+        var currentProduct = products[indexPath.row]
+        if searchActive {
+            currentProduct = filteredProducts[indexPath.row]
+        }
+        
+        if currentProduct.imageUrls.count <= 0 {
+            itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+        } else {
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = documentsURL.appendingPathComponent("\(currentProduct.pid!)-photo1.jpeg")
+            let filePath = fileURL.path
+            if FileManager.default.fileExists(atPath: filePath) {
+                itemImage.image = UIImage(contentsOfFile: filePath)
+            } else {
+                DispatchQueue.main.async(execute: {
+                    
+                    if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+                        do {
+                            let image = UIImage(data: imageData as Data)
+                            itemImage.image = image
+                            
+                            try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
+                        } catch let error as NSError {
+                            print("fuk boi--> \(error)")
+                        }
+                        
+                    } else {
+                        itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+                    }
+                    
+                })
+            }
+            
+        }
+        itemNameLabel.text = currentProduct.name
+        itemPriceLabel.text = currentProduct.price
+        
+        return cell!
+    }
+
     //Mark:Search bar delegate
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -677,12 +772,14 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         searchBar.endEditing(true)
         searchActive = false
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         searchBar.endEditing(true)
         searchActive = false
         self.searchBar.endEditing(true)
+        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -695,6 +792,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             searchActive = true
         }
         self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     
     
