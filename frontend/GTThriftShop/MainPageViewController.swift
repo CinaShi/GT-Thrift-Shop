@@ -21,6 +21,9 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     var filteredProducts = [Product]()
     var tags = [String]()
     
+    let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+    let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
+    
     private let refreshControl = UIRefreshControl()
     
     @IBOutlet weak var menuView: UIView!
@@ -37,6 +40,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var shadowView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -65,9 +69,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         //ends here
         
         refreshControl.addTarget(self, action: #selector(obtainAllProductsFromServer), for: .valueChanged)
-        //refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
         refreshControl.tintColor = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
-            
+        
         searchBar.delegate = self
                 
         self.menuTableView.dataSource = self
@@ -78,15 +81,22 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         leadingConstraint.constant = -300
         self.view.layoutIfNeeded()
         tags.append("All")
-        let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
+        
         self.sortView.layer.borderColor = color2.cgColor
         let swipeFromLeft = UISwipeGestureRecognizer(target: self, action: #selector(left(sender:)))
         swipeFromLeft.direction = .right
         let swipeFromRight = UISwipeGestureRecognizer(target: self, action: #selector(right(sender:)))
         swipeFromRight.direction = .left
         
-        self.tableView.addGestureRecognizer(swipeFromLeft)
-        self.tableView.addGestureRecognizer(swipeFromRight)
+//        self.tableView.addGestureRecognizer(swipeFromLeft)
+//        self.tableView.addGestureRecognizer(swipeFromRight)
+        self.collectionView.addGestureRecognizer(swipeFromLeft)
+        self.collectionView.addGestureRecognizer(swipeFromRight)
+        
+        shadowView.layer.shadowColor = color1.cgColor
+        shadowView.layer.shadowRadius = 3
+        shadowView.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        shadowView.layer.shadowOpacity = 1
         
         DispatchQueue.background(background: {
             // do something in background
@@ -95,6 +105,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             } else {
                 self.getUserInfo()
             }
+        
         }, completion:{
             // when background job finished, do something in main thread
             print("User info loaded")
@@ -720,6 +731,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         let itemNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
         let itemPriceLabel = cell?.contentView.viewWithTag(2) as! UILabel
         let itemImage = cell?.contentView.viewWithTag(3) as! UIImageView
+        let shadowView2 = (cell?.contentView.viewWithTag(10))! as UIView
         
         var currentProduct = products[indexPath.row]
         if searchActive {
@@ -757,15 +769,15 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         itemNameLabel.text = currentProduct.name
         itemPriceLabel.text = currentProduct.price
+
         
-        
-        //let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
-        cell!.layer.shadowRadius = 5
-        cell!.layer.shadowColor = UIColor.black.cgColor
-        cell!.layer.masksToBounds = false
-        cell!.clipsToBounds = false
-        cell!.layer.shadowOffset = CGSize(width: 5, height: 5)
-        
+        shadowView2.layer.shadowRadius = 5
+        shadowView2.layer.shadowColor = color1.cgColor
+        shadowView2.layer.shadowOpacity = 1
+        shadowView2.layer.shadowOffset = CGSize(width: 0, height: 5)
+//        cell!.layer.borderWidth = 1
+//        cell!.layer.borderColor = color1.cgColor
+//        
         return cell!
     }
     
