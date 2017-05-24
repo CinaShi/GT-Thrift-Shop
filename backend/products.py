@@ -171,7 +171,32 @@ def add_product():
 		db.close()
 		abort(400, '{"message":"Product info added unsuccessful"}')
 
-
+#author: Yichen
+@products.route('/products/info/update/<pid>', methods=['POST'])
+def update_product_info(pid):
+	if not request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tag' in request.json or not 'usedTime' in request.json: 
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	pName = request.json['pName']
+	pPrice = float(request.json['pPrice'])
+	pInfo = request.json['pInfo']
+	tag = request.json['tag']
+	usedTime = request.json['usedTime']
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT tid FROM Tag WHERE tag = '%s'"%tag)
+	tid = [item[0] for item in cursor.fetchall()]
+	cursor.execute("SELECT * FROM Product WHERE pid = %s AND isSold = %s",[pid, 0])
+	if cursor.rowcount == 1:
+		cursor.execute("UPDATE Product SET pName = %s, pPrice = %s, pInfo = %s, usedTime = %s WHERE pid = %s",[pName,pPrice,pInfo,usedTime,pid])
+		cursor.execute("UPDATE ProductTag SET tid = %s WHERE pid = %s",[tid, pid])
+		db.commit()
+		db.close()
+		return("Success") 
+	else:
+		db.rollback()
+		db.close()
+		abort(400, 'fail')
+	
 #author: Yichen
 @products.route('/products/update/isSold', methods=['POST'])
 def update_isSold():
