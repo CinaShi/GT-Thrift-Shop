@@ -31,7 +31,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadProductsIndicator: UIActivityIndicatorView!
     
     @IBOutlet var sortView: UIView!
@@ -39,15 +38,12 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var menuTableView: UITableView!
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    //专门放一个view来提供阴影效果
     @IBOutlet weak var shadowView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.tableView.refreshControl = refreshControl
         
         //Starts here, collectionview
         
@@ -78,6 +74,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.menuView.layer.shadowOpacity = 0.75
         self.menuView.layer.shadowRadius = 3
+        
         leadingConstraint.constant = -300
         self.view.layoutIfNeeded()
         tags.append("All")
@@ -88,10 +85,9 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         let swipeFromRight = UISwipeGestureRecognizer(target: self, action: #selector(right(sender:)))
         swipeFromRight.direction = .left
         
-//        self.tableView.addGestureRecognizer(swipeFromLeft)
-//        self.tableView.addGestureRecognizer(swipeFromRight)
         self.collectionView.addGestureRecognizer(swipeFromLeft)
         self.collectionView.addGestureRecognizer(swipeFromRight)
+        self.collectionView.reloadData()
         
         shadowView.layer.shadowColor = color1.cgColor
         shadowView.layer.shadowRadius = 3
@@ -121,8 +117,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         obtainAllProductsFromServer()
         collectionView.reloadData()
-        tableView.reloadData()
-        
     }
     
     func getUserInfo() {
@@ -351,7 +345,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                         self.initialSort()
                         self.loadProductsIndicator.stopAnimating()
                         self.storeProductsToLocal()
-                        self.tableView.reloadData()
                         self.collectionView.reloadData()
                         self.refreshControl.endRefreshing()
                     });
@@ -459,7 +452,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         initialSort()
-        self.tableView.reloadData()
         self.collectionView.reloadData()
     }
     
@@ -518,13 +510,11 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func highPriceFirst(_ sender: Any) {
         products.sort(by: {Double($0.price)! > Double($1.price)!})
-        self.tableView.reloadData()
         self.collectionView.reloadData()
     }
     
     @IBAction func lowPriceFirst(_ sender: Any) {
         products.sort(by: {Double($0.price)! < Double($1.price)!})
-        self.tableView.reloadData()
         self.collectionView.reloadData()
     }
     
@@ -533,7 +523,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
         products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
-        self.tableView.reloadData()
         self.collectionView.reloadData()
     }
     
@@ -541,7 +530,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
         products.sort(by: {dateFormatter.date(from: $0.postTime)! < dateFormatter.date(from: $1.postTime)!})
-        self.tableView.reloadData()
         self.collectionView.reloadData()
     }
     
@@ -590,18 +578,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count:Int?
-//        if tableView == self.tableView {
-//            if searchActive {
-//                count = filteredProducts.count
-//            } else {
-//                count = products.count
-//            }
-//        }
-        
-//        if tableView == self.menuTableView {
-//            count = tags.count
-//        }
-        
         count = tags.count
         print("asdfasdfsf：\(count)")
         return count!
@@ -610,70 +586,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Table view cells are reused and should be dequeued using a cell identifier.
         var cell:UITableViewCell?
-        
-//        if tableView == self.tableView {
-//            
-//            let cellIdentifier = "mainPageItemCell"
-//            cell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-//            var currentProduct = products[indexPath.row]
-//            if searchActive {
-//                currentProduct = filteredProducts[indexPath.row]
-//            }
-//            
-//            // Fetches the banks for the data source layout.
-//            let itemImage = cell?.contentView.viewWithTag(5) as! UIImageView
-//            itemImage.layer.cornerRadius = itemImage.frame.width/2
-//            itemImage.clipsToBounds = true
-//            
-//            let itemNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
-//            let yearUsedLabel = cell?.contentView.viewWithTag(2) as! UILabel
-//            let priceLabel = cell?.contentView.viewWithTag(3) as! UILabel
-//            let sellerLabel = cell?.contentView.viewWithTag(4) as! UILabel
-//            
-//            if currentProduct.imageUrls.count <= 0 {
-//                itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
-//            } else {
-//                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//                let fileURL = documentsURL.appendingPathComponent("\(currentProduct.pid!)-photo1.jpeg")
-//                let filePath = fileURL.path
-//                if FileManager.default.fileExists(atPath: filePath) {
-//                    itemImage.image = UIImage(contentsOfFile: filePath)
-//                } else {
-//                    DispatchQueue.main.async(execute: {
-//                        
-//                        if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-//                            do {
-//                                let image = UIImage(data: imageData as Data)
-//                                itemImage.image = image
-//                                
-//                                try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
-//                            } catch let error as NSError {
-//                                print("fuk boi--> \(error)")
-//                            }
-//                            
-//                        } else {
-//                            itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
-//                        }
-//
-//                    })
-//                }
-//                itemImage.clipsToBounds = true
-//
-//
-//            }
-//            
-//            itemNameLabel.text = currentProduct.name
-//            yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
-//            priceLabel.text = currentProduct.price
-//            sellerLabel.text = "Seller: \(currentProduct.userName!)"
-//        }
-        
-//        if tableView == self.menuTableView {
-//            let cellIdentifier = "menuCell"
-//            cell = self.menuTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-//            let tagNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
-//            tagNameLabel.text = tags[indexPath.row]
-//        }
         let cellIdentifier = "menuCell"
         cell = self.menuTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         let tagNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
@@ -684,15 +596,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-//        if tableView == self.tableView {
-//            print("Herererererererer")
-//            if searchActive {
-//                selected = filteredProducts[indexPath.row]
-//            } else {
-//                selected = products[indexPath.row]
-//            }
-//            performSegue(withIdentifier: "getItemDetails", sender: nil)
-//        }
         
         if tableView == self.menuTableView {
             closeMenu(self)
@@ -700,8 +603,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                 self.loadProductsIndicator.startAnimating()
                 refreshProductsFromLocal()
                 initialSort()
-                self.tableView.reloadData()
-                
+                self.collectionView.reloadData()
                 self.loadProductsIndicator.stopAnimating()
             } else {
                 getPidsByTag(tag: tags[indexPath.row])
@@ -775,9 +677,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         shadowView2.layer.shadowColor = color1.cgColor
         shadowView2.layer.shadowOpacity = 1
         shadowView2.layer.shadowOffset = CGSize(width: 0, height: 5)
-//        cell!.layer.borderWidth = 1
-//        cell!.layer.borderColor = color1.cgColor
-//        
+        
         return cell!
     }
     
@@ -808,7 +708,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         searchBar.text = nil
         searchBar.endEditing(true)
         searchActive = false
-        self.tableView.reloadData()
         self.collectionView.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -828,7 +727,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             searchActive = true
         }
-        self.tableView.reloadData()
         self.collectionView.reloadData()
     }
     
