@@ -56,18 +56,18 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         //设置边界的填充距离
         flowLayout.itemSize = CGSize(width: self.view.frame.width/2 - 20, height: self.view.frame.height/3)
         flowLayout.sectionInset = UIEdgeInsets.init(top: 15, left: 15, bottom: 15, right: 15)
-        //给collectionView设置布局属性, 也可以通过init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout)方法来创建一个UICollectionView对象
         self.collectionView.collectionViewLayout = flowLayout
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-
+        self.collectionView.refreshControl = refreshControl
 
         //ends here
         
         refreshControl.addTarget(self, action: #selector(obtainAllProductsFromServer), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
-        
+        //refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
+        refreshControl.tintColor = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
+            
         searchBar.delegate = self
                 
         self.menuTableView.dataSource = self
@@ -78,8 +78,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         leadingConstraint.constant = -300
         self.view.layoutIfNeeded()
         tags.append("All")
-        let color1 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
-        self.sortView.layer.borderColor = color1.cgColor
+        let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
+        self.sortView.layer.borderColor = color2.cgColor
         let swipeFromLeft = UISwipeGestureRecognizer(target: self, action: #selector(left(sender:)))
         swipeFromLeft.direction = .right
         let swipeFromRight = UISwipeGestureRecognizer(target: self, action: #selector(right(sender:)))
@@ -579,17 +579,19 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count:Int?
-        if tableView == self.tableView {
-            if searchActive {
-                count = filteredProducts.count
-            } else {
-                count = products.count
-            }
-        }
+//        if tableView == self.tableView {
+//            if searchActive {
+//                count = filteredProducts.count
+//            } else {
+//                count = products.count
+//            }
+//        }
         
-        if tableView == self.menuTableView {
-            count = tags.count
-        }
+//        if tableView == self.menuTableView {
+//            count = tags.count
+//        }
+        
+        count = tags.count
         print("asdfasdfsf：\(count)")
         return count!
     }
@@ -598,84 +600,88 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         // Table view cells are reused and should be dequeued using a cell identifier.
         var cell:UITableViewCell?
         
-        if tableView == self.tableView {
-            
-            let cellIdentifier = "mainPageItemCell"
-            cell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-            var currentProduct = products[indexPath.row]
-            if searchActive {
-                currentProduct = filteredProducts[indexPath.row]
-            }
-            
-            // Fetches the banks for the data source layout.
-            let itemImage = cell?.contentView.viewWithTag(5) as! UIImageView
-            itemImage.layer.cornerRadius = itemImage.frame.width/2
-            itemImage.clipsToBounds = true
-            
-            let itemNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
-            let yearUsedLabel = cell?.contentView.viewWithTag(2) as! UILabel
-            let priceLabel = cell?.contentView.viewWithTag(3) as! UILabel
-            let sellerLabel = cell?.contentView.viewWithTag(4) as! UILabel
-            
-            if currentProduct.imageUrls.count <= 0 {
-                itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
-            } else {
-                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                let fileURL = documentsURL.appendingPathComponent("\(currentProduct.pid!)-photo1.jpeg")
-                let filePath = fileURL.path
-                if FileManager.default.fileExists(atPath: filePath) {
-                    itemImage.image = UIImage(contentsOfFile: filePath)
-                } else {
-                    DispatchQueue.main.async(execute: {
-                        
-                        if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
-                            do {
-                                let image = UIImage(data: imageData as Data)
-                                itemImage.image = image
-                                
-                                try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
-                            } catch let error as NSError {
-                                print("fuk boi--> \(error)")
-                            }
-                            
-                        } else {
-                            itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
-                        }
-
-                    })
-                }
-                itemImage.clipsToBounds = true
-
-
-            }
-            
-            itemNameLabel.text = currentProduct.name
-            yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
-            priceLabel.text = currentProduct.price
-            sellerLabel.text = "Seller: \(currentProduct.userName!)"
-        }
+//        if tableView == self.tableView {
+//            
+//            let cellIdentifier = "mainPageItemCell"
+//            cell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+//            var currentProduct = products[indexPath.row]
+//            if searchActive {
+//                currentProduct = filteredProducts[indexPath.row]
+//            }
+//            
+//            // Fetches the banks for the data source layout.
+//            let itemImage = cell?.contentView.viewWithTag(5) as! UIImageView
+//            itemImage.layer.cornerRadius = itemImage.frame.width/2
+//            itemImage.clipsToBounds = true
+//            
+//            let itemNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
+//            let yearUsedLabel = cell?.contentView.viewWithTag(2) as! UILabel
+//            let priceLabel = cell?.contentView.viewWithTag(3) as! UILabel
+//            let sellerLabel = cell?.contentView.viewWithTag(4) as! UILabel
+//            
+//            if currentProduct.imageUrls.count <= 0 {
+//                itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+//            } else {
+//                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//                let fileURL = documentsURL.appendingPathComponent("\(currentProduct.pid!)-photo1.jpeg")
+//                let filePath = fileURL.path
+//                if FileManager.default.fileExists(atPath: filePath) {
+//                    itemImage.image = UIImage(contentsOfFile: filePath)
+//                } else {
+//                    DispatchQueue.main.async(execute: {
+//                        
+//                        if let imageData: NSData = NSData(contentsOf: URL(string: currentProduct.imageUrls.first!)!) {
+//                            do {
+//                                let image = UIImage(data: imageData as Data)
+//                                itemImage.image = image
+//                                
+//                                try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
+//                            } catch let error as NSError {
+//                                print("fuk boi--> \(error)")
+//                            }
+//                            
+//                        } else {
+//                            itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
+//                        }
+//
+//                    })
+//                }
+//                itemImage.clipsToBounds = true
+//
+//
+//            }
+//            
+//            itemNameLabel.text = currentProduct.name
+//            yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
+//            priceLabel.text = currentProduct.price
+//            sellerLabel.text = "Seller: \(currentProduct.userName!)"
+//        }
         
-        if tableView == self.menuTableView {
-            let cellIdentifier = "menuCell"
-            cell = self.menuTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-            let tagNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
-            tagNameLabel.text = tags[indexPath.row]
-        }
+//        if tableView == self.menuTableView {
+//            let cellIdentifier = "menuCell"
+//            cell = self.menuTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+//            let tagNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
+//            tagNameLabel.text = tags[indexPath.row]
+//        }
+        let cellIdentifier = "menuCell"
+        cell = self.menuTableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let tagNameLabel = cell?.contentView.viewWithTag(1) as! UILabel
+        tagNameLabel.text = tags[indexPath.row]
         
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        if tableView == self.tableView {
-            print("Herererererererer")
-            if searchActive {
-                selected = filteredProducts[indexPath.row]
-            } else {
-                selected = products[indexPath.row]
-            }
-            performSegue(withIdentifier: "getItemDetails", sender: nil)
-        }
+//        if tableView == self.tableView {
+//            print("Herererererererer")
+//            if searchActive {
+//                selected = filteredProducts[indexPath.row]
+//            } else {
+//                selected = products[indexPath.row]
+//            }
+//            performSegue(withIdentifier: "getItemDetails", sender: nil)
+//        }
         
         if tableView == self.menuTableView {
             closeMenu(self)
@@ -752,9 +758,28 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         itemNameLabel.text = currentProduct.name
         itemPriceLabel.text = currentProduct.price
         
+        
+        //let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+        cell!.layer.shadowRadius = 5
+        cell!.layer.shadowColor = UIColor.black.cgColor
+        cell!.layer.masksToBounds = false
+        cell!.clipsToBounds = false
+        cell!.layer.shadowOffset = CGSize(width: 5, height: 5)
+        
         return cell!
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //collectionView.deselectRow(at: indexPath, animated: false)
 
+        if searchActive {
+            selected = filteredProducts[indexPath.row]
+        } else {
+            selected = products[indexPath.row]
+        }
+        performSegue(withIdentifier: "getItemDetails", sender: nil)
+    }
+    
     //Mark:Search bar delegate
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
