@@ -262,6 +262,27 @@ def get_user_info(uid):
 	return jsonify({'userInfo':info})
 
 #author: Yichen
+@user.route('/user/info/update/<userId>', methods=['POST'])
+def update_user_info(userId):
+	if not request.json or not 'nickname' in request.json or not 'email' in request.json or not 'description' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	nickname = request.json['nickname']
+	email = request.json['email']
+	description = request.json['description']
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT * FROM UserInfo WHERE userId = '%s'"%userId)
+	if cursor.rowcount == 1:
+		cursor.execute("UPDATE UserInfo SET nickname = %s,email = %s,description = %s WHERE userId = %s", [nickname,email,description,userId])
+		db.commit()
+		db.close()
+		return("Success") 
+	else:
+		db.rollback()
+		db.close()
+		abort(400, 'fail')
+
+#author: Yichen
 @user.route('/user/getAvatarURL/<userId>', methods=['GET'])
 def get_user_avatarURL(userId):
 	db = mysql.connect()
