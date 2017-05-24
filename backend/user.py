@@ -55,14 +55,12 @@ def add_user_info():
 
 
 #author Yang
-@user.route('/user/rate/get', methods=['POST'])
-def get_user_rate():
+@user.route('/user/rate/get/<uid>', methods=['GET'])
+def get_user_rate(uid):
 	db = mysql.connect()
 	cursor = db.cursor()
-	if not request.json or not 'userId' in request.json:
-		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
-	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%userId)
+
+	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%uid)
 	if cursor.rowcount >0:
 		rateRow = cursor.fetchall()[0]
 		return jsonify({'rate':rateRow[0]})
@@ -181,14 +179,11 @@ def update_user_rate():
 
 
 #author: Yichen
-@user.route('/user/comment/get', methods=['POST'])
-def get_user_comment():
-	if not request.json or not 'userId' in request.json:
-		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
+@user.route('/user/comment/get/<uid>', methods=['GET'])
+def get_user_comment(uid):
 	db = mysql.connect()
 	cursor = db.cursor()
-	cursor.execute("SELECT UserComment.ccontent, UserComment.tranId, Transaction.pid, Transaction.buyerId, UserComment.postTime,UserComment.rate FROM UserComment INNER JOIN Transaction WHERE Transaction.tranId = UserComment.tranId AND UserComment.userId = '%s';"%userId)
+	cursor.execute("SELECT UserComment.ccontent, UserComment.tranId, Transaction.pid, Transaction.buyerId, UserComment.postTime,UserComment.rate FROM UserComment INNER JOIN Transaction WHERE Transaction.tranId = UserComment.tranId AND UserComment.userId = '%s';"%uid)
 	commentList = []
 	if cursor.rowcount > 0:
 		for comment in cursor.fetchall():
@@ -237,15 +232,12 @@ def update_user_comment():
 
 
 #author: JWZ
-@user.route('/user/info/get', methods=['POST'])
-def get_user_info():
-	if not request.json or not 'userId' in request.json:
-		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
+@user.route('/user/info/get/<uid>', methods=['GET'])
+def get_user_info(uid):
 	db = mysql.connect()
 	cursor = db.cursor()
 	info = {}
-	cursor.execute("SELECT nickname, email, avatarURL, description FROM UserInfo WHERE userId = '%s';"%userId)
+	cursor.execute("SELECT nickname, email, avatarURL, description FROM UserInfo WHERE userId = '%s';"%uid)
 	if cursor.rowcount > 0:
 		row = cursor.fetchall()[0]
 		info["nickname"] = row[0]
@@ -257,7 +249,7 @@ def get_user_info():
 		abort(400,"This user has invalid user info")
 
 	cursor = db.cursor()
-	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%userId)
+	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%uid)
 	if cursor.rowcount > 0:
 		row = cursor.fetchall()[0]
 		info["rate"] = float(row[0])
@@ -270,33 +262,8 @@ def get_user_info():
 	return jsonify({'userInfo':info})
 
 #author: Yichen
-@user.route('/user/info/update', methods=['POST'])
-def update_user_info():
-	if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'description' in request.json:
-		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
-	nickname = request.json['nickname']
-	email = request.json['email']
-	description = request.json['description']
-	db = mysql.connect()
-	cursor = db.cursor()
-	cursor.execute("SELECT * FROM UserInfo WHERE userId = '%s'"%userId)
-	if cursor.rowcount == 1:
-		cursor.execute("UPDATE UserInfo SET nickname = %s,email = %s,description = %s WHERE userId = %s", [nickname,email,description,userId])
-		db.commit()
-		db.close()
-		return("Success") 
-	else:
-		db.rollback()
-		db.close()
-		abort(400, 'fail')
-
-#author: Yichen
-@user.route('/user/getAvatarURL', methods=['POST'])
-def get_user_avatarURL():
-	if not request.json or not 'userId' in request.json:
-		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
+@user.route('/user/getAvatarURL/<userId>', methods=['GET'])
+def get_user_avatarURL(userId):
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT avatarURL FROM UserInfo WHERE userId = '%s';"%userId)

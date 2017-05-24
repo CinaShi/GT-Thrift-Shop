@@ -19,12 +19,11 @@ mysql.init_app(app)
 favorites = Blueprint('favorites', __name__)
 
 
-@favorites.route('/favorites/all', methods=['POST'])
-def get_favorites_pid():
+@favorites.route('/favorites/all/<userId>', methods=['GET'])
+def get_favorites_pid(userId):
+
 	pidList = []
-	if not request.json or not 'userId' in request.json:
-		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
+	
 	db = mysql.connect()
 	cursor = db.cursor()
 

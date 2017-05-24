@@ -53,7 +53,7 @@ def auth_login():
 
 
 #author: Wen
-@app.route('/tags', methods=['POST'])
+@app.route('/tags', methods=['GET'])
 def get_tags():
 	db = mysql.connect()
 	cursor = db.cursor()
