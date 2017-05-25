@@ -172,12 +172,12 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             nextStepButton.setTitle("Mark as sold", for: .normal)
             nextStepButton.addTarget(self, action: #selector(markAsSold), for: .touchUpInside)
             if product.isSold! {
-                nextStepButton.setTitle("Already sold!", for: .normal)
+                nextStepButton.setTitle("Sold", for: .normal)
                 //nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
                 nextStepButton.isEnabled = false
             }
         } else {
-            nextStepButton.setTitle("Contact seller", for: .normal)
+            nextStepButton.setTitle("Contact Seller", for: .normal)
             nextStepButton.addTarget(self, action: #selector(goToContactSellerVC), for: .touchUpInside)
         }
         
