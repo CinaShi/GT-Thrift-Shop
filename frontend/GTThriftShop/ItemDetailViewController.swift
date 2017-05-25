@@ -32,10 +32,12 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     var interestId = [(Int,String)]()
     var interestName = [String]()
     var selectedId: Int?
-    //New
     var tranId: Int!
     
     var channelRef: FIRDatabaseReference!
+    
+    let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+    let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
     
     @IBOutlet weak var interestTableView: UITableView!
     
@@ -256,7 +258,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         //send request to get all interest Id
         activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-        activityIndicatorView.color = .blue
+        activityIndicatorView.color = color2
         interestTableView.backgroundView = activityIndicatorView
         
         if interestId.count <= 0 {
@@ -699,8 +701,36 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         let currentId = interestId[indexPath.row]
         // Fetches the banks for the data source layout.
         let idLabel = cell.contentView.viewWithTag(1) as! UILabel
+        let userAvatar = cell.contentView.viewWithTag(2) as! UIImageView
+        userAvatar.layer.cornerRadius = userAvatar.frame.width/2
+        
         idLabel.text = currentId.1
         
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsURL.appendingPathComponent("\(currentId.0)-avatar.jpeg")
+        let filePath = fileURL.path
+        if FileManager.default.fileExists(atPath: filePath) {
+            userAvatar.image = UIImage(contentsOfFile: filePath)
+        } else {
+            DispatchQueue.main.async(execute: {
+                
+                if let imageData: NSData = NSData(contentsOf: URL(string: currentId.1)!) {
+                    do {
+                        let image = UIImage(data: imageData as Data)
+                        userAvatar.image = image
+                        
+                        try UIImageJPEGRepresentation(image!, 1)?.write(to: fileURL)
+                    } catch let error as NSError {
+                        print("fuk boi--> \(error)")
+                    }
+                    
+                } else {
+                    userAvatar.image = #imageLiteral(resourceName: "GT-icon")
+                }
+                
+            })
+        }
+
         return cell
     }
     
