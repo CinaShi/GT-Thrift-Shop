@@ -1,54 +1,62 @@
 //
-//  PublishmentTableViewController.swift
+//  PublishmentViewController.swift
 //  GTThriftShop
 //
-//  Created by Mengyang Shi on 3/9/17.
+//  Created by Jihai An on 5/25/17.
 //  Copyright © 2017 Triple6. All rights reserved.
 //
 
 import UIKit
 
-class PublishmentTableViewController: UITableViewController {
+class PublishmentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     var products = [Product]()
     var selected: Product?
     var userId: Int!
     var myProducts = [Product]()
     var userDefaults = UserDefaults.standard
-    var activityIndicatorView: UIActivityIndicatorView!
+    private let refreshControl = UIRefreshControl()
 
+    let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+    let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
+    
+    @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-        activityIndicatorView.color = .blue
-//        tableView.backgroundView = activityIndicatorView
+        self.shadowView.layer.shadowRadius = 3
+        self.shadowView.layer.shadowOpacity = 1
+        self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 3)
+        self.shadowView.layer.shadowColor = color1.cgColor
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = self.tableView.bounds
-        let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
-        backImageView.addSubview(blurEffectView)
-        self.tableView.backgroundView = backImageView
-        self.tableView.backgroundView?.addSubview(activityIndicatorView)
-        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.refreshControl = refreshControl
         self.tableView.refreshControl?.addTarget(self, action: #selector(obtainAllProductsFromServer), for: .valueChanged)
-        self.tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing🤣")
+        self.tableView.tableFooterView = UIView()
+
+        self.tableView.layer.shadowRadius = 3
+        self.tableView.layer.shadowOpacity = 1
+        self.tableView.layer.shadowOffset = CGSize(width: 0, height: -1)
+        self.tableView.layer.shadowColor = color1.cgColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = false
-        myProducts.removeAll()
-        activityIndicatorView.startAnimating()
+        self.myProducts.removeAll()
+        self.activityIndicatorView.startAnimating()
         loadProductsFromLocal()
         loadMyProducts()
-        
         initialSort()
         self.activityIndicatorView.stopAnimating()
-        tableView.reloadData()
+        self.tableView.reloadData()
+        
     }
-
-    //Mark: helper methods
     
     func obtainAllProductsFromServer() {
         let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products")
@@ -99,9 +107,6 @@ class PublishmentTableViewController: UITableViewController {
                                     self.notifyFailure(info: "cannot unarchive data from server")
                                     return
                             }
-                            //                            print("image list --> \(dict["iamges"])")
-                            //                            var imageUrls = [String]()
-                            //                            imageUrls.append("https://s3-us-west-2.amazonaws.com/gtthriftshopproducts/2/TI841.jpg")
                             let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, userName: userName, imageUrls: imageUrls, isSold: isSold)
                             self.products.append(newProduct)
                         }
@@ -152,13 +157,14 @@ class PublishmentTableViewController: UITableViewController {
         }
         
         userId = userDefaults.integer(forKey: "userId")
-        
+        print("userid: \(userId)")
     }
     
     func loadMyProducts() {
         for product in products {
             if product.userId == userId {
                 myProducts.append(product)
+                print("appended one")
             }
         }
     }
@@ -202,36 +208,27 @@ class PublishmentTableViewController: UITableViewController {
     
     @IBAction func backToUserProfileVC(_ sender: Any) {
         self.performSegue(withIdentifier: "unwindToUserProfileFromPublishment", sender: self)
+
     }
+    //MARK table view delegates
     
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("count:  \(myProducts.count)")
         return myProducts.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Table view cells are reused and should be dequeued using a cell identifier.
         let cellIdentifier = "publishmentItemCell"
         let cell: UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        let currentProduct = myProducts[indexPath.row]
-        // Fetches the banks for the data source layout.
-        let itemImage = cell.contentView.viewWithTag(5) as! UIImageView
-        itemImage.layer.cornerRadius = itemImage.frame.width/2
-        itemImage.clipsToBounds = true
         
+        let currentProduct = myProducts[indexPath.row]
+        print("myProducts: \(currentProduct)")
+        // Fetches the banks for the data source layout.
+        let itemImage = cell.contentView.viewWithTag(4) as! UIImageView
         let itemNameLabel = cell.contentView.viewWithTag(1) as! UILabel
-        let yearUsedLabel = cell.contentView.viewWithTag(2) as! UILabel
-        let priceLabel = cell.contentView.viewWithTag(3) as! UILabel
-        let sellerLabel = cell.contentView.viewWithTag(4) as! UILabel
-        let isSoldLabel = cell.contentView.viewWithTag(6) as! UILabel
+        let priceLabel = cell.contentView.viewWithTag(2) as! UILabel
+        let isSoldLabel = cell.contentView.viewWithTag(3) as! UILabel
         
         if currentProduct.imageUrls.count <= 0 {
             itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
@@ -260,26 +257,21 @@ class PublishmentTableViewController: UITableViewController {
                 })
             }
         }
-        itemImage.clipsToBounds = true
-
         
         itemNameLabel.text = currentProduct.name
-        yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
         priceLabel.text = "$" + currentProduct.price
-        sellerLabel.text = "Seller: \(currentProduct.userName!)"
         if currentProduct.isSold! {
             isSoldLabel.text = "Sold"
             isSoldLabel.textColor = .red
         } else {
             isSoldLabel.text = " "
-            //isSoldLabel.textColor = .green
         }
         
         
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         selected = myProducts[indexPath.row]
         performSegue(withIdentifier: "getItemDetailsFromPublishment", sender: nil)
@@ -298,6 +290,12 @@ class PublishmentTableViewController: UITableViewController {
         }
         
     }
-
-
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
 }
+

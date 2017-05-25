@@ -335,7 +335,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         
         itemNameLabel.text = currentProduct.name
         //yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
-        priceLabel.text = "$ " + currentProduct.price
+        priceLabel.text = "$" + currentProduct.price
         //sellerLabel.text = "Seller: \(currentProduct.userName!)"
         
         

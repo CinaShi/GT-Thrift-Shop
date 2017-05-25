@@ -298,7 +298,7 @@ class UserProfileViewController: UIViewController {
     
     
     @IBAction func unwindToUserProfileVC(segue: UIStoryboardSegue) {
-        if segue.source is PublishmentTableViewController {
+        if segue.source is PublishmentViewController {
             print("unwind from publishment VC")
         } else if segue.source is TransactionHistoryTableViewController {
             print("unwind from transaction VC")

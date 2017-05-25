@@ -16,7 +16,6 @@
 		088542D41DE93481004344D4 /* GTThriftShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542D31DE93481004344D4 /* GTThriftShopTests.swift */; };
 		088542DF1DE93481004344D4 /* GTThriftShopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542DE1DE93481004344D4 /* GTThriftShopUITests.swift */; };
 		089233801E8F58FB00B72BF7 /* ContactSellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0892337F1E8F58FB00B72BF7 /* ContactSellerViewController.swift */; };
-		0899EEE51E713B9900262267 /* PublishmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE41E713B9900262267 /* PublishmentTableViewController.swift */; };
 		0899EEE71E713BB000262267 /* TransactionHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE61E713BB000262267 /* TransactionHistoryTableViewController.swift */; };
 		0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */; };
 		0899EEED1E71DD9800262267 /* MyCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */; };
@@ -38,6 +37,7 @@
 		D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */; };
 		D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDAC31E72630900D94118 /* KDCircularProgress.swift */; };
 		D7960FD51ED5CE870034678F /* MyCommentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7960FD41ED5CE870034678F /* MyCommentCollectionViewController.swift */; };
+		D7960FD91ED6D4E20034678F /* PublishmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7960FD81ED6D4E20034678F /* PublishmentViewController.swift */; };
 		D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,7 +77,6 @@
 		089233811E8F5A6400B72BF7 /* JSQMessagesViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQMessagesViewController.framework; path = "Pods/../build/Debug-iphoneos/JSQMessagesViewController/JSQMessagesViewController.framework"; sourceTree = "<group>"; };
 		089233831E8F5A6800B72BF7 /* JSQSystemSoundPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQSystemSoundPlayer.framework; path = "Pods/../build/Debug-iphoneos/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework"; sourceTree = "<group>"; };
 		089233851E8F5C0A00B72BF7 /* GTThriftShop-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTThriftShop-Bridging-Header.h"; sourceTree = "<group>"; };
-		0899EEE41E713B9900262267 /* PublishmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishmentTableViewController.swift; sourceTree = "<group>"; };
 		0899EEE61E713BB000262267 /* TransactionHistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHistoryTableViewController.swift; sourceTree = "<group>"; };
 		0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateAndCommentTableViewController.swift; sourceTree = "<group>"; };
 		0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCommentTableViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +104,7 @@
 		D71CDAC31E72630900D94118 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		D71CDAC61E72643E00D94118 /* KDCircularProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KDCircularProgress.swift; path = "../../../../Downloads/KDCircularProgress-1.5.0/KDCircularProgress/KDCircularProgress.swift"; sourceTree = "<group>"; };
 		D7960FD41ED5CE870034678F /* MyCommentCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCommentCollectionViewController.swift; sourceTree = "<group>"; };
+		D7960FD81ED6D4E20034678F /* PublishmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishmentViewController.swift; sourceTree = "<group>"; };
 		D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -227,13 +227,13 @@
 			children = (
 				D71CDAC31E72630900D94118 /* KDCircularProgress.swift */,
 				0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */,
-				0899EEE41E713B9900262267 /* PublishmentTableViewController.swift */,
 				0899EEE61E713BB000262267 /* TransactionHistoryTableViewController.swift */,
 				0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */,
 				089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */,
 				0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */,
 				08F5A3521E9E052800EAADCC /* EmbedTableViewController.swift */,
 				D7960FD41ED5CE870034678F /* MyCommentCollectionViewController.swift */,
+				D7960FD81ED6D4E20034678F /* PublishmentViewController.swift */,
 			);
 			name = "User Profile";
 			sourceTree = "<group>";
@@ -482,6 +482,7 @@
 				089ECA451DEE8F4200D508F6 /* ItemDetailViewController.swift in Sources */,
 				089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */,
 				0899EEF31E72278300262267 /* SellTableViewController.swift in Sources */,
+				D7960FD91ED6D4E20034678F /* PublishmentViewController.swift in Sources */,
 				D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */,
 				089ECA431DEE8F2300D508F6 /* MainPageViewController.swift in Sources */,
 				0899EEE71E713BB000262267 /* TransactionHistoryTableViewController.swift in Sources */,
@@ -501,7 +502,6 @@
 				088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */,
 				08757B7B1E56C56600219BCA /* Product.swift in Sources */,
 				08F5A3531E9E052800EAADCC /* EmbedTableViewController.swift in Sources */,
-				0899EEE51E713B9900262267 /* PublishmentTableViewController.swift in Sources */,
 				0868862A1E9DD09A009DFF61 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

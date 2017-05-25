@@ -38,7 +38,7 @@ class MyCommentCollectionViewController: UICollectionViewController {
         
         
         let flowLayout = UICollectionViewFlowLayout.init()
-        flowLayout.minimumLineSpacing = 15
+        flowLayout.minimumLineSpacing = 10
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.itemSize = CGSize(width: self.view.frame.width - 30, height: self.view.frame.height/8)
         flowLayout.sectionInset = UIEdgeInsets.init(top: 15, left: 15, bottom: 15, right: 15)

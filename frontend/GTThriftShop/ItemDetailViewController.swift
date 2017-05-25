@@ -136,11 +136,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         loadDetailsIndicator.startAnimating()
         loadAdditionalDetails()
         
-        //Button UI setup
-//        nextStepButton.layer.borderWidth = 1
-//        nextStepButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
-//        nextStepButton.layer.cornerRadius = 20
-        
         channelRef = FIRDatabase.database().reference().child("Channels").child(generateChannel())
         
         if (product.userId != userId) {
@@ -152,7 +147,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.interestTableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(loadInterestIds), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
     }
     
     func initNextStepButtonBasedOnSourceVC() {
@@ -160,16 +154,14 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         if sourceVCName == "transactionVC" {
             favoriteImage.isHidden = true
             if userId == product.userId {
-                nextStepButton.setTitle("Can't rate yourself :P", for: .normal)
-                nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
+                nextStepButton.setTitle("Your Own Item", for: .normal)
                 nextStepButton.isEnabled = false
             } else {
                 if !isRated {
-                    nextStepButton.setTitle("Rate and comment", for: .normal)
+                    nextStepButton.setTitle("Comment", for: .normal)
                     nextStepButton.addTarget(self, action: #selector(goToRateAndCommentVC), for: .touchUpInside)
                 } else {
-                    nextStepButton.setTitle("Already rated!", for: .normal)
-                    nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
+                    nextStepButton.setTitle("Rated", for: .normal)
                     nextStepButton.isEnabled = false
                 }
             }
@@ -682,7 +674,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         } else if segue.source is RateAndCommentTableViewController {
             print("unwind from rateAndComment VC")
             nextStepButton.setTitle("Already rated!", for: .normal)
-            nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
             nextStepButton.isEnabled = false
         }
     }

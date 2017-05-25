@@ -10,7 +10,6 @@ import UIKit
 
 class SellTableViewController: UITableViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate, UIPickerViewDelegate, UITextFieldDelegate, UITextViewDelegate {
     
-    //
     var categories = [String]()
     var selectedAddPhotoImageView: UIImageView?
     var photos = [UIImage?](repeating: nil, count:6)
@@ -34,15 +33,6 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     @IBOutlet var mainTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = mainTable.bounds
-        //blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
-        backImageView.addSubview(blurEffectView)
-        mainTable.backgroundView = backImageView
         
         loadTagsFromLocal()
         userId = UserDefaults.standard.integer(forKey: "userId")
