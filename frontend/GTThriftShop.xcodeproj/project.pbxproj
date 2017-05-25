@@ -37,6 +37,7 @@
 		08F5A3531E9E052800EAADCC /* EmbedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F5A3521E9E052800EAADCC /* EmbedTableViewController.swift */; };
 		D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */; };
 		D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDAC31E72630900D94118 /* KDCircularProgress.swift */; };
+		D7960FD51ED5CE870034678F /* MyCommentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7960FD41ED5CE870034678F /* MyCommentCollectionViewController.swift */; };
 		D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +104,7 @@
 		D71CDABB1E706E3C00D94118 /* DropMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropMenuButton.swift; sourceTree = "<group>"; };
 		D71CDAC31E72630900D94118 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		D71CDAC61E72643E00D94118 /* KDCircularProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KDCircularProgress.swift; path = "../../../../Downloads/KDCircularProgress-1.5.0/KDCircularProgress/KDCircularProgress.swift"; sourceTree = "<group>"; };
+		D7960FD41ED5CE870034678F /* MyCommentCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCommentCollectionViewController.swift; sourceTree = "<group>"; };
 		D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -231,6 +233,7 @@
 				089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */,
 				0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */,
 				08F5A3521E9E052800EAADCC /* EmbedTableViewController.swift */,
+				D7960FD41ED5CE870034678F /* MyCommentCollectionViewController.swift */,
 			);
 			name = "User Profile";
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				089ECA491DEE8F7700D508F6 /* ChatViewController.swift in Sources */,
 				088542C11DE93481004344D4 /* ViewController.swift in Sources */,
 				0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */,
+				D7960FD51ED5CE870034678F /* MyCommentCollectionViewController.swift in Sources */,
 				0899EEED1E71DD9800262267 /* MyCommentTableViewController.swift in Sources */,
 				0899EEF11E71DDF700262267 /* CommentDetailTableViewController.swift in Sources */,
 				D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */,

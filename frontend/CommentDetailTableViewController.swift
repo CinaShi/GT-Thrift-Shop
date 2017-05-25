@@ -19,6 +19,9 @@ class CommentDetailTableViewController: UITableViewController {
     var postTime: String!
     var rate: Int!
     
+    let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+    let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
+    
     @IBOutlet weak var productImageView: UIImageView!
     
     @IBOutlet weak var sellerNameLabel: UILabel!
@@ -33,22 +36,23 @@ class CommentDetailTableViewController: UITableViewController {
     
     @IBOutlet var stars: [UIImageView]!
     
+    @IBOutlet weak var shadowView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = self.tableView.bounds
-        let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
-        backImageView.addSubview(blurEffectView)
-        self.tableView.backgroundView = backImageView
-        
-        productImageView.layer.cornerRadius = productImageView.frame.width/2
-        productImageView.clipsToBounds = true
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: color2]
+        self.navigationController?.navigationBar.layer.shadowColor = color1.cgColor;
+        self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 3);
+        self.navigationController?.navigationBar.layer.shadowOpacity = 1;
         
         userId = UserDefaults.standard.integer(forKey: "userId")
         
+        shadowView.layer.shadowRadius = 5
+        shadowView.layer.shadowOpacity = 1
+        shadowView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        shadowView.layer.shadowColor = color1.cgColor
+    
         if userId == product.userId! {
             sellerNameLabel.text = "You"
             buyerNameLabel.text = "to " + buyerName
@@ -59,16 +63,16 @@ class CommentDetailTableViewController: UITableViewController {
             sellerNameLabel.text = product.userName
             buyerNameLabel.text = "to " + buyerName
         }
-        productNameLabel.text = product.name
+        productNameLabel.text = "sold " + product.name
         //time format
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss z"
         let postDate = dateFormatter.date(from: postTime)
-        dateFormatter.dateFormat = "MMM dd yyyy, HH:mm"
+        dateFormatter.dateFormat = "MMM dd yyyy"
         let goodDate = dateFormatter.string(from: postDate!)
         postTimeLabel.text = goodDate
         
-        commentTextView.text = "   " + commentContent
+        commentTextView.text = commentContent
         
         if product.imageUrls.count <= 0 {
             productImageView.image = #imageLiteral(resourceName: "No Camera Filled-100")
@@ -123,15 +127,5 @@ class CommentDetailTableViewController: UITableViewController {
     @IBAction func unwindToPreviousPage(_ sender: Any) {
         self.performSegue(withIdentifier: "unwindToMyCommentVC", sender: self)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
