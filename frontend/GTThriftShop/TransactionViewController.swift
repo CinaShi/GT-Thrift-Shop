@@ -1,53 +1,58 @@
 //
-//  TransactionHistoryTableViewController.swift
+//  TransactionViewController.swift
 //  GTThriftShop
 //
-//  Created by Mengyang Shi on 3/9/17.
+//  Created by Jihai An on 5/25/17.
 //  Copyright © 2017 Triple6. All rights reserved.
 //
 
 import UIKit
 
-class TransactionHistoryTableViewController: UITableViewController {
-
+class TransactionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     var products = [Product]()
     var selected: Product?
     var selectedIsRated: Bool?
     var selectedTranId: Int?
-    
     var userId: Int!
     var myTransactions = [(Int, Product, Int, Bool, Int, String, String)]()
     var userDefaults = UserDefaults.standard
-    var activityIndicatorView: UIActivityIndicatorView!
+    
+    let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+    let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
+    private let refreshControl = UIRefreshControl()
+    
+    @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-        activityIndicatorView.color = .blue
-//        tableView.backgroundView = activityIndicatorView
-
-    
         
+        self.shadowView.layer.shadowRadius = 3
+        self.shadowView.layer.shadowOpacity = 1
+        self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 3)
+        self.shadowView.layer.shadowColor = color1.cgColor
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.refreshControl = refreshControl
         self.tableView.refreshControl?.addTarget(self, action: #selector(loadMyTransactions), for: .valueChanged)
-        self.tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing🤣")
-        
+        self.tableView.tableFooterView = UIView()
+
+        self.tableView.layer.shadowRadius = 3
+        self.tableView.layer.shadowOpacity = 1
+        self.tableView.layer.shadowOffset = CGSize(width: 0, height: -1)
+        self.tableView.layer.shadowColor = color1.cgColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.navigationController?.navigationBar.isHidden = false
-        
-        
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
-        
-        activityIndicatorView.startAnimating()
-        
+        activityIndicator.startAnimating()
         loadProductsFromLocal()
         loadMyTransactions()
         
     }
-    
-    //Mark: helper methods
     
     func loadProductsFromLocal() {
         if let decoded = userDefaults.object(forKey: "products") as? Data {
@@ -124,13 +129,13 @@ class TransactionHistoryTableViewController: UITableViewController {
                         //deal with star here
                         self.initialSort()
                         self.tableView.reloadData()
-                        self.activityIndicatorView.stopAnimating()
+                        self.activityIndicator.stopAnimating()
                         self.tableView.refreshControl?.endRefreshing()
                     });
                 }  else if httpResponse.statusCode == 400 {
                     DispatchQueue.main.async(execute: {
                         self.notifyFailure(info: "You don't have any transaction history!")
-//                        self.backToUserProfileVC(self)
+                        //                        self.backToUserProfileVC(self)
                     });
                 } else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
@@ -171,7 +176,7 @@ class TransactionHistoryTableViewController: UITableViewController {
     
     func notifyFailure(info: String) {
         self.sendAlart(info: info)
-        self.activityIndicatorView.stopAnimating()
+        self.activityIndicator.stopAnimating()
         self.tableView.refreshControl?.endRefreshing()
     }
     
@@ -191,24 +196,17 @@ class TransactionHistoryTableViewController: UITableViewController {
         }
     }
     
-    
     @IBAction func backToUserProfileVC(_ sender: Any) {
         self.performSegue(withIdentifier: "unwindToUserProfileFromTransaction", sender: self)
     }
     
     // MARK: - Table view data source
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return myTransactions.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Table view cells are reused and should be dequeued using a cell identifier.
         let cellIdentifier = "transactionItemCell"
         let cell: UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
@@ -221,13 +219,10 @@ class TransactionHistoryTableViewController: UITableViewController {
         let sellerName = currentTransaction.6
         // Fetches the banks for the data source layout.
         let itemImage = cell.contentView.viewWithTag(5) as! UIImageView
-        itemImage.layer.cornerRadius = itemImage.frame.width/2
-
         let productLabel = cell.contentView.viewWithTag(2) as! UILabel
         let sellerLabel = cell.contentView.viewWithTag(1) as! UILabel
         let buyerLabel = cell.contentView.viewWithTag(3) as! UILabel
-        
-        let isRatedLabel = cell.contentView.viewWithTag(7) as! UILabel
+        let isRatedLabel = cell.contentView.viewWithTag(4) as! UILabel
         
         if currentProduct.imageUrls.count <= 0 {
             itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
@@ -255,11 +250,10 @@ class TransactionHistoryTableViewController: UITableViewController {
                     }
                 })
             }
-            itemImage.clipsToBounds = true
         }
         
         
-        productLabel.text = currentProduct.name
+        productLabel.text = "Sold " + currentProduct.name
         if userId == seller {
             sellerLabel.text = "You"
             buyerLabel.text = "to " + buyerName
@@ -283,14 +277,12 @@ class TransactionHistoryTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         selected = myTransactions[indexPath.row].1
         selectedIsRated = myTransactions[indexPath.row].3
-        //New
         selectedTranId = myTransactions[indexPath.row].4
         performSegue(withIdentifier: "getItemDetailsFromTransactionHistory", sender: nil)
-        
     }
     
     // MARK: - Navigation
@@ -303,13 +295,13 @@ class TransactionHistoryTableViewController: UITableViewController {
             destination.product = selected!
             destination.isRated = selectedIsRated!
             destination.sourceVCName = "transactionVC"
-            //New
             destination.tranId = selectedTranId!
-
-
         }
         
     }
-
-   
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 }

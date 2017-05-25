@@ -38,6 +38,7 @@
 		D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CDAC31E72630900D94118 /* KDCircularProgress.swift */; };
 		D7960FD51ED5CE870034678F /* MyCommentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7960FD41ED5CE870034678F /* MyCommentCollectionViewController.swift */; };
 		D7960FD91ED6D4E20034678F /* PublishmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7960FD81ED6D4E20034678F /* PublishmentViewController.swift */; };
+		D7960FF91ED716980034678F /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7960FF81ED716980034678F /* TransactionViewController.swift */; };
 		D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +106,7 @@
 		D71CDAC61E72643E00D94118 /* KDCircularProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KDCircularProgress.swift; path = "../../../../Downloads/KDCircularProgress-1.5.0/KDCircularProgress/KDCircularProgress.swift"; sourceTree = "<group>"; };
 		D7960FD41ED5CE870034678F /* MyCommentCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCommentCollectionViewController.swift; sourceTree = "<group>"; };
 		D7960FD81ED6D4E20034678F /* PublishmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishmentViewController.swift; sourceTree = "<group>"; };
+		D7960FF81ED716980034678F /* TransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		D7A84B991E3B3ACC00DCEDE7 /* HttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -234,6 +236,7 @@
 				08F5A3521E9E052800EAADCC /* EmbedTableViewController.swift */,
 				D7960FD41ED5CE870034678F /* MyCommentCollectionViewController.swift */,
 				D7960FD81ED6D4E20034678F /* PublishmentViewController.swift */,
+				D7960FF81ED716980034678F /* TransactionViewController.swift */,
 			);
 			name = "User Profile";
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				089233801E8F58FB00B72BF7 /* ContactSellerViewController.swift in Sources */,
 				089ECA411DEE8EFD00D508F6 /* LoginViewController.swift in Sources */,
 				08CA35541E3ACD1A00EFF7D1 /* FirstTimeSuccessViewController.swift in Sources */,
+				D7960FF91ED716980034678F /* TransactionViewController.swift in Sources */,
 				08AF3D1A1E9F63AD0078A906 /* ForgotPasswordViewController.swift in Sources */,
 				D7A84B9A1E3B3ACC00DCEDE7 /* HttpClient.swift in Sources */,
 				089ECA4D1DEE8FAB00D508F6 /* FavoriteViewController.swift in Sources */,
