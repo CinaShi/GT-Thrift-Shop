@@ -14,20 +14,39 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     var userId: Int!
     var favoritedProducts = [Product]()
     var userDefaults = UserDefaults.standard
+    
     private let refreshControl = UIRefreshControl()
+    
+    let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+    let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadFavoriteIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var shadowView: UIView!
     
+    @IBOutlet weak var headConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.shadowView.layer.shadowRadius = 3
+        self.shadowView.layer.shadowOpacity = 1
+        self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 3)
+        self.shadowView.layer.shadowColor = color1.cgColor
+        
+        //self.headConstraint.constant = 75 + self.view.frame.size.height
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(obtainAllProductsFromServer), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
+        refreshControl.tintColor = color2
+        
+        self.tableView.tableFooterView = UIView()
+        self.tableView.layer.shadowRadius = 3
+        self.tableView.layer.shadowOpacity = 1
+        self.tableView.layer.shadowOffset = CGSize(width: 0, height: -1)
+        self.tableView.layer.shadowColor = color1.cgColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +56,8 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         loadProductsFromLocal()
         obtainFavoriteProductsFromServer()
         
+        //self.headConstraint.constant = 75
+        //UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
         tableView.reloadData()
         
         
@@ -277,13 +298,10 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         let currentProduct = favoritedProducts[indexPath.row]
         // Fetches the banks for the data source layout.
         let itemImage = cell.contentView.viewWithTag(5) as! UIImageView
-        itemImage.layer.cornerRadius = itemImage.frame.width/2
-        itemImage.clipsToBounds = true
-        
         let itemNameLabel = cell.contentView.viewWithTag(1) as! UILabel
-        let yearUsedLabel = cell.contentView.viewWithTag(2) as! UILabel
+        //let yearUsedLabel = cell.contentView.viewWithTag(2) as! UILabel
         let priceLabel = cell.contentView.viewWithTag(3) as! UILabel
-        let sellerLabel = cell.contentView.viewWithTag(4) as! UILabel
+        //let sellerLabel = cell.contentView.viewWithTag(4) as! UILabel
         
         if currentProduct.imageUrls.count <= 0 {
             itemImage.image = #imageLiteral(resourceName: "No Camera Filled-100")
@@ -314,18 +332,18 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
 
 
         }
-        itemImage.clipsToBounds = true
-
         
         itemNameLabel.text = currentProduct.name
-        yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
-        priceLabel.text = currentProduct.price
-        sellerLabel.text = "Seller: \(currentProduct.userName!)"
+        //yearUsedLabel.text = "Used for \(currentProduct.usedTime!)"
+        priceLabel.text = "$ " + currentProduct.price
+        //sellerLabel.text = "Seller: \(currentProduct.userName!)"
         
         
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.view.frame.height/8
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         selected = favoritedProducts[indexPath.row]

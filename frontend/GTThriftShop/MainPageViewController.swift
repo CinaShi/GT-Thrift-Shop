@@ -49,11 +49,8 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         let flowLayout = UICollectionViewFlowLayout.init()
         
-        //设置行间距
         flowLayout.minimumLineSpacing = 20
-        //设置列间距
         flowLayout.minimumInteritemSpacing = 10
-        //设置边界的填充距离
         flowLayout.itemSize = CGSize(width: self.view.frame.width/2 - 20, height: self.view.frame.height/3)
         flowLayout.sectionInset = UIEdgeInsets.init(top: 15, left: 15, bottom: 15, right: 15)
         self.collectionView.collectionViewLayout = flowLayout

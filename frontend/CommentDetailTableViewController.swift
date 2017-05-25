@@ -72,7 +72,7 @@ class CommentDetailTableViewController: UITableViewController {
         let goodDate = dateFormatter.string(from: postDate!)
         postTimeLabel.text = goodDate
         
-        commentTextView.text = commentContent
+        commentTextView.text = "\"" + commentContent + "\""
         
         if product.imageUrls.count <= 0 {
             productImageView.image = #imageLiteral(resourceName: "No Camera Filled-100")

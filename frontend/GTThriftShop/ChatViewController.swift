@@ -14,7 +14,7 @@ import Alamofire
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
-    @IBOutlet weak var tableView: UITableView!
+    
     
     var currentUser: User!
     var users = [(Int, String, String)]()
@@ -23,28 +23,33 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var selectedUserId: Int!
     
     private let refreshControl = UIRefreshControl()
+    let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
+    let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
     
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var loadUsersIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        tableView.delegate = self
-        tableView.dataSource = self
+        
+        self.shadowView.layer.shadowRadius = 3
+        self.shadowView.layer.shadowOpacity = 1
+        self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 3)
+        self.shadowView.layer.shadowColor = color1.cgColor
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(getUsers), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
+        refreshControl.tintColor = color2
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = self.view.bounds
-        //blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        let backImageView = UIImageView(image: UIImage(named: "iOS-9-Wallpaper"))
-        backImageView.addSubview(blurEffectView)
-        self.view.addSubview(backImageView)
-        self.view.sendSubview(toBack: backImageView)
-        
-        
+        self.tableView.layer.shadowRadius = 3
+        self.tableView.layer.shadowOpacity = 1
+        self.tableView.layer.shadowOffset = CGSize(width: 0, height: -1)
+        self.tableView.layer.shadowColor = color1.cgColor
+        self.tableView.tableFooterView = UIView()
         
         let ud = UserDefaults.standard
         userId = ud.integer(forKey: "userId")
@@ -66,10 +71,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if !refreshControl.isRefreshing {
             loadUsersIndicator.startAnimating()
         }
-        
-        
-        
-        
         Alamofire.request("http://ec2-34-196-222-211.compute-1.amazonaws.com/products/getInterest/\(userId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success:

@@ -20,7 +20,7 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet var mainTable: UITableView!
     @IBOutlet var stars: [UIButton]!
-    @IBOutlet weak var submitButton: UIButton!
+    //@IBOutlet weak var submitButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +45,10 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
         commentTextView.layer.borderColor = color1.cgColor
         commentTextView.layer.borderWidth = 1
         
-        let color2 = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1)
-        submitButton.layer.cornerRadius = 20
-        submitButton.layer.borderColor = color2.cgColor
-        submitButton.layer.borderWidth = 1
+//        let color2 = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1)
+//        submitButton.layer.cornerRadius = 20
+//        submitButton.layer.borderColor = color2.cgColor
+//        submitButton.layer.borderWidth = 1
         
         commentTextView.text = "Type your comment here."
         commentTextView.textColor = UIColor.lightGray
@@ -65,10 +65,19 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
             sendAlert(info: "Please write down your comments before submission!")
         } else {
             //ready to submit
-            submitButton.isEnabled = false
+            //submitButton.isEnabled = false
             uploadComment()
         }
     }
+//    @IBAction func submitRateAndComment(_ sender: Any) {
+//        if commentTextView.text! == "" {
+//            sendAlert(info: "Please write down your comments before submission!")
+//        } else {
+//            //ready to submit
+//            submitButton.isEnabled = false
+//            uploadComment()
+//        }
+//    }
     
     func uploadComment() {
         let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/cr/update")
@@ -140,7 +149,7 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
     
     func notifyFailure(info: String) {
         self.sendAlert(info: info)
-        submitButton.isEnabled = true
+        //submitButton.isEnabled = true
     }
     
     func sendAlert(info: String) {
