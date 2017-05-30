@@ -392,8 +392,9 @@ def get_products_by_page():
 			cursor.execute("SELECT userId, Product.pid, pName, pPrice, pInfo, postTime, usedTime, isSold FROM Product INNER JOIN ProductTag WHERE Product.pid = ProductTag.pid AND ProductTag.tid = '%d' ORDER BY postTime ASC;"%tid)
 
 	if cursor.rowcount > 0:
-		for i in range(pageNum):
-			productList = cursor.fetchmany(pageSize)
+		if pageNum > 1:
+			cursor.fetchmany(pageSize * (pageNum - 1))
+		productList = cursor.fetchmany(pageSize)
 		
 		for pRow in productList:
 			userId = pRow[0]
@@ -428,4 +429,74 @@ def get_products_by_page():
 			currentProduct['isSold'] = isSold
 			productsList.append(currentProduct)
 	db.close()
-	return jsonify({'products':productList})
+	return jsonify({'products':productsList})
+
+
+
+#author: Wen
+@products.route('/products/search', methods=['POST'])
+def search():
+	if not request.json or not 'keyword' in request.json or not 'pageNum' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	
+	keyword = request.json['keyword']
+	pageNum = int(request.json['pageNum'])
+
+	if pageNum < 1:
+		abort(400, "Incorrect page number")
+
+	pageSize = 20
+	if 'pageSize' in request.json:
+		pageSize = int(request.json['pageSize'])
+
+	productsList = []
+
+	db = mysql.connect()
+	cursor = db.cursor()
+	try:
+		cursor.execute("SELECT * FROM Product WHERE MATCH (pName) AGAINST ('%s*' IN BOOLEAN MODE);"%keyword)
+		
+		if cursor.rowcount > 0:
+			if pageNum > 1:
+				cursor.fetchmany(pageSize * (pageNum - 1))
+			productList = cursor.fetchmany(pageSize)
+			
+			for pRow in productList:
+				userId = pRow[0]
+				pid = pRow[1]
+				pName = pRow[2]
+				pPrice = str(pRow[3])
+				pInfo = pRow[4]
+				postTime = pRow[5]
+				usedTime = pRow[6]
+				isSold = pRow[7]
+				imageCur = db.cursor()
+				imageCur.execute("SELECT imageURL FROM ProductImage WHERE pid = '%d';"%pid)
+				imageList = []
+				if imageCur.rowcount > 0:
+					imageR = imageCur.fetchall()
+					for i in imageR:
+						imageList.append(i[0])
+				userCur = db.cursor()
+				userCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%d';"%userId)
+				if userCur.rowcount >0:
+					nickname = userCur.fetchall()[0][0]
+				currentProduct = {}
+				currentProduct['nickname'] = nickname
+				currentProduct['userId'] = userId
+				currentProduct['pid'] = pid
+				currentProduct['pName'] = pName
+				currentProduct['pPrice'] = pPrice
+				currentProduct['pInfo'] = pInfo
+				currentProduct['postTime'] = postTime
+				currentProduct['usedTime'] = usedTime
+				currentProduct['images'] = imageList
+				currentProduct['isSold'] = isSold
+				productsList.append(currentProduct)
+		db.close()
+		return jsonify({'products':productsList})
+	except:
+	    db.close()
+	    abort(400, "search failed")
+
+
