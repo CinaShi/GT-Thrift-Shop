@@ -264,7 +264,7 @@ class TransactionViewController: UIViewController, UITableViewDataSource, UITabl
             sellerLabel.text = sellerName
             buyerLabel.text = "to " + buyerName
         }
-        
+        // TODO: change this label to an image to indicate
         if isRated {
             isRatedLabel.text = "rated"
             isRatedLabel.textColor = .blue

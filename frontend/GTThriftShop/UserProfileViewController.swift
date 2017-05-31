@@ -74,7 +74,7 @@ class UserProfileViewController: UIViewController {
             backButton.isHidden = false
             logoutButton.isHidden = true
             
-            buttonBlock.heightAnchor.constraint(equalToConstant: 60).isActive = true
+            //buttonBlock.heightAnchor.constraint(equalToConstant: 60).isActive = true
             
         }
     }

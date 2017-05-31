@@ -362,7 +362,7 @@
 				TargetAttributes = {
 					088542BA1DE93481004344D4 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = K5BR2FF6XK;
+						DevelopmentTeam = QA3AX87W5A;
 						ProvisioningStyle = Automatic;
 					};
 					088542CE1DE93481004344D4 = {
@@ -655,7 +655,7 @@
 			baseConfigurationReference = 3A49BD5A6938D325BF2E5287 /* Pods-GTThriftShop.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K5BR2FF6XK;
+				DEVELOPMENT_TEAM = QA3AX87W5A;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -678,7 +678,7 @@
 			baseConfigurationReference = 89C60571F5E8E65FA2903918 /* Pods-GTThriftShop.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K5BR2FF6XK;
+				DEVELOPMENT_TEAM = QA3AX87W5A;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
