@@ -31,6 +31,7 @@ def uploader(username):
 	return "https://s3-us-west-2.amazonaws.com/gtthriftshopusers/" + username + "/" + filename
 
 
+
 @user.route('/user/info', methods=['POST'])
 def add_user_info():
 	if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'avatarURL' in request.json or not 'description' in request.json:
@@ -262,19 +263,21 @@ def get_user_info(uid):
 	return jsonify({'userInfo':info})
 
 #author: Yichen
+#Sprint: 6
 @user.route('/user/info/update', methods=['POST'])
 def update_user_info():
-	if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'description' in request.json:
+	if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'avatarURL' in request.json or not 'description' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	nickname = request.json['nickname']
 	email = request.json['email']
+	avatarURL = request.json['avatarURL']
 	description = request.json['description']
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT * FROM UserInfo WHERE userId = '%s'"%userId)
 	if cursor.rowcount == 1:
-		cursor.execute("UPDATE UserInfo SET nickname = %s,email = %s,description = %s WHERE userId = %s", [nickname,email,description,userId])
+		cursor.execute("UPDATE UserInfo SET nickname = %s,email = %s,avatarURL = %s, description = %s WHERE userId = %s", [nickname,email,avatarURL,description,userId])
 		db.commit()
 		db.close()
 		return("Success") 
