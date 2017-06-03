@@ -727,10 +727,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         self.collectionView.reloadData()
     }
     
-    
-    //Mark: Other delegates
-    
-    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
