@@ -80,7 +80,7 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
 //    }
     
     func uploadComment() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/cr/update")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/cr/update")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "POST"

@@ -118,7 +118,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func getUserInfo() {
         let userId = userDefaults.integer(forKey: "userId")
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/info/get/\(userId)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info/get/\(userId)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -209,7 +209,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func obtainTagsFromServer() {
         loadProductsIndicator.startAnimating()
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/tags")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/tags")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -276,7 +276,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         if !refreshControl.isRefreshing {
             loadProductsIndicator.startAnimating()
         }
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -377,7 +377,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         if tag.contains(" ") {
             newTag = tag.replacingOccurrences(of: " ", with: "_")
         }
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/tags/\(newTag)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/tags/\(newTag)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"

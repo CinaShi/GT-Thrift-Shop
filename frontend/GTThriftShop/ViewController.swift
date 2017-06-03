@@ -50,7 +50,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if !refreshControl.isRefreshing {
             loadProductsIndicator.startAnimating()
         }
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"

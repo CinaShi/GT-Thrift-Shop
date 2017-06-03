@@ -177,7 +177,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func uploadUserInfo() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/auth/login");
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/auth/login");
         
         var request = URLRequest(url:url! as URL);
         request.httpMethod = "POST";

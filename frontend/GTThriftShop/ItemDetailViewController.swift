@@ -271,7 +271,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         activityIndicatorView.startAnimating()
         
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/interest/\(product.pid!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/interest/\(product.pid!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -382,7 +382,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         self.nextStepButton.isEnabled = false
         
         loadDetailsIndicator.startAnimating()
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/update/isSold")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/update/isSold")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "POST"
@@ -469,8 +469,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func loadAdditionalDetails() {
         loadDetailsIndicator.startAnimating()
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/details/\(product.pid!)")
-        print("http://ec2-34-196-222-211.compute-1.amazonaws.com/products/details/\(product.pid!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/details/\(product.pid!)")
+        print("\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/details/\(product.pid!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "POST"
@@ -577,9 +577,9 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         var url: URL?
         if isFavorited {
-            url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/favorites/remove")!
+            url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/favorites/remove")!
         } else {
-            url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/favorites/new")!
+            url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/favorites/new")!
         }
         
         var request = URLRequest(url:url! as URL)

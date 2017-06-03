@@ -134,7 +134,7 @@ class UserProfileViewController: UIViewController {
     }
     
     func getUserInfo() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/info/get/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info/get/\(userId!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"

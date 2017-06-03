@@ -84,7 +84,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         loadFavoriteIndicator.startAnimating()
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/favorites/all/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/favorites/all/\(userId!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -175,7 +175,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func obtainAllProductsFromServer() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"

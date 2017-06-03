@@ -84,7 +84,7 @@ class MyCommentCollectionViewController: UICollectionViewController {
     func loadMyComments() {
         //implement this part after backend API changed
         
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/comment/get/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/comment/get/\(userId!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"

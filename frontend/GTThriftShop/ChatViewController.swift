@@ -71,7 +71,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if !refreshControl.isRefreshing {
             loadUsersIndicator.startAnimating()
         }
-        Alamofire.request("http://ec2-34-196-222-211.compute-1.amazonaws.com/products/getInterest/\(userId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
+        Alamofire.request("\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/getInterest/\(userId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success:
                 print("Validation Successful")

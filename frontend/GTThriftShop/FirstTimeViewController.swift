@@ -150,7 +150,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     
     
     func submitPhotoFirst() {
-        let url:URL = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/image/\(userId)")!
+        let url:URL = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/image/\(userId)")!
         let session = URLSession.shared
         
         let request = NSMutableURLRequest(url:url);
@@ -197,7 +197,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     }
     
     func uploadWholeInfo(imageurl: String) {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/info");
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info");
         
         var request = URLRequest(url:url! as URL);
         request.httpMethod = "POST";

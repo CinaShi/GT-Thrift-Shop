@@ -68,7 +68,7 @@ class TransactionViewController: UIViewController, UITableViewDataSource, UITabl
     
     func loadMyTransactions() {
         
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/transactions/getAll/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/transactions/getAll/\(userId!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"

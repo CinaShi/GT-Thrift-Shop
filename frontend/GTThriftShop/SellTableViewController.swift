@@ -142,7 +142,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     func uploadInfoFirst() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/add/allInfo")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/add/allInfo")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "POST"
@@ -228,7 +228,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
             }
         }
         
-        let url:URL = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/add/images/\(assignedPid)")!
+        let url:URL = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/add/images/\(assignedPid)")!
         let session = URLSession.shared
         
         let request = NSMutableURLRequest(url:url)

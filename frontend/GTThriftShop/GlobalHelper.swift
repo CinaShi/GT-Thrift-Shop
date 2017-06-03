@@ -11,6 +11,8 @@ import UIKit
 
 class GlobalHelper {
     static let sharedInstance = GlobalHelper()
+    
+    let AWSUrlHeader = "http://ec2-34-196-222-211.compute-1.amazonaws.com"
 
     class func sendAlart(info: String, VC: UIViewController) {
         let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
