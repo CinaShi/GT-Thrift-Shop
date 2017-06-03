@@ -157,8 +157,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                         self.user = User(uid: userId, nickname: userNickname, email: userEmail, info: userDescription, rate: userRating, avatarURL: userImageUrl)
                         
                         let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: self.user)
-                        self.userDefaults.set(encodedData, forKey: "userInfo")
-                        self.userDefaults.synchronize()
+                        GlobalHelper.storeToUserDefaults(value: encodedData, key: "userInfo")
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
                     }
@@ -188,15 +187,13 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     //Mark: helper methods
     
     func storeTagsToLocal() {
-        userDefaults.set(tags, forKey: "tags")
-        userDefaults.synchronize()
+        GlobalHelper.storeToUserDefaults(value: tags, key: "tags")
     }
     
     func storeProductsToLocal() {
         let productsToSave = allProducts.sorted(by: {$0.pid! < $1.pid!})
         let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: productsToSave)
-        userDefaults.set(encodedData, forKey: "products")
-        userDefaults.synchronize()
+        GlobalHelper.storeToUserDefaults(value: encodedData, key: "products")
     }
     
     func refreshProductsFromLocal() {
@@ -459,20 +456,11 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.loadProductsIndicator.stopAnimating()
         self.refreshControl.endRefreshing()
     }
     
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     @IBAction func chooseSortingFunction(_ sender: Any) {
         if !sortViewExpanded {

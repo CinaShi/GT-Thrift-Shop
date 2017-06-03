@@ -459,8 +459,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     products[index] = prod
                     let productsToSave = products.sorted(by: {$0.pid! < $1.pid!})
                     let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: productsToSave)
-                    userDefaults.set(encodedData, forKey: "products")
-                    userDefaults.synchronize()
+                    GlobalHelper.storeToUserDefaults(value: encodedData, key: "products")
                     return
                 }
             }
@@ -562,21 +561,11 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.loadDetailsIndicator.stopAnimating()
         self.activityIndicatorView.stopAnimating()
         self.nextStepButton.isEnabled = true
         self.refreshControl.endRefreshing()
-    }
-    
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
     }
     
     

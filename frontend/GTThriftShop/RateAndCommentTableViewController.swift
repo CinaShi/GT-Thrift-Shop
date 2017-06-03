@@ -62,7 +62,7 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
     
     @IBAction func submitRateAndComment(_ sender: Any) {
         if commentTextView.text! == "" {
-            sendAlert(info: "Please write down your comments before submission!")
+            GlobalHelper.sendAlart(info: "Please write down your comments before submission!", VC: self)
         } else {
             //ready to submit
             //submitButton.isEnabled = false
@@ -148,19 +148,10 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
     }
     
     func notifyFailure(info: String) {
-        self.sendAlert(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         //submitButton.isEnabled = true
     }
     
-    func sendAlert(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     // MARK: - rating-related function goes here
     

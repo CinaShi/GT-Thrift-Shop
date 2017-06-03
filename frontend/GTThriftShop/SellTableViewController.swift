@@ -119,10 +119,10 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
    
     @IBAction func submit(_ sender: AnyObject) {
         if itemNameField.text! == "" || priceField.text! == "" || usedYearField.text! == "" || descriptionTextView.text! == "" || categoryField.text! == "" {
-            sendAlart(info: "Please fill in all information before submit!")
+            GlobalHelper.sendAlart(info: "Please fill in all information before submit!", VC: self)
         
         } else if (itemNameField.text?.length)! > 29 {
-            sendAlart(info: "Item's name should be less than 30 characters")
+            GlobalHelper.sendAlart(info: "Item's name should be less than 30 characters", VC: self)
         } else {
             var photosToUpload = [UIImage]()
             for photo in photos {
@@ -131,7 +131,7 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
                 }
             }
             if photosToUpload.count <= 0 {
-                self.sendAlart(info: "Please choose at least 1 photo!")
+                GlobalHelper.sendAlart(info: "Please choose at least 1 photo!", VC: self)
             } else {
                 submitButton.isEnabled = false
                 uploadInfoFirst()
@@ -321,18 +321,8 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         submitButton.isEnabled = true
-    }
-    
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
     }
     
     

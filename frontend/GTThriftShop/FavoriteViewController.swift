@@ -260,20 +260,11 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.loadFavoriteIndicator.stopAnimating()
         self.refreshControl.endRefreshing()
     }
-    
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
+
     
     @IBAction func unwindFromDetailVCtoFavoriteVC(segue: UIStoryboardSegue) {
         if segue.source is ItemDetailViewController {

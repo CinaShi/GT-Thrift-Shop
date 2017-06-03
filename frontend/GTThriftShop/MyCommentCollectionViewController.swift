@@ -192,20 +192,11 @@ class MyCommentCollectionViewController: UICollectionViewController {
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.activityIndicatorView.stopAnimating()
         self.collectionView?.refreshControl?.endRefreshing()
     }
-    
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
+
     
     
     @IBAction func unwindToUserProfile(_ sender: Any) {

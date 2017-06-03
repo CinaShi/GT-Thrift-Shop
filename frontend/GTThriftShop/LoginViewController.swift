@@ -74,7 +74,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func login(_ sender: Any) {
         if usernameField.text! == "" || passwordField.text! == ""  {
-            sendAlart(info: "Please fill in all blank fields before login!")
+            GlobalHelper.sendAlart(info: "Please fill in all blank fields before login!", VC: self)
         } else {
             loginActivityIndicator.startAnimating()
             self.loginToGT()
@@ -221,9 +221,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             print("user id : \(userId)")
                             self.userIdString = String(userId as! Int)
                             DispatchQueue.main.async(execute: {
-                                let ud = UserDefaults.standard
-                                ud.set(userId as! Int, forKey: "userId")
-                                ud.synchronize()
+                                GlobalHelper.storeToUserDefaults(value: userId as! Int, key: "userId")
                                 self.proceedToFirstTimeView()
                             });
                         } else {
@@ -236,9 +234,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                          if let userId = responseJSON["userId"] {
                             print("user id : \(userId)")
                             DispatchQueue.main.async(execute: {
-                                let ud = UserDefaults.standard
-                                ud.set(userId as! Int, forKey: "userId")
-                                ud.synchronize()
+                                GlobalHelper.storeToUserDefaults(value: userId as! Int, key: "userId")
                                 self.proceedToMainTabView(user: userId as! Int)
                             });
                         }
@@ -262,18 +258,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         task.resume()
     }
     
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.loginActivityIndicator.stopAnimating()
     }
     
