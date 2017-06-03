@@ -16,6 +16,8 @@ class PublishmentViewController: UIViewController, UITableViewDelegate, UITableV
     var myProducts = [Product]()
     var userDefaults = UserDefaults.standard
     private let refreshControl = UIRefreshControl()
+    
+    var shouldRefreshData = false
 
     let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
     let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
@@ -49,8 +51,16 @@ class PublishmentViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = false
         self.myProducts.removeAll()
+        
         self.activityIndicatorView.startAnimating()
-        loadProductsFromLocal()
+        
+        if shouldRefreshData {
+            shouldRefreshData = false
+            obtainAllProductsFromServer()
+        }else {
+            loadProductsFromLocal()
+        }
+        
         loadMyProducts()
         initialSort()
         self.activityIndicatorView.stopAnimating()
@@ -118,7 +128,7 @@ class PublishmentViewController: UIViewController, UITableViewDelegate, UITableV
                     DispatchQueue.main.async(execute: {
                         self.myProducts.removeAll()
                         
-                        self.loadProductsFromLocal()
+//                        self.loadProductsFromLocal()
                         self.loadMyProducts()
                         
                         self.initialSort()

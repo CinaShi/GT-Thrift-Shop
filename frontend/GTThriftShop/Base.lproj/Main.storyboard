@@ -729,7 +729,7 @@
                             <tableViewSection headerTitle="Photo" id="ZQN-Q9-175">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="270" id="CSo-zB-8RK" userLabel="Pictures">
-                                        <rect key="frame" x="0.0" y="55.5" width="414" height="270"/>
+                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="270"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CSo-zB-8RK" id="qxQ-dF-bLA">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="270"/>
@@ -875,7 +875,7 @@
                             <tableViewSection headerTitle="Details" id="pnZ-Mt-77f">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="yNX-uy-BxQ" userLabel="NameCell">
-                                        <rect key="frame" x="0.0" y="381.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="381.33333333333331" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yNX-uy-BxQ" id="atI-zO-gDg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -904,7 +904,7 @@
                                         </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="A9J-ly-Mfi" userLabel="UsedTimeCell">
-                                        <rect key="frame" x="0.0" y="425.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="425.33333333333331" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A9J-ly-Mfi" id="Hlb-Du-XIy">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -933,7 +933,7 @@
                                         </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="f2Z-um-lZd" userLabel="PriceCell">
-                                        <rect key="frame" x="0.0" y="469.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="469.33333333333331" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f2Z-um-lZd" id="kRF-nB-xgP">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -962,7 +962,7 @@
                                         </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="FIg-bA-iP4" userLabel="CategoryCell">
-                                        <rect key="frame" x="0.0" y="513.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="513.33333333333326" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FIg-bA-iP4" id="9A3-Rk-pcR">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -991,7 +991,7 @@
                                         </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="80" id="S5s-Hi-wpQ" userLabel="DescriptionCell">
-                                        <rect key="frame" x="0.0" y="557.5" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="557.33333333333326" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S5s-Hi-wpQ" id="edW-Mg-11G">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -1025,7 +1025,7 @@
                             <tableViewSection id="3oT-Ff-cfh">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="144" id="jWK-Hu-a4Z" userLabel="SubmitCell">
-                                        <rect key="frame" x="0.0" y="673.5" width="414" height="144"/>
+                                        <rect key="frame" x="0.0" y="673.33333333333326" width="414" height="144"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jWK-Hu-a4Z" id="aBd-dt-7Wf">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="144"/>
@@ -1102,9 +1102,11 @@
                         <outletCollection property="addPhotoButtons" destination="rKu-78-vsr" collectionClass="NSMutableArray" id="jeO-RC-sSd"/>
                         <outletCollection property="addPhotoButtons" destination="ySa-zS-iXQ" collectionClass="NSMutableArray" id="w2j-be-wb5"/>
                         <segue destination="LK4-iB-5uv" kind="presentation" identifier="uploadInfoSuccess" modalTransitionStyle="coverVertical" id="hka-TD-So8"/>
+                        <segue destination="7lz-cc-KuB" kind="unwind" identifier="productUpdated" unwindAction="unwindToItemDetailVCWithSegue:" id="gPC-HD-9X7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PE7-oc-3Ab" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="7lz-cc-KuB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2642" y="135"/>
         </scene>
@@ -2378,8 +2380,21 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nz1-0E-Mrn" userLabel="top half view">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="385"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YIC-Sb-wGs">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" ambiguous="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YIC-Sb-wGs">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="320"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dX6-tk-p7c">
+                                                <rect key="frame" x="15" y="282" width="41" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <state key="normal" title="EDIT">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="updateProduct:" destination="dSn-hY-4Nv" eventType="touchUpInside" id="6ht-E0-aiC"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="320" id="RHs-Dy-snA"/>
                                         </constraints>
@@ -2639,6 +2654,8 @@
                         <outlet property="priceLabelView" destination="X1J-JZ-FDO" id="bOS-hE-tkn"/>
                         <outlet property="tagView" destination="Lzr-1Z-scY" id="4Ap-2e-Xqy"/>
                         <outlet property="topView" destination="Nz1-0E-Mrn" id="rCc-0J-icf"/>
+                        <outlet property="updateProductButton" destination="dX6-tk-p7c" id="U2J-1E-5ti"/>
+                        <outlet property="usedTimeLabelView" destination="oW5-U2-pPx" id="aRc-Pr-wFC"/>
                         <segue destination="ZOk-hp-Z0r" kind="unwind" identifier="unwindToMainPage" unwindAction="unwindFromDetailVCWithSegue:" id="iiB-lP-Ifn"/>
                         <segue destination="ZOk-hp-Z0r" kind="unwind" identifier="unwindToFavorite" unwindAction="unwindFromDetailVCtoFavoriteVCWithSegue:" id="dmD-4L-OUO"/>
                         <segue destination="zFd-Dm-gBy" kind="presentation" identifier="contactSellerVC" modalTransitionStyle="coverVertical" id="67t-OU-7l1"/>
@@ -2646,6 +2663,7 @@
                         <segue destination="ZOk-hp-Z0r" kind="unwind" identifier="unwindToTransaction" unwindAction="unwindFromDetailVCtoTransactionVCWithSegue:" id="sC5-MR-YUv"/>
                         <segue destination="U0C-z8-sSW" kind="presentation" identifier="rateAndCommentVC" modalTransitionStyle="coverVertical" id="5lS-nC-vax"/>
                         <segue destination="g76-sG-NjQ" kind="presentation" identifier="goToUserProfile" modalTransitionStyle="coverVertical" id="btL-pi-SGU"/>
+                        <segue destination="vMy-cE-XyJ" kind="presentation" identifier="goToProductUpdate" modalTransitionStyle="coverVertical" id="ra7-RM-jfm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9qW-eR-3V2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3185,6 +3203,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="Wch-iz-7VF"/>
         <segue reference="btL-pi-SGU"/>
+        <segue reference="ra7-RM-jfm"/>
         <segue reference="67t-OU-7l1"/>
         <segue reference="99o-Qk-lN0"/>
     </inferredMetricsTieBreakers>

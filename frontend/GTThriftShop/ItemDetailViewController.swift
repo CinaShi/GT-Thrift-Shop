@@ -24,6 +24,10 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     let blurEffectView = UIVisualEffectView(effect: nil)
     var activityIndicatorView: UIActivityIndicatorView!
     
+    //for product update
+    var hasBeenUpdated = false
+    var updatedInfo: (String, String, String, String)!
+    
     var tappedImage: UIImage!
     
     private let refreshControl = UIRefreshControl()
@@ -44,6 +48,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var favoriteImage: UIButton!
     @IBOutlet weak var nameLabelView: UILabel!
     @IBOutlet weak var priceLabelView: UILabel!
+    @IBOutlet weak var usedTimeLabelView: UILabel!
     @IBOutlet weak var ownerLabelView: UILabel!
     @IBOutlet weak var descriptionView: UITextView!
     @IBOutlet weak var tagView: UILabel!
@@ -53,6 +58,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var pageIndicator: UIPageControl!
     @IBOutlet weak var backFromInterestBlock: UIButton!
     @IBOutlet var interestBlock: UIView!
+    @IBOutlet weak var updateProductButton: UIButton!
     
     @IBOutlet weak var topView: UIView!
     
@@ -64,6 +70,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        updateProductButton.isHidden = true
 
         interestTableView.delegate = self
         interestTableView.dataSource = self
@@ -129,6 +136,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         priceLabelView.text = product.price!
         ownerLabelView.text = product.userName!
         descriptionView.text = product!.info
+        usedTimeLabelView.text = product!.usedTime
         
         let ud = UserDefaults.standard
         userId = ud.integer(forKey: "userId")
@@ -183,6 +191,9 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 nextStepButton.setTitle("Sold", for: .normal)
                 //nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
                 nextStepButton.isEnabled = false
+            } else {
+                updateProductButton.isHidden = false
+                imageScrollView.bringSubview(toFront: updateProductButton)
             }
         } else {
             nextStepButton.setTitle("Contact Seller", for: .normal)
@@ -538,7 +549,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         var tagLabel = self.tags.first
                         for tag in self.tags {
                             if tag == self.tags.first {continue}
-                            tagLabel = "\(tagLabel), \(tag)"
+                            tagLabel = "\(String(describing: tagLabel)), \(tag)"
                         }
                         self.tagView.text = tagLabel
                         if self.isFavorited! {
@@ -667,6 +678,11 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
+    @IBAction func updateProduct(_ sender: Any) {
+        self.performSegue(withIdentifier: "goToProductUpdate", sender: self)
+    }
+    
+    
     @IBAction func unwindToItemDetailVC(segue: UIStoryboardSegue) {
         if segue.source is ContactSellerViewController {
             print("unwind from contact VC")
@@ -674,6 +690,14 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             print("unwind from rateAndComment VC")
             nextStepButton.setTitle("Already rated!", for: .normal)
             nextStepButton.isEnabled = false
+        } else if segue.source is SellTableViewController {
+            print("unwind from product update")
+            if hasBeenUpdated {
+                usedTimeLabelView.text = updatedInfo.0
+                priceLabelView.text = updatedInfo.1
+                tagView.text = updatedInfo.2
+                descriptionView.text = updatedInfo.3
+            }
         }
     }
     
@@ -771,6 +795,15 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let destination = segue.destination as! UserProfileViewController
             destination.isFromOtherUser = true
             destination.otherUserId = product.userId!
+        } else if segue.identifier == "goToProductUpdate" {
+            let destination = segue.destination as! SellTableViewController
+            destination.isForUpdate = true
+            destination.productForUpdate = product
+            destination.productTag = self.tagView.text!
+            destination.productImages = self.imageArray
+        } else if segue.identifier == "unwindToPublishment" {
+            let destination = segue.destination as! PublishmentViewController
+            destination.shouldRefreshData = true
         }
         
     }

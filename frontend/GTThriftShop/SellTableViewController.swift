@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class SellTableViewController: UITableViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate, UIPickerViewDelegate, UITextFieldDelegate, UITextViewDelegate {
     
@@ -16,6 +17,11 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     var selectedIndex: Int!
     var userId: Int!
     var assignedPid = -1
+    
+    var isForUpdate = false
+    var productForUpdate:Product?
+    var productTag:String!
+    var productImages: [UIImage]!
     
     @IBOutlet var photosImageViews: [UIImageView]!
     
@@ -58,6 +64,23 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         
         descriptionTextView.text = "Type your description here."
         descriptionTextView.textColor = UIColor.lightGray
+        
+        if isForUpdate && productForUpdate != nil {
+            
+            submitButton.setTitle("Update", for: .normal)
+            
+            for (index, img) in productImages.enumerated() {
+                self.photos[index] = img
+                self.scaleImageToFitImageView(img, in: self.photosImageViews[index])
+            }
+            
+            self.itemNameField.text = productForUpdate!.name
+            self.itemNameField.isUserInteractionEnabled = false
+            self.usedYearField.text = productForUpdate!.usedTime
+            self.priceField.text = productForUpdate!.price
+            self.categoryField.text = productTag
+            self.descriptionTextView.text = productForUpdate!.info
+        }
     }
     
     
@@ -134,7 +157,12 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
                 GlobalHelper.sendAlart(info: "Please choose at least 1 photo!", VC: self)
             } else {
                 submitButton.isEnabled = false
-                uploadInfoFirst()
+                if isForUpdate {
+                    updateProduct()
+                } else {
+                    uploadInfoFirst()
+                }
+               
             }
             
         }
@@ -304,7 +332,41 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         task.resume()
     }
     
+    func updateProduct() {
+        let parameters: Parameters = [
+            "pid": productForUpdate!.pid,
+            "pName": productForUpdate!.name,
+            "pPrice": priceField.text!,
+            "pInfo": descriptionTextView.text,
+            "tag": categoryField.text!,
+            "usedTime": usedYearField.text!
+        ]
+        print("param ---> \(parameters)")
+        Alamofire.request("\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/info/update", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseString { response in
+            switch response.result {
+            case .success:
+                print("Response String: \(response.result.value!)")
+                if response.result.value! == "Success" {
+                    self.performSegue(withIdentifier: "productUpdated", sender: self)
+                } else {
+                    self.notifyFailure(info: "Failed to update product!")
+                    self.submitButton.isEnabled = true
+                }
+            case .failure(let error):
+                print(error)
+                self.notifyFailure(info: "Cannot connect to server!")
+                self.submitButton.isEnabled = true
+            }
+        }
+    }
+    
     @IBAction func resetAll(_ sender: Any) {
+        
+        if isForUpdate {
+            resetAllToBeforeUpdate()
+            return
+        }
+        
         itemNameField.text = ""
         usedYearField.text = ""
         priceField.text = ""
@@ -318,7 +380,24 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         photos = [UIImage?](repeating: nil, count:6)
     }
     
-    
+    func resetAllToBeforeUpdate() {
+        
+        for imageView in photosImageViews {
+            imageView.image = #imageLiteral(resourceName: "Unchecked Checkbox-100")
+        }
+        
+        photos = [UIImage?](repeating: nil, count:6)
+        for (index, img) in productImages.enumerated() {
+            self.photos[index] = img
+            self.scaleImageToFitImageView(img, in: self.photosImageViews[index])
+        }
+        
+        self.usedYearField.text = productForUpdate!.usedTime
+        self.priceField.text = productForUpdate!.price
+        self.categoryField.text = productTag
+        self.descriptionTextView.text = productForUpdate!.info
+        descriptionTextView.textColor = UIColor.lightGray
+    }
     
     func notifyFailure(info: String) {
         GlobalHelper.sendAlart(info: info, VC: self)
@@ -332,25 +411,29 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         let pickedImage:UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         
         photos[selectedIndex] = pickedImage
-        //scale down image
-        let imageSize = pickedImage.size
-        let imageViewSideLength = Float((selectedAddPhotoImageView?.frame.size.width)!)
-//        print(imageViewSideLength)
-        let scaledImage: UIImage!
-        if Float(imageSize.width) >= Float(imageSize.height) {
-            let scaledHeight = imageViewSideLength * Float(imageSize.height) / Float(imageSize.width)
-//            print("height -> \(scaledHeight)")
-            scaledImage = self.scaleImageWith(pickedImage, and: CGSize(width: Int(imageViewSideLength), height: Int(scaledHeight)))
-            selectedAddPhotoImageView?.image = scaledImage
-        } else {
-            let scaledWidth = imageViewSideLength * Float(imageSize.width) / Float(imageSize.height)
-//            print("width -> \(scaledWidth)")
-            scaledImage = self.scaleImageWith(pickedImage, and: CGSize(width: Int(scaledWidth), height: Int(imageViewSideLength)))
-            selectedAddPhotoImageView?.image = scaledImage
-        }
+        self.scaleImageToFitImageView(pickedImage, in: self.selectedAddPhotoImageView!)
         
         
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func scaleImageToFitImageView(_ image:UIImage, in imageView: UIImageView) {
+        //scale down image
+        let imageSize = image.size
+        let imageViewSideLength = Float((imageView.frame.size.width))
+        //        print(imageViewSideLength)
+        let scaledImage: UIImage!
+        if Float(imageSize.width) >= Float(imageSize.height) {
+            let scaledHeight = imageViewSideLength * Float(imageSize.height) / Float(imageSize.width)
+            //            print("height -> \(scaledHeight)")
+            scaledImage = self.scaleImageWith(image, and: CGSize(width: Int(imageViewSideLength), height: Int(scaledHeight)))
+            imageView.image = scaledImage
+        } else {
+            let scaledWidth = imageViewSideLength * Float(imageSize.width) / Float(imageSize.height)
+            //            print("width -> \(scaledWidth)")
+            scaledImage = self.scaleImageWith(image, and: CGSize(width: Int(scaledWidth), height: Int(imageViewSideLength)))
+            imageView.image = scaledImage
+        }
     }
     
     func scaleImageWith(_ image:UIImage, and newSize:CGSize)->UIImage{
@@ -414,14 +497,17 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
     
     
     
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "productUpdated"{
+            let destination = segue.destination as! ItemDetailViewController
+            destination.hasBeenUpdated = true
+            destination.updatedInfo = (usedYearField.text!, priceField.text!, categoryField.text!, descriptionTextView.text)
+        }
+        
     }
-    */
 
 }
