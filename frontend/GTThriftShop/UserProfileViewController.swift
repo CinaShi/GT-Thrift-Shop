@@ -54,9 +54,9 @@ class UserProfileViewController: UIViewController {
         buttonBlock.layer.shadowOpacity = 0.5
         
         let color5 = UIColor(red: 255/255, green: 94/255, blue: 58/255, alpha: 1)
-        logoutButton.layer.cornerRadius = 20
-        logoutButton.layer.borderColor = color5.cgColor
-        logoutButton.layer.borderWidth = 1
+//        logoutButton.layer.cornerRadius = 20
+//        logoutButton.layer.borderColor = color5.cgColor
+//        logoutButton.layer.borderWidth = 1
         
         //scoreLabel
         self.scoreLabel.center.x = self.view.frame.width - 60
@@ -302,7 +302,7 @@ class UserProfileViewController: UIViewController {
             print("unwind from publishment VC")
         } else if segue.source is TransactionViewController {
             print("unwind from transaction VC")
-        } else if segue.source is MyCommentTableViewController {
+        } else if segue.source is MyCommentCollectionViewController {
             print("unwind from comment VC")
         }
     }

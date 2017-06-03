@@ -21,6 +21,8 @@ class EmbedTableViewController: UITableViewController {
         blurEffectView.frame = view.bounds
         view.addSubview(blurEffectView)
         view.sendSubview(toBack: blurEffectView)
+        self.tableView.tableFooterView = UIView()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -105,7 +107,7 @@ class EmbedTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedToComment" && isFromAnotherUser {
             let navVc = segue.destination as! UINavigationController
-            let destination = navVc.viewControllers.first as! MyCommentTableViewController
+            let destination = navVc.viewControllers.first as! MyCommentCollectionViewController
             destination.isFromAnotherUser = self.isFromAnotherUser
             destination.otherUserId = self.otherUserId!
         }

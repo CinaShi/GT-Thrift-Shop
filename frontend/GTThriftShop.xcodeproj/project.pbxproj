@@ -17,7 +17,6 @@
 		088542DF1DE93481004344D4 /* GTThriftShopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542DE1DE93481004344D4 /* GTThriftShopUITests.swift */; };
 		089233801E8F58FB00B72BF7 /* ContactSellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0892337F1E8F58FB00B72BF7 /* ContactSellerViewController.swift */; };
 		0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */; };
-		0899EEED1E71DD9800262267 /* MyCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */; };
 		0899EEF11E71DDF700262267 /* CommentDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */; };
 		0899EEF31E72278300262267 /* SellTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0899EEF21E72278300262267 /* SellTableViewController.swift */; };
 		089ECA3F1DEE7F6C00D508F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */; };
@@ -78,7 +77,6 @@
 		089233831E8F5A6800B72BF7 /* JSQSystemSoundPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQSystemSoundPlayer.framework; path = "Pods/../build/Debug-iphoneos/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework"; sourceTree = "<group>"; };
 		089233851E8F5C0A00B72BF7 /* GTThriftShop-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTThriftShop-Bridging-Header.h"; sourceTree = "<group>"; };
 		0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateAndCommentTableViewController.swift; sourceTree = "<group>"; };
-		0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCommentTableViewController.swift; sourceTree = "<group>"; };
 		0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentDetailTableViewController.swift; path = ../CommentDetailTableViewController.swift; sourceTree = "<group>"; };
 		0899EEF21E72278300262267 /* SellTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellTableViewController.swift; sourceTree = "<group>"; };
 		089ECA3E1DEE7F6C00D508F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -226,7 +224,6 @@
 			isa = PBXGroup;
 			children = (
 				D71CDAC31E72630900D94118 /* KDCircularProgress.swift */,
-				0899EEEC1E71DD9800262267 /* MyCommentTableViewController.swift */,
 				0899EEE81E713BC500262267 /* RateAndCommentTableViewController.swift */,
 				089ECA4E1DEE8FBE00D508F6 /* UserProfileViewController.swift */,
 				0899EEF01E71DDF700262267 /* CommentDetailTableViewController.swift */,
@@ -496,7 +493,6 @@
 				088542C11DE93481004344D4 /* ViewController.swift in Sources */,
 				0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */,
 				D7960FD51ED5CE870034678F /* MyCommentCollectionViewController.swift in Sources */,
-				0899EEED1E71DD9800262267 /* MyCommentTableViewController.swift in Sources */,
 				0899EEF11E71DDF700262267 /* CommentDetailTableViewController.swift in Sources */,
 				D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */,
 				088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */,
