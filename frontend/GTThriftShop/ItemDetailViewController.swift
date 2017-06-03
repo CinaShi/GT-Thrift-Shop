@@ -149,6 +149,14 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.interestTableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(loadInterestIds), for: .valueChanged)
+        
+        let swipeFromLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeFromLeft(sender:)))
+        swipeFromLeft.direction = .right
+        self.view.addGestureRecognizer(swipeFromLeft)
+    }
+    
+    func swipeFromLeft(sender:UISwipeGestureRecognizer) {
+        self.backToMain(self)
     }
     
     func initNextStepButtonBasedOnSourceVC() {
