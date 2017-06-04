@@ -3,7 +3,7 @@ from flask.ext.mysql import MySQL
 import json, codecs
 import boto3
 from werkzeug.utils import secure_filename
-import datetime
+import datetime, random, string
 from products import products
 from user import user
 from favorites import favorites
@@ -38,9 +38,12 @@ def auth_login():
 		try:
 			cursor.execute("insert into User (gtusername,AccountType) values (%s,%s)",[gtusername,0])
 			newID = cursor.lastrowid
+			tokenCursor = db.cursor()
+			token = generate_token()
+			tokenCursor.execute("REPLACE INTO APITokens (userId, tokens, timeStamp) VALUES (%s, %s, %s);",[newID, token, datetime.datetime.now()])
 			db.commit()
 			db.close()
-			return json.dumps({'new':True,'userId':newID})
+			return json.dumps({'new':True,'userId':newID, 'token':token})
 		except:
 			db.rollback()
 			db.close()
@@ -48,8 +51,15 @@ def auth_login():
 	elif cursor.rowcount==1:
 		results = cursor.fetchall()
 		userid = results[0][0]
+		tokenCursor = db.cursor()
+		token = generate_token()
+		tokenCursor.execute("REPLACE INTO APITokens (userId, tokens, timeStamp) VALUES (%s, %s, %s);",[userid, token, datetime.datetime.now()])
+		db.commit()
 		db.close()
-		return  json.dumps({'new':False,'userId':userid}) 
+		return  json.dumps({'new':False,'userId':userid, 'token':token}) 
+
+def generate_token():
+	return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits + "~!@#$%^&*()-_=+,.<>?;:{}[]") for _ in range(64))
 
 
 #author: Wen
@@ -71,4 +81,4 @@ def get_tags():
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
 	app.debug = True
-	#app.run(port=8889)
+	# app.run(port=8888)
