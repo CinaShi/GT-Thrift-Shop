@@ -84,12 +84,13 @@ class UserProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.getUserInfo()
+        initProfileImage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        initProfileImage()
+        
     }
     
     //Mark: helper methods
