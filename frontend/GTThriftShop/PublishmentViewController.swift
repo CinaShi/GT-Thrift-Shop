@@ -16,6 +16,8 @@ class PublishmentViewController: UIViewController, UITableViewDelegate, UITableV
     var myProducts = [Product]()
     var userDefaults = UserDefaults.standard
     private let refreshControl = UIRefreshControl()
+    
+    var shouldRefreshData = false
 
     let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
     let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
@@ -49,8 +51,16 @@ class PublishmentViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = false
         self.myProducts.removeAll()
+        
         self.activityIndicatorView.startAnimating()
-        loadProductsFromLocal()
+        
+        if shouldRefreshData {
+            shouldRefreshData = false
+            obtainAllProductsFromServer()
+        }else {
+            loadProductsFromLocal()
+        }
+        
         loadMyProducts()
         initialSort()
         self.activityIndicatorView.stopAnimating()
@@ -59,7 +69,7 @@ class PublishmentViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func obtainAllProductsFromServer() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -118,7 +128,7 @@ class PublishmentViewController: UIViewController, UITableViewDelegate, UITableV
                     DispatchQueue.main.async(execute: {
                         self.myProducts.removeAll()
                         
-                        self.loadProductsFromLocal()
+//                        self.loadProductsFromLocal()
                         self.loadMyProducts()
                         
                         self.initialSort()
@@ -185,20 +195,11 @@ class PublishmentViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.activityIndicatorView.stopAnimating()
         self.tableView.refreshControl?.endRefreshing()
     }
     
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     @IBAction func unwindFromDetailVCtoPublishmentVC(segue: UIStoryboardSegue) {
         if segue.source is ItemDetailViewController {

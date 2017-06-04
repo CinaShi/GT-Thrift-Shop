@@ -134,7 +134,7 @@ class UserProfileViewController: UIViewController {
     }
     
     func getUserInfo() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/info/get/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info/get/\(userId!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -250,17 +250,7 @@ class UserProfileViewController: UIViewController {
     }
 
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
-    }
-    
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
+        GlobalHelper.sendAlart(info: info, VC: self)
     }
     
     
@@ -272,7 +262,6 @@ class UserProfileViewController: UIViewController {
     }
     
     func logout() {
-        
         HttpClient.clearCookies()
         
         LoginViewController.authFormPost = nil

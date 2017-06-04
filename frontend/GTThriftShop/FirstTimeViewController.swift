@@ -64,7 +64,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     
     @IBAction func submitInfo(_ sender: AnyObject) {
         if nickNameField.text! == "" || emailField.text! == "" || descriptionView.text! == "" {
-            sendAlart(info: "Please fill in all blank fields before submit!")
+            GlobalHelper.sendAlart(info: "Please fill in all blank fields before submit!", VC: self)
         } else {
             self.uploadPhotoButton.isEnabled = false
             self.submitButton.isEnabled = false
@@ -148,18 +148,9 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
         return "Boundary-\(NSUUID().uuidString)"
     }
     
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     func submitPhotoFirst() {
-        let url:URL = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/image/\(userId)")!
+        let url:URL = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/image/\(userId)")!
         let session = URLSession.shared
         
         let request = NSMutableURLRequest(url:url);
@@ -206,7 +197,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     }
     
     func uploadWholeInfo(imageurl: String) {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/info");
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info");
         
         var request = URLRequest(url:url! as URL);
         request.httpMethod = "POST";
@@ -272,7 +263,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.uploadPhotoButton.isEnabled = true
         self.submitButton.isEnabled = true
         self.submitActivityIndicator.stopAnimating()

@@ -50,7 +50,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if !refreshControl.isRefreshing {
             loadProductsIndicator.startAnimating()
         }
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -153,22 +153,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.loadProductsIndicator.stopAnimating()
         refreshControl.endRefreshing()
     }
-    
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    
     
     //Mark: Table view delegate
     

@@ -84,7 +84,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         loadFavoriteIndicator.startAnimating()
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/favorites/all/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/favorites/all/\(userId!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -175,7 +175,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func obtainAllProductsFromServer() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -260,20 +260,11 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.loadFavoriteIndicator.stopAnimating()
         self.refreshControl.endRefreshing()
     }
-    
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
+
     
     @IBAction func unwindFromDetailVCtoFavoriteVC(segue: UIStoryboardSegue) {
         if segue.source is ItemDetailViewController {

@@ -68,7 +68,7 @@ class TransactionViewController: UIViewController, UITableViewDataSource, UITabl
     
     func loadMyTransactions() {
         
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/transactions/getAll/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/transactions/getAll/\(userId!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -175,20 +175,11 @@ class TransactionViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.activityIndicator.stopAnimating()
         self.tableView.refreshControl?.endRefreshing()
     }
     
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     @IBAction func unwindFromDetailVCtoTransactionVC(segue: UIStoryboardSegue) {
         if segue.source is ItemDetailViewController {

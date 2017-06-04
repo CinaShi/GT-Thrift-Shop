@@ -119,7 +119,7 @@ class ContactSellerViewController: JSQMessagesViewController {
     }
     
     func getSellerAvatar() {
-        Alamofire.request("http://ec2-34-196-222-211.compute-1.amazonaws.com/user/getAvatarURL/\(sellerId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
+        Alamofire.request("\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/getAvatarURL/\(sellerId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success:
                 print("Validation Successful")
@@ -148,7 +148,7 @@ class ContactSellerViewController: JSQMessagesViewController {
     }
     
     func sendInterestInBackground() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/add/interest");
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/add/interest");
         
         var request = URLRequest(url:url! as URL);
         request.httpMethod = "POST";
@@ -197,18 +197,9 @@ class ContactSellerViewController: JSQMessagesViewController {
         task.resume()
     }
     
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
     }
     
     private func addMessage(withId id: String, name: String, date: Date, text: String) {

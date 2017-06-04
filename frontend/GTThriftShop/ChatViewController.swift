@@ -71,7 +71,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if !refreshControl.isRefreshing {
             loadUsersIndicator.startAnimating()
         }
-        Alamofire.request("http://ec2-34-196-222-211.compute-1.amazonaws.com/products/getInterest/\(userId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
+        Alamofire.request("\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/getInterest/\(userId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success:
                 print("Validation Successful")
@@ -118,20 +118,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.loadUsersIndicator.stopAnimating()
         self.refreshControl.endRefreshing()
     }
     
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     func generateChannel(anotherId: Int) -> String {
         return userId < anotherId ? "\(userId!)_\(anotherId)" : "\(anotherId)_\(userId!)"

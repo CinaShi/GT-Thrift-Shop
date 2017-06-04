@@ -84,7 +84,7 @@ class MyCommentCollectionViewController: UICollectionViewController {
     func loadMyComments() {
         //implement this part after backend API changed
         
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/comment/get/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/comment/get/\(userId!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -192,20 +192,11 @@ class MyCommentCollectionViewController: UICollectionViewController {
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.activityIndicatorView.stopAnimating()
         self.collectionView?.refreshControl?.endRefreshing()
     }
-    
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
+
     
     
     @IBAction func unwindToUserProfile(_ sender: Any) {

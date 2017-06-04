@@ -24,6 +24,10 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     let blurEffectView = UIVisualEffectView(effect: nil)
     var activityIndicatorView: UIActivityIndicatorView!
     
+    //for product update
+    var hasBeenUpdated = false
+    var updatedInfo: (String, String, String, String)!
+    
     var tappedImage: UIImage!
     
     private let refreshControl = UIRefreshControl()
@@ -44,6 +48,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var favoriteImage: UIButton!
     @IBOutlet weak var nameLabelView: UILabel!
     @IBOutlet weak var priceLabelView: UILabel!
+    @IBOutlet weak var usedTimeLabelView: UILabel!
     @IBOutlet weak var ownerLabelView: UILabel!
     @IBOutlet weak var descriptionView: UITextView!
     @IBOutlet weak var tagView: UILabel!
@@ -53,6 +58,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var pageIndicator: UIPageControl!
     @IBOutlet weak var backFromInterestBlock: UIButton!
     @IBOutlet var interestBlock: UIView!
+    @IBOutlet weak var updateProductButton: UIButton!
     
     @IBOutlet weak var topView: UIView!
     
@@ -64,6 +70,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        updateProductButton.isHidden = true
 
         interestTableView.delegate = self
         interestTableView.dataSource = self
@@ -129,6 +136,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         priceLabelView.text = product.price!
         ownerLabelView.text = product.userName!
         descriptionView.text = product!.info
+        usedTimeLabelView.text = product!.usedTime
         
         let ud = UserDefaults.standard
         userId = ud.integer(forKey: "userId")
@@ -149,6 +157,14 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.interestTableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(loadInterestIds), for: .valueChanged)
+        
+        let swipeFromLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeFromLeft(sender:)))
+        swipeFromLeft.direction = .right
+        self.view.addGestureRecognizer(swipeFromLeft)
+    }
+    
+    func swipeFromLeft(sender:UISwipeGestureRecognizer) {
+        self.backToMain(self)
     }
     
     func initNextStepButtonBasedOnSourceVC() {
@@ -175,6 +191,9 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 nextStepButton.setTitle("Sold", for: .normal)
                 //nextStepButton.setTitleColor(UIColor(red: 0, green: 128/255, blue: 1, alpha: 1), for: .normal)
                 nextStepButton.isEnabled = false
+            } else {
+                updateProductButton.isHidden = false
+                imageScrollView.bringSubview(toFront: updateProductButton)
             }
         } else {
             nextStepButton.setTitle("Contact Seller", for: .normal)
@@ -271,7 +290,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         activityIndicatorView.startAnimating()
         
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/interest/\(product.pid!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/interest/\(product.pid!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "GET"
@@ -382,7 +401,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         self.nextStepButton.isEnabled = false
         
         loadDetailsIndicator.startAnimating()
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/update/isSold")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/update/isSold")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "POST"
@@ -459,8 +478,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     products[index] = prod
                     let productsToSave = products.sorted(by: {$0.pid! < $1.pid!})
                     let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: productsToSave)
-                    userDefaults.set(encodedData, forKey: "products")
-                    userDefaults.synchronize()
+                    GlobalHelper.storeToUserDefaults(value: encodedData, key: "products")
                     return
                 }
             }
@@ -470,8 +488,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func loadAdditionalDetails() {
         loadDetailsIndicator.startAnimating()
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/products/details/\(product.pid!)")
-        print("http://ec2-34-196-222-211.compute-1.amazonaws.com/products/details/\(product.pid!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/details/\(product.pid!)")
+        print("\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/details/\(product.pid!)")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "POST"
@@ -531,7 +549,7 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         var tagLabel = self.tags.first
                         for tag in self.tags {
                             if tag == self.tags.first {continue}
-                            tagLabel = "\(tagLabel), \(tag)"
+                            tagLabel = "\(String(describing: tagLabel)), \(tag)"
                         }
                         self.tagView.text = tagLabel
                         if self.isFavorited! {
@@ -562,21 +580,11 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.loadDetailsIndicator.stopAnimating()
         self.activityIndicatorView.stopAnimating()
         self.nextStepButton.isEnabled = true
         self.refreshControl.endRefreshing()
-    }
-    
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
     }
     
     
@@ -588,9 +596,9 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         var url: URL?
         if isFavorited {
-            url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/favorites/remove")!
+            url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/favorites/remove")!
         } else {
-            url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/favorites/new")!
+            url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/favorites/new")!
         }
         
         var request = URLRequest(url:url! as URL)
@@ -670,6 +678,11 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
+    @IBAction func updateProduct(_ sender: Any) {
+        self.performSegue(withIdentifier: "goToProductUpdate", sender: self)
+    }
+    
+    
     @IBAction func unwindToItemDetailVC(segue: UIStoryboardSegue) {
         if segue.source is ContactSellerViewController {
             print("unwind from contact VC")
@@ -677,6 +690,14 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             print("unwind from rateAndComment VC")
             nextStepButton.setTitle("Already rated!", for: .normal)
             nextStepButton.isEnabled = false
+        } else if segue.source is SellTableViewController {
+            print("unwind from product update")
+            if hasBeenUpdated {
+                usedTimeLabelView.text = updatedInfo.0
+                priceLabelView.text = updatedInfo.1
+                tagView.text = updatedInfo.2
+                descriptionView.text = updatedInfo.3
+            }
         }
     }
     
@@ -774,6 +795,15 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let destination = segue.destination as! UserProfileViewController
             destination.isFromOtherUser = true
             destination.otherUserId = product.userId!
+        } else if segue.identifier == "goToProductUpdate" {
+            let destination = segue.destination as! SellTableViewController
+            destination.isForUpdate = true
+            destination.productForUpdate = product
+            destination.productTag = self.tagView.text!
+            destination.productImages = self.imageArray
+        } else if segue.identifier == "unwindToPublishment" {
+            let destination = segue.destination as! PublishmentViewController
+            destination.shouldRefreshData = true
         }
         
     }
