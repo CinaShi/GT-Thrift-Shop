@@ -69,7 +69,7 @@ def generate_token():
 
 
 #author: Wen
-#authentication
+#auth   entication
 @app.route('/tags', methods=['POST'])
 def get_tags():
 	if not request.json or not 'userId' in request.json or not 'token' in request.json:

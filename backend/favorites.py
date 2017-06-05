@@ -19,10 +19,14 @@ mysql.init_app(app)
 favorites = Blueprint('favorites', __name__)
 
 
-@favorites.route('/favorites/all/<userId>', methods=['GET'])
-def get_favorites_pid(userId):
+@favorites.route('/favorites/all', methods=['POST'])
+def get_favorites_pid():
 
 	pidList = []
+	
+	if not request.json or not 'userId' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
 	
 	db = mysql.connect()
 	cursor = db.cursor()
@@ -52,9 +56,9 @@ def add_favorites():
 		return "200"
 
 	except:
-	   db.rollback()
-	   db.close()
-	   abort(400, '{"message":"insert unsuccessful"}')
+		db.rollback()
+		db.close()
+		abort(400, '{"message":"insert unsuccessful"}')
 
 
 @favorites.route('/favorites/remove', methods=['POST'])

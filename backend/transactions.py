@@ -20,9 +20,13 @@ transactions = Blueprint('transactions', __name__)
 
 
 #author: Wen
-@transactions.route('/transactions/get/<tranId>', methods=['GET'])
-def get_transactions(tranId):
-	
+@transactions.route('/transactions/get', methods=['POST'])
+def get_transactions():
+
+	if not request.json or not 'tranId' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	tranId = request.json['tranId']
+
 	db = mysql.connect()
 	cursor = db.cursor()
 
@@ -54,15 +58,19 @@ def get_transactions(tranId):
 
 
 #author: Wen
-@transactions.route('/transactions/getAll/<uid>', methods=['GET'])
-def get_all_transactions(uid):
+@transactions.route('/transactions/getAll', methods=['POST'])
+def get_all_transactions():
 	transList = []
 	returnList = []
+	
+	if not request.json or not 'userId' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+	userId = request.json['userId']
 	
 	db = mysql.connect()
 	cursor = db.cursor()
 
-	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid, Transaction.isRated, Transaction.time, Transaction.tranId FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND (Product.userId = %s OR Transaction.buyerId = %s);",[uid, uid]) 
+	cursor.execute("SELECT Transaction.buyerId, Product.userId, Transaction.pid, Transaction.isRated, Transaction.time, Transaction.tranId FROM Transaction INNER JOIN Product WHERE Transaction.pid = Product.pid AND (Product.userId = %s OR Transaction.buyerId = %s);",[userId, userId]) 
 	if cursor.rowcount > 0:
 		transList = cursor.fetchall()
 		for trans in transList:
