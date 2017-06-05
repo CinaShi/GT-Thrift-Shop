@@ -3,11 +3,12 @@ from flask.ext.mysql import MySQL
 import json, codecs
 import boto3
 from werkzeug.utils import secure_filename
-import datetime, random, string
+import datetime, random, string, hmac, hashlib
 from products import products
 from user import user
 from favorites import favorites
 from transactions import transactions
+import utils
 
 config = json.load(codecs.open('config.json', encoding='utf-8'))
 app = Flask(__name__)
@@ -28,9 +29,14 @@ app.register_blueprint(transactions)
 
 @app.route('/auth/login',methods=['POST'])
 def auth_login():
-	if not request.json or not 'gtusername' in request.json:
+	if not request.json or not 'gtusername' in request.json or not 'hash' in request.json:
 		abort(400)
 	gtusername = request.json['gtusername']
+	providedHash = request.json['hash']
+	generatedHash = hmac.new(key="jdteam199",msg=gtusername+"gtthriftshop2017", digestmod=hashlib.sha256).hexdigest()
+	if not hmac.compare_digest(str(providedHash), str(generatedHash)):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("select * from User WHERE gtusername = '%s'"%gtusername)
@@ -56,15 +62,23 @@ def auth_login():
 		tokenCursor.execute("REPLACE INTO APITokens (userId, tokens, timeStamp) VALUES (%s, %s, %s);",[userid, token, datetime.datetime.now()])
 		db.commit()
 		db.close()
-		return  json.dumps({'new':False,'userId':userid, 'token':token}) 
+		return  json.dumps({'new':False, 'userId':userid, 'token':token}) 
 
 def generate_token():
-	return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits + "~!@#$%^&*()-_=+,.<>?;:{}[]") for _ in range(64))
+	return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(64))
 
 
 #author: Wen
-@app.route('/tags', methods=['GET'])
+#authentication
+@app.route('/tags', methods=['POST'])
 def get_tags():
+	if not request.json or not 'userId' in request.json or not 'token' in request.json:
+		abort(400)
+	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT tag FROM Tag;")
@@ -80,5 +94,5 @@ def get_tags():
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0',port='80')
-	app.debug = True
+	# app.debug = True
 	# app.run(port=8888)
