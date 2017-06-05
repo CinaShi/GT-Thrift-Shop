@@ -31,7 +31,7 @@ def uploader(username):
 	return "https://s3-us-west-2.amazonaws.com/gtthriftshopusers/" + username + "/" + filename
 
 
-
+#author: Yichen
 @user.route('/user/info', methods=['POST'])
 def add_user_info():
 	if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'avatarURL' in request.json or not 'description' in request.json:
@@ -239,7 +239,7 @@ def update_user_comment():
 		abort(400, '{"message":"insert new comment unsuccessful"}')
 
 
-#author: JWZ
+#author: Wen
 @user.route('/user/info/get', methods=['POST'])
 def get_user_info():
 

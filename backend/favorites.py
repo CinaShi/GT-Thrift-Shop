@@ -19,6 +19,7 @@ mysql.init_app(app)
 favorites = Blueprint('favorites', __name__)
 
 
+#author: Yichen
 @favorites.route('/favorites/all', methods=['POST'])
 def get_favorites_pid():
 

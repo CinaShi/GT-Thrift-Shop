@@ -26,7 +26,7 @@ app.register_blueprint(user)
 app.register_blueprint(favorites)
 app.register_blueprint(transactions)
 
-
+#author: Yang
 @app.route('/auth/login',methods=['POST'])
 def auth_login():
 	if not request.json or not 'gtusername' in request.json or not 'hash' in request.json:
@@ -69,7 +69,7 @@ def generate_token():
 
 
 #author: Wen
-#auth   entication
+#authentication
 @app.route('/tags', methods=['POST'])
 def get_tags():
 	if not request.json or not 'userId' in request.json or not 'token' in request.json:

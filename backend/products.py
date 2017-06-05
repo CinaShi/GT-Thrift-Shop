@@ -89,7 +89,7 @@ def get_tag_pid():
 		db.close()
 		abort(400,"Incorrect Tag")
 
-
+#author: Yichen
 @products.route('/products/details', methods=['POST'])
 def get_tag_details():
 	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
