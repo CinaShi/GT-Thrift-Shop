@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var nickNameField: UITextField!
@@ -17,8 +17,10 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     @IBOutlet weak var submitActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var background: UIImageView!
     
     var userId = String()
+    var gtName = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,21 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
         imageView.isUserInteractionEnabled = true
         
+        submitButton.layer.borderWidth = 1
+        submitButton.layer.borderColor = UIColor(red: 0, green: 128/255, blue: 1, alpha: 1).cgColor
+        submitButton.layer.cornerRadius = 20
+        
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        let width = UIScreen.main.bounds.size.width
+        let height = UIScreen.main.bounds.size.height
+        
+        blurView.frame.size = CGSize(width: width, height: height)
+        blurView.alpha = 0.9
+        background.addSubview(blurView)
+        imageView.layer.cornerRadius = imageView.frame.width/2
+        imageView.clipsToBounds = true
+        
     }
     
     //all button functions start here
@@ -47,7 +64,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     
     @IBAction func submitInfo(_ sender: AnyObject) {
         if nickNameField.text! == "" || emailField.text! == "" || descriptionView.text! == "" {
-            sendAlart(info: "Please fill in all blank fields before submit!")
+            GlobalHelper.sendAlart(info: "Please fill in all blank fields before submit!", VC: self)
         } else {
             self.uploadPhotoButton.isEnabled = false
             self.submitButton.isEnabled = false
@@ -60,21 +77,42 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     //all helper methods start here
     
     func handleSelectProfileImageView() {
-        let picker = UIImagePickerController()
-        
-        picker.delegate = self
-        picker.allowsEditing = true
-        picker.sourceType = .photoLibrary
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            picker.sourceType = UIImagePickerControllerSourceType.camera
-            picker.cameraCaptureMode = .photo
-            picker.modalPresentationStyle = .fullScreen
-            present(picker,animated: true,completion: nil)
-        } else {
-            print("no camera, use library instead")
-            picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
-            present(picker, animated: true, completion: nil)
+//        let picker = UIImagePickerController()
+//        
+//        picker.delegate = self
+//        picker.allowsEditing = true
+//        picker.sourceType = .photoLibrary
+//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//            picker.sourceType = UIImagePickerControllerSourceType.camera
+//            picker.cameraCaptureMode = .photo
+//            picker.modalPresentationStyle = .fullScreen
+//            present(picker,animated: true,completion: nil)
+//        } else {
+//            print("no camera, use library instead")
+//            picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+//            present(picker, animated: true, completion: nil)
+//        }
+    
+        let alert = UIAlertController(title: nil, message: "Choose a way", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Take a photo", style: .default) { action in
+            let imagePicker:UIImagePickerController = UIImagePickerController()
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true, completion: nil)
         }
+        let libraryAction = UIAlertAction(title: "Choose from library", style: .default) { action in
+            let imagePicker:UIImagePickerController = UIImagePickerController()
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        
+        alert.addAction(cameraAction)
+        alert.addAction(libraryAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+
     }
     
     func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData?, boundary: String) -> NSData {
@@ -110,18 +148,9 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
         return "Boundary-\(NSUUID().uuidString)"
     }
     
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     func submitPhotoFirst() {
-        let url:URL = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/image/demo")!
+        let url:URL = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/image/\(userId)")!
         let session = URLSession.shared
         
         let request = NSMutableURLRequest(url:url);
@@ -168,7 +197,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     }
     
     func uploadWholeInfo(imageurl: String) {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/user/info");
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info");
         
         var request = URLRequest(url:url! as URL);
         request.httpMethod = "POST";
@@ -234,16 +263,22 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.uploadPhotoButton.isEnabled = true
         self.submitButton.isEnabled = true
         self.submitActivityIndicator.stopAnimating()
     }
     
     func proceedToSuccessView() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "FirstTimeSuccessViewController") as! FirstTimeSuccessViewController
-        self.navigationController?.pushViewController(newViewController, animated: true)
+        FIRAuth.auth()?.createUser(withEmail: "\(gtName)@gatech.edu", password: "GTThriftShop_\(userId)", completion: { (user, error) in
+            if error == nil {
+                print(user!.uid)
+                
+                self.performSegue(withIdentifier: "signupSuccess", sender: self)
+            } else {
+                print(error!.localizedDescription)
+            }
+        })
         
     }
     

@@ -7,30 +7,74 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     static var authFormPost: String?
     static var authLTPost: String?
+    var userIdString = String()
+    var effect: UIVisualEffect!
     
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var loginBlock: UIView!
+    @IBOutlet weak var loginBlockBlur: UIVisualEffectView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         usernameField.delegate = self
         passwordField.delegate = self
-        self.navigationController?.navigationBar.isHidden = true
+        
+        effect = loginBlockBlur.effect
+        loginBlockBlur.effect = nil
+        
+        loginBlock.layer.cornerRadius = 10
+        
+        loginButton.layer.cornerRadius = 5
+        backButton.layer.cornerRadius = 5
+        
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.view.addSubview(loginBlock)
+        loginBlock.center = self.view.center
+        loginBlock.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        loginBlock.alpha = 0
+        
+        UIView.animate(withDuration: 0.5) {
+            self.loginBlockBlur.effect = self.effect
+            self.loginBlock.alpha = 1
+            self.loginBlock.transform = CGAffineTransform.identity
+        }
+        
+    }
+
+    func animateIn() {
+        
+        self.view.addSubview(loginBlock)
+        loginBlock.center = self.view.center
+        loginBlock.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        loginBlock.alpha = 0
+        
+        UIView.animate(withDuration: 0.5) {
+            self.loginBlockBlur.effect = self.effect
+            self.loginBlock.alpha = 1
+            self.loginBlock.transform = CGAffineTransform.identity
+        }
+
+    }
     //below are functions
     
     
     @IBAction func login(_ sender: Any) {
         if usernameField.text! == "" || passwordField.text! == ""  {
-            sendAlart(info: "Please fill in all blank fields before login!")
+            GlobalHelper.sendAlart(info: "Please fill in all blank fields before login!", VC: self)
         } else {
             loginActivityIndicator.startAnimating()
             self.loginToGT()
@@ -133,7 +177,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func uploadUserInfo() {
-        let url = URL(string: "http://ec2-34-196-222-211.compute-1.amazonaws.com/auth/login");
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/auth/login");
         
         var request = URLRequest(url:url! as URL);
         request.httpMethod = "POST";
@@ -174,10 +218,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 {
                     if newUser {
                         if let userId = responseJSON["userId"] {
-                            print(userId)
-                            let userIdString = String(userId as! Int)
+                            print("user id : \(userId)")
+                            self.userIdString = String(userId as! Int)
                             DispatchQueue.main.async(execute: {
-                                self.proceedToFirstTimeView(userId: String(userIdString))
+                                GlobalHelper.storeToUserDefaults(value: userId as! Int, key: "userId")
+                                self.proceedToFirstTimeView()
                             });
                         } else {
                             //notify failure
@@ -186,9 +231,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             });
                         }
                     } else {
-                        DispatchQueue.main.async(execute: {
-                            self.proceedToMainTabView()
-                        });
+                         if let userId = responseJSON["userId"] {
+                            print("user id : \(userId)")
+                            DispatchQueue.main.async(execute: {
+                                GlobalHelper.storeToUserDefaults(value: userId as! Int, key: "userId")
+                                self.proceedToMainTabView(user: userId as! Int)
+                            });
+                        }
                         
                     }
                 } else {
@@ -209,33 +258,33 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         task.resume()
     }
     
-    func sendAlart(info: String) {
-        let alertController = UIAlertController(title: "Hey!", message: info, preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
     
     func notifyFailure(info: String) {
-        self.sendAlart(info: info)
+        GlobalHelper.sendAlart(info: info, VC: self)
         self.loginActivityIndicator.stopAnimating()
     }
     
-    func proceedToMainTabView() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "MainTabViewController") as! UITabBarController
-        self.navigationController?.pushViewController(newViewController, animated: true)
+    func proceedToMainTabView(user: Int) {
+        FIRAuth.auth()?.signIn(withEmail: "\(usernameField.text!)@gatech.edu", password: "GTThriftShop_\(user)", completion: { (user, error) in
+            if error == nil {
+                print(user!.uid)
+                
+                self.performSegue(withIdentifier: "login", sender: self)
+                
+            } else {
+                print(error!.localizedDescription)
+            }
+        })
         
     }
     
-    func proceedToFirstTimeView(userId: String) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "FirstTimeViewController") as! FirstTimeViewController
-        newViewController.userId = userId
-        self.navigationController?.pushViewController(newViewController, animated: true)
+    func proceedToFirstTimeView() {
+        self.performSegue(withIdentifier: "signup", sender: self)
+    }
+    
+    
+    @IBAction func unwindToMainPage(_ sender: Any) {
+        self.performSegue(withIdentifier: "unwindToMainVC", sender: self)
     }
     
 //below are delegate functions
@@ -247,6 +296,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "signup"{
+            let destination = segue.destination as! FirstTimeViewController
+            destination.userId = userIdString
+            destination.gtName = usernameField.text!
+        }
         
     }
     
