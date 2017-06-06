@@ -92,11 +92,10 @@ def get_tag_pid():
 #author: Yichen
 @products.route('/products/details', methods=['POST'])
 def get_tag_details():
-	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
-		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	tidList = []
 	tagList = []
-
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	pid = request.json['pid']
 
