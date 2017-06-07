@@ -22,9 +22,6 @@ favorites = Blueprint('favorites', __name__)
 #author: Yichen
 @favorites.route('/favorites/all', methods=['POST'])
 def get_favorites_pid():
-
-	pidList = []
-	
 	if not request.json or not 'userId' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
@@ -77,6 +74,6 @@ def remove_favorites():
 		return "200"
 
 	except:
-	   db.rollback()
-	   db.close()
-	   abort(400, '{"message":"remove unsuccessful"}')
+		db.rollback()
+		db.close()
+		abort(400, '{"message":"remove unsuccessful"}')

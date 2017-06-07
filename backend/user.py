@@ -50,9 +50,9 @@ def add_user_info():
 		return 'Insert User Info Success'
 
 	except:
-	   db.rollback()
-	   db.close()
-	   abort(400, '{"message":"insert unsuccessful"}')
+		db.rollback()
+		db.close()
+		abort(400, '{"message":"insert unsuccessful"}')
 
 
 #author Yang
@@ -63,7 +63,7 @@ def get_user_rate():
 
 	if not request.json or not 'userId' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
- 	userId = request.json['userId']
+	userId = request.json['userId']
 	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%userId)
 
 	if cursor.rowcount >0:
@@ -107,12 +107,12 @@ def update_user_rate_comment():
 
 	tranCur = db.cursor()
 	try:
-   		tranCur.execute("UPDATE Transaction SET isRated = '%s' WHERE tranId = %s;",[1,tranId])
-   		db.commit()
-   	except:
-   		db.rollback()
-   		db.close()
-   		abort(400,'{"message":"update transction fail"}')
+		tranCur.execute("UPDATE Transaction SET isRated = '%s' WHERE tranId = %s;",[1,tranId])
+		db.commit()
+	except:
+		db.rollback()
+		db.close()
+		abort(400,'{"message":"update transction fail"}')
 
 	cursor = db.cursor()
 	cursor.execute("SELECT userRate,rateCount from UserRate WHERE userId =%s;"%userId)
@@ -130,8 +130,8 @@ def update_user_rate_comment():
 			return ("success")
 		except:
 			db.rollback()
-	    	db.close()
-	    	abort(400, '{"message":"update rate unsuccessful"}')
+			db.close()
+			abort(400, '{"message":"update rate unsuccessful"}')
 	else:
 		try:
 			cursor.execute("INSERT INTO UserRate(userId,userRate,rateCount) values (%s,%s,%s)",[userId,rate,1])
@@ -139,8 +139,8 @@ def update_user_rate_comment():
 			return("success")
 		except:
 			db.rollback()
-	    	db.close()
-	     	abort(400, '{"message":"insert rate unsuccessful"}')
+			db.close()
+			abort(400, '{"message":"insert rate unsuccessful"}')
 	
 	cursor.close()
 	
@@ -169,8 +169,8 @@ def update_user_rate():
 			return ("success")
 		except:
 			db.rollback()
-	    	db.close()
-	    	abort(400, '{"message":"update rate unsuccessful"}')
+			db.close()
+			abort(400, '{"message":"update rate unsuccessful"}')
 	else:
 		try:
 			cursor.execute("INSERT INTO UserRate(userId,userRate,rateCount) values (%s,%s,%s)",[userId,rate,1])
@@ -179,8 +179,8 @@ def update_user_rate():
 			return("success")
 		except:
 			db.rollback()
-	    	db.close()
-	     	abort(400, '{"message":"update rate unsuccessful"}')
+			db.close()
+			abort(400, '{"message":"update rate unsuccessful"}')
 
 
 #author: Yichen
@@ -303,7 +303,7 @@ def get_user_avatarURL():
 
 	if not request.json or not 'userId' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
- 	userId = request.json['userId']
+	userId = request.json['userId']
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT avatarURL FROM UserInfo WHERE userId = '%s';"%userId)

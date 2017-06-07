@@ -60,7 +60,6 @@ def get_transactions():
 #author: Wen
 @transactions.route('/transactions/getAll', methods=['POST'])
 def get_all_transactions():
-	transList = []
 	returnList = []
 	
 	if not request.json or not 'userId' in request.json:

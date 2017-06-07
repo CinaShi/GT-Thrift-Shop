@@ -92,7 +92,6 @@ def get_tag_pid():
 #author: Yichen
 @products.route('/products/details', methods=['POST'])
 def get_tag_details():
-	tidList = []
 	tagList = []
 	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
@@ -248,15 +247,13 @@ def add_interest():
 		db.close()
 		return("success")
 	except:
-	    db.rollback()
-	    db.close()
-	    abort(400, '{"message":"add interest user unsuccessful"}')
+		db.rollback()
+		db.close()
+		abort(400, '{"message":"add interest user unsuccessful"}')
 
 #author: Yichen
 @products.route('/products/getInterest', methods=['POST'])
 def get_interest():
-	pidList1 = []
-	pidList2 = []
 	result = []
 	finalList = []
 
@@ -301,8 +298,6 @@ def get_interest():
 
 @products.route('/products/getAllPost', methods=['POST'])
 def get_all_post():
-	pidList = []
-
 	if not request.json or not 'userId' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
@@ -322,8 +317,6 @@ def get_all_post():
 #author: Wen
 @products.route('/products/interest', methods=['POST'])
 def get_product_interests():
-	uidList = []
-
 	if not request.json or not 'pid' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	pid = request.json['pid']
@@ -512,7 +505,7 @@ def search():
 		db.close()
 		return jsonify({'products':productsList})
 	except:
-	    db.close()
-	    abort(400, "search failed")
+		db.close()
+		abort(400, "search failed")
 
 
