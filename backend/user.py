@@ -303,7 +303,7 @@ def get_user_avatarURL():
 
 	if not request.json or not 'userId' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
- 	fuserId = request.json['userId']
+ 	userId = request.json['userId']
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT avatarURL FROM UserInfo WHERE userId = '%s';"%userId)
