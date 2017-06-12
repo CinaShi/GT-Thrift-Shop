@@ -4,6 +4,7 @@ import json, codecs
 import boto3
 from werkzeug.utils import secure_filename
 import datetime
+import utils
 
 config = json.load(codecs.open('config.json', encoding='utf-8'))
 app = Flask(__name__)
@@ -19,12 +20,16 @@ mysql.init_app(app)
 favorites = Blueprint('favorites', __name__)
 
 
-#author: Yichen
+#author: Yichen, Wen
+#authentication
 @favorites.route('/favorites/all', methods=['POST'])
 def get_favorites_pid():
-	if not request.json or not 'userId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
 	
 	db = mysql.connect()
 	cursor = db.cursor()
@@ -39,12 +44,18 @@ def get_favorites_pid():
 		abort(400,"Unknown userId")
 
 
+#author: Wen
+#authentication
 @favorites.route('/favorites/new', methods=['POST'])
 def add_favorites():
-	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	pid = request.json['pid']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
 	try:
@@ -59,12 +70,18 @@ def add_favorites():
 		abort(400, '{"message":"insert unsuccessful"}')
 
 
+#author: Wen
+#authentication
 @favorites.route('/favorites/remove', methods=['POST'])
 def remove_favorites():
-	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	pid = request.json['pid']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+		
 	db = mysql.connect()
 	cursor = db.cursor()
 	try:
