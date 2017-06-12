@@ -26,14 +26,15 @@ app.register_blueprint(user)
 app.register_blueprint(favorites)
 app.register_blueprint(transactions)
 
-#author: Yang
+#author: Yang, Wen
 @app.route('/auth/login',methods=['POST'])
 def auth_login():
 	if not request.json or not 'gtusername' in request.json or not 'hash' in request.json:
 		abort(400)
 	gtusername = request.json['gtusername']
 	providedHash = request.json['hash']
-	generatedHash = hmac.new(key="jdteam199",msg=gtusername+"gtthriftshop2017", digestmod=hashlib.sha256).hexdigest()
+	timeStamp = str(datetime.datetime.utcnow().date()) + "-" + str(datetime.datetime.utcnow().hour)
+	generatedHash = hmac.new(key="jdteam199",msg=gtusername+"gtthriftshop2017"+timeStamp, digestmod=hashlib.sha256).hexdigest()
 	if not hmac.compare_digest(str(providedHash), str(generatedHash)):
 		abort(401)
 

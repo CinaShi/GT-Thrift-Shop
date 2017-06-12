@@ -4,6 +4,7 @@ import json, codecs
 import boto3
 from werkzeug.utils import secure_filename
 import datetime
+import utils
 
 config = json.load(codecs.open('config.json', encoding='utf-8'))
 app = Flask(__name__)
@@ -18,29 +19,42 @@ mysql.init_app(app)
 
 user = Blueprint('user', __name__)
 
-
-@user.route('/user/image/<username>', methods=['POST'])
+#author: Wen
+#authentication
+@user.route('/user/image', methods=['POST'])
 def uploader(username):
-	if 'file' not in request.files:
+	if 'file' not in request.files or 'userId' not in request.json or 'token' not in request.json:
 		abort(400)
+
 	f = request.files['file']
 	if f.filename == "":
 		abort(400)
+
+	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	filename = secure_filename(f.filename)
-	client.upload_fileobj(f, 'gtthriftshopusers', username + "/" + filename)
-	return "https://s3-us-west-2.amazonaws.com/gtthriftshopusers/" + username + "/" + filename
+	client.upload_fileobj(f, 'gtthriftshopusers', userId + "/" + filename)
+	return "https://s3-us-west-2.amazonaws.com/gtthriftshopusers/" + userId + "/" + filename
 
 
-#author: Yichen
+#author: Yichen, Wen
+#authentication
 @user.route('/user/info', methods=['POST'])
 def add_user_info():
-	if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'avatarURL' in request.json or not 'description' in request.json:
+	if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'avatarURL' in request.json or not 'description' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	nickname = request.json['nickname']
 	email = request.json['email']
 	avatarURL = request.json['avatarURL']
 	description = request.json['description']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
 	try:
@@ -55,34 +69,46 @@ def add_user_info():
 		abort(400, '{"message":"insert unsuccessful"}')
 
 
-#author Yang
+#author: Yang, Wen
+#authentication
 @user.route('/user/rate/get', methods=['POST'])
 def get_user_rate():
+	if not request.json or not 'userId' in request.json or not 'token' in request.json:
+		abort(400)
+	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
-
-	if not request.json or not 'userId' in request.json:
-		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
 	cursor.execute("SELECT userRate FROM UserRate WHERE userId = '%s';"%userId)
 
 	if cursor.rowcount >0:
 		rateRow = cursor.fetchall()[0]
+		db.close()
 		return jsonify({'rate':rateRow[0]})
 	else:
+		db.close()
 		return jsonify({'rate':-1})
-	db.close()
 
+
+#author: Wen
+#authentication
 @user.route('/user/cr/update',methods = ['POST'])
 def update_user_rate_comment():
-	if not request.json or not 'userId' in request.json or not 'rate' in request.json or not 'ccontent' in request.json or not 'commentatorId' in request.json or not 'tranId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'rate' in request.json or not 'ccontent' in request.json or not 'commentatorId' in request.json or not 'tranId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = int(request.json['userId'])
 	rate = int(request.json['rate'])	
 	ccontent = request.json['ccontent']
 	commentatorId = int(request.json['commentatorId'])
 	tranId = request.json['tranId']
+	token = request.json['token']
 	postTime = datetime.datetime.now()
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor2 = db.cursor()
 	cursor2.execute("SELECT userId FROM UserComment WHERE tranId = %s;"%tranId)
@@ -144,13 +170,18 @@ def update_user_rate_comment():
 	
 	cursor.close()
 	
-#author Yang
+
+#author: Yang, Wen
+#authentication
 @user.route('/user/rate/update', methods=['POST'])
 def update_user_rate():
-	if not request.json or not 'userId' in request.json or not 'rate' in request.json:
+	if not request.json or not 'userId' in request.json or not 'rate' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = int(request.json['userId'])
+	userId = request.json['userId']
 	rate = int(request.json['rate'])
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
 
 	db = mysql.connect()
 	cursor = db.cursor()
@@ -183,14 +214,20 @@ def update_user_rate():
 			abort(400, '{"message":"update rate unsuccessful"}')
 
 
-#author: Yichen
+#author: Yichen, Wen
+#authentication
 @user.route('/user/comment/get', methods=['POST'])
 def get_user_comment():
-	db = mysql.connect()
-	cursor = db.cursor()
-	if not request.json or not 'userId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
+	db = mysql.connect()
+	cursor = db.cursor()
+	
 	cursor.execute("SELECT UserComment.ccontent, UserComment.tranId, Transaction.pid, Transaction.buyerId, UserComment.postTime,UserComment.rate FROM UserComment INNER JOIN Transaction WHERE Transaction.tranId = UserComment.tranId AND UserComment.userId = '%s';"%userId)
 	commentList = []
 	if cursor.rowcount > 0:
@@ -204,7 +241,6 @@ def get_user_comment():
 			buyerCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%s';"%comment[3])
 			buyerName = buyerCur.fetchall()[0][0]
 			temp["buyerName"] = buyerName
-			
 			temp["postTime"] = comment[4]
 			temp["rate"] = comment[5]
 			commentList.append(temp)
@@ -215,15 +251,20 @@ def get_user_comment():
 		abort(400,"No comment provided for this user")
 
 
-#author: Yichen
+#author: Yichen, Wen
+#authentication
 @user.route('/user/comment/update', methods=['POST'])
 def update_user_comment():
-	if not request.json or not 'userId' in request.json or not 'ccontent' in request.json or not 'commentatorId' in request.json or not 'tranId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'ccontent' in request.json or not 'commentatorId' in request.json or not 'tranId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	ccontent = request.json['ccontent']
 	commentatorId = request.json['commentatorId']
 	tranId = request.json['tranId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	postTime = datetime.datetime.now()
 	db = mysql.connect()
 	cursor = db.cursor()
@@ -240,12 +281,16 @@ def update_user_comment():
 
 
 #author: Wen
+#authentication
 @user.route('/user/info/get', methods=['POST'])
 def get_user_info():
-
-	if not request.json or not 'userId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
 	info = {}
@@ -273,17 +318,23 @@ def get_user_info():
 	db.close()
 	return jsonify({'userInfo':info})
 
-#author: Yichen
+
+#author: Yichen, Wen
 #Sprint: 6
+#authentication
 @user.route('/user/info/update', methods=['POST'])
 def update_user_info():
-	if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'avatarURL' in request.json or not 'description' in request.json:
+	if not request.json or not 'userId' in request.json or not 'nickname' in request.json or not 'email' in request.json or not 'avatarURL' in request.json or not 'description' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	nickname = request.json['nickname']
 	email = request.json['email']
 	avatarURL = request.json['avatarURL']
 	description = request.json['description']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT * FROM UserInfo WHERE userId = '%s'"%userId)
@@ -297,13 +348,18 @@ def update_user_info():
 		db.close()
 		abort(400, 'fail')
 
-#author: Yichen
+
+#author: Yichen, Wen
+#authentication
 @user.route('/user/getAvatarURL', methods=['POST'])
 def get_user_avatarURL():
-
-	if not request.json or not 'userId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+		
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT avatarURL FROM UserInfo WHERE userId = '%s';"%userId)
