@@ -4,6 +4,7 @@ import json, codecs
 import boto3
 from werkzeug.utils import secure_filename
 import datetime
+import utils
 
 config = json.load(codecs.open('config.json', encoding='utf-8'))
 app = Flask(__name__)
@@ -20,12 +21,16 @@ transactions = Blueprint('transactions', __name__)
 
 
 #author: Wen
+#authentication
 @transactions.route('/transactions/get', methods=['POST'])
 def get_transactions():
-
-	if not request.json or not 'tranId' in request.json:
+	if not request.json or not 'tranId' in request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	tranId = request.json['tranId']
+	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
 
 	db = mysql.connect()
 	cursor = db.cursor()
@@ -58,13 +63,17 @@ def get_transactions():
 
 
 #author: Wen
+#authentication
 @transactions.route('/transactions/getAll', methods=['POST'])
 def get_all_transactions():
-	returnList = []
-	
-	if not request.json or not 'userId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
+	returnList = []
 	
 	db = mysql.connect()
 	cursor = db.cursor()
