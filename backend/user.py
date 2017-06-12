@@ -23,7 +23,7 @@ user = Blueprint('user', __name__)
 #authentication
 @user.route('/user/image', methods=['POST'])
 def uploader(username):
-	if 'file' not in request.files or 'userId' not in request.json or 'token' not in request.json:
+	if not request.files or not request.json or 'file' not in request.files or 'userId' not in request.json or 'token' not in request.json:
 		abort(400)
 
 	f = request.files['file']

@@ -4,6 +4,7 @@ import json, codecs
 import boto3
 from werkzeug.utils import secure_filename
 import datetime
+import utils
 
 config = json.load(codecs.open('config.json', encoding='utf-8'))
 app = Flask(__name__)
@@ -19,9 +20,9 @@ mysql.init_app(app)
 products = Blueprint('products', __name__)
 
 #author: Yang
+#Deprecated
 @products.route('/products', methods=['POST'])
 def get_all_products():
-	
 	productsList = []
 
 	db = mysql.connect()
@@ -65,6 +66,8 @@ def get_all_products():
 	return jsonify({'products':productsList})
 
 
+#author: Wen
+#Deprecated
 @products.route('/products/tags', methods=['POST'])
 def get_tag_pid():
 	
@@ -89,15 +92,19 @@ def get_tag_pid():
 		db.close()
 		abort(400,"Incorrect Tag")
 
-#author: Yichen
+#author: Yichen, Wen
+#authentication
 @products.route('/products/details', methods=['POST'])
 def get_tag_details():
-	tagList = []
-	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	pid = request.json['pid']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
 
+	tagList = []
 	db = mysql.connect()
 	cursor = db.cursor()
 
@@ -123,11 +130,22 @@ def get_tag_details():
 
 
 #author: Wen
-@products.route('/products/add/images/<pid>', methods=['POST'])
-def product_uploader(pid):
+#authentication
+@products.route('/products/add/images', methods=['POST'])
+def product_uploader():
+	if not request.files or not request.json or not 'files' in request.files or not 'pid' in request.json or not 'userId' in request.json or not 'token' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+
 	fileList = request.files.getlist('files')
 	if len(fileList) == 0:
 		abort(400)
+
+	pid = request.json['pid']
+	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
 	addressList = []
@@ -146,10 +164,12 @@ def product_uploader(pid):
 	db.close()
 	return jsonify({'photoUrls':addressList})
 
-#author: Yichen
+
+#author: Yichen, Wen
+#authentication
 @products.route('/products/add/allInfo', methods=['POST'])
 def add_product():
-	if not request.json or not 'userId' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tag' in request.json or not 'usedTime' in request.json: 
+	if not request.json or not 'userId' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tag' in request.json or not 'usedTime' in request.json or not 'token' in request.json: 
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	pName = request.json['pName']
@@ -157,6 +177,10 @@ def add_product():
 	pInfo = request.json['pInfo']
 	usedTime = request.json['usedTime']
 	tag = request.json['tag']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	isSold = 0
 	postTime = datetime.datetime.now()
 	db = mysql.connect()
@@ -176,10 +200,11 @@ def add_product():
 		abort(400, '{"message":"Product info added unsuccessful"}')
 
 
-#author: Yichen
+#author: Yichen, Wen
+#authentication
 @products.route('/products/info/update', methods=['POST'])
 def update_product_info():
-	if not request.json or not 'pid' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tag' in request.json or not 'usedTime' in request.json: 
+	if not request.json or not 'pid' in request.json or not 'pName' in request.json or not 'pPrice' in request.json or not 'pInfo' in request.json or not 'tag' in request.json or not 'usedTime' in request.json or not 'userId' in request.json or not 'token' in request.json: 
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	pid = request.json['pid']
 	pName = request.json['pName']
@@ -187,6 +212,11 @@ def update_product_info():
 	pInfo = request.json['pInfo']
 	tag = request.json['tag']
 	usedTime = request.json['usedTime']
+	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT tid FROM Tag WHERE tag = '%s'"%tag)
@@ -203,13 +233,19 @@ def update_product_info():
 		db.close()
 		abort(400, 'fail')
 
-#author: Yichen
+
+#author: Yichen, Wen
+#authentication
 @products.route('/products/update/isSold', methods=['POST'])
 def update_isSold():
-	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	pid = request.json['pid']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	isSold = 1
 	postTime = datetime.datetime.now()
 	db = mysql.connect()
@@ -232,13 +268,18 @@ def update_isSold():
 		abort(400,"Product not found or item has been sold already")
 
 
-#author: Yang
+#author: Yang, Wen
+#authentication
 @products.route('/products/add/interest', methods=['POST'])
 def add_interest():
-	if not request.json or not 'userId' in request.json or not 'pid' in request.json:
+	if not request.json or not 'userId' in request.json or not 'pid' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
 	pid = request.json['pid']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
 	try:
@@ -251,15 +292,19 @@ def add_interest():
 		db.close()
 		abort(400, '{"message":"add interest user unsuccessful"}')
 
-#author: Yichen
+#author: Yichen, Wen
+#authentication
 @products.route('/products/getInterest', methods=['POST'])
 def get_interest():
-	result = []
-	finalList = []
-
-	if not request.json or not 'userId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
+	result = []
+	finalList = []
 	db = mysql.connect()
 	cursor = db.cursor()
 	
@@ -295,15 +340,19 @@ def get_interest():
 	return jsonify({'Interest':finalList})
 
 
-
+#author: Wen
+#authentication
 @products.route('/products/getAllPost', methods=['POST'])
 def get_all_post():
-	if not request.json or not 'userId' in request.json:
+	if not request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
+
 	db = mysql.connect()
 	cursor = db.cursor()
-
 	cursor.execute("SELECT pid FROM Product WHERE userId = '%s';"%userId) 
 	if cursor.rowcount > 0:
 		pidList = [item[0] for item in cursor.fetchall()]
@@ -315,11 +364,16 @@ def get_all_post():
 
 
 #author: Wen
+#authentication
 @products.route('/products/interest', methods=['POST'])
 def get_product_interests():
-	if not request.json or not 'pid' in request.json:
+	if not request.json or not 'pid' in request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 	pid = request.json['pid']
+	userId = request.json['userId']
+	token = request.json['token']
+	if not utils.authenticateToken(userId, token):
+		abort(401)
 	
 	db = mysql.connect()
 	cursor = db.cursor()
