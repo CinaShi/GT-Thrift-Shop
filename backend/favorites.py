@@ -20,32 +20,32 @@ mysql.init_app(app)
 favorites = Blueprint('favorites', __name__)
 
 
-#author: Yichen, Wen
-#authentication
+# author: Yichen, Wen
+# authentication
 @favorites.route('/favorites/all', methods=['POST'])
 def get_favorites_pid():
 	if not request.json or not 'userId' in request.json or not 'token' in request.json:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
-	userId = request.json['userId']
+	user_id = request.json['userId']
 	token = request.json['token']
-	if not utils.authenticateToken(userId, token):
+	if not utils.authenticateToken(user_id, token):
 		abort(401)
 	
 	db = mysql.connect()
 	cursor = db.cursor()
 
-	cursor.execute("SELECT pid FROM UserLike WHERE userId = '%s';"%userId) 
+	cursor.execute("SELECT pid FROM UserLike WHERE userId = '%s';" % user_id)
 	if cursor.rowcount > 0:
-		pidList = [item[0] for item in cursor.fetchall()]
+		pid_list = [item[0] for item in cursor.fetchall()]
 		db.close()
-		return jsonify({'favoritePids':pidList})
+		return jsonify({'favoritePids':pid_list})
 	else :
 		db.close()
 		abort(400,"Unknown userId")
 
 
-#author: Wen
-#authentication
+# author: Wen
+# authentication
 @favorites.route('/favorites/new', methods=['POST'])
 def add_favorites():
 	if not request.json or not 'userId' in request.json or not 'pid' in request.json or not 'token' in request.json:
@@ -70,8 +70,8 @@ def add_favorites():
 		abort(400, '{"message":"insert unsuccessful"}')
 
 
-#author: Wen
-#authentication
+# author: Wen
+# authentication
 @favorites.route('/favorites/remove', methods=['POST'])
 def remove_favorites():
 	if not request.json or not 'userId' in request.json or not 'pid' in request.json or not 'token' in request.json:

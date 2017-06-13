@@ -20,8 +20,8 @@ mysql.init_app(app)
 transactions = Blueprint('transactions', __name__)
 
 
-#author: Wen
-#authentication
+# author: Wen
+# authentication
 @transactions.route('/transactions/get', methods=['POST'])
 def get_transactions():
 	if not request.json or not 'tranId' in request.json or not 'userId' in request.json or not 'token' in request.json:
@@ -62,8 +62,8 @@ def get_transactions():
 		abort(400,"Unknown tranId")
 
 
-#author: Wen
-#authentication
+# author: Wen
+# authentication
 @transactions.route('/transactions/getAll', methods=['POST'])
 def get_all_transactions():
 	if not request.json or not 'userId' in request.json or not 'token' in request.json:
