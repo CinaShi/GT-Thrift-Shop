@@ -31,10 +31,10 @@ The idea of this project is to make a mobile application for pre-owned goods tra
   
  __3. Existing problems & future functionalities.__
   * This app can only run properly on iOS devices of which system language is English(U.S.).
-  * User will be able to update their profile and products in the future.
-  * User will be able to use swipe gesture to browse images in full-screen mode.
-  * User will be able to use third party payment methods(Venmo, Paypal, etc) to complete their transaction.
-  * User will be able to receive notifications when they receive in-app messages.
+  * Users will be able to update their profiles and products in the future.
+  * Users will be able to use swipe gesture to browse images in full-screen mode.
+  * Users will be able to use third party payment methods(Venmo, Paypal, etc) to complete their transaction.
+  * Users will be able to receive notifications when they receive in-app messages.
 
 ## Install Guide
 
