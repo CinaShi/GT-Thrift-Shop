@@ -1,6 +1,6 @@
 # GT Thrift Shop
 
-The idea of project is to make a mobile application for pre-owned goods trading among Georgia Tech students. This idea came from our experience using Facebook GT thrift shop group page. We believe that a mobile application, with improvement and newly added features such as rating and comments system, instant message and direct photos uploads, will make it more convenient for GT students and faculties to sell or buy used goods. Additionally, integrating GT authentication into the app will make our app a much safer choice for GT students.
+The idea of this project is to make a mobile application for pre-owned goods trading among Georgia Tech students. This idea came from our experience using Facebook GT thrift shop group page. We believe that a mobile application, with improvement and newly added features such as rating and comments system, instant message and direct photos uploads, will make it more convenient for GT students and faculties to sell or buy used goods. Additionally, integrating GT authentication into the app will make our app a much safer choice for GT students.
 
 ## Team Members
 
@@ -42,7 +42,7 @@ The idea of project is to make a mobile application for pre-owned goods trading 
 
 - For developers:
 
-> This project requires Mac OS system, Xcode 8 and Swift 3 to run. Normally if you are using a Mac system already, simply downlaod the [latest version of Xcode](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) from App Store and open `GTThriftShop.xcworkspace` in `frontend` folder. 
+> This project requires Mac OS system, Xcode 8 and Swift 3 to run. Normally if you are using a Mac system already, simply download the [latest version of Xcode](https://itunes.apple.com/us/app/xcode/id497799835?mt=12) from App Store and open `GTThriftShop.xcworkspace` in `frontend` folder. 
 
 - For future customers:
 
@@ -50,7 +50,7 @@ The idea of project is to make a mobile application for pre-owned goods trading 
 
 ### Dependent Libraries and Trouble-shooting(for developers):
 
-> Normally to run this project there's no need to download any other dependent libraries since all dependent ones have been included. But if when running the app Xcode shoots troubles of any third-party libraries missing, try re-install CocoaPods by running following line in `frontend` folder from Terminal:
+> Normally to run this project there is no need to download any other dependent libraries since all dependent ones have been included. But if when running the app Xcode shoots troubles of any third-party libraries missing, try to re-install CocoaPods by running following line in `frontend` folder from Terminal:
 
 ```sh
 $ pod install
