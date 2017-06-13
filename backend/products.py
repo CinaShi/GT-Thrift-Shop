@@ -180,7 +180,7 @@ def add_product():
 	used_time = request.json['usedTime']
 	tag = request.json['tag']
 	token = request.json['token']
-	if not utils.authenticateToken(userId, token):
+	if not utils.authenticateToken(user_id, token):
 		abort(401)
 
 	is_sold = 0

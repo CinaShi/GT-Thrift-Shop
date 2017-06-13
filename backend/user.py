@@ -360,7 +360,6 @@ def get_user_avatarURL():
 	token = request.json['token']
 	if not utils.authenticateToken(user_id, token):
 		abort(401)
-		
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT avatarURL FROM UserInfo WHERE userId = '%s';" % user_id)
