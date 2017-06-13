@@ -14,7 +14,7 @@ app.config['MYSQL_DATABASE_HOST'] = config['db_host']
 mysql.init_app(app)
 
 
-## abort 401 Unauthenticated
+# abort 401 Unauthenticated
 def authenticateToken(userId, token):
 	TIMELIMIT = datetime.timedelta(minutes=30)
 	db = mysql.connect()
