@@ -11,7 +11,7 @@ from transactions import transactions
 import utils
 
 config = json.load(codecs.open('config.json', encoding='utf-8'))
-app = Flask(__name__)
+application = app = Flask(__name__)
 mysql = MySQL()
 client = boto3.client('s3')
 
