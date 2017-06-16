@@ -6,7 +6,7 @@ The idea of this project is to make a mobile application for pre-owned goods tra
 
   * Jihai An [@alexan0218]
   * Mengyang Shi [@CinaShi]
-  * Wenzhong Jin [@WenzhongJin]
+  * Wenzhong Jin [@wenzhongjin]
   * Yang Yang [@yysama233]
   * Yichen Li [@yli923]
 
