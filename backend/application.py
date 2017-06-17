@@ -31,10 +31,12 @@ app.register_blueprint(transactions)
 def hello_world():
 	header_text = '''
 	    <html>\n<head> <title>GT THRIFT SHOP</title> </head>\n<body>'''
+	welcome = '''
+	    <p>Welcome to GT Thrift Shop.</p>\n'''
 	instructions = '''
 	    <p>This page is only for backend testing purpose.</p>\n'''
 	footer_text = '</body>\n</html>'
-	return header_text + instructions + footer_text;
+	return header_text + welcome + instructions + footer_text;
 
 
 # author: Yang, Wen

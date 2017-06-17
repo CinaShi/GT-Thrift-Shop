@@ -233,7 +233,7 @@ def get_user_comment():
 	comment_list = []
 	if cursor.rowcount > 0:
 		for comment in cursor.fetchall():
-			temp = []
+			temp = {}
 			temp["commentContent"] = comment[0]
 			temp["tranId"] = comment[1]
 			temp["pid"] = comment[2]

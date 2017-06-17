@@ -334,7 +334,7 @@ def get_interest():
 		r_cursor = db.cursor()
 		r_cursor.execute("SELECT nickname, userId, avatarURL FROM UserInfo where userId = '%s';" % r)
 		r_list = r_cursor.fetchall()[0]
-		result_list = []
+		result_list = {}
 		result_list['username'] = r_list[0]
 		result_list['userId'] = r_list[1]
 		result_list['avatarURL'] = r_list[2]
