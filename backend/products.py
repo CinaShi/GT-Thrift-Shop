@@ -135,16 +135,22 @@ def get_tag_details():
 # authentication
 @products.route('/products/add/images', methods=['POST'])
 def product_uploader():
-	if not request.files or not request.get_json(force=True) or not 'files' in request.files or not 'pid' in request.get_json(force=True) or not 'userId' in request.get_json(force=True) or not 'token' in request.get_json(force=True):
+	if not request.files or not 'files' in request.files or not 'json' in request.files:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 
 	fileList = request.files.getlist('files')
 	if len(fileList) == 0:
-		abort(400)
+		abort(400, '{"message":"Empty file list"}')
 
-	pid = request.get_json(force=True)['pid']
-	userId = request.get_json(force=True)['userId']
-	token = request.get_json(force=True)['token']
+	jsonFile = request.files["json"]
+	jsonDic = json.load(codecs.open(jsonFile, encoding='utf-8'))
+	if not 'pid' in jsonDic or not 'userId' in jsonDic or not 'token' in jsonDic:
+		abort(400, '{"message":"Missing parameters in json file"}')
+
+	pid = jsonDic['pid']
+	userId = jsonDic['userId']
+	token = jsonDic['token']
+
 	if not utils.authenticateToken(userId, token):
 		abort(401)
 
