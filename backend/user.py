@@ -24,15 +24,20 @@ user = Blueprint('user', __name__)
 # authentication
 @user.route('/user/image', methods=['POST'])
 def uploader(username):
-	if not request.files or not request.json or 'file' not in request.files or 'userId' not in request.json or 'token' not in request.json:
+	if not request.files or not request.form or 'file' not in request.files or 'json' not in request.form:
 		abort(400)
 
 	f = request.files['file']
 	if f.filename == "":
 		abort(400)
 
-	userId = request.json['userId']
-	token = request.json['token']
+	jsonStr = request.form["json"]
+	jsonDic = json.loads(jsonStr)
+	if not 'userId' in jsonDic or not 'token' in jsonDic:
+		abort(400, '{"message":"Missing parameters in json file"}')
+
+	userId = jsonDic['userId']
+	token = jsonDic['token']
 	if not utils.authenticateToken(userId, token):
 		abort(401)
 
