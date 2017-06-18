@@ -135,28 +135,16 @@ def get_tag_details():
 # authentication
 @products.route('/products/add/images', methods=['POST'])
 def product_uploader():
-	if not request.files:
-		print("no files")
-		abort(400)
-
-	if not 'files' in request.files:
-		print("fuck")
-		abort(400)
-
-	if not request.files or not 'files' in request.files or not 'json' in request.form:
-		print("Input parameter incorrect or missing")
+	if not request.files or not request.form or not 'files' in request.files or not 'json' in request.form:
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 
 	fileList = request.files.getlist('files')
 	if len(fileList) == 0:
-		print("Empty file list")
 		abort(400, '{"message":"Empty file list"}')
 
 	jsonStr = request.form["json"]
-	print jsonStr
 	jsonDic = json.loads(jsonStr)
 	if not 'pid' in jsonDic or not 'userId' in jsonDic or not 'token' in jsonDic:
-		print("Missing parameters in json file")
 		abort(400, '{"message":"Missing parameters in json file"}')
 
 	pid = jsonDic['pid']
