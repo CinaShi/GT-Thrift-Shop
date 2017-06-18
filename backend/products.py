@@ -143,7 +143,7 @@ def product_uploader():
 		print("fuck")
 		abort(400)
 
-	if not request.files or not 'files' in request.files or not 'json' in request.files:
+	if not request.files or not 'files' in request.files or not 'json' in request.form:
 		print("Input parameter incorrect or missing")
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 
