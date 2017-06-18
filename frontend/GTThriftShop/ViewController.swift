@@ -19,6 +19,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var allProducts = [Product]()
     var products = [Product]()
     
+    var pageNum = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -27,7 +29,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(obtainAllProductsFromServer), for: .valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Refreshing🤣")
-        
+        pageNum = 1
         for key in Array(UserDefaults.standard.dictionaryRepresentation().keys) {
             UserDefaults.standard.removeObject(forKey: key)
         }
@@ -50,10 +52,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if !refreshControl.isRefreshing {
             loadProductsIndicator.startAnimating()
         }
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/page")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST"
+        
+        let param = [
+            "pageNum"  : pageNum,
+            "sortBy" : "timeLatestFirst"
+        ] as [String : Any]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -77,7 +90,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print("***** statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 200 {
                     do {
-                        self.allProducts.removeAll()
+                        if self.pageNum == 1 {
+                            self.allProducts.removeAll()
+                        }
+                        
                         self.products.removeAll()
                         
                         
@@ -221,6 +237,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = products.count - 1
+        if (allProducts.count % 20 == 0) && indexPath.row == lastElement {
+            pageNum += 1
+            obtainAllProductsFromServer()
+        }
     }
     
     @IBAction func unwindFromLoginVC(segue: UIStoryboardSegue) {

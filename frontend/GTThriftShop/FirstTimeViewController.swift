@@ -150,7 +150,7 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
     
     
     func submitPhotoFirst() {
-        let url:URL = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/image/\(userId)")!
+        let url:URL = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/image")!
         let session = URLSession.shared
         
         let request = NSMutableURLRequest(url:url);
@@ -167,7 +167,12 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
         
         if(imageData==nil)  { return; }
         
-        request.httpBody = createBodyWithParameters(parameters: nil, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary) as Data
+        let param: [String: String] = [
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ]
+        
+        request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary) as Data
         
         
         submitActivityIndicator.startAnimating();
@@ -207,7 +212,8 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
             "nickname"    : nickNameField.text!,
             "email"    : emailField.text!,
             "avatarURL"    : imageurl,
-            "description"    : descriptionView.text!
+            "description"    : descriptionView.text!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
         ]
         let jsonData = try? JSONSerialization.data(withJSONObject: param)
         print("******sent param --> \(param)")

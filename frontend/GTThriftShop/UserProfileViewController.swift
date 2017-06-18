@@ -135,10 +135,20 @@ class UserProfileViewController: UIViewController {
     }
     
     func getUserInfo() {
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info/get/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info/get")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST";
+        
+        let param = [
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in

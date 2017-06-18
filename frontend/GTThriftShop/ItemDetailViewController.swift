@@ -290,13 +290,21 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         activityIndicatorView.startAnimating()
         
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/interest/\(product.pid!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/interest")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST";
         
+        let param = [
+            "pid" : product.pid!,
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ] as [String : Any]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
         
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -408,8 +416,9 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let param = [
             "userId"  : selectedId!,
-            "pid"  : product.pid
-        ]
+            "pid"  : product.pid,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ] as [String : Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: param)
         print("******sent param --> \(param)")
         
@@ -488,15 +497,16 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func loadAdditionalDetails() {
         loadDetailsIndicator.startAnimating()
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/details/\(product.pid!)")
-        print("\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/details/\(product.pid!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/details")
         
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "POST"
         
         let param = [
-            "userId"  : userId!
-        ]
+            "pid" : product.pid!,
+            "userId"  : userId!,
+            "token"  : UserDefaults.standard.string(forKey: "token")!
+        ] as [String : Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: param)
         print("******sent param --> \(param)")
         
@@ -606,8 +616,9 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let param = [
             "userId"  : userId!,
-            "pid"    : product.pid!
-        ]
+            "pid"    : product.pid!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ] as [String : Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: param)
         print("******sent param --> \(param)")
         

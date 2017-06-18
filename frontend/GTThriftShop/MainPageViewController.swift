@@ -20,6 +20,10 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     var sortViewExpanded = false
     var filteredProducts = [Product]()
     var tags = [String]()
+    var pageNum = 1
+    var tagPageNum = 1
+    var inTag = false
+    var currentTag = "All"
     
     let color1 = UIColor(red: 191/255, green: 211/255, blue: 233/255, alpha: 1)
     let color2 = UIColor(red: 80/255, green: 114/255, blue: 155/255, alpha: 1)
@@ -38,7 +42,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var menuTableView: UITableView!
     
     @IBOutlet weak var collectionView: UICollectionView!
-    //专门放一个view来提供阴影效果
     @IBOutlet weak var shadowView: UIView!
     
     override func viewDidLoad() {
@@ -48,6 +51,10 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         //Starts here, collectionview
         
         let flowLayout = UICollectionViewFlowLayout.init()
+        pageNum = 1
+        tagPageNum = 1
+        inTag = false
+        currentTag = "All"
         
         flowLayout.minimumLineSpacing = 20
         flowLayout.minimumInteritemSpacing = 10
@@ -118,10 +125,20 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func getUserInfo() {
         let userId = userDefaults.integer(forKey: "userId")
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info/get/\(userId)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/info/get")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST";
+        
+        let param = [
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -129,7 +146,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             if error != nil {
                 print("error=\(error!)")
                 DispatchQueue.main.async(execute: {
-                    print("Here1=========")
                     self.notifyFailure(info: "There might be some connection issue. Please try again!")
                 });
                 
@@ -212,7 +228,17 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/tags")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST";
+        
+        let param = [
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -276,10 +302,21 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         if !refreshControl.isRefreshing {
             loadProductsIndicator.startAnimating()
         }
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/page")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST"
+        
+        let param = [
+            "pageNum"  : pageNum,
+            "sortBy" : "timeLatestFirst"
+            ] as [String : Any]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -303,7 +340,9 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                 print("***** statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 200 {
                     do {
-                        self.allProducts.removeAll()
+                        if self.pageNum == 1 {
+                            self.allProducts.removeAll()
+                        }
                         self.products.removeAll()
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
                         let array = json["products"] as! [Dictionary<String, Any>]
@@ -371,17 +410,41 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func getPidsByTag(tag: String) {
-        loadProductsIndicator.startAnimating()
+    func filterOutSoldDisplayProducts() {
+        var newProducts = [Product]()
+        for product in products {
+            if !product.isSold {
+                newProducts.append(product)
+            }
+        }
+        products = newProducts
+    }
+    
+    func filterByTag(tag: String) {
         var newTag = tag
         if tag.contains(" ") {
             newTag = tag.replacingOccurrences(of: " ", with: "_")
         }
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/tags/\(newTag)")
+        if !refreshControl.isRefreshing {
+            loadProductsIndicator.startAnimating()
+        }
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/page")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
-
+        request.httpMethod = "POST"
+        
+        let param = [
+            "pageNum"  : tagPageNum,
+            "sortBy" : "timeLatestFirst",
+            "tag" : newTag
+            ] as [String : Any]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             
@@ -404,18 +467,40 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
                 print("***** statusCode: \(httpResponse.statusCode)")
                 if httpResponse.statusCode == 200 {
                     do {
+                        self.products.removeAll()
                         let json = try JSONSerialization.jsonObject(with: data!, options: []) as! Dictionary<String, Any>
-                        let array = json["pids"] as! [Int]
-                        DispatchQueue.main.async(execute: {
-                            self.reloadTableWithTaggedPids(pids: array)
-                        });
+                        let array = json["products"] as! [Dictionary<String, Any>]
+                        // Loop through objects
+                        for dict in array {
+                            guard let name = dict["pName"] as? String,
+                                let price = dict["pPrice"] as? String,
+                                let info = dict["pInfo"] as? String,
+                                let pid = dict["pid"] as? Int,
+                                let postTime = dict["postTime"] as? String,
+                                let usedTime = dict["usedTime"] as? String,
+                                let userId = dict["userId"] as? Int,
+                                let userName = dict["nickname"] as? String,
+                                let imageUrls = dict["images"] as? [String],
+                                let isSold = dict["isSold"] as? Bool
+                                else{
+                                    self.notifyFailure(info: "cannot unarchive data from server")
+                                    return
+                            }
+                            
+                            let newProduct = Product(name: name, price: price, info: info, pid: pid, postTime: postTime, usedTime: usedTime, userId: userId, userName: userName, imageUrls: imageUrls, isSold: isSold)
+                            self.products.append(newProduct)
+                            
+                        }
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
                     }
                     
                     
                     DispatchQueue.main.async(execute: {
+                        self.filterOutSoldDisplayProducts()
                         self.loadProductsIndicator.stopAnimating()
+                        self.collectionView.reloadData()
+                        self.refreshControl.endRefreshing()
                     });
                 }else if httpResponse.statusCode == 404 {
                     DispatchQueue.main.async(execute: {
@@ -438,16 +523,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         task.resume()
     }
     
-    func reloadTableWithTaggedPids(pids: [Int]) {
-        refreshProductsFromLocal()
-        
-        products = products.filter{ item in
-            return pids.contains(item.pid!)
-        }
-        
-        initialSort()
-        self.collectionView.reloadData()
-    }
     
     func initialSort() {
         let dateFormatter = DateFormatter()
@@ -564,7 +639,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count:Int?
         count = tags.count
-        print("asdfasdfsf：\(count)")
         return count!
     }
     
@@ -585,13 +659,18 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         if tableView == self.menuTableView {
             closeMenu(self)
             if tags[indexPath.row] == "All" {
+                inTag = false
+                currentTag = "All"
                 self.loadProductsIndicator.startAnimating()
                 refreshProductsFromLocal()
                 initialSort()
                 self.collectionView.reloadData()
                 self.loadProductsIndicator.stopAnimating()
             } else {
-                getPidsByTag(tag: tags[indexPath.row])
+                tagPageNum = 1
+                inTag = true
+                currentTag = tags[indexPath.row]
+                filterByTag(tag: tags[indexPath.row])
             }
         }
     }
@@ -605,7 +684,6 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             count = products.count
         }
-        print("im herer:\(count)")
         return count!
     }
     
@@ -675,6 +753,25 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             selected = products[indexPath.row]
         }
         performSegue(withIdentifier: "getItemDetails", sender: nil)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        var lastElement = products.count - 1
+        
+        if searchActive {
+            lastElement = filteredProducts.count
+        }
+        
+        if (allProducts.count % 20 == 0) && indexPath.row == lastElement {
+            if inTag {
+                tagPageNum += 1
+                filterByTag(tag: currentTag)
+            } else {
+                pageNum += 1
+                obtainAllProductsFromServer()
+            }
+            
+        }
     }
     
     //Mark:Search bar delegate

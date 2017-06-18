@@ -71,7 +71,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if !refreshControl.isRefreshing {
             loadUsersIndicator.startAnimating()
         }
-        Alamofire.request("\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/getInterest/\(userId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
+        let param = [
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ]
+        Alamofire.request("\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/getInterest", method: .post, parameters: param, encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success:
                 print("Validation Successful")

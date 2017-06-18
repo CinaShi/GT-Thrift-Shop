@@ -68,10 +68,20 @@ class TransactionViewController: UIViewController, UITableViewDataSource, UITabl
     
     func loadMyTransactions() {
         
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/transactions/getAll/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/transactions/getAll")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST";
+        
+        let param = [
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -104,7 +114,6 @@ class TransactionViewController: UIViewController, UITableViewDataSource, UITabl
                                 let sellerID = dict["sellerID"] as? Int,
                                 let pid = dict["pid"] as? Int,
                                 let isRatedString = dict["isRated"] as? Int,
-                                //New
                                 let tranID = dict["tranId"] as? Int,
                                 let buyerName = dict["buyerName"] as? String,
                                 let sellerName = dict["sellerName"] as? String
@@ -117,7 +126,9 @@ class TransactionViewController: UIViewController, UITableViewDataSource, UITabl
                             if isRatedString == 1 {
                                 isRated = true
                             }
-                            self.myTransactions.append((sellerID, product!, buyerID, isRated, tranID, buyerName, sellerName))
+                            if product != nil {
+                                self.myTransactions.append((sellerID, product!, buyerID, isRated, tranID, buyerName, sellerName))
+                            }
                         }
                         
                     } catch let error as NSError {

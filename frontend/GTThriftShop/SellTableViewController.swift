@@ -182,7 +182,8 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
             "pPrice"    : priceField.text!,
             "pInfo"    : descriptionTextView.text!,
             "usedTime"    : usedYearField.text!,
-            "tag"   : categoryField.text!
+            "tag"   : categoryField.text!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
         ] as [String : Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: param)
         print("******sent param --> \(param)")
@@ -256,7 +257,64 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
             }
         }
         
-        let url:URL = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/add/images/\(assignedPid)")!
+        let url:URL = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/add/images")!
+        
+        let param = [
+            "pid" : "\(assignedPid)",
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ]
+        
+//        Alamofire.upload(multipartFormData: { multipartFormData in
+//            
+//            if photosToUpload.count > 0 {
+//                for i in (0..<photosToUpload.count) {
+//                    multipartFormData.append(UIImageJPEGRepresentation(photosToUpload[i], 0.5)!, withName: "image", fileName: "photo\(i+1).jpeg", mimeType: "image/jpeg")
+//                }
+//            }
+//            
+//            for (key, value) in param {
+//                multipartFormData.append((value.data(using: .utf8))!, withName: key)
+//            }}, to: url, method: .post, 
+//                encodingCompletion: { encodingResult in
+//                    switch encodingResult {
+//                    case .success(let upload, _, _):
+//                        upload.response { [weak self] response in
+//                            guard self != nil else {
+//                                return
+//                            }
+//                            if let httpResponse = response.response {
+//                                print("***** statusCode: \(httpResponse.statusCode)")
+//                                if httpResponse.statusCode == 200 {
+//                                    print("upload success")
+//                                    DispatchQueue.main.async(execute: {
+//                                        self?.performSegue(withIdentifier: "uploadInfoSuccess", sender: self)
+//                                    });
+//                                } else if httpResponse.statusCode == 404 {
+//                                    DispatchQueue.main.async(execute: {
+//                                        self?.notifyFailure(info: "Cannot find url!")
+//                                    });
+//                                }
+//                                else {
+//                                    DispatchQueue.main.async(execute: {
+//                                        print(response)
+//                                        self?.notifyFailure(info: "There might be some connection issue. Please try again!")
+//                                    });
+//                                    
+//                                }
+//                            } else {
+//                                DispatchQueue.main.async(execute: {
+//                                    self?.notifyFailure(info: "There might be some connection issue. Please try again!")
+//                                });
+//                            }
+//                        }
+//                    case .failure(let encodingError):
+//                        print("error:\(encodingError)")
+//                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+//                    }
+//        })
+        
+        
         let session = URLSession.shared
         
         let request = NSMutableURLRequest(url:url)
@@ -266,11 +324,19 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
         let boundary: NSString = "----CustomFormBoundarycC4YiaUFwM44F6rT"
         let body: NSMutableData = NSMutableData()
         
+        
+        
+        for (key, value) in param {
+            body.append(("--\(boundary)\r\n" as String).data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+            body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n" .data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+            body.append("\(value)\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+        }
+        
         // you can also send multiple images
         if photosToUpload.count > 0 {
             for i in (0..<photosToUpload.count) {
                 body.append(("--\(boundary)\r\n" as String).data(using: String.Encoding.utf8, allowLossyConversion: true)!)
-                body.append("Content-Disposition: form-data; name=\"files\"; filename=\"photo\(i+1).jpeg\"\r\n" .data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+                body.append("Content-Disposition: form-data; name=\"image(file)\"; filename=\"photo\(i+1).jpeg\"\r\n" .data(using: String.Encoding.utf8, allowLossyConversion: true)!)
                 body.append("Content-Type: image/jpeg\r\n\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
                 
                 // change quality of image here
@@ -339,7 +405,9 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
             "pPrice": priceField.text!,
             "pInfo": descriptionTextView.text,
             "tag": categoryField.text!,
-            "usedTime": usedYearField.text!
+            "usedTime": usedYearField.text!,
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
         ]
         print("param ---> \(parameters)")
         Alamofire.request("\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/info/update", method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseString { response in

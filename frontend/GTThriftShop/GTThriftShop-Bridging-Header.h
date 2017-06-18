@@ -6,5 +6,6 @@
 //  Copyright © 2017 Triple6. All rights reserved.
 //
 
-#import <JSQMessagesViewController/JSQMessages.h>
+//#import <JSQMessagesViewController/JSQMessages.h>
+#import "CommonCrypto/CommonCrypto.h"
 

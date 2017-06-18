@@ -69,11 +69,21 @@ class PublishmentViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func obtainAllProductsFromServer() {
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/products/page")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST"
         
+        let param = [
+            "pageNum"  : 1,
+            "sortBy" : "timeLatestFirst"
+            ] as [String : Any]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             

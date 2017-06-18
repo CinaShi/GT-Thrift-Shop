@@ -183,7 +183,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         request.httpMethod = "POST";
         
         let param = [
-            "gtusername"  : usernameField.text!
+            "gtusername"  : usernameField.text!,
+            "hash" : GlobalHelper.generateHash(username: usernameField.text!)
         ]
         let jsonData = try? JSONSerialization.data(withJSONObject: param)
         print("******sent param --> \(param)")
@@ -222,6 +223,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             self.userIdString = String(userId as! Int)
                             DispatchQueue.main.async(execute: {
                                 GlobalHelper.storeToUserDefaults(value: userId as! Int, key: "userId")
+                                GlobalHelper.storeToUserDefaults(value: responseJSON["token"] as! String, key: "token")
                                 self.proceedToFirstTimeView()
                             });
                         } else {
@@ -235,6 +237,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             print("user id : \(userId)")
                             DispatchQueue.main.async(execute: {
                                 GlobalHelper.storeToUserDefaults(value: userId as! Int, key: "userId")
+                                print(responseJSON["token"] as! String)
+                                GlobalHelper.storeToUserDefaults(value: responseJSON["token"] as! String, key: "token")
                                 self.proceedToMainTabView(user: userId as! Int)
                             });
                         }

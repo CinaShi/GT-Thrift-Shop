@@ -119,7 +119,12 @@ class ContactSellerViewController: JSQMessagesViewController {
     }
     
     func getSellerAvatar() {
-        Alamofire.request("\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/getAvatarURL/\(sellerId!)", method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
+        let param = [
+            "userId" : sellerId!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ] as [String : Any]
+        
+        Alamofire.request("\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/getAvatarURL", method: .post, parameters: param, encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success:
                 print("Validation Successful")
@@ -155,8 +160,9 @@ class ContactSellerViewController: JSQMessagesViewController {
         
         let param = [
             "userId"  : userId!,
-            "pid"  : pid!
-        ]
+            "pid"  : pid!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ] as [String : Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: param)
         print("******sent param --> \(param)")
         

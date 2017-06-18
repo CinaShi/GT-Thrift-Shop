@@ -84,10 +84,20 @@ class MyCommentCollectionViewController: UICollectionViewController {
     func loadMyComments() {
         //implement this part after backend API changed
         
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/comment/get/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/comment/get")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST";
+        
+        let param = [
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -128,8 +138,9 @@ class MyCommentCollectionViewController: UICollectionViewController {
                                     return
                             }
                             let product = self.findProductByPid(pid: pid)
-                            
-                            self.myComments.append((tranId, product!, buyerId, commentContent, postTime, rate, buyerName))
+                            if product != nil {
+                                self.myComments.append((tranId, product!, buyerId, commentContent, postTime, rate, buyerName))
+                            }
                         }
                         
                     } catch let error as NSError {

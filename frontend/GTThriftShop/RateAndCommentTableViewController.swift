@@ -85,13 +85,13 @@ class RateAndCommentTableViewController: UITableViewController, UITextViewDelega
         var request = URLRequest(url:url! as URL)
         request.httpMethod = "POST"
         
-        
         let param = [
             "userId"  : targetId!,
             "rate"    : rating,
             "ccontent"    : commentTextView.text!,
             "commentatorId"    : userId!,
             "tranId"    : tranId!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
             ] as [String : Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: param)
         print("******sent param --> \(param)")

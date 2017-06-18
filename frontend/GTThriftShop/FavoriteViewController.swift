@@ -84,10 +84,20 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         loadFavoriteIndicator.startAnimating()
-        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/favorites/all/\(userId!)")
+        let url = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/favorites/all")
         
         var request = URLRequest(url:url! as URL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST";
+        
+        let param = [
+            "userId"  : UserDefaults.standard.string(forKey: "userId")!,
+            "token" : UserDefaults.standard.string(forKey: "token")!
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+        print("******sent param --> \(param)")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -121,7 +131,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
                             if !self.products.contains(where: {$0.pid! == pid}) {
                                 DispatchQueue.main.async(execute: {
                                     print("unavailable products")
-                                    self.notifyFailure(info: "please reload your products")
+                                    self.notifyFailure(info: "There are products you liked that are not stored locally! Please reload your products!")
                                 });
                                 return
                             }
