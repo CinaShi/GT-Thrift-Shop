@@ -152,8 +152,8 @@ def product_uploader():
 		print("Empty file list")
 		abort(400, '{"message":"Empty file list"}')
 
-	jsonFile = request.form["json"]
-	jsonDic = json.load(codecs.open(jsonFile, encoding='utf-8'))
+	jsonStr = request.form["json"]
+	jsonDic = json.load(jsonStr)
 	if not 'pid' in jsonDic or not 'userId' in jsonDic or not 'token' in jsonDic:
 		print("Missing parameters in json file")
 		abort(400, '{"message":"Missing parameters in json file"}')
