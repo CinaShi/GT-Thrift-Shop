@@ -139,6 +139,10 @@ def product_uploader():
 		print("no files")
 		abort(400)
 
+	if not 'files' in request.files:
+		print("fuck")
+		abort(400)
+
 	if not request.files or not 'files' in request.files or not 'json' in request.files:
 		print("Input parameter incorrect or missing")
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
