@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, abort, Blueprint
-from flask.ext.mysql import MySQL
+from flaskext.mysql import MySQL
 import json, codecs
 import boto3
 from werkzeug.utils import secure_filename

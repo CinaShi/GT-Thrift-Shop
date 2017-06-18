@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, abort
-from flask.ext.mysql import MySQL
+from flaskext.mysql import MySQL
 import json, codecs
 import boto3
 from werkzeug.utils import secure_filename
@@ -107,6 +107,6 @@ def get_tags():
 
 
 if __name__ == '__main__':
-	app.debug = True
+	# app.debug = True
 	app.run(host='0.0.0.0',port=80)
 	# app.run(port=8888)

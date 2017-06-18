@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, abort, Blueprint
-from flask.ext.mysql import MySQL
+from flaskext.mysql import MySQL
 import json, codecs
 import boto3
 from werkzeug.utils import secure_filename
@@ -29,6 +29,66 @@ def get_all_products():
 	db = mysql.connect()
 	cursor = db.cursor()
 	cursor.execute("SELECT * FROM Product ORDER BY postTime;")
+	if cursor.rowcount > 0:
+		productList = cursor.fetchall()
+		for pRow in productList:
+			userId = pRow[0]
+			pid = pRow[1]
+			pName = pRow[2]
+			pPrice = str(pRow[3])
+			pInfo = pRow[4]
+			postTime = pRow[5]
+			usedTime = pRow[6]
+			isSold = pRow[7]
+			imageCur = db.cursor()
+			imageCur.execute("SELECT imageURL FROM ProductImage WHERE pid = '%d';"%pid)
+			imageList = []
+			if imageCur.rowcount > 0:
+				imageR = imageCur.fetchall()
+				for i in imageR:
+					imageList.append(i[0])
+			userCur = db.cursor()
+			userCur.execute("SELECT nickname FROM UserInfo WHERE userId = '%d';"%userId)
+			if userCur.rowcount >0:
+				nickname = userCur.fetchall()[0][0]
+			currentProduct = {}
+			currentProduct['nickname'] = nickname
+			currentProduct['userId'] = userId
+			currentProduct['pid'] = pid
+			currentProduct['pName'] = pName
+			currentProduct['pPrice'] = pPrice
+			currentProduct['pInfo'] = pInfo
+			currentProduct['postTime'] = postTime
+			currentProduct['usedTime'] = usedTime
+			currentProduct['images'] = imageList
+			currentProduct['isSold'] = isSold
+			productsList.append(currentProduct)
+	db.close()
+	return jsonify({'products':productsList})
+
+
+# author: Wen
+@products.route('/products/pids', methods=['POST'])
+def get_products_by_pids():
+	if not request.json or not 'pidList' in request.json:
+		abort(400, '{"message":"Input parameter incorrect or missing"}')
+
+	pidList = request.json['pidList']
+	if len(pidList) == 0:
+		abort(400, '{"message":"Empty pid list"}')
+
+	if len(pidList) == 1:
+		pidTuple = "(" + str(pidList[0]) + ")"
+	else:
+		pidTuple = ()
+		for p in pidList:
+			pidTuple = pidTuple + (p,)
+
+	productsList = []
+
+	db = mysql.connect()
+	cursor = db.cursor()
+	cursor.execute("SELECT * FROM Product WHERE pid IN %s;"%str(pidTuple))
 	if cursor.rowcount > 0:
 		productList = cursor.fetchall()
 		for pRow in productList:

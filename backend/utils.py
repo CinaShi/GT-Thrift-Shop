@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, abort
-from flask.ext.mysql import MySQL
+from flaskext.mysql import MySQL
 import json, codecs
 import datetime
 
