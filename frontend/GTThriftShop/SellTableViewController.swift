@@ -265,137 +265,142 @@ class SellTableViewController: UITableViewController, UIImagePickerControllerDel
             "token" : UserDefaults.standard.string(forKey: "token")!
         ]
         
-//        Alamofire.upload(multipartFormData: { multipartFormData in
-//            
-//            if photosToUpload.count > 0 {
-//                for i in (0..<photosToUpload.count) {
-//                    multipartFormData.append(UIImageJPEGRepresentation(photosToUpload[i], 0.5)!, withName: "image", fileName: "photo\(i+1).jpeg", mimeType: "image/jpeg")
-//                }
-//            }
-//            
+        Alamofire.upload(multipartFormData: { multipartFormData in
+            
+            let jsonData = try? JSONSerialization.data(withJSONObject: param)
+            multipartFormData.append(jsonData!, withName: "json")
+            
+            if photosToUpload.count > 0 {
+                for i in (0..<photosToUpload.count) {
+                    multipartFormData.append(UIImageJPEGRepresentation(photosToUpload[i], 0.5)!, withName: "files", fileName: "photo\(i+1).jpeg", mimeType: "image/jpeg")
+                }
+            }
+            
+            
 //            for (key, value) in param {
 //                multipartFormData.append((value.data(using: .utf8))!, withName: key)
-//            }}, to: url, method: .post, 
-//                encodingCompletion: { encodingResult in
-//                    switch encodingResult {
-//                    case .success(let upload, _, _):
-//                        upload.response { [weak self] response in
-//                            guard self != nil else {
-//                                return
-//                            }
-//                            if let httpResponse = response.response {
-//                                print("***** statusCode: \(httpResponse.statusCode)")
-//                                if httpResponse.statusCode == 200 {
-//                                    print("upload success")
-//                                    DispatchQueue.main.async(execute: {
-//                                        self?.performSegue(withIdentifier: "uploadInfoSuccess", sender: self)
-//                                    });
-//                                } else if httpResponse.statusCode == 404 {
-//                                    DispatchQueue.main.async(execute: {
-//                                        self?.notifyFailure(info: "Cannot find url!")
-//                                    });
-//                                }
-//                                else {
-//                                    DispatchQueue.main.async(execute: {
-//                                        print(response)
-//                                        self?.notifyFailure(info: "There might be some connection issue. Please try again!")
-//                                    });
-//                                    
-//                                }
-//                            } else {
-//                                DispatchQueue.main.async(execute: {
-//                                    self?.notifyFailure(info: "There might be some connection issue. Please try again!")
-//                                });
-//                            }
-//                        }
-//                    case .failure(let encodingError):
-//                        print("error:\(encodingError)")
-//                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
-//                    }
-//        })
-        
-        
-        let session = URLSession.shared
-        
-        let request = NSMutableURLRequest(url:url)
-        request.httpMethod = "POST"
-        
-        
-        let boundary: NSString = "----CustomFormBoundarycC4YiaUFwM44F6rT"
-        let body: NSMutableData = NSMutableData()
-        
-        
-        
-        for (key, value) in param {
-            body.append(("--\(boundary)\r\n" as String).data(using: String.Encoding.utf8, allowLossyConversion: true)!)
-            body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n" .data(using: String.Encoding.utf8, allowLossyConversion: true)!)
-            body.append("\(value)\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
-        }
-        
-        // you can also send multiple images
-        if photosToUpload.count > 0 {
-            for i in (0..<photosToUpload.count) {
-                body.append(("--\(boundary)\r\n" as String).data(using: String.Encoding.utf8, allowLossyConversion: true)!)
-                body.append("Content-Disposition: form-data; name=\"image(file)\"; filename=\"photo\(i+1).jpeg\"\r\n" .data(using: String.Encoding.utf8, allowLossyConversion: true)!)
-                body.append("Content-Type: image/jpeg\r\n\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
-                
-                // change quality of image here
-                body.append(UIImageJPEGRepresentation(photosToUpload[i], 0.5)!)
-                body.append("\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
-            }
-        }
-        
-        body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
-        
-        request.httpBody = body as Data
-        request.timeoutInterval = 20
-        request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        let task = session.dataTask(with: request as URLRequest) {
-            (
-            data, response, error) in
-            
-            guard let data = data, let _:URLResponse = response  , error == nil else {
-                print("******* error=\(error)")
-                DispatchQueue.main.async(execute: {
-                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
-                });
-                
-                return
-            }
-            print("******* response = \(response!)")
-            
-            // Print out reponse body
-            let responseString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-            print("****** response data = \(responseString!)")
-            if let httpResponse = response as? HTTPURLResponse {
-                print("***** statusCode: \(httpResponse.statusCode)")
-                if httpResponse.statusCode == 200 {
-                    print("upload success")
-                    DispatchQueue.main.async(execute: {
-                        self.performSegue(withIdentifier: "uploadInfoSuccess", sender: self)
-                    });
-                } else if httpResponse.statusCode == 404 {
-                    DispatchQueue.main.async(execute: {
-                        self.notifyFailure(info: "Cannot find url!")
-                    });
-                }
-                else {
-                    DispatchQueue.main.async(execute: {
+//            }
+        }, to: url, method: .post, headers: nil,
+                encodingCompletion: { encodingResult in
+                    switch encodingResult {
+                    case .success(let upload, _, _):
+                        upload.response { [weak self] response in
+                            guard self != nil else {
+                                return
+                            }
+                            if let httpResponse = response.response {
+                                print("***** statusCode: \(httpResponse.statusCode)")
+                                if httpResponse.statusCode == 200 {
+                                    print("upload success")
+                                    DispatchQueue.main.async(execute: {
+                                        self?.performSegue(withIdentifier: "uploadInfoSuccess", sender: self)
+                                    });
+                                } else if httpResponse.statusCode == 404 {
+                                    DispatchQueue.main.async(execute: {
+                                        self?.notifyFailure(info: "Cannot find url!")
+                                    });
+                                }
+                                else {
+                                    DispatchQueue.main.async(execute: {
+                                        print(response)
+                                        self?.notifyFailure(info: "There might be some connection issue. Please try again!")
+                                    });
+                                    
+                                }
+                            } else {
+                                DispatchQueue.main.async(execute: {
+                                    self?.notifyFailure(info: "There might be some connection issue. Please try again!")
+                                });
+                            }
+                        }
+                    case .failure(let encodingError):
+                        print("error:\(encodingError)")
                         self.notifyFailure(info: "There might be some connection issue. Please try again!")
-                    });
-                    
-                }
-            } else {
-                DispatchQueue.main.async(execute: {
-                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
-                });
-            }
-            
-            
-        }
+                    }
+        })
         
-        task.resume()
+        
+//        let session = URLSession.shared
+//        
+//        let request = NSMutableURLRequest(url:url)
+//        request.httpMethod = "POST"
+//        
+//        
+//        let boundary: NSString = "----CustomFormBoundarycC4YiaUFwM44F6rT"
+//        let body: NSMutableData = NSMutableData()
+//        
+//        
+//        let jsonData = try? JSONSerialization.data(withJSONObject: param)
+//        
+//            body.append(("--\(boundary)\r\n" as String).data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+//            body.append("Content-Disposition: form-data; name=\"json\"\r\n\r\n" .data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+//            body.append("\(jsonData!)\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+//        
+//        
+//        // you can also send multiple images
+//        if photosToUpload.count > 0 {
+//            for i in (0..<photosToUpload.count) {
+//                body.append(("--\(boundary)\r\n" as String).data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+//                body.append("Content-Disposition: form-data; name=\"image(file)\"; filename=\"photo\(i+1).jpeg\"\r\n" .data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+//                body.append("Content-Type: image/jpeg\r\n\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+//                
+//                // change quality of image here
+//                body.append(UIImageJPEGRepresentation(photosToUpload[i], 0.5)!)
+//                body.append("\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+//            }
+//        }
+//        
+//        body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8, allowLossyConversion: true)!)
+//        
+//        request.httpBody = body as Data
+//        request.timeoutInterval = 20
+//        request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+//        
+//        let task = session.dataTask(with: request as URLRequest) {
+//            (
+//            data, response, error) in
+//            
+//            guard let data = data, let _:URLResponse = response  , error == nil else {
+//                print("******* error=\(error)")
+//                DispatchQueue.main.async(execute: {
+//                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+//                });
+//                
+//                return
+//            }
+//            print("******* response = \(response!)")
+//            
+//            // Print out reponse body
+//            let responseString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+//            print("****** response data = \(responseString!)")
+//            if let httpResponse = response as? HTTPURLResponse {
+//                print("***** statusCode: \(httpResponse.statusCode)")
+//                if httpResponse.statusCode == 200 {
+//                    print("upload success")
+//                    DispatchQueue.main.async(execute: {
+//                        self.performSegue(withIdentifier: "uploadInfoSuccess", sender: self)
+//                    });
+//                } else if httpResponse.statusCode == 404 {
+//                    DispatchQueue.main.async(execute: {
+//                        self.notifyFailure(info: "Cannot find url!")
+//                    });
+//                }
+//                else {
+//                    DispatchQueue.main.async(execute: {
+//                        self.notifyFailure(info: "There might be some connection issue. Please try again!")
+//                    });
+//                    
+//                }
+//            } else {
+//                DispatchQueue.main.async(execute: {
+//                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
+//                });
+//            }
+//            
+//            
+//        }
+//        
+//        task.resume()
     }
     
     func updateProduct() {

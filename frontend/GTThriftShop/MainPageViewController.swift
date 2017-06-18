@@ -762,16 +762,19 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
             lastElement = filteredProducts.count
         }
         
-        if (allProducts.count % 20 == 0) && indexPath.row == lastElement {
-            if inTag {
+        if inTag {
+            if products.count >= 20 && products.count % 20 == 0 && indexPath.row == lastElement {
                 tagPageNum += 1
                 filterByTag(tag: currentTag)
-            } else {
+            }
+        } else {
+            if allProducts.count >= 20 && allProducts.count % 20 == 0 && indexPath.row == lastElement {
                 pageNum += 1
                 obtainAllProductsFromServer()
             }
             
         }
+        
     }
     
     //Mark:Search bar delegate
