@@ -135,16 +135,33 @@ def get_tag_details():
 # authentication
 @products.route('/products/add/images', methods=['POST'])
 def product_uploader():
-	if not request.files or not request.get_json(force=True) or not 'files' in request.files or not 'pid' in request.get_json(force=True) or not 'userId' in request.get_json(force=True) or not 'token' in request.get_json(force=True):
+	if not request.files:
+		print("no files")
+		abort(400)
+
+	if not 'files' in request.files:
+		print("fuck")
+		abort(400)
+
+	if not request.files or not 'files' in request.files or not 'json' in request.form:
+		print("Input parameter incorrect or missing")
 		abort(400, '{"message":"Input parameter incorrect or missing"}')
 
 	fileList = request.files.getlist('files')
 	if len(fileList) == 0:
-		abort(400)
+		print("Empty file list")
+		abort(400, '{"message":"Empty file list"}')
 
-	pid = request.get_json(force=True)['pid']
-	userId = request.get_json(force=True)['userId']
-	token = request.get_json(force=True)['token']
+	jsonStr = request.form["json"]
+	jsonDic = json.load(jsonStr)
+	if not 'pid' in jsonDic or not 'userId' in jsonDic or not 'token' in jsonDic:
+		print("Missing parameters in json file")
+		abort(400, '{"message":"Missing parameters in json file"}')
+
+	pid = jsonDic['pid']
+	userId = jsonDic['userId']
+	token = jsonDic['token']
+
 	if not utils.authenticateToken(userId, token):
 		abort(401)
 
