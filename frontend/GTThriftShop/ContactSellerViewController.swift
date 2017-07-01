@@ -457,7 +457,12 @@ class ContactSellerViewController: JSQMessagesViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
         let message = messages[indexPath.item]
         let messageDate = message.date
-        let currentDate = Date()
+        
+        let oldDateFormatter = DateFormatter()
+        oldDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        oldDateFormatter.dateFormat = "dd LLL yyyy"
+        let todayDate = oldDateFormatter.string(from: Date())
+        let messageOnlyDate = oldDateFormatter.string(from: messageDate!)
         
         let canDisplay = dateDisplayed[indexPath.item]
         let dateFormatter = DateFormatter()
@@ -481,9 +486,16 @@ class ContactSellerViewController: JSQMessagesViewController {
 //        }
         
         if canDisplay {
-            dateFormatter.dateStyle = .medium
-            dateFormatter.timeStyle = .short
-            dateString = NSMutableAttributedString(string: dateFormatter.string(from: messageDate!))
+            if todayDate == messageOnlyDate {
+                dateFormatter.dateStyle = .none
+                dateFormatter.timeStyle = .short
+                dateString = NSMutableAttributedString(string: "Today, \(dateFormatter.string(from: messageDate!))")
+            } else {
+                dateFormatter.dateStyle = .medium
+                dateFormatter.timeStyle = .short
+                dateString = NSMutableAttributedString(string: dateFormatter.string(from: messageDate!))
+            }
+            
         }
         
         return dateString
