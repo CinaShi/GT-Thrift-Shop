@@ -8,6 +8,8 @@
 
 import UIKit
 import FirebaseAuth
+import Alamofire
+
 class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var nickNameField: UITextField!
@@ -115,52 +117,42 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
 
     }
     
-    func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData?, boundary: String) -> NSData {
-        let body = NSMutableData();
-        
-        if parameters != nil {
-            for (key, value) in parameters! {
-                body.appendString(string: "--\(boundary)\r\n")
-                body.appendString(string: "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
-                body.appendString(string: "\(value)\r\n")
-            }
-        }
-        
-        if imageDataKey != nil {
-            let filename = "\(self.userId)-avatar.jpg"
-            let mimetype = "image/jpg"
-            
-            
-            body.appendString(string: "--\(boundary)\r\n")
-            body.appendString(string: "Content-Disposition: form-data; name=\"\(filePathKey!)\"; filename=\"\(filename)\"\r\n")
-            body.appendString(string: "Content-Type: \(mimetype)\r\n\r\n")
-            body.append(imageDataKey as! Data)
-            body.appendString(string: "\r\n")
-        }
-        
-        
-        body.appendString(string: "--\(boundary)--\r\n")
-        
-        return body
-    }
-    
-    func generateBoundaryString() -> String {
-        return "Boundary-\(NSUUID().uuidString)"
-    }
+//    func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData?, boundary: String) -> NSData {
+//        let body = NSMutableData();
+//        
+//        if parameters != nil {
+//            for (key, value) in parameters! {
+//                body.appendString(string: "--\(boundary)\r\n")
+//                body.appendString(string: "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+//                body.appendString(string: "\(value)\r\n")
+//            }
+//        }
+//        
+//        if imageDataKey != nil {
+//            let filename = "\(self.userId)-avatar.jpg"
+//            let mimetype = "image/jpg"
+//            
+//            
+//            body.appendString(string: "--\(boundary)\r\n")
+//            body.appendString(string: "Content-Disposition: form-data; name=\"\(filePathKey!)\"; filename=\"\(filename)\"\r\n")
+//            body.appendString(string: "Content-Type: \(mimetype)\r\n\r\n")
+//            body.append(imageDataKey as! Data)
+//            body.appendString(string: "\r\n")
+//        }
+//        
+//        
+//        body.appendString(string: "--\(boundary)--\r\n")
+//        
+//        return body
+//    }
+//    
+//    func generateBoundaryString() -> String {
+//        return "Boundary-\(NSUUID().uuidString)"
+//    }
     
     
     func submitPhotoFirst() {
         let url:URL = URL(string: "\(GlobalHelper.sharedInstance.AWSUrlHeader)/user/image")!
-        let session = URLSession.shared
-        
-        let request = NSMutableURLRequest(url:url);
-        request.httpMethod = "POST";
-        
-        
-        
-        let boundary = generateBoundaryString()
-        
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         
         let imageData = UIImageJPEGRepresentation(imageView.image!, 1)
@@ -172,33 +164,58 @@ class FirstTimeViewController: UIViewController, UITextViewDelegate, UITextField
             "token" : UserDefaults.standard.string(forKey: "token")!
         ]
         
-        request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary) as Data
+        submitActivityIndicator.startAnimating()
         
-        
-        submitActivityIndicator.startAnimating();
-        
-        let task = session.dataTask(with: request as URLRequest) {
-            (
-            data, response, error) in
+        Alamofire.upload(multipartFormData: { multipartFormData in
             
-            guard let data = data, let _:URLResponse = response  , error == nil else {
-                print("******* error=\(error)")
-                DispatchQueue.main.async(execute: {
-                    self.notifyFailure(info: "There might be some connection issue. Please try again!")
-                });
-                
-                return
+            let jsonData = try? JSONSerialization.data(withJSONObject: param)
+            multipartFormData.append(jsonData!, withName: "json")
+            
+            multipartFormData.append(imageData!, withName: "file", fileName: "\(self.userId)-avatar.jpeg", mimeType: "image/jpeg")
+            
+            
+            //            for (key, value) in param {
+            //                multipartFormData.append((value.data(using: .utf8))!, withName: key)
+            //            }
+        }, to: url, method: .post, headers: nil,
+           encodingCompletion: { encodingResult in
+            switch encodingResult {
+            case .success(let upload, _, _):
+                upload.response { [weak self] response in
+                    guard self != nil else {
+                        return
+                    }
+                    if let httpResponse = response.response {
+                        print("***** statusCode: \(httpResponse.statusCode)")
+                        if httpResponse.statusCode == 200 {
+                            print("upload success")
+                            let imageUrl =  String(data: response.data!, encoding: String.Encoding.utf8)
+                            print("******* image url = \(imageUrl!)")
+                            self?.uploadWholeInfo(imageurl: imageUrl!)
+                        } else if httpResponse.statusCode == 404 {
+                            DispatchQueue.main.async(execute: {
+                                self?.notifyFailure(info: "Cannot find url!")
+                            });
+                        }
+                        else {
+                            DispatchQueue.main.async(execute: {
+                                print(response)
+                                self?.notifyFailure(info: "There might be some connection issue. Please try again!")
+                            });
+                            
+                        }
+                    } else {
+                        DispatchQueue.main.async(execute: {
+                            self?.notifyFailure(info: "There might be some connection issue. Please try again!")
+                        });
+                    }
+                }
+            case .failure(let encodingError):
+                print("error:\(encodingError)")
+                self.notifyFailure(info: "There might be some connection issue. Please try again!")
             }
-            print("******* response = \(response!)")
-            
-            let imageUrl =  String(data: data, encoding: String.Encoding.utf8)
-            print("******* image url = \(imageUrl!)")
-            
-            self.uploadWholeInfo(imageurl: imageUrl!)
-            
-        }
+        })
         
-        task.resume()
     }
     
     func uploadWholeInfo(imageurl: String) {
