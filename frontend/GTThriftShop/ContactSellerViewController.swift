@@ -53,6 +53,9 @@ class ContactSellerViewController: JSQMessagesViewController {
         }
     }
     
+    var dateDisplayed = [Bool]()
+    var currentDate = ""
+    
     private lazy var usersTypingQuery: FIRDatabaseQuery =
         self.channelRef!.child("typingIndicator").queryOrderedByValue().queryEqual(toValue: true)
     
@@ -72,9 +75,6 @@ class ContactSellerViewController: JSQMessagesViewController {
         
         if let imageData: NSData = NSData(contentsOf: URL(string: userUrl)!) {
             userAvatarImageView = JSQMessagesAvatarImage.avatar(with: UIImage(data: imageData as Data))
-            
-            
-            
             
         } else {
             userAvatarImageView = JSQMessagesAvatarImage.avatar(with: #imageLiteral(resourceName: "GT-icon"))
@@ -211,15 +211,50 @@ class ContactSellerViewController: JSQMessagesViewController {
     private func addMessage(withId id: String, name: String, date: Date, text: String) {
         if let message = JSQMessage(senderId: id, senderDisplayName: name, date: date, text: text) {
             messages.append(message)
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "dd LLL yyyy"
+            let messageDate = dateFormatter.string(from: date)
+            if currentDate == "" {
+                currentDate = messageDate
+                dateDisplayed.append(true)
+            } else {
+                if messageDate == currentDate {
+                    dateDisplayed.append(false)
+                } else {
+                    currentDate = messageDate
+                    dateDisplayed.append(true)
+                }
+            }
+            
+            collectionView.reloadData()
         }
+        
     }
     
-    private func addPhotoMessage(withId id: String, key: String, mediaItem: JSQPhotoMediaItem) {
-        if let message = JSQMessage(senderId: id, displayName: "", media: mediaItem) {
+    private func addPhotoMessage(withId id: String, key: String, date: Date, mediaItem: JSQPhotoMediaItem) {
+        if let message = JSQMessage(senderId: id, senderDisplayName: "", date: date, media: mediaItem) {
             messages.append(message)
             
             if (mediaItem.image == nil) {
                 photoMessageMap[key] = mediaItem
+            }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "dd LLL yyyy"
+            let messageDate = dateFormatter.string(from: date)
+            if currentDate == "" {
+                currentDate = messageDate
+                dateDisplayed.append(true)
+            } else {
+                if messageDate == currentDate {
+                    dateDisplayed.append(false)
+                } else {
+                    currentDate = messageDate
+                    dateDisplayed.append(true)
+                }
             }
             
             collectionView.reloadData()
@@ -259,9 +294,11 @@ class ContactSellerViewController: JSQMessagesViewController {
     func sendPhotoMessage() -> String? {
         let itemRef = messageRef.childByAutoId()
         
+        let date = Date()
         let messageItem = [
             "photoURL": imageURLNotSetKey,
             "senderId": senderId!,
+            "sendTime": "\(date.timeIntervalSince1970)"
             ]
         
         itemRef.setValue(messageItem)
@@ -301,10 +338,10 @@ class ContactSellerViewController: JSQMessagesViewController {
                 
                 self.finishReceivingMessage()
             } else if let id = messageData["senderId"] as String!,
-                let photoURL = messageData["photoURL"] as String! {
+                let photoURL = messageData["photoURL"] as String!,  let interval = messageData["sendTime"] as String! {
                 
                 if let mediaItem = JSQPhotoMediaItem(maskAsOutgoing: id == self.senderId) {
-                    self.addPhotoMessage(withId: id, key: snapshot.key, mediaItem: mediaItem)
+                    self.addPhotoMessage(withId: id, key: snapshot.key, date: Date(timeIntervalSince1970: Double(interval)!), mediaItem: mediaItem)
                     if photoURL.hasPrefix("gs://") {
                         self.fetchImageDataAtURL(photoURL, forMediaItem: mediaItem, clearsPhotoMessageMapOnSuccessForKey: nil)
                     }
@@ -408,13 +445,23 @@ class ContactSellerViewController: JSQMessagesViewController {
         }
     }
     
-    //deal with date display later
-//    override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
-//        let message = messages[indexPath.item]
-//        let messageDate = message.date
-//        let currentDate = Date()
-//        let dateFormatter = DateFormatter()
-//        var dateString = NSMutableAttributedString()
+//    deal with date display later
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
+        let canDisplay = dateDisplayed[indexPath.item]
+        if canDisplay {
+            return kJSQMessagesCollectionViewCellLabelHeightDefault
+        }
+        return 0
+    }
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
+        let message = messages[indexPath.item]
+        let messageDate = message.date
+        let currentDate = Date()
+        
+        let canDisplay = dateDisplayed[indexPath.item]
+        let dateFormatter = DateFormatter()
+        var dateString = NSMutableAttributedString()
 //        if currentDate.minutes(from: messageDate!) == 5 {
 //            dateFormatter.dateStyle = .none
 //            dateFormatter.timeStyle = .short
@@ -432,10 +479,18 @@ class ContactSellerViewController: JSQMessagesViewController {
 //            dateFormatter.timeStyle = .short
 //            dateString = NSMutableAttributedString(string: dateFormatter.string(from: messageDate!))
 //        }
-//        
-//        return dateString
-//    }
-//    
+        
+        if canDisplay {
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .short
+            dateString = NSMutableAttributedString(string: dateFormatter.string(from: messageDate!))
+        }
+        
+        return dateString
+    }
+    
+    
+//
 //    override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
 //        let message = messages[indexPath.item]
 //        let messageDate = message.date
