@@ -189,6 +189,7 @@ class MyCommentCollectionViewController: UICollectionViewController {
     
     func initialSort() {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
         self.myComments.sort(by: {dateFormatter.date(from: $0.4)! > dateFormatter.date(from: $1.4)!})
     }

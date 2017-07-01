@@ -526,6 +526,7 @@ class MainPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func initialSort() {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
         self.products.sort(by: {dateFormatter.date(from: $0.postTime)! > dateFormatter.date(from: $1.postTime)!})
     }

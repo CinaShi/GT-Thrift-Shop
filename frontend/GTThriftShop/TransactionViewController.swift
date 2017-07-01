@@ -172,6 +172,7 @@ class TransactionViewController: UIViewController, UITableViewDataSource, UITabl
     
     func initialSort() {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "EEE, dd LLL yyyy HH:mm:ss z"
         self.myTransactions.sort(by: {dateFormatter.date(from: $0.1.postTime)! > dateFormatter.date(from: $1.1.postTime)!})
     }
