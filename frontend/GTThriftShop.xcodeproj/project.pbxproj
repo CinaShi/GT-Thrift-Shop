@@ -362,7 +362,7 @@
 				TargetAttributes = {
 					088542BA1DE93481004344D4 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = K5BR2FF6XK;
+						DevelopmentTeam = FP59EAC744;
 						ProvisioningStyle = Automatic;
 					};
 					088542CE1DE93481004344D4 = {
@@ -656,7 +656,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = K5BR2FF6XK;
+				DEVELOPMENT_TEAM = FP59EAC744;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -681,7 +681,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = K5BR2FF6XK;
+				DEVELOPMENT_TEAM = FP59EAC744;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
