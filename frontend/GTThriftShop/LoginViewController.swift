@@ -14,6 +14,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     static var authLTPost: String?
     var userIdString = String()
     var effect: UIVisualEffect!
+    var loadedDuoTwoFactor = false
     
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -22,6 +23,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var loginBlock: UIView!
+    @IBOutlet weak var twoFactorWebView: UIWebView!
+    @IBOutlet weak var twoFactorWebViewCenterConstraint: NSLayoutConstraint!
     @IBOutlet weak var loginBlockBlur: UIVisualEffectView!
     
     override func viewDidLoad() {
@@ -164,9 +167,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.notifyFailure(info: "Your username or password is incorrect!")
             });
             
-        } else {
+        } else if response.contains("iframe") {
+            //need to do two-way auth here
+            self.twoFactorWebView.loadHTMLString(response, baseURL: URL(string: "https://login.gatech.edu/cas/login"))
+            self.twoFactorWebView.superview?.alpha = 1.0
+            
+            self.twoFactorWebView.delegate = TwoFactorWebViewDelegate()
+            loadedDuoTwoFactor = false
+        }
+        else {
             print("Right password! Send request to GT thrift shop to get userid.")
-            //send request to YY and check if its first time user and get userid
             DispatchQueue.main.async(execute: {
                 self.loginActivityIndicator.stopAnimating()
                 self.uploadUserInfo()
@@ -174,6 +184,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             });
             
         }
+    }
+    
+    func presentTwoFactorView() {
+        if self.twoFactorWebViewCenterConstraint.constant == 0 { return }
+        
+        UIView.animate(withDuration: 0.45, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
+            self.twoFactorWebViewCenterConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    func nextStepAfterTwoWayAuth() {
+        print("two-way auth success! Send request to GT thrift shop to get userid.")
+        DispatchQueue.main.async(execute: {
+            self.loginActivityIndicator.stopAnimating()
+            self.uploadUserInfo()
+        });
     }
     
     func uploadUserInfo() {
@@ -315,6 +342,46 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+}
+
+//two-way auth related helper
+class TwoFactorWebViewDelegate : NSObject, UIWebViewDelegate {
+    static var loginController: LoginViewController? {
+        return UIApplication.shared.keyWindow?.rootViewController as? LoginViewController
+    }
+    //URL pointed to by the Duo iframe
+    //is loaded by the page at runtime
+    func iframeSrc(_ webView: UIWebView) -> String? {
+        let content = webView.stringByEvaluatingJavaScript(from: "document.documentElement.outerHTML")
+        let iframe = HttpClient.getInfoFromPage((content ?? "") as NSString, infoSearch: "<iframe", terminator: ">")
+        return HttpClient.getInfoFromPage((iframe ?? "") as NSString, infoSearch: "src=\"", terminator: "\"")
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        let content = webView.stringByEvaluatingJavaScript(from: "document.documentElement.outerHTML")
+        
+        //if still waiting on two-factor to complete
+        
+        if !(TwoFactorWebViewDelegate.loginController?.loadedDuoTwoFactor)! {
+            let isCorrectPage = content?.contains("Two-factor login is needed") == true
+            let hasFinishedProcessing = iframeSrc(webView) != nil
+            
+            if isCorrectPage && hasFinishedProcessing {
+                TwoFactorWebViewDelegate.loginController?.loadedDuoTwoFactor = true
+                //hide everything but the Duo iframe
+                let javascript = "$($('body').append($('#duo_iframe')));" +
+                    "$('body > *:not(iframe)').hide();" +
+                "$('#duo_iframe').height(100);"
+                webView.stringByEvaluatingJavaScript(from: javascript)
+                TwoFactorWebViewDelegate.loginController?.presentTwoFactorView()
+            }
+        }
+        
+        //successful login
+        if let content = content, content.contains("My Workspace") == true || content.contains("Log Out") == true {
+            TwoFactorWebViewDelegate.loginController?.nextStepAfterTwoWayAuth()
+        }
+    }
 }
 
 extension String {
