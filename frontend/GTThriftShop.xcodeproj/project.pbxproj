@@ -8,6 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		084190971EE3471900C30EC9 /* GlobalHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084190961EE3471900C30EC9 /* GlobalHelper.swift */; };
+		0852F77D1FFB4E0800AF9098 /* CameraExampleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0852F7781FFB4E0500AF9098 /* CameraExampleViewController.mm */; };
+		0852F77E1FFB4E0800AF9098 /* ios_image_load.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0852F7791FFB4E0600AF9098 /* ios_image_load.mm */; };
+		0852F77F1FFB4E0800AF9098 /* tensorflow_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0852F77A1FFB4E0700AF9098 /* tensorflow_utils.mm */; };
+		0852F7811FFB555700AF9098 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0852F7801FFB555700AF9098 /* AVFoundation.framework */; };
+		0852F7831FFB556300AF9098 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0852F7821FFB556300AF9098 /* CoreMedia.framework */; };
+		0852F7851FFB556E00AF9098 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0852F7841FFB556E00AF9098 /* CoreGraphics.framework */; };
+		0852F7871FFB557A00AF9098 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0852F7861FFB557A00AF9098 /* CoreImage.framework */; };
+		0852F7891FFB55A700AF9098 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0852F7881FFB55A700AF9098 /* UIKit.framework */; };
+		0852F78F1FFB657D00AF9098 /* grace_hopper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0852F78B1FFB657700AF9098 /* grace_hopper.jpg */; };
+		0852F7901FFB657D00AF9098 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0852F78C1FFB657900AF9098 /* LICENSE */; };
+		0852F7911FFB657D00AF9098 /* imagenet_comp_graph_label_strings.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0852F78D1FFB657A00AF9098 /* imagenet_comp_graph_label_strings.txt */; };
+		0852F7921FFB657D00AF9098 /* tensorflow_inception_graph.pb in Resources */ = {isa = PBXBuildFile; fileRef = 0852F78E1FFB657D00AF9098 /* tensorflow_inception_graph.pb */; };
 		0868862A1E9DD09A009DFF61 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086886291E9DD09A009DFF61 /* User.swift */; };
 		08757B7B1E56C56600219BCA /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08757B7A1E56C56600219BCA /* Product.swift */; };
 		088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088542BE1DE93481004344D4 /* AppDelegate.swift */; };
@@ -60,6 +72,21 @@
 
 /* Begin PBXFileReference section */
 		084190961EE3471900C30EC9 /* GlobalHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalHelper.swift; sourceTree = "<group>"; };
+		0852F7751FFB4DFF00AF9098 /* tensorflow_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tensorflow_utils.h; sourceTree = "<group>"; };
+		0852F7761FFB4E0100AF9098 /* CameraExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraExampleViewController.h; sourceTree = "<group>"; };
+		0852F7781FFB4E0500AF9098 /* CameraExampleViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CameraExampleViewController.mm; sourceTree = "<group>"; };
+		0852F7791FFB4E0600AF9098 /* ios_image_load.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ios_image_load.mm; sourceTree = "<group>"; };
+		0852F77A1FFB4E0700AF9098 /* tensorflow_utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tensorflow_utils.mm; sourceTree = "<group>"; };
+		0852F77B1FFB4E0800AF9098 /* ios_image_load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios_image_load.h; sourceTree = "<group>"; };
+		0852F7801FFB555700AF9098 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0852F7821FFB556300AF9098 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		0852F7841FFB556E00AF9098 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0852F7861FFB557A00AF9098 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		0852F7881FFB55A700AF9098 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0852F78B1FFB657700AF9098 /* grace_hopper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = grace_hopper.jpg; sourceTree = "<group>"; };
+		0852F78C1FFB657900AF9098 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		0852F78D1FFB657A00AF9098 /* imagenet_comp_graph_label_strings.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imagenet_comp_graph_label_strings.txt; sourceTree = "<group>"; };
+		0852F78E1FFB657D00AF9098 /* tensorflow_inception_graph.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = tensorflow_inception_graph.pb; sourceTree = "<group>"; };
 		086886291E9DD09A009DFF61 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		08757B7A1E56C56600219BCA /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Product.swift; path = ../Product.swift; sourceTree = "<group>"; };
 		088542BB1DE93481004344D4 /* GTThriftShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTThriftShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +140,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0852F7891FFB55A700AF9098 /* UIKit.framework in Frameworks */,
+				0852F7871FFB557A00AF9098 /* CoreImage.framework in Frameworks */,
+				0852F7851FFB556E00AF9098 /* CoreGraphics.framework in Frameworks */,
+				0852F7831FFB556300AF9098 /* CoreMedia.framework in Frameworks */,
+				0852F7811FFB555700AF9098 /* AVFoundation.framework in Frameworks */,
 				08E8A84D1E8DFDB600B338EE /* Pods_GTThriftShop.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,6 +166,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0852F7741FFB4DEC00AF9098 /* Recommendation */ = {
+			isa = PBXGroup;
+			children = (
+				0852F7761FFB4E0100AF9098 /* CameraExampleViewController.h */,
+				0852F7781FFB4E0500AF9098 /* CameraExampleViewController.mm */,
+				0852F77B1FFB4E0800AF9098 /* ios_image_load.h */,
+				0852F7791FFB4E0600AF9098 /* ios_image_load.mm */,
+				0852F7751FFB4DFF00AF9098 /* tensorflow_utils.h */,
+				0852F77A1FFB4E0700AF9098 /* tensorflow_utils.mm */,
+			);
+			name = Recommendation;
+			sourceTree = "<group>";
+		};
+		0852F78A1FFB656C00AF9098 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				0852F78B1FFB657700AF9098 /* grace_hopper.jpg */,
+				0852F78D1FFB657A00AF9098 /* imagenet_comp_graph_label_strings.txt */,
+				0852F78C1FFB657900AF9098 /* LICENSE */,
+				0852F78E1FFB657D00AF9098 /* tensorflow_inception_graph.pb */,
+			);
+			name = data;
+			sourceTree = "<group>";
+		};
 		086886281E9DCA12009DFF61 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +242,8 @@
 		088542BD1DE93481004344D4 /* GTThriftShop */ = {
 			isa = PBXGroup;
 			children = (
+				0852F78A1FFB656C00AF9098 /* data */,
+				0852F7741FFB4DEC00AF9098 /* Recommendation */,
 				088542BE1DE93481004344D4 /* AppDelegate.swift */,
 				088542C21DE93481004344D4 /* Main.storyboard */,
 				084190961EE3471900C30EC9 /* GlobalHelper.swift */,
@@ -280,6 +338,11 @@
 		D71CDAC51E72643D00D94118 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0852F7881FFB55A700AF9098 /* UIKit.framework */,
+				0852F7861FFB557A00AF9098 /* CoreImage.framework */,
+				0852F7841FFB556E00AF9098 /* CoreGraphics.framework */,
+				0852F7821FFB556300AF9098 /* CoreMedia.framework */,
+				0852F7801FFB555700AF9098 /* AVFoundation.framework */,
 				089233831E8F5A6800B72BF7 /* JSQSystemSoundPlayer.framework */,
 				089233811E8F5A6400B72BF7 /* JSQMessagesViewController.framework */,
 				08E8A84B1E8DFDA000B338EE /* Foundation.framework */,
@@ -362,7 +425,7 @@
 				TargetAttributes = {
 					088542BA1DE93481004344D4 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = FP59EAC744;
+						DevelopmentTeam = K5BR2FF6XK;
 						ProvisioningStyle = Automatic;
 					};
 					088542CE1DE93481004344D4 = {
@@ -402,10 +465,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0852F78F1FFB657D00AF9098 /* grace_hopper.jpg in Resources */,
 				088542C91DE93481004344D4 /* LaunchScreen.storyboard in Resources */,
 				08E8A84A1E8DFBFA00B338EE /* GoogleService-Info.plist in Resources */,
+				0852F7901FFB657D00AF9098 /* LICENSE in Resources */,
+				0852F7911FFB657D00AF9098 /* imagenet_comp_graph_label_strings.txt in Resources */,
 				089ECA3F1DEE7F6C00D508F6 /* Assets.xcassets in Resources */,
 				088542C41DE93481004344D4 /* Main.storyboard in Resources */,
+				0852F7921FFB657D00AF9098 /* tensorflow_inception_graph.pb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,13 +499,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GTThriftShop-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		919E7DE2793118105E658695 /* [CP] Copy Pods Resources */ = {
@@ -462,9 +532,24 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-GTThriftShop/Pods-GTThriftShop-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftGifOrigin/SwiftGifOrigin.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftGifOrigin.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -482,6 +567,7 @@
 				08CA35521E3ACD0800EFF7D1 /* FirstTimeViewController.swift in Sources */,
 				089ECA451DEE8F4200D508F6 /* ItemDetailViewController.swift in Sources */,
 				089ECA4F1DEE8FBE00D508F6 /* UserProfileViewController.swift in Sources */,
+				0852F77D1FFB4E0800AF9098 /* CameraExampleViewController.mm in Sources */,
 				0899EEF31E72278300262267 /* SellTableViewController.swift in Sources */,
 				D7960FD91ED6D4E20034678F /* PublishmentViewController.swift in Sources */,
 				D71CDAC41E72630900D94118 /* KDCircularProgress.swift in Sources */,
@@ -497,11 +583,13 @@
 				088542C11DE93481004344D4 /* ViewController.swift in Sources */,
 				0899EEE91E713BC500262267 /* RateAndCommentTableViewController.swift in Sources */,
 				D7960FD51ED5CE870034678F /* MyCommentCollectionViewController.swift in Sources */,
+				0852F77E1FFB4E0800AF9098 /* ios_image_load.mm in Sources */,
 				0899EEF11E71DDF700262267 /* CommentDetailTableViewController.swift in Sources */,
 				D71CDABC1E706E3C00D94118 /* DropMenuButton.swift in Sources */,
 				088542BF1DE93481004344D4 /* AppDelegate.swift in Sources */,
 				08757B7B1E56C56600219BCA /* Product.swift in Sources */,
 				08F5A3531E9E052800EAADCC /* EmbedTableViewController.swift in Sources */,
+				0852F77F1FFB4E0800AF9098 /* tensorflow_utils.mm in Sources */,
 				0868862A1E9DD09A009DFF61 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,7 +744,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = FP59EAC744;
+				DEVELOPMENT_TEAM = K5BR2FF6XK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -665,7 +753,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQSystemSoundPlayer",
 				);
 				GCC_OPTIMIZATION_LEVEL = 1;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GTThriftShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = GTTS;
@@ -681,7 +769,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = FP59EAC744;
+				DEVELOPMENT_TEAM = K5BR2FF6XK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -689,7 +777,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQMessagesViewController",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/JSQSystemSoundPlayer",
 				);
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GTThriftShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = GTTS;

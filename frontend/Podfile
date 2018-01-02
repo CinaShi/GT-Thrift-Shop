@@ -13,4 +13,5 @@ target 'GTThriftShop' do
     pod 'Firebase/Storage'
     pod 'JSQMessagesViewController'
     pod 'SwiftGifOrigin'
+    pod 'TensorFlow-experimental'
 end

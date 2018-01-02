@@ -41,6 +41,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.layer.cornerRadius = 5
         backButton.layer.cornerRadius = 5
         
+        self.twoFactorWebViewCenterConstraint.constant = 220
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -169,10 +171,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
         } else if response.contains("iframe") {
             //need to do two-way auth here
+            print("HI IM 2-WAY AUTH")
             self.twoFactorWebView.loadHTMLString(response, baseURL: URL(string: "https://login.gatech.edu/cas/login"))
             self.twoFactorWebView.superview?.alpha = 1.0
             
             self.twoFactorWebView.delegate = TwoFactorWebViewDelegate()
+            print("HI IM 2-WAY AUTH 2")
             loadedDuoTwoFactor = false
         }
         else {
@@ -187,6 +191,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func presentTwoFactorView() {
+        print("HI IM 2-WAY AUTH PRESENT")
+        
         if self.twoFactorWebViewCenterConstraint.constant == 0 { return }
         
         UIView.animate(withDuration: 0.45, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
@@ -196,6 +202,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func nextStepAfterTwoWayAuth() {
+        print("HI IM 2-WAY AUTH afterwards")
         print("two-way auth success! Send request to GT thrift shop to get userid.")
         DispatchQueue.main.async(execute: {
             self.loginActivityIndicator.stopAnimating()
@@ -363,6 +370,7 @@ class TwoFactorWebViewDelegate : NSObject, UIWebViewDelegate {
         //if still waiting on two-factor to complete
         
         if !(TwoFactorWebViewDelegate.loginController?.loadedDuoTwoFactor)! {
+            print("HI IM 2-WAY AUTH delegate")
             let isCorrectPage = content?.contains("Two-factor login is needed") == true
             let hasFinishedProcessing = iframeSrc(webView) != nil
             
