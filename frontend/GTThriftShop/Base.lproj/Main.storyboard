@@ -1492,7 +1492,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="dgH-j0-PNR" kind="presentation" trigger="accessoryAction" id="xp1-nB-EB6"/>
+                                            <segue destination="dgH-j0-PNR" kind="presentation" identifier="embedToAutoRec" trigger="accessoryAction" modalTransitionStyle="crossDissolve" id="xp1-nB-EB6"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

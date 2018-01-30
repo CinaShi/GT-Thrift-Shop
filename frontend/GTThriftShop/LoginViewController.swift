@@ -169,17 +169,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.notifyFailure(info: "Your username or password is incorrect!")
             });
             
-        } else if response.contains("iframe") {
-            //need to do two-way auth here
-            print("HI IM 2-WAY AUTH")
-            self.twoFactorWebView.loadHTMLString(response, baseURL: URL(string: "https://login.gatech.edu/cas/login"))
-            self.twoFactorWebView.superview?.alpha = 1.0
-            
-            self.twoFactorWebView.delegate = TwoFactorWebViewDelegate()
-            print("HI IM 2-WAY AUTH 2")
-            loadedDuoTwoFactor = false
-        }
-        else {
+        } else {
             print("Right password! Send request to GT thrift shop to get userid.")
             DispatchQueue.main.async(execute: {
                 self.loginActivityIndicator.stopAnimating()

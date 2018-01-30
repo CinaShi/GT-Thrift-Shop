@@ -30,16 +30,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Add code here (e.g. if/else) to determine which view controller class (chooseViewControllerA or chooseViewControllerB) and storyboard ID (chooseStoryboardA or chooseStoryboardB) to send the user to
         
-        let initialViewController = mainStoryboard.instantiateViewController(withIdentifier: "recommendationPage")
-        self.window?.rootViewController = initialViewController
+//        let initialViewController = mainStoryboard.instantiateViewController(withIdentifier: "recommendationPage")
+//        self.window?.rootViewController = initialViewController
         
-//        if UserDefaults.standard.object(forKey: "userId") != nil {
-//            let initialViewController: UITabBarController = mainStoryboard.instantiateViewController(withIdentifier: "MainTabViewController") as! UITabBarController
-//            self.window?.rootViewController = initialViewController
-//        }else{
-//            let initialViewController: ViewController = mainStoryboard.instantiateViewController(withIdentifier: "preLoginInitial") as! ViewController
-//            self.window?.rootViewController = initialViewController
-//        }
+        if UserDefaults.standard.object(forKey: "userId") != nil {
+            let initialViewController: UITabBarController = mainStoryboard.instantiateViewController(withIdentifier: "MainTabViewController") as! UITabBarController
+            self.window?.rootViewController = initialViewController
+        }else{
+            let initialViewController: ViewController = mainStoryboard.instantiateViewController(withIdentifier: "preLoginInitial") as! ViewController
+            self.window?.rootViewController = initialViewController
+        }
         
         self.window?.makeKeyAndVisible()
         
